@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{44D3DE58-8220-49CC-BE41-EA4277CBBC0B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Deipax.DataAccess</RootNamespace>
+    <AssemblyName>Deipax.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\DataRecordMap.cs" />
+    <Compile Include="Common\DbManager.cs" />
+    <Compile Include="Common\DbTimings.cs" />
+    <Compile Include="Common\DynamicDictionary.cs" />
+    <Compile Include="Common\DynamicMap.cs" />
+    <Compile Include="Concretes\Db.cs" />
+    <Compile Include="Concretes\DbBatch.cs" />
+    <Compile Include="Concretes\DbCmd.cs" />
+    <Compile Include="Concretes\DbCon.cs" />
+    <Compile Include="Extensions\IDbBatchExtensions.cs" />
+    <Compile Include="Extensions\IDbCmdExtensions.cs" />
+    <Compile Include="Extensions\IDbConExtensions.cs" />
+    <Compile Include="Extensions\IDbConnectionExtensions.cs" />
+    <Compile Include="Extensions\IDbExtensions.cs" />
+    <Compile Include="Interfaces\IDb.cs" />
+    <Compile Include="Interfaces\IDbBatch.cs" />
+    <Compile Include="Interfaces\IDbCmd.cs" />
+    <Compile Include="Interfaces\IDbCon.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj">
+      <Project>{a3089ab5-9bdd-4429-96c4-e8df1c2ec207}</Project>
+      <Name>Deipax.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
