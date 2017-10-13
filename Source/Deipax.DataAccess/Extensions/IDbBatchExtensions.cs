@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Deipax.DataAccess.Common;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Deipax.DataAccess.Interfaces
@@ -38,6 +39,28 @@ namespace Deipax.DataAccess.Interfaces
 			IEnumerable<object> values)
 		{
 			return source.Connection.CreateParameters(baseName, values);
+		}
+
+		public static IDbBatch Open(
+			this IDbBatch source)
+		{
+			var con = source.Connection;
+
+			if (con.State != ConnectionState.Open)
+			{
+				lock (con)
+				{
+					if (con.State != ConnectionState.Open)
+					{
+						using (var timer = new OpenTimer(source.Db))
+						{
+							con.Open();
+						}
+					}
+				}
+			}
+
+			return source;
 		}
 	}
 }

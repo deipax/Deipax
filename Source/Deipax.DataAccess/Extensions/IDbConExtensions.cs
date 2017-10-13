@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Deipax.DataAccess.Common;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -129,6 +130,28 @@ namespace Deipax.DataAccess.Interfaces
 					throw;
 				}
 			}
+		}
+
+		public static IDbCon Open(
+			this IDbCon source)
+		{
+			var con = source.GetConnection();
+
+			if (con.State != ConnectionState.Open)
+			{
+				lock (con)
+				{
+					if (con.State != ConnectionState.Open)
+					{
+						using (var timer = new OpenTimer(source.Db))
+						{
+							con.Open();
+						}
+					}
+				}
+			}
+
+			return source;
 		}
 	}
 }
