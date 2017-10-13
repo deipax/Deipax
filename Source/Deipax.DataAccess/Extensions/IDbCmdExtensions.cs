@@ -98,7 +98,6 @@ namespace Deipax.DataAccess.Interfaces
 		public static IEnumerable<dynamic> AsDynamicEnumerable(
 			this IDbCmd source)
 		{
-			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
@@ -121,7 +120,6 @@ namespace Deipax.DataAccess.Interfaces
 		public static IEnumerable<T> AsEnumerable<T>(
 			this IDbCmd source)
 		{
-			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
@@ -144,7 +142,6 @@ namespace Deipax.DataAccess.Interfaces
 		public static int ExecuteNonQuery(
 			this IDbCmd source)
 		{
-			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			{
@@ -155,7 +152,6 @@ namespace Deipax.DataAccess.Interfaces
 		public static object ExecuteScalar(
 			this IDbCmd source)
 		{
-			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			{

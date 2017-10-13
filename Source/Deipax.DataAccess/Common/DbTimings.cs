@@ -55,9 +55,11 @@ namespace Deipax.DataAccess.Common
 		public RunTimer(IDbCmd dbCmd)
 		{
 			_dbCmd = dbCmd;
+			dbCmd.Open();
+			_start = DateTime.Now;
 		}
 
-		private DateTime _start = DateTime.Now;
+		private DateTime _start;
 		private IDbCmd _dbCmd;
 
 		public void Dispose()

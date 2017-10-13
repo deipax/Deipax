@@ -60,16 +60,22 @@ namespace Deipax.DataAccess.Concretes
 		{
 			if (_con != null)
 			{
-				if (_con.State != ConnectionState.Closed)
+				lock (_lock)
 				{
-					using (var time = new CloseTimer(this.Db))
+					if (_con != null)
 					{
-						_con.Close();
+						if (_con.State != ConnectionState.Closed)
+						{
+							using (var time = new CloseTimer(this.Db))
+							{
+								_con.Close();
+							}
+						}
+
+						_con.Dispose();
+						_con = null;
 					}
 				}
-
-				_con.Dispose();
-				_con = null;
 			}
 		}
 		#endregion
