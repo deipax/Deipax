@@ -1,5 +1,5 @@
-﻿using System.Data;
-using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Interfaces;
+using System.Data;
 
 namespace Deipax.DataAccess.Concretes
 {

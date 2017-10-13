@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Deipax.Core.Conversion;
+using Deipax.DataAccess.Common;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Deipax.Core.Conversion;
-using Deipax.DataAccess.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -98,6 +98,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static IEnumerable<dynamic> AsDynamicEnumerable(
 			this IDbCmd source)
 		{
+			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
@@ -120,6 +121,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static IEnumerable<T> AsEnumerable<T>(
 			this IDbCmd source)
 		{
+			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
@@ -142,6 +144,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static int ExecuteNonQuery(
 			this IDbCmd source)
 		{
+			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			{
@@ -152,6 +155,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static object ExecuteScalar(
 			this IDbCmd source)
 		{
+			source.Open();
 			using (var timer = new RunTimer(source))
 			using (var dbCmd = source.CreateCommand())
 			{
@@ -192,6 +196,26 @@ namespace Deipax.DataAccess.Interfaces
 			cmd.Parameters.Clear();
 			source.Parameters.ToList().ForEach(x => cmd.Parameters.Add(x));
 			return cmd;
+		}
+
+		private static void Open(
+			this IDbCmd source)
+		{
+			var con = source.Connection;
+
+			if (con.State != ConnectionState.Open)
+			{
+				lock (con)
+				{
+					if (con.State != ConnectionState.Open)
+					{
+						using (var timer = new OpenTimer(source.Db))
+						{
+							con.Open();
+						}
+					}
+				}
+			}
 		}
 		#endregion
 	}

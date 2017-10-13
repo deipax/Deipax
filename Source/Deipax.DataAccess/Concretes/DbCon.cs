@@ -44,23 +44,14 @@ namespace Deipax.DataAccess.Concretes
 
 		public IDbBatch CreateDbBatch()
 		{
-			var con = GetConnection();
+			return new DbBatch(this.Db)
+				.SetConnection(GetConnection());
+		}
 
-			if (con.State != ConnectionState.Open)
-			{
-				lock (_lock)
-				{
-					if (con.State != ConnectionState.Open)
-					{
-						using (var timer = new OpenTimer(this.Db))
-						{
-							con.Open();
-						}
-					}
-				}
-			}
-
-			return new DbBatch(this.Db).SetConnection(con);
+		public IDbCmd CreateDbCmd()
+		{
+			return new DbCmd(this.Db)
+				.SetConnection(GetConnection());
 		}
 		#endregion
 

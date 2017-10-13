@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using Deipax.DataAccess.Interfaces;
 
 namespace Deipax.DataAccess.Interfaces
 {
