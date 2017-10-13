@@ -98,7 +98,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static IEnumerable<dynamic> AsDynamicEnumerable(
 			this IDbCmd source)
 		{
-			using (var timer = new RunTimer(source))
+			using (var timer = RunTimer.Create(source))
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
@@ -120,7 +120,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static IEnumerable<T> AsEnumerable<T>(
 			this IDbCmd source)
 		{
-			using (var timer = new RunTimer(source))
+			using (var timer = RunTimer.Create(source))
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
@@ -142,7 +142,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static int ExecuteNonQuery(
 			this IDbCmd source)
 		{
-			using (var timer = new RunTimer(source))
+			using (var timer = RunTimer.Create(source))
 			using (var dbCmd = source.CreateCommand())
 			{
 				return dbCmd.ExecuteNonQuery();
@@ -152,7 +152,7 @@ namespace Deipax.DataAccess.Interfaces
 		public static object ExecuteScalar(
 			this IDbCmd source)
 		{
-			using (var timer = new RunTimer(source))
+			using (var timer = RunTimer.Create(source))
 			using (var dbCmd = source.CreateCommand())
 			{
 				var obj = dbCmd.ExecuteScalar();
@@ -178,7 +178,7 @@ namespace Deipax.DataAccess.Interfaces
 				{
 					if (con.State != ConnectionState.Open)
 					{
-						using (var timer = new OpenTimer(source.Db))
+						using (var timer = OpenTimer.Create(source.Db))
 						{
 							con.Open();
 						}

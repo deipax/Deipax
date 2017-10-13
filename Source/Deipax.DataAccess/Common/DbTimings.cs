@@ -12,13 +12,22 @@ namespace Deipax.DataAccess.Common
 
 	public class OpenTimer : IDisposable
 	{
-		public OpenTimer(IDb db)
+		private OpenTimer(IDb db)
 		{
 			_db = db;
 		}
 
+		private OpenTimer()
+		{
+		}
+
 		private DateTime _start = DateTime.Now;
 		private IDb _db;
+
+		public static OpenTimer Create(IDb db)
+		{
+			return new OpenTimer(db);
+		}
 
 		public void Dispose()
 		{
@@ -32,13 +41,22 @@ namespace Deipax.DataAccess.Common
 
 	public class CloseTimer : IDisposable
 	{
-		public CloseTimer(IDb db)
+		private CloseTimer(IDb db)
 		{
 			_db = db;
 		}
 
+		private CloseTimer()
+		{
+		}
+
 		private DateTime _start = DateTime.Now;
 		private IDb _db;
+
+		public static CloseTimer Create(IDb db)
+		{
+			return new CloseTimer(db);
+		}
 
 		public void Dispose()
 		{
@@ -52,15 +70,23 @@ namespace Deipax.DataAccess.Common
 
 	public class RunTimer : IDisposable
 	{
-		public RunTimer(IDbCmd dbCmd)
+		private RunTimer(IDbCmd dbCmd)
 		{
-			_dbCmd = dbCmd;
-			dbCmd.Open();
-			_start = DateTime.Now;
+			_dbCmd = dbCmd;		
 		}
 
-		private DateTime _start;
+		private RunTimer()
+		{
+		}
+
+		private DateTime _start = DateTime.Now;
 		private IDbCmd _dbCmd;
+
+		public static RunTimer Create(IDbCmd dbCmd)
+		{
+			dbCmd.Open();
+			return new RunTimer(dbCmd);
+		}
 
 		public void Dispose()
 		{

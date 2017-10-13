@@ -66,7 +66,7 @@ namespace Deipax.DataAccess.Concretes
 					{
 						if (_con.State != ConnectionState.Closed)
 						{
-							using (var time = new CloseTimer(this.Db))
+							using (var time = CloseTimer.Create(this.Db))
 							{
 								_con.Close();
 							}
