@@ -25,6 +25,8 @@
     <SccProvider>
     </SccProvider>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,6 +66,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CloneFactory2.cs" />
+    <Compile Include="DbHelper.cs" />
     <Compile Include="DeepCloneHelper.cs" />
     <Compile Include="RandGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,9 +83,16 @@
       <Project>{A3089AB5-9BDD-4429-96C4-E8DF1C2EC207}</Project>
       <Name>Deipax.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Deipax.DataAccess\Deipax.DataAccess.csproj">
+      <Project>{44D3DE58-8220-49CC-BE41-EA4277CBBC0B}</Project>
+      <Name>Deipax.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\Northwind_small.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

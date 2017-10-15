@@ -50,9 +50,6 @@
       <HintPath>..\..\packages\CloneExtensions.1.4.2\lib\net46\CloneExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CloneExtensions.Framework">
-      <HintPath>..\..\lib\CloneExtensions\CloneExtensions.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />

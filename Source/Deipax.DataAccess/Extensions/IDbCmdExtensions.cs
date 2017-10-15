@@ -57,6 +57,7 @@ namespace Deipax.DataAccess.Interfaces
 			source.Sql = sql;
 			return source;
 		}
+
 		public static IDbCmd AddParameter(
 			this IDbCmd source,
 			string name = null,
@@ -81,7 +82,11 @@ namespace Deipax.DataAccess.Interfaces
 			this IDbCmd source,
 			IEnumerable<IDbDataParameter> parameters)
 		{
-			parameters.ToList().ForEach(x => source.Parameters.Add(x));
+			foreach (var p in parameters)
+			{
+				source.Parameters.Add(p);
+			}
+	
 			return source;
 		}
 
@@ -212,7 +217,12 @@ namespace Deipax.DataAccess.Interfaces
 			cmd.CommandText = source.Sql;
 			cmd.CommandType = source.CommandType;
 			cmd.Parameters.Clear();
-			source.Parameters.ToList().ForEach(x => cmd.Parameters.Add(x));
+
+			foreach (var p in source.Parameters)
+			{
+				cmd.Parameters.Add(p);
+			}
+
 			return cmd;
 		}
 		#endregion

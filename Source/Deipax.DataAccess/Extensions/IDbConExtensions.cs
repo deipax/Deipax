@@ -48,7 +48,9 @@ namespace Deipax.DataAccess.Interfaces
 			this IDbCon source,
 			Action<IDbBatch> func)
 		{
-			var batch = source.CreateDbBatch();
+			var batch = source
+				.CreateDbBatch()
+				.Open();
 
 			using (var trans = batch.Connection.BeginTransaction())
 			{
@@ -70,7 +72,9 @@ namespace Deipax.DataAccess.Interfaces
 			IsolationLevel isolationLevel,
 			Action<IDbBatch> func)
 		{
-			var batch = source.CreateDbBatch();
+			var batch = source
+				.CreateDbBatch()
+				.Open();
 
 			using (var trans = batch.Connection.BeginTransaction(isolationLevel))
 			{
@@ -91,7 +95,9 @@ namespace Deipax.DataAccess.Interfaces
 			this IDbCon source,
 			Func<IDbBatch, T> func)
 		{
-			var batch = source.CreateDbBatch();
+			var batch = source
+				.CreateDbBatch()
+				.Open();
 
 			using (var trans = batch.Connection.BeginTransaction())
 			{
@@ -114,7 +120,9 @@ namespace Deipax.DataAccess.Interfaces
 			IsolationLevel isolationLevel,
 			Func<IDbBatch, T> func)
 		{
-			var batch = source.CreateDbBatch();
+			var batch = source
+				.CreateDbBatch()
+				.Open();
 
 			using (var trans = batch.Connection.BeginTransaction(isolationLevel))
 			{
