@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Deipax.DataAccess.Common;
+using System;
 using System.Data;
 
 namespace Deipax.DataAccess.Interfaces
@@ -6,6 +7,20 @@ namespace Deipax.DataAccess.Interfaces
 	public static class IDbExtensions
 	{
 		#region Public Members
+		public static IDb Create(
+			this IDb source,
+			string name = null,
+			string cs = null,
+			string provider = null,
+			Func<IDb, IDbConnection> factory = null)
+		{
+			return DbFactory.Create(
+				name ?? source.Name,
+				cs ?? source.ConnectionString,
+				provider ?? source.ProviderName,
+				factory ?? source.ConnectionFactory);
+		}
+
 		public static void AsTransaction(
 			this IDb source,
 			Action<IDbBatch> func)
