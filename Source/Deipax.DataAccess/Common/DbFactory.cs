@@ -6,14 +6,31 @@ using System.Data.Common;
 
 namespace Deipax.DataAccess.Common
 {
+	public delegate IDb CreateDbDelegate(
+		string name,
+		string cs,
+		string provider,
+		Func<IDb, IDbConnection> factory = null);
+
 	public static class DbFactory
 	{
+		public static CreateDbDelegate Override { get; set; }
+
 		public static IDb Create(
 			string name,
 			string cs,
 			string provider,
 			Func<IDb, IDbConnection> factory = null)
 		{
+			if (Override != null)
+			{
+				return Override(
+					name ?? string.Empty,
+					cs ?? string.Empty,
+					provider ?? string.Empty,
+					factory ?? CreateDbConnection);
+			}
+
 			return new Db(
 				name ?? string.Empty,
 				cs ?? string.Empty,

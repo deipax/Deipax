@@ -10,6 +10,42 @@ namespace Integration.DataAccess
 	public class DbFactoryTests
 	{
 		[TestMethod]
+		public void Override()
+		{
+			try
+			{
+				DbFactory.Override = null;
+
+				var db1 = DbFactory.Create("jon", "cs", "pro");
+
+				Assert.IsNotNull(db1);
+
+				DbFactory.Override = (name, cs, provider, func) =>
+				{
+					return new DbHelperClass()
+					{
+						Name = name,
+						ConnectionFactory = func,
+						ConnectionString = cs,
+						ProviderName = provider
+					};
+				};
+
+				var db2 = DbFactory.Create("jon", "cs", "pro");
+
+				Assert.IsInstanceOfType(db2, typeof(DbHelperClass));
+				Assert.AreEqual(db2.Name, "jon");
+				Assert.AreEqual(db2.ConnectionFactory, db1.ConnectionFactory);
+				Assert.AreEqual(db2.ConnectionString, "cs");
+				Assert.AreEqual(db2.ProviderName, "pro");
+			}
+			finally
+			{
+				DbFactory.Override = null;
+			}
+		}
+
+		[TestMethod]
 		public void Create()
 		{
 			Func<IDb, IDbConnection> func = ConnectionFactory;
@@ -94,6 +130,16 @@ namespace Integration.DataAccess
 		private IDbConnection ConnectionFactory(IDb db)
 		{
 			return null;
+		}
+		#endregion
+
+		#region Helper
+		class DbHelperClass : IDb
+		{
+			public Func<IDb, IDbConnection> ConnectionFactory { get; set; }
+			public string ConnectionString { get; set; }
+			public string Name { get; set; }
+			public string ProviderName { get; set; }
 		}
 		#endregion
 	}

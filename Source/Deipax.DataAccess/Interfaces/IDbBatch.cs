@@ -7,6 +7,5 @@ namespace Deipax.DataAccess.Interfaces
 		IDb Db { get; }
 		IDbConnection Connection { get; set; }
 		IDbTransaction Transaction { get; set; }
-		IDbCmd CreateDbCmd();
 	}
 }

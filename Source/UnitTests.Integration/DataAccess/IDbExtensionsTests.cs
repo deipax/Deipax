@@ -11,10 +11,10 @@ namespace Integration.DataAccess
 	public class IDbExtensionsTests
 	{
 		[TestMethod]
-		public void Create()
+		public void CreateDb()
 		{
 			var db1 = DbHelper.GetNorthwind();
-			var db2 = db1.Create();
+			var db2 = db1.CreateDb();
 
 			Assert.AreNotSame(db1, db2);
 			Assert.AreEqual(db1.Name, db2.Name);
@@ -22,7 +22,7 @@ namespace Integration.DataAccess
 			Assert.AreEqual(db1.ConnectionString, db2.ConnectionString);
 			Assert.AreEqual(db1.ConnectionFactory, db2.ConnectionFactory);
 
-			db2 = db1.Create("John");
+			db2 = db1.CreateDb("John");
 			Assert.AreNotSame(db1, db2);
 			Assert.AreNotEqual(db1.Name, db2.Name);
 			Assert.AreEqual(db2.Name, "John");
@@ -30,7 +30,7 @@ namespace Integration.DataAccess
 			Assert.AreEqual(db1.ConnectionString, db2.ConnectionString);
 			Assert.AreEqual(db1.ConnectionFactory, db2.ConnectionFactory);
 
-			db2 = db1.Create("John", "cs");
+			db2 = db1.CreateDb("John", "cs");
 			Assert.AreNotSame(db1, db2);
 			Assert.AreNotEqual(db1.Name, db2.Name);
 			Assert.AreEqual(db2.Name, "John");
@@ -39,7 +39,7 @@ namespace Integration.DataAccess
 			Assert.AreEqual(db2.ConnectionString, "cs");
 			Assert.AreEqual(db1.ConnectionFactory, db2.ConnectionFactory);
 
-			db2 = db1.Create("John", "cs", "myProviderName");
+			db2 = db1.CreateDb("John", "cs", "myProviderName");
 			Assert.AreNotSame(db1, db2);
 			Assert.AreNotEqual(db1.Name, db2.Name);
 			Assert.AreEqual(db2.Name, "John");
@@ -55,7 +55,7 @@ namespace Integration.DataAccess
 				return (IDbConnection)null;
 			};
 
-			db2 = db1.Create("John", "cs", "myProviderName", func);
+			db2 = db1.CreateDb("John", "cs", "myProviderName", func);
 			Assert.AreNotSame(db1, db2);
 			Assert.AreNotEqual(db1.Name, db2.Name);
 			Assert.AreEqual(db2.Name, "John");

@@ -9,7 +9,5 @@ namespace Deipax.DataAccess.Interfaces
 		string ConnectionString { get; }
 		string ProviderName { get; }
 		Func<IDb, IDbConnection> ConnectionFactory { get; }
-
-		IDbCon CreateDbCon();
 	}
 }

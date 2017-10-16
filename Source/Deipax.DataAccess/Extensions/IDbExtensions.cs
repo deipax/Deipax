@@ -7,7 +7,7 @@ namespace Deipax.DataAccess.Interfaces
 	public static class IDbExtensions
 	{
 		#region Public Members
-		public static IDb Create(
+		public static IDb CreateDb(
 			this IDb source,
 			string name = null,
 			string cs = null,
@@ -19,6 +19,12 @@ namespace Deipax.DataAccess.Interfaces
 				cs ?? source.ConnectionString,
 				provider ?? source.ProviderName,
 				factory ?? source.ConnectionFactory);
+		}
+
+		public static IDbCon CreateDbCon(
+			this IDb source)
+		{
+			return DbConFactory.Create(source);
 		}
 
 		public static void AsTransaction(

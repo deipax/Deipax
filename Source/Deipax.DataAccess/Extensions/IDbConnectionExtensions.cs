@@ -71,7 +71,7 @@ namespace Deipax.DataAccess.Interfaces
 			return list;
 		}
 
-		internal static void OpenSafe(
+		internal static IDbConnection OpenSafe(
 			this IDbConnection source,
 			IDb db)
 		{
@@ -88,6 +88,8 @@ namespace Deipax.DataAccess.Interfaces
 					}
 				}
 			}
+
+			return source;
 		}
 	}
 }

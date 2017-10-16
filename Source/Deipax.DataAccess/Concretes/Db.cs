@@ -32,11 +32,6 @@ namespace Deipax.DataAccess.Concretes
 		public string Name { get; private set; }
 		public string ProviderName { get; private set; }
 		public Func<IDb, IDbConnection> ConnectionFactory { get; private set; }
-
-		public IDbCon CreateDbCon()
-		{
-			return new DbCon(this);
-		}
 		#endregion
 	}
 }

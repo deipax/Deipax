@@ -6,6 +6,16 @@ namespace Deipax.DataAccess.Interfaces
 {
 	public static class IDbBatchExtensions
 	{
+		public static IDbCmd CreateDbCmd(
+			this IDbBatch dbBatch)
+		{
+			dbBatch.Connection.OpenSafe(dbBatch.Db);
+
+			return DbCmdFactory.Create(dbBatch.Db)
+				.SetConnection(dbBatch.Connection)
+				.SetTransaction(dbBatch.Transaction);
+		}
+
 		public static IDbBatch SetTransaction(
 			this IDbBatch source,
 			IDbTransaction transaction)

@@ -24,7 +24,7 @@ namespace Deipax.DataAccess.Concretes
 		#endregion
 
 		#region IDbCon Members
-		public IDb Db { get; set; }
+		public IDb Db { get; private set; }
 
 		public IDbConnection GetConnection()
 		{
@@ -40,21 +40,6 @@ namespace Deipax.DataAccess.Concretes
 			}
 
 			return _con;
-		}
-
-		public IDbBatch CreateDbBatch()
-		{
-			return new DbBatch(this.Db)
-				.SetConnection(GetConnection());
-		}
-
-		public IDbCmd CreateDbCmd()
-		{
-			var con = this.GetConnection();
-			con.OpenSafe(this.Db);
-
-			return new DbCmd(this.Db)
-				.SetConnection(con);
 		}
 		#endregion
 
