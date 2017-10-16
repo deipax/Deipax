@@ -1,4 +1,5 @@
-﻿using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Common;
+using Deipax.DataAccess.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -332,6 +333,40 @@ namespace Integration.DataAccess
 				.ExecuteScalar<int>();
 
 				Assert.IsTrue(result == 8);
+			});
+		}
+
+		[TestMethod]
+		public void TimeIt()
+		{
+			SetupAndAssert(dbCmd =>
+			{
+				bool funcCalled = false;
+
+				dbCmd.TimeIt(dbConnection =>
+				{
+					funcCalled = true;
+				});
+
+				Assert.IsTrue(funcCalled);
+			});
+		}
+
+		[TestMethod]
+		public void TimeIt_WithReturn()
+		{
+			SetupAndAssert(dbCmd =>
+			{
+				bool funcCalled = false;
+
+				var result = dbCmd.TimeIt(dbConnection =>
+				{
+					funcCalled = true;
+					return 12;
+				});
+
+				Assert.IsTrue(result == 12);
+				Assert.IsTrue(funcCalled);
 			});
 		}
 

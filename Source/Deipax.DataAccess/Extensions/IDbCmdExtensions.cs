@@ -171,6 +171,26 @@ namespace Deipax.DataAccess.Interfaces
 			var obj = source.ExecuteScalar();
 			return ConvertTo<T>.From(obj);
 		}
+
+		public static void TimeIt(
+			this IDbCmd source, 
+			Action<IDbConnection> func)
+		{
+			using (var timer = RunTimer.Create(source))
+			{
+				func(source.Connection);
+			}
+		}
+
+		public static T TimeIt<T>(
+			this IDbCmd source, 
+			Func<IDbConnection, T> func)
+		{
+			using (var timer = RunTimer.Create(source))
+			{
+				return func(source.Connection);
+			}
+		}
 		#endregion
 
 		#region Private Members

@@ -1,29 +1,29 @@
-﻿using System;
+﻿using Deipax.DataAccess.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
-using Deipax.DataAccess.Concretes;
-using Deipax.DataAccess.Interfaces;
 
 namespace Deipax.DataAccess.Common
 {
-	public class DbManager
+	public static class DbManager
 	{
-		#region Field Members
-		private static Lazy<IReadOnlyDictionary<string, Db>> _connections = new Lazy<IReadOnlyDictionary<string, Db>>(() =>
+		static DbManager()
 		{
-			return ConfigurationManager
-				.ConnectionStrings
-				.Cast<ConnectionStringSettings>()
-				.Select(x => Db.Create(x.Name, x.ProviderName, x.ConnectionString))
-				.Where(x => x != null)
-				.ToDictionary(x => x.Name, x => x);
-		},
-		LazyThreadSafetyMode.ExecutionAndPublication);
+			_connections = Initialize();
+		}
+
+		#region Field Members
+		private static Lazy<IReadOnlyDictionary<string, IDb>> _connections;
 		#endregion
 
 		#region Public Members
+		public static void Clear()
+		{
+			_connections = Initialize();
+		}
+
 		public static IDb Get(string name)
 		{
 			if (_connections.Value.ContainsKey(name))
@@ -37,6 +37,22 @@ namespace Deipax.DataAccess.Common
 		public static IEnumerable<IDb> GetAll()
 		{
 			return _connections.Value.Values;
+		}
+		#endregion
+
+		#region Private Members
+		private static Lazy<IReadOnlyDictionary<string, IDb>> Initialize()
+		{
+			return new Lazy<IReadOnlyDictionary<string, IDb>>(() =>
+			{
+				return ConfigurationManager
+					.ConnectionStrings
+					.Cast<ConnectionStringSettings>()
+					.Select(x => DbFactory.Create(x.Name, x.ConnectionString, x.ProviderName))
+					.Where(x => x != null)
+					.ToDictionary(x => x.Name, x => x);
+			},
+			LazyThreadSafetyMode.ExecutionAndPublication);
 		}
 		#endregion
 	}

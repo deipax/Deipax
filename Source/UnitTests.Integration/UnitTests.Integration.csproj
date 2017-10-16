@@ -93,6 +93,8 @@
     <Compile Include="Core\ObjectActivatorTests.cs" />
     <Compile Include="Cloning\PrimativeCloneLogicTests.cs" />
     <Compile Include="Cloning\NoCloneAttributeTests.cs" />
+    <Compile Include="DataAccess\DbFactoryTests.cs" />
+    <Compile Include="DataAccess\DbManagerTests.cs" />
     <Compile Include="DataAccess\IDbBatchExtensionsTests.cs" />
     <Compile Include="DataAccess\IDbCmdExtensionsTests.cs" />
     <Compile Include="DataAccess\IDbConExtensionsTests.cs" />

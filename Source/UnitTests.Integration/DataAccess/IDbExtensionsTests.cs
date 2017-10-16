@@ -1,12 +1,7 @@
 ﻿using Deipax.DataAccess.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnitTests.Common;
 
 namespace Integration.DataAccess
@@ -31,7 +26,6 @@ namespace Integration.DataAccess
 
 			AssertConnectionDisposed(connection);
 		}
-
 		
 		[TestMethod]
 		public void AsBatch_WithReturn()
@@ -52,7 +46,6 @@ namespace Integration.DataAccess
 			Assert.IsTrue(result == 1);
 			AssertConnectionDisposed(connection);
 		}
-
 		
 		[TestMethod]
 		public void AsTransaction()
@@ -98,7 +91,6 @@ namespace Integration.DataAccess
 			AssertTransactionDisposed(transaction);
 			AssertConnectionDisposed(connection);
 		}
-
 		
 		[TestMethod]
 		public void AsTransaction_WithReturn()

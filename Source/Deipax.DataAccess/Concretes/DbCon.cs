@@ -1,16 +1,16 @@
-﻿using System;
-using System.Data;
-using Deipax.DataAccess.Common;
+﻿using Deipax.DataAccess.Common;
 using Deipax.DataAccess.Interfaces;
+using System;
+using System.Data;
 
 namespace Deipax.DataAccess.Concretes
 {
-	public class DbCon : IDbCon
+	internal class DbCon : IDbCon
 	{
-		public DbCon(IDb db, Func<IDb, IDbConnection> factory)
+		public DbCon(IDb db)
 		{
 			this.Db = db;
-			_factory = factory;
+			_factory = db.ConnectionFactory;
 		}
 
 		private DbCon()
@@ -50,10 +50,11 @@ namespace Deipax.DataAccess.Concretes
 
 		public IDbCmd CreateDbCmd()
 		{
-			this.GetConnection().OpenSafe(this.Db);
+			var con = this.GetConnection();
+			con.OpenSafe(this.Db);
 
 			return new DbCmd(this.Db)
-				.SetConnection(GetConnection());
+				.SetConnection(con);
 		}
 		#endregion
 
