@@ -83,18 +83,6 @@ namespace Integration.DataAccess
 			});
 		}
 
-		[TestMethod]
-		public void Open()
-		{
-			SetupAndAssert(dbBatch =>
-			{
-				Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Closed);
-				var dbCon2 = dbBatch.Open();
-				Assert.IsTrue(dbBatch == dbCon2);
-				Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Open);
-			});
-		}
-
 		#region Private Members
 		private static void SetupAndAssertClosedConnection(Action<IDbBatch> act)
 		{

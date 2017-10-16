@@ -209,18 +209,6 @@ namespace Integration.DataAccess
 			});
 		}
 
-		[TestMethod]
-		public void Open()
-		{
-			SetupAndAssert(dbCon =>
-			{
-				Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
-				var dbCon2 = dbCon.Open();
-				Assert.IsTrue(dbCon == dbCon2);
-				Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Open);
-			});
-		}
-
 		#region Private Members
 		private static void SetupAndAssertClosedConnection(Action<IDbCon> act)
 		{

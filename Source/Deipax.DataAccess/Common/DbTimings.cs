@@ -84,7 +84,6 @@ namespace Deipax.DataAccess.Common
 
 		public static RunTimer Create(IDbCmd dbCmd)
 		{
-			dbCmd.Open();
 			return new RunTimer(dbCmd);
 		}
 

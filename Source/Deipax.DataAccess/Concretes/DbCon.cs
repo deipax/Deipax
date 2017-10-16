@@ -50,6 +50,8 @@ namespace Deipax.DataAccess.Concretes
 
 		public IDbCmd CreateDbCmd()
 		{
+			this.GetConnection().OpenSafe(this.Db);
+
 			return new DbCmd(this.Db)
 				.SetConnection(GetConnection());
 		}

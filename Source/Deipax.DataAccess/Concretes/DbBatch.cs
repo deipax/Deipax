@@ -21,6 +21,8 @@ namespace Deipax.DataAccess.Concretes
 
 		public IDbCmd CreateDbCmd()
 		{
+			this.Connection.OpenSafe(this.Db);
+
 			return new DbCmd(this.Db)
 				.SetConnection(this.Connection)
 				.SetTransaction(this.Transaction);

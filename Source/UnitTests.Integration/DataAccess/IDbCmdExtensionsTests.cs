@@ -16,7 +16,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void SetCommandType()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(dbCmd.CommandType == CommandType.Text);
 				var dbCmd2 = dbCmd.SetCommandType(CommandType.StoredProcedure);
@@ -28,7 +28,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void SetConnection()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(dbCmd.Connection != null);
 				var dbCmd2 = dbCmd.SetConnection(null);
@@ -40,7 +40,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void SetTimeout()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(dbCmd.Timeout <= 0);
 				var dbCmd2 = dbCmd.SetTimeout(1000);
@@ -52,7 +52,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void SetTransaction()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				var trans = new TestTransaction();
 				Assert.IsTrue(dbCmd.Transaction == null);
@@ -65,7 +65,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void SetName()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(string.IsNullOrEmpty(dbCmd.Name));
 				var dbCmd2 = dbCmd.SetName("Bill");
@@ -77,7 +77,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void SetSql()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(string.IsNullOrEmpty(dbCmd.Sql));
 				var dbCmd2 = dbCmd.SetSql("Bill");
@@ -89,7 +89,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void AddParameter_Test1()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(dbCmd.Parameters != null);
 				Assert.IsTrue(dbCmd.Parameters.Count == 0);
@@ -119,7 +119,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void AddParameter_Test2()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(dbCmd.Parameters != null);
 				Assert.IsTrue(dbCmd.Parameters.Count == 0);
@@ -139,7 +139,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void AddParameters_Test1()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(dbCmd.Parameters != null);
 				Assert.IsTrue(dbCmd.Parameters.Count == 0);
@@ -166,7 +166,7 @@ namespace Integration.DataAccess
 		[TestMethod]
 		public void AddParameters_Test2()
 		{
-			SetupAndAssertClosedConnection(dbCmd =>
+			SetupAndAssert(dbCmd =>
 			{
 				Assert.IsTrue(dbCmd.Parameters != null);
 				Assert.IsTrue(dbCmd.Parameters.Count == 0);
@@ -189,18 +189,6 @@ namespace Integration.DataAccess
 					Assert.IsTrue(p.ParameterName.IndexOf("MyBaseName") >= 0);
 					Assert.IsTrue(p.Value == list[i]);
 				}
-			});
-		}
-
-		[TestMethod]
-		public void Open()
-		{
-			SetupAndAssert(dbCmd =>
-			{
-				Assert.IsTrue(dbCmd.Connection.State == ConnectionState.Closed);
-				var dbCmd2 = dbCmd.Open();
-				Assert.IsTrue(dbCmd == dbCmd2);
-				Assert.IsTrue(dbCmd.Connection.State == ConnectionState.Open);
 			});
 		}
 
@@ -348,16 +336,6 @@ namespace Integration.DataAccess
 		}
 
 		#region Private Members
-		private static void SetupAndAssertClosedConnection(Action<IDbCmd> act)
-		{
-			using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
-			{
-				Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
-				act(dbCon.CreateDbCmd());
-				Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
-			}
-		}
-
 		private static void SetupAndAssert(Action<IDbCmd> act)
 		{
 			using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())

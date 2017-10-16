@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Deipax.DataAccess.Common;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
@@ -68,6 +69,25 @@ namespace Deipax.DataAccess.Interfaces
 			}
 
 			return list;
+		}
+
+		internal static void OpenSafe(
+			this IDbConnection source,
+			IDb db)
+		{
+			if (source.State != ConnectionState.Open)
+			{
+				lock (source)
+				{
+					if (source.State != ConnectionState.Open)
+					{
+						using (var timer = OpenTimer.Create(db))
+						{
+							source.Open();
+						}
+					}
+				}
+			}
 		}
 	}
 }

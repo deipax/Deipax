@@ -40,27 +40,5 @@ namespace Deipax.DataAccess.Interfaces
 		{
 			return source.Connection.CreateParameters(baseName, values);
 		}
-
-		public static IDbBatch Open(
-			this IDbBatch source)
-		{
-			var con = source.Connection;
-
-			if (con.State != ConnectionState.Open)
-			{
-				lock (con)
-				{
-					if (con.State != ConnectionState.Open)
-					{
-						using (var timer = OpenTimer.Create(source.Db))
-						{
-							con.Open();
-						}
-					}
-				}
-			}
-
-			return source;
-		}
 	}
 }

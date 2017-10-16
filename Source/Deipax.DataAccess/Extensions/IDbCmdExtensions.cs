@@ -171,28 +171,6 @@ namespace Deipax.DataAccess.Interfaces
 			var obj = source.ExecuteScalar();
 			return ConvertTo<T>.From(obj);
 		}
-
-		public static IDbCmd Open(
-			this IDbCmd source)
-		{
-			var con = source.Connection;
-
-			if (con.State != ConnectionState.Open)
-			{
-				lock (con)
-				{
-					if (con.State != ConnectionState.Open)
-					{
-						using (var timer = OpenTimer.Create(source.Db))
-						{
-							con.Open();
-						}
-					}
-				}
-			}
-
-			return source;
-		}
 		#endregion
 
 		#region Private Members
