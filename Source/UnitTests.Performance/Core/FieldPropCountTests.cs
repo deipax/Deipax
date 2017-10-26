@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using UnitTests.Common;
 
-namespace UnitTests.Performance.Core
+namespace Performance.Core
 {
     [TestClass]
     public class FieldPropCountTests
