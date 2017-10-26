@@ -22,10 +22,11 @@ namespace Deipax.Core.Common
         {
             this.Type = t;
 
-            var modelInfo = ModelInfo.Create(this.Type);
+            var fields = t.GetAllFields();
+            var props = t.GetFilteredProperties(fields);
 
-            AllGetters = GetAllGetters(modelInfo);
-            AllSetters = GetAllSetters(modelInfo);
+            AllGetters = GetAllGetters(t, props, fields);
+            AllSetters = GetAllSetters(t, props, fields);
 
             Getters = AllGetters
                 .GroupBy(x => x.Name)
@@ -104,19 +105,20 @@ namespace Deipax.Core.Common
         #endregion
 
         #region Private Members
-        private static IReadOnlyList<ISetter> GetAllSetters(ModelInfo modelInfo)
+        private static IReadOnlyList<ISetter> GetAllSetters(
+            Type t,
+            IEnumerable<IPropertyModelInfo> properties,
+            IEnumerable<IFieldModelInfo> fields)
         {
             List<ISetter> setters = new List<ISetter>();
 
-            setters.AddRange(modelInfo
-                .Properties
+            setters.AddRange(properties
                 .Where(x => x.CanWrite && !x.IsStatic && !x.HasParameters)
-                .Select(x => GetSetDelegate(modelInfo.Type, x)));
+                .Select(x => GetSetDelegate(t, x)));
 
-            setters.AddRange(modelInfo
-                .Fields
+            setters.AddRange(fields
                 .Where(x => x.CanWrite && !x.IsStatic && !x.IsBackingField)
-                .Select(x => GetSetDelegate(modelInfo.Type, x)));
+                .Select(x => GetSetDelegate(t, x)));
 
             return setters;
         }
@@ -154,19 +156,20 @@ namespace Deipax.Core.Common
             return Setter.Create<T>(info, lambda);
         }
 
-        private static IReadOnlyList<IGetter> GetAllGetters(ModelInfo modelInfo)
+        private static IReadOnlyList<IGetter> GetAllGetters(
+            Type t,
+            IEnumerable<IPropertyModelInfo> properties,
+            IEnumerable<IFieldModelInfo> fields)
         {
             List<IGetter> getters = new List<IGetter>();
 
-            getters.AddRange(modelInfo
-                .Properties
+            getters.AddRange(properties
                 .Where(x => x.CanRead && !x.IsStatic && !x.HasParameters)
-                .Select(x => GetGetDelegate(modelInfo.Type, x)));
+                .Select(x => GetGetDelegate(t, x)));
 
-            getters.AddRange(modelInfo
-                .Fields
+            getters.AddRange(fields
                 .Where(x => x.CanRead && !x.IsStatic && !x.IsBackingField)
-                .Select(x => GetGetDelegate(modelInfo.Type, x)));
+                .Select(x => GetGetDelegate(t, x)));
 
             return getters;
         }

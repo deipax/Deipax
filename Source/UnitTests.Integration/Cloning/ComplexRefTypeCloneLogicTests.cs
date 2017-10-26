@@ -465,6 +465,69 @@ namespace Integration.Cloning
 			var tmp = source.GetClone();
 		}
 
+		[TestMethod]
+		public void ComplexRefTypeCloneLogicTests_ShadowFieldProps()
+		{
+			DerivedClassOne source = new DerivedClassOne()
+			{
+				MyField = 1,
+				Property = 1,
+				VirtualProperty = 2,
+				VirtualProperty2 = 3,
+				AbstractProperty = 4,
+				VirtualProperty3 = "test1"
+			};
+
+			Assert.AreEqual(2, ((BaseClassOne)source).VirtualProperty);
+			Assert.AreEqual(3, ((BaseClassOne)source).VirtualProperty2);
+			Assert.AreEqual(4, ((BaseClassOne)source).AbstractProperty);
+			Assert.AreEqual("test1", ((BaseClassOne)source).VirtualProperty3);
+
+			((BaseClassOne)source).MyField = 2;
+			((BaseClassOne)source).Property = 5;
+			((BaseClassOne)source).VirtualProperty = 6;
+			((BaseClassOne)source).VirtualProperty2 = 7;
+			((BaseClassOne)source).AbstractProperty = 8;
+			((BaseClassOne)source).VirtualProperty3 = "test2";
+
+			Assert.AreEqual(1, source.MyField);
+			Assert.AreEqual(2, ((BaseClassOne)source).MyField);
+
+			Assert.AreEqual(1, source.Property);
+			Assert.AreEqual(5, ((BaseClassOne)source).Property);
+
+			Assert.AreEqual(6, source.VirtualProperty);
+			Assert.AreEqual(6, ((BaseClassOne)source).VirtualProperty);
+
+			Assert.AreEqual(7, source.VirtualProperty2);
+			Assert.AreEqual(7, ((BaseClassOne)source).VirtualProperty2);
+
+			Assert.AreEqual(8, source.AbstractProperty);
+			Assert.AreEqual(8, ((BaseClassOne)source).AbstractProperty);
+
+			Assert.AreEqual("test2", source.VirtualProperty3);
+			Assert.AreEqual("test2", ((BaseClassOne)source).VirtualProperty3);
+
+			var target = source.GetClone();
+
+			Assert.AreEqual(1, target.MyField);
+			Assert.AreEqual(2, ((BaseClassOne)target).MyField);
+
+			Assert.AreEqual(1, target.Property);
+			Assert.AreEqual(5, ((BaseClassOne)target).Property);
+
+			Assert.AreEqual(6, target.VirtualProperty);
+			Assert.AreEqual(6, ((BaseClassOne)target).VirtualProperty);
+
+			Assert.AreEqual(7, target.VirtualProperty2);
+			Assert.AreEqual(7, ((BaseClassOne)target).VirtualProperty2);
+
+			Assert.AreEqual(8, target.AbstractProperty);
+			Assert.AreEqual(8, ((BaseClassOne)target).AbstractProperty);
+
+			Assert.AreEqual("test2", target.VirtualProperty3);
+			Assert.AreEqual("test2", ((BaseClassOne)target).VirtualProperty3);
+		}
 
 		#region Private Members
 		private T GetClone<T>(T source, int dictCount)

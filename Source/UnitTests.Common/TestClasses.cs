@@ -196,4 +196,32 @@ namespace UnitTests.Common
 	{
 		public Base aRef;  // polymorphic reference to a Derived
 	}
+
+    public abstract class BaseClassOne
+    {
+        public int MyField;
+
+        public int Property { get; set; }
+        virtual public int VirtualProperty { get; set; }
+        abstract public int AbstractProperty { get; set; }
+        virtual public int VirtualProperty2 { get; set; }
+
+        virtual public string VirtualProperty3
+        {
+            get { return _virtualProperty; }
+            set { _virtualProperty = string.Empty; }
+        }
+        private string _virtualProperty;
+    }
+
+    public class DerivedClassOne : BaseClassOne
+    {
+        public new int MyField;
+
+        public new int Property { get; set; }
+        public override int AbstractProperty { get; set; }
+        public override int VirtualProperty { get; set; }
+        // use the default implementation for VirtualProperty2
+        public override string VirtualProperty3 { get; set; }
+    }
 }

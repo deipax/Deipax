@@ -79,6 +79,7 @@
     <Compile Include="Cloning\TupleCloneLogicTests.cs" />
     <Compile Include="Cloning\ComplexValueTypeCloneLogicTests.cs" />
     <Compile Include="Cloning\NullableCloneLogicTests.cs" />
+    <Compile Include="Core\FieldPropCountTests.cs" />
     <Compile Include="Core\ObjectActivatorTests.cs" />
     <Compile Include="Cloning\PrimativeCloneLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

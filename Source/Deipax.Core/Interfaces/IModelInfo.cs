@@ -28,5 +28,7 @@ namespace Deipax.Core.Interfaces
 		PropertyInfo PropertyInfo { get; }
 		bool HasParameters { get; }
 		bool HasBackingField { get; }
+		bool IsAbstract { get; }
+		bool IsVirtual { get; }
 	}
 }

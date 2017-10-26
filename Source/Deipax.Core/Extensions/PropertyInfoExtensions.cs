@@ -62,5 +62,29 @@ namespace Deipax.Core.Extensions
 
 			return defaultValue;
 		}
+
+		public static bool IsVitrual(this PropertyInfo source, bool defaultValue)
+		{
+			if (source != null)
+			{
+				return
+					(source.SetMethod != null && source.SetMethod.IsVirtual) ||
+					(source.GetMethod != null && source.GetMethod.IsVirtual);
+			}
+
+			return defaultValue;
+		}
+
+		public static bool IsAbstract(this PropertyInfo source, bool defaultValue)
+		{
+			if (source != null)
+			{
+				return
+					(source.SetMethod != null && source.SetMethod.IsAbstract) ||
+					(source.GetMethod != null && source.GetMethod.IsAbstract);
+			}
+
+			return defaultValue;
+		}
 	}
 }

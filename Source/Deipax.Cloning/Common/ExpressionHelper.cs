@@ -1,5 +1,4 @@
 ﻿using Deipax.Cloning.Extensions;
-using Deipax.Core.Common;
 using Deipax.Core.Extensions;
 using System;
 using System.Collections;
@@ -19,59 +18,60 @@ namespace Deipax.Cloning.Common
         {
             List<Expression> expressions = new List<Expression>();
 
-            bool cloneAll = typeof(T)
+            var type = typeof(T);
+
+            bool cloneAll = type
                 .GetCustomAttributes<CloneAllAttribute>()
                 .Count() > 0;
+     
+            var fields = type.GetAllFields();
+            var properties = type.GetFilteredProperties(fields);
 
-            ModelInfo<T>
-                .Fields
-                .Where(x =>
-                    x.CanRead &&
-                    x.CanWrite &&
-                    !x.IsStatic &&
-                    !x.IsBackingField &&
-                    (x.IsPublic || cloneAll || x.GetCustomAttributes<CloneAttribute>().Count() > 0) &&
-                    x.GetCustomAttributes<NoCloneAttribute>().Count() == 0)
-                .ToList()
-                .ForEach(x =>
-                {
-                    var memberType = x.Type;
-                    var memberInfo = x.FieldInfo;
+            fields.Where(x =>
+                x.CanRead &&
+                x.CanWrite &&
+                !x.IsStatic &&
+                !x.IsBackingField &&
+                (x.IsPublic || cloneAll || x.GetCustomAttributes<CloneAttribute>().Count() > 0) &&
+                x.GetCustomAttributes<NoCloneAttribute>().Count() == 0)
+            .ToList()
+            .ForEach(x =>
+            {
+                var memberType = x.Type;
+                var memberInfo = x.FieldInfo;
 
-                    var cloneExpression = memberType.IsPrimitiveCloneLogic() ?
-                       (Expression)Expression.MakeMemberAccess(source, memberInfo) :
-                       (Expression)GetCloneMethod(memberType, Expression.MakeMemberAccess(source, memberInfo), clonedObjects);
+                var cloneExpression = memberType.IsPrimitiveCloneLogic() ?
+                    (Expression)Expression.MakeMemberAccess(source, memberInfo) :
+                    (Expression)GetCloneMethod(memberType, Expression.MakeMemberAccess(source, memberInfo), clonedObjects);
 
-                    expressions.Add(Expression.Assign(
-                        Expression.MakeMemberAccess(target, memberInfo),
-                        cloneExpression));
-                });
+                expressions.Add(Expression.Assign(
+                    Expression.MakeMemberAccess(target, memberInfo),
+                    cloneExpression));
+            });
 
-            ModelInfo<T>
-                .Properties
-                .Where(x =>
-                    x.CanRead &&
-                    x.CanWrite &&
-                    !x.IsStatic &&
-                    !x.HasParameters &&
-                    (x.IsPublic || cloneAll || x.GetCustomAttributes<CloneAttribute>().Count() > 0) &&
-                    x.GetCustomAttributes<NoCloneAttribute>().Count() == 0)
-                .ToList()
-                .ForEach(x =>
-                {
-                    var memberType = x.Type;
-                    var memberInfo = x.HasBackingField ?
-                        (MemberInfo)x.BackingField.FieldInfo :
-                        (MemberInfo)x.PropertyInfo;
+            properties.Where(x =>
+                x.CanRead &&
+                x.CanWrite &&
+                !x.IsStatic &&
+                !x.HasParameters &&
+                (x.IsPublic || cloneAll || x.GetCustomAttributes<CloneAttribute>().Count() > 0) &&
+                x.GetCustomAttributes<NoCloneAttribute>().Count() == 0)
+            .ToList()
+            .ForEach(x =>
+            {
+                var memberType = x.Type;
+                var memberInfo = x.HasBackingField ?
+                    (MemberInfo)x.BackingField.FieldInfo :
+                    (MemberInfo)x.PropertyInfo;
 
-                    var cloneExpression = memberType.IsPrimitiveCloneLogic() ?
-                       (Expression)Expression.MakeMemberAccess(source, memberInfo) :
-                       (Expression)GetCloneMethod(memberType, Expression.MakeMemberAccess(source, memberInfo), clonedObjects);
+                var cloneExpression = memberType.IsPrimitiveCloneLogic() ?
+                    (Expression)Expression.MakeMemberAccess(source, memberInfo) :
+                    (Expression)GetCloneMethod(memberType, Expression.MakeMemberAccess(source, memberInfo), clonedObjects);
 
-                    expressions.Add(Expression.Assign(
-                        Expression.MakeMemberAccess(target, memberInfo),
-                        cloneExpression));
-                });
+                expressions.Add(Expression.Assign(
+                    Expression.MakeMemberAccess(target, memberInfo),
+                    cloneExpression));
+            });
 
             return expressions.Count > 0 ?
                 Expression.Block(expressions) :

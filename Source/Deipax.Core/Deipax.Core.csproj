@@ -60,7 +60,6 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\ModelAccess.cs" />
-    <Compile Include="Common\ModelInfo.cs" />
     <Compile Include="Common\ObjectActivator.cs" />
     <Compile Include="Interfaces\IGetter.cs" />
     <Compile Include="Interfaces\IModelInfo.cs" />

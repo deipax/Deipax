@@ -43,7 +43,7 @@ namespace Integration.DataAccess
 			}
 			finally
 			{
-				DbConFactory.Override = null;
+			    DbCmdFactory.Override = null;
 			}
 		}
 
