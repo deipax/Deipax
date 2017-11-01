@@ -5,7 +5,9 @@ namespace Deipax.Core.Extensions
 {
 	public static class PropertyInfoExtensions
 	{
-		public static bool IsStatic(this PropertyInfo source, bool defaultValue = false)
+		public static bool IsStatic(
+			this PropertyInfo source,
+			bool defaultValue = false)
 		{
 			if (source != null)
 			{
@@ -17,7 +19,9 @@ namespace Deipax.Core.Extensions
 			return defaultValue;
 		}
 
-		public static bool IsPublic(this PropertyInfo source, bool defaultValue = false)
+		public static bool IsPublic(
+			this PropertyInfo source,
+			bool defaultValue = false)
 		{
 			if (source != null)
 			{
@@ -29,7 +33,9 @@ namespace Deipax.Core.Extensions
 			return defaultValue;
 		}
 
-		public static bool CanRead(this PropertyInfo source, bool defaultValue = false)
+		public static bool CanRead(
+			this PropertyInfo source,
+			bool defaultValue = false)
 		{
 			if (source != null)
 			{
@@ -41,7 +47,9 @@ namespace Deipax.Core.Extensions
 			return defaultValue;
 		}
 
-		public static bool CanWrite(this PropertyInfo source, bool defaultValue = false)
+		public static bool CanWrite(
+			this PropertyInfo source,
+			bool defaultValue = false)
 		{
 			if (source != null)
 			{
@@ -53,7 +61,9 @@ namespace Deipax.Core.Extensions
 			return defaultValue;
 		}
 
-		public static bool HasParameters(this PropertyInfo source, bool defaultValue = false)
+		public static bool HasParameters(
+			this PropertyInfo source,
+			bool defaultValue = false)
 		{
 			if (source != null)
 			{
@@ -63,7 +73,9 @@ namespace Deipax.Core.Extensions
 			return defaultValue;
 		}
 
-		public static bool IsVitrual(this PropertyInfo source, bool defaultValue)
+		public static bool IsVitrual(
+			this PropertyInfo source,
+			bool defaultValue)
 		{
 			if (source != null)
 			{
@@ -75,13 +87,29 @@ namespace Deipax.Core.Extensions
 			return defaultValue;
 		}
 
-		public static bool IsAbstract(this PropertyInfo source, bool defaultValue)
+		public static bool IsAbstract(
+			this PropertyInfo source,
+			bool defaultValue)
 		{
 			if (source != null)
 			{
 				return
 					(source.SetMethod != null && source.SetMethod.IsAbstract) ||
 					(source.GetMethod != null && source.GetMethod.IsAbstract);
+			}
+
+			return defaultValue;
+		}
+
+		public static bool IsNew(
+			this PropertyInfo source,
+			bool defaultValue)
+		{
+			if (source != null)
+			{
+				return
+					(source.SetMethod != null && (source.SetMethod.HasAttribute(MethodAttributes.NewSlot))) ||
+					(source.GetMethod != null && (source.GetMethod.HasAttribute(MethodAttributes.NewSlot)));
 			}
 
 			return defaultValue;

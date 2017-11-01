@@ -88,33 +88,57 @@ namespace Deipax.Core.Extensions
 			return GetAllPropertiesHelper(allFields, type, 0);
 		}
 
-	    public static IReadOnlyList<IPropertyModelInfo> GetFilteredProperties(
-	        this Type type,
-	        IEnumerable<IFieldModelInfo> fields = null)
-	    {
-	        List<IPropertyModelInfo> properties = new List<IPropertyModelInfo>();
-	        var allProperties = type.GetAllProperties(fields);
+		public static IReadOnlyList<IPropertyModelInfo> GetFilteredProperties(
+			this Type type,
+			IEnumerable<IFieldModelInfo> fields = null)
+		{
+			List<IPropertyModelInfo> properties = new List<IPropertyModelInfo>();
+			var allProperties = type.GetAllProperties(fields);
 
-	        // If properties that share a name are marked as abstract
-	        // or virtual, then only one of them is needed in order to
-	        // set/get the value of the property.  Any of them should 
-	        // work correctly, use the first one.
-	        allProperties
-	            .Where(x => x.IsAbstract || x.IsVirtual)
-	            .Select(x => x)
-	            .GroupBy(x => x.Name)
-	            .ToList()
-	            .ForEach(x => properties.Add(x.OrderBy(y => y.Depth).First()));
+			// If properties that share a name are marked as abstract
+			// or virtual, then only one of them is needed in order to
+			// set/get the value of the property.  Any of them should 
+			// work correctly, use the first one.
+			allProperties
+				.Where(x => x.IsAbstract || x.IsVirtual)
+				.Select(x => x)
+				.GroupBy(x => x.Name)
+				.ToList()
+				.ForEach(x =>
+				{
+					// All Abstract properties are "new"
+					// All initial implemention of virtual properties 
+					// are "new".  Foreach "new" property
+					// find the property at the lowest depth.
+					foreach (var item in x.Where(y => y.IsNew))
+					{
+						var itemToAdd = item;
 
-	        // Add all non-virtual/non-abstract properties
-	        properties.AddRange(allProperties.Where(x => !(x.IsAbstract || x.IsVirtual)).Select(x => x));
+						foreach(var p in x.Where(y => y.Depth < item.Depth).OrderByDescending(y => y.Depth))
+						{
+							if (!p.IsNew)
+							{
+								itemToAdd = p;
+							}
+							else
+							{
+								break;
+							}
+						}
 
-	        return properties;
-        }
-	    #endregion
+						properties.Add(itemToAdd);
+					}
+				});
 
-            #region Private Members
-        private static IReadOnlyList<IFieldModelInfo> GetAllFieldsHelper(
+			// Add all non-virtual/non-abstract properties
+			properties.AddRange(allProperties.Where(x => !(x.IsAbstract || x.IsVirtual)).Select(x => x));
+
+			return properties;
+		}
+		#endregion
+
+			#region Private Members
+		private static IReadOnlyList<IFieldModelInfo> GetAllFieldsHelper(
 			Type type,
 			int depth = 0)
 		{
@@ -164,11 +188,11 @@ namespace Deipax.Core.Extensions
 
 			return props;
 		}
-        #endregion
+		#endregion
 
-        #region Helpers
-	    [DebuggerDisplay("{FieldInfo.FieldType.Name} {FieldInfo.Name} {FieldInfo.DeclaringType.Name}")]
-        class FieldModelInfo : IFieldModelInfo
+		#region Helpers
+		[DebuggerDisplay("{FieldInfo.FieldType.Name} {FieldInfo.Name} {FieldInfo.DeclaringType.Name}")]
+		class FieldModelInfo : IFieldModelInfo
 		{
 			public static IFieldModelInfo Create(
 				FieldInfo info,
@@ -203,7 +227,7 @@ namespace Deipax.Core.Extensions
 			public bool IsLiteral { get; private set; }
 		}
 
-        [DebuggerDisplay("{PropertyInfo.PropertyType.Name} {PropertyInfo.Name} {PropertyInfo.DeclaringType.Name}")]
+		[DebuggerDisplay("{PropertyInfo.PropertyType.Name} {PropertyInfo.Name} {PropertyInfo.DeclaringType.Name}")]
 		class PropertyModelInfo : IPropertyModelInfo
 		{
 			public static IPropertyModelInfo Create(
@@ -237,7 +261,8 @@ namespace Deipax.Core.Extensions
 					Depth = depth,
 					IsLiteral = false,
 					IsAbstract = info.IsAbstract(false),
-					IsVirtual = info.IsVitrual(false)
+					IsVirtual = info.IsVitrual(false),
+					IsNew = info.IsNew(false)
 				};
 			}
 
@@ -256,6 +281,7 @@ namespace Deipax.Core.Extensions
 			public bool IsLiteral { get; private set; }
 			public bool IsAbstract { get; private set; }
 			public bool IsVirtual { get; private set; }
+			public bool IsNew { get; private set; }
 		}
 		#endregion
 	}

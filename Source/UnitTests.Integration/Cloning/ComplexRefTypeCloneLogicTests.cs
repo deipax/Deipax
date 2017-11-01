@@ -466,7 +466,7 @@ namespace Integration.Cloning
 		}
 
 		[TestMethod]
-		public void ComplexRefTypeCloneLogicTests_ShadowFieldProps()
+		public void ComplexRefTypeCloneLogicTests_ShadowFieldProps1()
 		{
 			DerivedClassOne source = new DerivedClassOne()
 			{
@@ -527,6 +527,31 @@ namespace Integration.Cloning
 
 			Assert.AreEqual("test2", target.VirtualProperty3);
 			Assert.AreEqual("test2", ((BaseClassOne)target).VirtualProperty3);
+		}
+
+		[TestMethod]
+		public void ComplexRefTypeCloneLogicTests_ShadowFieldProps2()
+		{
+			D source = new D()
+			{
+				Foo = "D"
+			};
+
+			((C)source).Foo = "C";
+			((B) source).Foo = "B";
+			((A)source).Foo = "A";
+
+			Assert.AreEqual("C", source.Foo);
+			Assert.AreEqual("C", ((C) source).Foo);
+			Assert.AreEqual("A", ((B)source).Foo);
+			Assert.AreEqual("A", ((A)source).Foo);
+
+			var target = source.GetClone();
+
+			Assert.AreEqual("C", target.Foo);
+			Assert.AreEqual("C", ((C)target).Foo);
+			Assert.AreEqual("A", ((B)target).Foo);
+			Assert.AreEqual("A", ((A)target).Foo);
 		}
 
 		#region Private Members

@@ -30,5 +30,6 @@ namespace Deipax.Core.Interfaces
 		bool HasBackingField { get; }
 		bool IsAbstract { get; }
 		bool IsVirtual { get; }
+		bool IsNew { get; }
 	}
 }

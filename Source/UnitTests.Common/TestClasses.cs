@@ -224,4 +224,24 @@ namespace UnitTests.Common
         // use the default implementation for VirtualProperty2
         public override string VirtualProperty3 { get; set; }
     }
+
+	public class A
+	{
+		public virtual string Foo { get; set; }
+	}
+
+	public class B : A
+	{
+		public override string Foo { get; set; }
+	}
+
+	public class C : B
+	{
+		public virtual new string Foo { get; set; }
+	}
+
+	public class D : C
+	{
+		public override string Foo { get; set; }
+	}
 }
