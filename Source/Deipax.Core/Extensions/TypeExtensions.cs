@@ -83,7 +83,7 @@ namespace Deipax.Core.Extensions
 		{
 			var allFields = fields != null ?
 				fields :
-				GetAllFields(type);
+				type.GetAllFields();
 
 			return GetAllPropertiesHelper(allFields, type, 0);
 		}
@@ -97,8 +97,7 @@ namespace Deipax.Core.Extensions
 
 			// If properties that share a name are marked as abstract
 			// or virtual, then only one of them is needed in order to
-			// set/get the value of the property.  Any of them should 
-			// work correctly, use the first one.
+			// set/get the value of the property.
 			allProperties
 				.Where(x => x.IsAbstract || x.IsVirtual)
 				.Select(x => x)
@@ -114,7 +113,7 @@ namespace Deipax.Core.Extensions
 					{
 						var itemToAdd = item;
 
-						foreach(var p in x.Where(y => y.Depth < item.Depth).OrderByDescending(y => y.Depth))
+						foreach (var p in x.Where(y => y.Depth < item.Depth).OrderByDescending(y => y.Depth))
 						{
 							if (!p.IsNew)
 							{
@@ -137,7 +136,7 @@ namespace Deipax.Core.Extensions
 		}
 		#endregion
 
-			#region Private Members
+		#region Private Members
 		private static IReadOnlyList<IFieldModelInfo> GetAllFieldsHelper(
 			Type type,
 			int depth = 0)
