@@ -83,7 +83,25 @@ namespace Integration.Core
                 .Keys
                 .ToList();
 
-            Assert.IsTrue(names.Count > 0);
+            Assert.IsTrue(names.Count == 31);
+
+            foreach (var name in names)
+            {
+                var getter = ModelAccess<GrandChildClass>.GetGetter(name);
+                Assert.IsTrue(getter != null);
+            }
+        }
+
+        [TestMethod]
+        public void ModelAccessTests_GetGettersByName_CaseInsensitive()
+        {
+            var names = ModelAccess<GrandChildClass>
+                .Getters
+                .Keys
+                .Select(x => x.ToUpperInvariant())
+                .ToList();
+
+            Assert.IsTrue(names.Count == 31);
 
             foreach (var name in names)
             {
@@ -100,7 +118,25 @@ namespace Integration.Core
                 .Keys
                 .ToList();
 
-            Assert.IsTrue(names.Count > 0);
+            Assert.IsTrue(names.Count == 22);
+
+            foreach (var name in names)
+            {
+                var setter = ModelAccess<GrandChildClass>.GetSetter(name);
+                Assert.IsTrue(setter != null);
+            }
+        }
+
+        [TestMethod]
+        public void ModelAccessTests_GetSettersByName_CaseInsensitive()
+        {
+            var names = ModelAccess<GrandChildClass>
+                .Setters
+                .Keys
+                .Select(x => x.ToUpperInvariant())
+                .ToList();
+
+            Assert.IsTrue(names.Count == 22);
 
             foreach (var name in names)
             {

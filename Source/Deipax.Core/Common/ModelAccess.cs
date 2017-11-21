@@ -29,14 +29,14 @@ namespace Deipax.Core.Common
             AllSetters = GetAllSetters(t, props, fields);
 
             Getters = AllGetters
-                .GroupBy(x => x.Name)
+                .GroupBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
                 .Select(x => x.OrderBy(y => y.ModelInfo.Depth).First())
-                .ToDictionary(x => x.Name, x => x);
+                .ToDictionary(x => x.Name, x => x, StringComparer.OrdinalIgnoreCase);
 
             Setters = AllSetters
-                .GroupBy(x => x.Name)
+                .GroupBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
                 .Select(x => x.OrderBy(y => y.ModelInfo.Depth).First())
-                .ToDictionary(x => x.Name, x => x);
+                .ToDictionary(x => x.Name, x => x, StringComparer.OrdinalIgnoreCase);
         }
 
         private ModelAccess()

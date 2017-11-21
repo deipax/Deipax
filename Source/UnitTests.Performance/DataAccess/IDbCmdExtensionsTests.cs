@@ -68,38 +68,49 @@ namespace UnitTests.Performance.DataAccess
         #endregion
 
         [TestMethod]
-        public void IDbCmdExtensionsTests_AsList()
+        public void IDbCmdExtensionsTests_AsList_AllFields()
         {
             DbHelper.GetNorthwind().AsBatch(dbBatch =>
             {
-                InitAsList(dbBatch);
-                var result = TimingHelper.GetPerformance(100, () => RunAsList(dbBatch));
+                InitAsList<QueryHelper1>(dbBatch);
+                var result = TimingHelper.GetPerformance(500, () => RunAsList<QueryHelper1>(dbBatch));
+                Console.WriteLine(result.GetReport());
+            });
+        }
+
+        [TestMethod]
+        public void IDbCmdExtensionsTests_AsList_SingleFields()
+        {
+            DbHelper.GetNorthwind().AsBatch(dbBatch =>
+            {
+                InitAsList<QueryHelper2>(dbBatch);
+                var result = TimingHelper.GetPerformance(500, () => RunAsList<QueryHelper2>(dbBatch));
                 Console.WriteLine(result.GetReport());
             });
         }
 
         #region Private Members
-        public static void InitAsList(IDbBatch dbBatch)
+        public static void InitAsList<T>(IDbBatch dbBatch)
         {
             var tmp = dbBatch
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<QueryHelper>();
+                .AsList<T>();
         }
 
-        public static void RunAsList(IDbBatch dbBatch)
+        public static void RunAsList<T>(IDbBatch dbBatch)
         {
             var tmp = dbBatch
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<QueryHelper>();
+                .AsList<T>();
         }
         #endregion
 
         #region Helpers
-        class QueryHelper
+        class QueryHelper1
         {
             public string OrderDetailId { get; set; }
             public double Discount { get; set; }
@@ -130,23 +141,28 @@ namespace UnitTests.Performance.DataAccess
             public string CustomerPhone { get; set; }
             public string CustomerPostalCode { get; set; }
             public string CustomerRegion { get; set; }
-            public string EmployeeAddress { get; set; }     
-            public string EmployeeBirthDate { get; set; }      
-            public string EmployeeCity { get; set; }    
-            public string EmployeeCountry { get; set; }    
-            public string EmployeeExtension { get; set; }     
-            public string EmployeeFirstName { get; set; }      
-            public string EmployeeHireDate { get; set; }     
-            public string EmployeeHomePhone { get; set; }    
-            public string EmployeeLastName { get; set; }    
-            public string EmployeeNotes { get; set; }     
-            public byte[] EmployeePhoto { get; set; }      
-            public string EmployeePhotoPath { get; set; }  
-            public string EmployeePostalCode { get; set; }     
-            public string EmployeeRegion { get; set; }     
-            public int EmployeeReportsTo { get; set; }     
-            public string EmployeeTitle { get; set; }  
+            public string EmployeeAddress { get; set; }
+            public string EmployeeBirthDate { get; set; }
+            public string EmployeeCity { get; set; }
+            public string EmployeeCountry { get; set; }
+            public string EmployeeExtension { get; set; }
+            public string EmployeeFirstName { get; set; }
+            public string EmployeeHireDate { get; set; }
+            public string EmployeeHomePhone { get; set; }
+            public string EmployeeLastName { get; set; }
+            public string EmployeeNotes { get; set; }
+            public byte[] EmployeePhoto { get; set; }
+            public string EmployeePhotoPath { get; set; }
+            public string EmployeePostalCode { get; set; }
+            public string EmployeeRegion { get; set; }
+            public int EmployeeReportsTo { get; set; }
+            public string EmployeeTitle { get; set; }
             public string EmployeeTitleOfCourtesy { get; set; }
+        }
+
+        class QueryHelper2
+        {
+            public string OrderDetailId { get; set; }
         }
         #endregion
     }

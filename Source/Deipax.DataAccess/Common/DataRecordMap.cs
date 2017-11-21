@@ -1,89 +1,80 @@
-﻿using System;
+﻿using Deipax.Core.Common;
+using Deipax.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using Deipax.Core.Common;
-using Deipax.Core.Interfaces;
 
 namespace Deipax.DataAccess.Common
 {
-	public class DataRecordMap<T>
-	{
-		static DataRecordMap()
-		{
-			_init = ObjectActivator<T>.Create;
-		}
+    public class DataRecordMap<T>
+    {
+        private DataRecordMap(List<Action<object, IDataRecord>> setters)
+        {
+            _setters = setters;
+        }
 
-		private DataRecordMap()
-		{
-		}
+        private DataRecordMap()
+        {
+        }
 
-		#region Field Members
-		private static Func<T> _init;
-		#endregion
+        #region Field Members
+        private static Func<T> _init = ObjectActivator<T>.Create;
+        private List<Action<object, IDataRecord>> _setters;
+        #endregion
 
-		private List<Action<object, IDataRecord>> Setters;
+        #region Public Members
+        public static DataRecordMap<T> Create(IDataReader r)
+        {
+            List<Action<object, IDataRecord>> tmp = new List<Action<object, IDataRecord>>();
+            var setters = ModelAccess<T>.Setters;
+            int fieldCount = r.FieldCount;
 
-		#region Public Members
-		public static DataRecordMap<T> Create(IDataReader r)
-		{
-			DataRecordMap<T> map = new DataRecordMap<T>()
-			{
-				Setters = new List<Action<object, IDataRecord>>()
-			};
+            for (var i = 0; i < fieldCount; i++)
+            {
+                ISetter setter;
+                if (setters.TryGetValue(r.GetName(i), out setter) && setter != null)
+                {
+                    tmp.Add(SetHelper.Create(i, setter).Set);
+                }
+            }
 
-			var setters = ModelAccess<T>.Setters;
+            return new DataRecordMap<T>(tmp);
+        }
 
-			for (var i = 0; i < r.FieldCount; i++)
-			{
-				var columnName = setters
-					.Keys
-					.Where(x => string.Equals(x, r.GetName(i), StringComparison.OrdinalIgnoreCase))
-					.FirstOrDefault();
+        public T From(IDataRecord r)
+        {
+            object retVal = _init();
+            _setters.ForEach(x => x(retVal, r));
+            return (T)retVal;
+        }
+        #endregion
+    }
 
-				if (!string.IsNullOrEmpty(columnName))
-				{
-					map.Setters.Add(SetHelper.Create(i, setters[columnName]).Set);
-				}
-			}
+    class SetHelper
+    {
+        private SetHelper()
+        {
+        }
 
-			return map;
-		}
+        #region Field Members
+        private int _index;
+        private Action<object, object> _set;
+        #endregion
 
-		public T From(IDataRecord r)
-		{
-			object retVal = _init();
-			this.Setters.ForEach(x => x(retVal, r));
-			return (T)retVal;
-		}
-		#endregion
-	}
+        #region Public Members
+        public static SetHelper Create(int index, ISetter setter)
+        {
+            return new SetHelper()
+            {
+                _index = index,
+                _set = setter.Set
+            };
+        }
 
-	class SetHelper
-	{
-		private SetHelper()
-		{
-		}
-
-		#region Field Members
-		private int _index;
-		private Action<object, object> _set;
-		#endregion
-
-		#region Public Members
-		public static SetHelper Create(int index, ISetter setter)
-		{
-			return new SetHelper()
-			{
-				_index = index,
-				_set = setter.Set
-			};
-		}
-
-		public void Set(object item, IDataRecord r)
-		{
-			_set(item, r.GetValue(_index));
-		}
-		#endregion
-	}
+        public void Set(object item, IDataRecord r)
+        {
+            _set(item, r.GetValue(_index));
+        }
+        #endregion
+    }
 }
