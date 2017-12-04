@@ -45,10 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DataRecordMap.cs" />
-    <Compile Include="Common\DbBatchFactory.cs" />
-    <Compile Include="Common\DbCmdFactory.cs" />
-    <Compile Include="Common\DbConFactory.cs" />
-    <Compile Include="Common\DbFactory.cs" />
+    <Compile Include="Common\DbConfig.cs" />
     <Compile Include="Common\DbManager.cs" />
     <Compile Include="Common\DbTimings.cs" />
     <Compile Include="Common\DynamicDictionary.cs" />

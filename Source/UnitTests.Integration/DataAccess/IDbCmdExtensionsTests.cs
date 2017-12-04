@@ -1,5 +1,4 @@
-﻿using Deipax.DataAccess.Common;
-using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,8 @@ using UnitTests.Integration.DataAccess;
 
 namespace Integration.DataAccess
 {
-	[TestClass]
-	public class IDbCmdExtensionsTests
+    [TestClass]
+	public class IDbCmdExtensionsTests : BaseTest
 	{
 		[TestMethod]
 		public void SetCommandType()

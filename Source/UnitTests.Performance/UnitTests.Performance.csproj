@@ -88,6 +88,7 @@
     <Compile Include="Core\FieldPropCountTests.cs" />
     <Compile Include="Core\ObjectActivatorTests.cs" />
     <Compile Include="Cloning\PrimativeCloneLogicTests.cs" />
+    <Compile Include="DataAccess\BaseTest.cs" />
     <Compile Include="DataAccess\IDbCmdExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

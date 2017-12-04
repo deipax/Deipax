@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Deipax.DataAccess.Interfaces
 {
-	public static class IDbExtensions
+    public static class IDbExtensions
 	{
 		#region Public Members
 		public static IDb CreateDb(
@@ -14,7 +14,7 @@ namespace Deipax.DataAccess.Interfaces
 			string provider = null,
 			Func<IDb, IDbConnection> factory = null)
 		{
-			return DbFactory.Create(
+			return DbConfig.CreateDb(
 				name ?? source.Name,
 				cs ?? source.ConnectionString,
 				provider ?? source.ProviderName,
@@ -24,10 +24,22 @@ namespace Deipax.DataAccess.Interfaces
 		public static IDbCon CreateDbCon(
 			this IDb source)
 		{
-			return DbConFactory.Create(source);
+			return DbConfig.CreateDbCon(source);
 		}
 
-		public static void AsTransaction(
+        public static IDbBatch CreateDbBatch(
+            this IDb source)
+        {
+            return DbConfig.CreateDbBatch(source);
+        }
+
+        public static IDbCmd CreateDbCmd(
+            this IDb source)
+        {
+            return DbConfig.CreateDbCmd(source);
+        }
+
+        public static void AsTransaction(
 			this IDb source,
 			Action<IDbBatch> func)
 		{

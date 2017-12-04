@@ -1,15 +1,13 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using Deipax.DataAccess.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnitTests.Common;
-using Deipax.DataAccess.Interfaces;
+using System;
 using System.Data;
+using UnitTests.Common;
 
-namespace UnitTests.Performance.DataAccess
+namespace Performance.DataAccess
 {
     [TestClass]
-    public class IDbCmdExtensionsTests
+    public class IDbCmdExtensionsTests : BaseTest
     {
         #region Field Members
         private static readonly string _sql = @"

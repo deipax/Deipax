@@ -1,18 +1,16 @@
 ﻿using Deipax.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Threading;
 
 namespace Deipax.DataAccess.Common
 {
-	public static class DbManager
+    public static class DbManager
 	{
 		static DbManager()
 		{
-			_connections = Initialize();
-		}
+            SetInitializer(DbConfig.DbInitializer);
+        }
 
 		#region Field Members
 		private static Lazy<IReadOnlyDictionary<string, IDb>> _connections;
@@ -21,7 +19,7 @@ namespace Deipax.DataAccess.Common
 		#region Public Members
 		public static void Clear()
 		{
-			_connections = Initialize();
+            SetInitializer(DbConfig.DbInitializer);
 		}
 
 		public static IDb Get(string name)
@@ -41,19 +39,10 @@ namespace Deipax.DataAccess.Common
 		#endregion
 
 		#region Private Members
-		private static Lazy<IReadOnlyDictionary<string, IDb>> Initialize()
-		{
-			return new Lazy<IReadOnlyDictionary<string, IDb>>(() =>
-			{
-				return ConfigurationManager
-					.ConnectionStrings
-					.Cast<ConnectionStringSettings>()
-					.Select(x => DbFactory.Create(x.Name, x.ConnectionString, x.ProviderName))
-					.Where(x => x != null)
-					.ToDictionary(x => x.Name, x => x);
-			},
-			LazyThreadSafetyMode.ExecutionAndPublication);
-		}
+        public static void SetInitializer(Func<IReadOnlyDictionary<string, IDb>> init)
+        {
+            _connections = new Lazy<IReadOnlyDictionary<string, IDb>>(init, LazyThreadSafetyMode.ExecutionAndPublication);
+        }
 		#endregion
 	}
 }

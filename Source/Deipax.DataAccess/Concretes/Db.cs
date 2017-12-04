@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Deipax.DataAccess.Interfaces;
+using System;
 using System.Data;
-using System.Data.Common;
-using Deipax.DataAccess.Interfaces;
 
 namespace Deipax.DataAccess.Concretes
 {
-	internal class Db : IDb
+    internal class Db : IDb
 	{
 		public Db(
 			string name,
@@ -22,10 +21,6 @@ namespace Deipax.DataAccess.Concretes
 		private Db()
 		{
 		}
-
-		#region Public Members
-
-		#endregion
 
 		#region IDb Members
 		public string ConnectionString { get; private set; }

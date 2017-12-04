@@ -1,17 +1,18 @@
-﻿using Deipax.DataAccess.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 
 namespace Deipax.DataAccess.Interfaces
 {
-	public static class IDbBatchExtensions
+    public static class IDbBatchExtensions
 	{
 		public static IDbCmd CreateDbCmd(
 			this IDbBatch dbBatch)
 		{
 			dbBatch.Connection.OpenSafe(dbBatch.Db);
 
-			return DbCmdFactory.Create(dbBatch.Db)
+			return dbBatch
+                .Db
+                .CreateDbCmd()
 				.SetConnection(dbBatch.Connection)
 				.SetTransaction(dbBatch.Transaction);
 		}
