@@ -4,20 +4,32 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Deipax.Core.Extensions
 {
-	public static class TypeExtensions
+    public static class TypeExtensions
 	{
 		#region Field Members
 		private static HashSet<Type> _immutableTypes = new HashSet<Type>()
 		{
 			typeof(string), typeof(DateTime), typeof(TimeSpan)
 		};
-		#endregion
+        #endregion
 
-		#region Public Members
-		public static bool IsNullable(this Type source)
+        #region Public Members
+	    public static bool IsAnonymous(this Type type)
+	    {
+	        return
+	            Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false) &&
+	            type.IsGenericType &&
+	            type.Name.Contains("AnonymousType") &&
+	            (type.Name.StartsWith("<>", StringComparison.OrdinalIgnoreCase) ||
+	             type.Name.StartsWith("VB$", StringComparison.OrdinalIgnoreCase)) &&
+	            (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+	    }
+
+        public static bool IsNullable(this Type source)
 		{
 			return source.IsGenericType() && source.GetGenericTypeDefinition() == typeof(Nullable<>);
 		}
