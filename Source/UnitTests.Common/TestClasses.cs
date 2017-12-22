@@ -1,247 +1,100 @@
-﻿using System.Collections.Generic;
-using CloneExtensions;
-using Deipax.Cloning.Common;
-
-namespace UnitTests.Common
+﻿namespace UnitTests.Common
 {
-	public abstract class ParentAbstractClass : MyInterface
-	{
-		public string PublicFieldCommonName;
-		private string PrivateFieldCommonName;
-
-		private string PrivatePropCommonName { get; set; }
-		public string PublicPropCommonName { get; set; }
-
-		public string Parent_PublicField;
-		private string Parent_PrivateField;
-		public readonly string Parent_ReadOnlyField;
-		public static string Parent_StaticField;
-		public const string Parent_ConstField = "";
-
-		public static string Parent_Public_Static_GetSet_AutoProp { get; set; }
-		private static string Parent_Private_Static_GetSet_AutoProp { get; set; }
-
-		public string Parent_Public_GetSet_AutoProp { get; set; }
-		public string Parent_Public_GetPSet_AutoProp { get; private set; }
-		public string Parent_Public_PGetSet_AutoProp { private get; set; }
-		public string Parent_Public_Get_AutoProp { get; }
-
-		private string Parent_Private_GetSet_AutoProp { get; set; }
-		private string Parent_Private_Get_AutoProp { get; }
-	}
-
-	public abstract class ChildAbstractClass : ParentAbstractClass
-	{
-		public new string PublicFieldCommonName;
-		private string PrivateFieldCommonName;
-
-		private string PrivatePropCommonName { get; set; }
-		public new string PublicPropCommonName { get; set; }
-
-		public string Child_PublicField;
-		private string Child_PrivateField;
-		public readonly string Child_ReadOnlyField;
-		public static string Child_StaticField;
-		public const string Child_ConstField = "";
-
-		public static string Child_Public_Static_GetSet_AutoProp { get; set; }
-		private static string Child_Private_Static_GetSet_AutoProp { get; set; }
-
-		public string Child_Public_GetSet_AutoProp { get; set; }
-		public string Child_Public_GetPSet_AutoProp { get; private set; }
-		public string Child_Public_PGetSet_AutoProp { private get; set; }
-		public string Child_Public_Get_AutoProp { get; }
-
-		private string Child_Private_GetSet_AutoProp { get; set; }
-		private string Child_Private_Get_AutoProp { get; }
-	}
-
-	public class GrandChildClass : ChildAbstractClass
-	{
-		public new string PublicFieldCommonName;
-		private string PrivateFieldCommonName;
-
-		private string PrivatePropCommonName { get; set; }
-		public new string PublicPropCommonName { get; set; }
-
-		public string GrandChild_PublicField;
-		private string GrandChild_PrivateField;
-		public readonly string GrandChild_ReadOnlyField;
-		public static string GrandChild_StaticField;
-		public const string GrandChild_ConstField = "";
-
-		public static string GrandChild_Public_Static_GetSet_AutoProp { get; set; }
-		private static string GrandChild_Private_Static_GetSet_AutoProp { get; set; }
-
-		public string GrandChild_Public_GetSet_AutoProp { get; set; }
-		public string GrandChild_Public_GetPSet_AutoProp { get; private set; }
-		public string GrandChild_Public_PGetSet_AutoProp { private get; set; }
-		public string GrandChild_Public_Get_AutoProp { get; }
-
-		private string GrandChild_Private_GetSet_AutoProp { get; set; }
-		private string GrandChild_Private_Get_AutoProp { get; }
-	}
-
-	public interface MyInterface
-	{
-		string Parent_Public_GetSet_AutoProp { get; set; }
-		string Parent_Public_Get_AutoProp { get; }
-	}
-
-	public struct MyStruct
-	{
-		public int PropTwo { get; set; }
-	}
-
-	public class MyStaticClass
-	{
-		public static string MyStaticProperty { get; set; }
-		public static string MyStaticField;
-	}
-
-	public interface MyTmpInterface
-	{
-		int PropOne { get; set; }
-	}
-
-	public class Helper1 : MyTmpInterface
-	{
-		public int PropOne { get; set; }
-		public int PropTwo { get; set; }
-		public int PropThree { get; set; }
-		public int PropFour { get; set; }
-		public int PropFive { get; set; }
-		public int PropSix { get; set; }
-		public int PropSeven { get; set; }
-		public int PropEight { get; set; }
-		public int PropNine { get; set; }
-		public int PropTen { get; set; }
-	}
-
-	public class Helper1_1 : MyTmpInterface
-	{
-		public int PropOne { get; set; }
-	}
-
-	public class Helper2
-	{
-		public Helper1 Helper { get; set; }
-	}
-
-	public struct HelperStruct1
-	{
-		public int PropOne { get; set; }
-		public int PropTwo { get; set; }
-		public int PropThree { get; set; }
-		public int PropFour { get; set; }
-		public int PropFive { get; set; }
-		public int PropSix { get; set; }
-		public int PropSeven { get; set; }
-		public int PropEight { get; set; }
-		public int PropNine { get; set; }
-		public int PropTen { get; set; }
-	}
-
-	public struct HelperStruct2
-	{
-		public HelperStruct1 Helper { get; set; }
-	}
-
-	public struct HelperStruct3 : MyTmpInterface
-	{
-		public int PropOne { get; set; }
-	}
-
-	public class Helper3<T> : List<T>
-	{
-		public int PropOne { get; set; }
-	}
-
-	public class Helper4
-	{
-		public Helper4 Prop { get; set; }
-	}
-
-	public class Helper5
-	{
-		public Helper5(int prop)
-		{
-			this.Prop = prop;
-		}
-
-		public int Prop { get; private set; }
-	}
-
-	public struct HelperStruct5
-	{
-		public HelperStruct5(int prop)
-		{
-			this.Prop = prop;
-		}
-
-		public int Prop { get; private set; }
-	}
-
-	public class Base
-	{
-		public int iBase;
-	}
-
-	public class Derived : Base
-	{
-		public int iDerived;
-	}
-
-	public class Message
-	{
-		public Base aRef;  // polymorphic reference to a Derived
-	}
-
-    public abstract class BaseClassOne
+    public struct SimpleStruct
     {
-        public int MyField;
-
-        public int Property { get; set; }
-        virtual public int VirtualProperty { get; set; }
-        abstract public int AbstractProperty { get; set; }
-        virtual public int VirtualProperty2 { get; set; }
-
-        virtual public string VirtualProperty3
+        public static SimpleStruct Generate()
         {
-            get { return _virtualProperty; }
-            set { _virtualProperty = string.Empty; }
+            return new SimpleStruct()
+            {
+                Int = RandGen.GenerateInt(),
+                Long = RandGen.GenerateInt(),
+                UInt = (uint)RandGen.GenerateInt(min: 0)
+            };
         }
-        private string _virtualProperty;
+
+        public int Int { get; set; }
+        public uint UInt { get; set; }
+        public long Long { get; set; }
     }
 
-    public class DerivedClassOne : BaseClassOne
+    public abstract class SimpleClassParent
     {
-        public new int MyField;
-
-        public new int Property { get; set; }
-        public override int AbstractProperty { get; set; }
-        public override int VirtualProperty { get; set; }
-        // use the default implementation for VirtualProperty2
-        public override string VirtualProperty3 { get; set; }
+        public int BaseInt { get; set; }
     }
 
-	public class A
-	{
-		public virtual string Foo { get; set; }
-	}
+    public class SimpleClass : SimpleClassParent
+    {
+        public static SimpleClass Generate()
+        {
+            return new SimpleClass()
+            {
+                BaseInt = RandGen.GenerateInt(),
+                Double = RandGen.GenerateInt(),
+                Float = RandGen.GenerateInt(),
+                Int = RandGen.GenerateInt(),
+                Long = RandGen.GenerateInt(),
+                String = RandGen.GenerateString(10),
+                UInt = (uint)RandGen.GenerateInt(min: 0),
+                ULong = (ulong)RandGen.GenerateInt(min: 0)
+            };
+        }
 
-	public class B : A
-	{
-		public override string Foo { get; set; }
-	}
+        public int Int { get; set; }
+        public uint UInt { get; set; }
+        public long Long { get; set; }
+        public ulong ULong { get; set; }
+        public double Double { get; set; }
+        public float Float { get; set; }
+        public string String { get; set; }
+    }
 
-	public class C : B
-	{
-		public virtual new string Foo { get; set; }
-	}
+    public class ComplexClass
+    {
+        public static ComplexClass Generate()
+        {
+            ComplexClass tmp = new ComplexClass()
+            {
+                Int = RandGen.GenerateInt()
+            };
 
-	public class D : C
-	{
-		public override string Foo { get; set; }
-	}
+            tmp.One = tmp;
+
+            return tmp;
+        }
+
+        public int Int { get; set; }
+        public ComplexClass One { get; set; }
+    }
+
+    public struct ComplexStruct
+    {
+        public static ComplexStruct Generate()
+        {
+            return new ComplexStruct()
+            {
+                Int = RandGen.GenerateInt(),
+                One = ComplexClass.Generate()
+            };
+        }
+
+        public int Int { get; set; }
+        public ComplexClass One { get; set; }
+    }
+
+    public class DoubleSimpleClass
+    {
+        public static DoubleSimpleClass Generate()
+        {
+            var tmp = SimpleClass.Generate();
+
+            return new DoubleSimpleClass()
+            {
+                One = tmp,
+                Two = tmp
+            };
+        }
+
+        public SimpleClass One { get; set; }
+        public SimpleClass Two { get; set; }
+    }
 }

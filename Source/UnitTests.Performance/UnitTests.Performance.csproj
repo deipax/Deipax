@@ -73,21 +73,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Cloning\ArrayCloneLogicPrimitiveTests.cs" />
-    <Compile Include="Cloning\ArrayCloneLogicTests.cs" />
-    <Compile Include="Cloning\BaseTest.cs" />
-    <Compile Include="Cloning\CloneExpressionCacheTests.cs" />
-    <Compile Include="Cloning\ComplexRefTypeCloneLogicTests.cs" />
-    <Compile Include="Cloning\AbstractCloneLogicTests.cs" />
     <Compile Include="Core\DynamicTests.cs" />
-    <Compile Include="Cloning\KeyValueCloneLogicTests.cs" />
-    <Compile Include="Cloning\PrimitiveListCloneLogicTests.cs" />
-    <Compile Include="Cloning\TupleCloneLogicTests.cs" />
-    <Compile Include="Cloning\ComplexValueTypeCloneLogicTests.cs" />
-    <Compile Include="Cloning\NullableCloneLogicTests.cs" />
     <Compile Include="Core\FieldPropCountTests.cs" />
     <Compile Include="Core\ObjectActivatorTests.cs" />
-    <Compile Include="Cloning\PrimativeCloneLogicTests.cs" />
     <Compile Include="DataAccess\BaseTest.cs" />
     <Compile Include="DataAccess\IDbCmdExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

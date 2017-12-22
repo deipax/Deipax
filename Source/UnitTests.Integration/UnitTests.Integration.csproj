@@ -73,27 +73,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Cloning\ArrayCloneLogicTests.cs" />
-    <Compile Include="Cloning\ArrayCloneLogicPrimitiveTests.cs" />
-    <Compile Include="Cloning\ComplexRefTypeCloneLogicTests.cs" />
-    <Compile Include="Cloning\CloneExtensionsTests.cs" />
     <Compile Include="Concretes\TestTransaction.cs" />
     <Compile Include="Core\ConvertMapTests.cs" />
     <Compile Include="Core\ConvertToTests.cs" />
     <Compile Include="DataAccess\BaseTest.cs" />
     <Compile Include="DataAccess\Category.cs" />
-    <Compile Include="Cloning\AbstractCloneLogicTests.cs" />
-    <Compile Include="Cloning\CloneConfigTests.cs" />
-    <Compile Include="Cloning\ExceptionCloneLogicTests.cs" />
-    <Compile Include="Cloning\KeyValueCloneLogicTests.cs" />
-    <Compile Include="Cloning\PrimitiveListCloneLogicTests.cs" />
-    <Compile Include="Cloning\TupleCloneLogicTests.cs" />
-    <Compile Include="Cloning\ComplexValueTypeCloneLogicTests.cs" />
     <Compile Include="Core\ModelAccessTests.cs" />
-    <Compile Include="Cloning\NullableCloneLogicTests.cs" />
     <Compile Include="Core\ObjectActivatorTests.cs" />
-    <Compile Include="Cloning\PrimativeCloneLogicTests.cs" />
-    <Compile Include="Cloning\NoCloneAttributeTests.cs" />
     <Compile Include="DataAccess\DbConfigTests.cs" />
     <Compile Include="DataAccess\DbManagerTests.cs" />
     <Compile Include="DataAccess\IDbBatchExtensionsTests.cs" />

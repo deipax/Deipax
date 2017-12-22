@@ -1,21 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Common", "Source\UnitTests.Common\UnitTests.Common.csproj", "{B9D6FF58-7BA4-4926-85BB-FE38F494186A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Performance", "Source\UnitTests.Performance\UnitTests.Performance.csproj", "{E82426B6-AF69-41D3-869A-0F0DFDD02FB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deipax.DataAccess", "Source\Deipax.DataAccess\Deipax.DataAccess.csproj", "{44D3DE58-8220-49CC-BE41-EA4277CBBC0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deipax.DataAccess", "Source\Deipax.DataAccess\Deipax.DataAccess.csproj", "{44D3DE58-8220-49CC-BE41-EA4277CBBC0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{C2C4BBD3-FD5D-46AA-B825-3D9CF44881F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deipax.Core", "Source\Deipax.Core\Deipax.Core.csproj", "{A3089AB5-9BDD-4429-96C4-E8DF1C2EC207}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deipax.Core", "Source\Deipax.Core\Deipax.Core.csproj", "{A3089AB5-9BDD-4429-96C4-E8DF1C2EC207}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Integration", "Source\UnitTests.Integration\UnitTests.Integration.csproj", "{167171B7-3AA6-4EC9-B045-4317DC1974E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deipax.Cloning", "Source\Deipax.Cloning\Deipax.Cloning.csproj", "{8830A56B-512B-4022-A39E-D84B1AFBAAC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deipax.Cloning", "Source\Deipax.Cloning\Deipax.Cloning.csproj", "{8830A56B-512B-4022-A39E-D84B1AFBAAC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Cloning", "Source\UnitTests.Cloning\UnitTests.Cloning.csproj", "{1F74ED99-3A78-4A63-82FB-0E96F75B89D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmarks", "Benchmarks", "{45463119-6498-4C23-9303-B41691809D7B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.Cloning", "Source\Benchmarks.Cloning\Benchmarks.Cloning.csproj", "{984C8B1F-B8F8-41D5-BF31-BFDE11476FCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,14 @@ Global
 		{8830A56B-512B-4022-A39E-D84B1AFBAAC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8830A56B-512B-4022-A39E-D84B1AFBAAC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8830A56B-512B-4022-A39E-D84B1AFBAAC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F74ED99-3A78-4A63-82FB-0E96F75B89D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F74ED99-3A78-4A63-82FB-0E96F75B89D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F74ED99-3A78-4A63-82FB-0E96F75B89D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F74ED99-3A78-4A63-82FB-0E96F75B89D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{984C8B1F-B8F8-41D5-BF31-BFDE11476FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{984C8B1F-B8F8-41D5-BF31-BFDE11476FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{984C8B1F-B8F8-41D5-BF31-BFDE11476FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{984C8B1F-B8F8-41D5-BF31-BFDE11476FCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +69,8 @@ Global
 		{B9D6FF58-7BA4-4926-85BB-FE38F494186A} = {C2C4BBD3-FD5D-46AA-B825-3D9CF44881F9}
 		{E82426B6-AF69-41D3-869A-0F0DFDD02FB7} = {C2C4BBD3-FD5D-46AA-B825-3D9CF44881F9}
 		{167171B7-3AA6-4EC9-B045-4317DC1974E9} = {C2C4BBD3-FD5D-46AA-B825-3D9CF44881F9}
+		{1F74ED99-3A78-4A63-82FB-0E96F75B89D6} = {C2C4BBD3-FD5D-46AA-B825-3D9CF44881F9}
+		{984C8B1F-B8F8-41D5-BF31-BFDE11476FCD} = {45463119-6498-4C23-9303-B41691809D7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44824324-8680-4E41-B99B-CC0AE59ACED7}
