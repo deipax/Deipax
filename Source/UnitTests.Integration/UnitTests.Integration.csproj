@@ -74,12 +74,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Concretes\TestTransaction.cs" />
-    <Compile Include="Core\ConvertMapTests.cs" />
-    <Compile Include="Core\ConvertToTests.cs" />
     <Compile Include="DataAccess\BaseTest.cs" />
     <Compile Include="DataAccess\Category.cs" />
-    <Compile Include="Core\ModelAccessTests.cs" />
-    <Compile Include="Core\ObjectActivatorTests.cs" />
     <Compile Include="DataAccess\DbConfigTests.cs" />
     <Compile Include="DataAccess\DbManagerTests.cs" />
     <Compile Include="DataAccess\IDbBatchExtensionsTests.cs" />
@@ -88,7 +84,6 @@
     <Compile Include="DataAccess\IDbConnectionExtensionsTests.cs" />
     <Compile Include="DataAccess\IDbExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\FieldPropCountTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Cloning\Deipax.Cloning.csproj">

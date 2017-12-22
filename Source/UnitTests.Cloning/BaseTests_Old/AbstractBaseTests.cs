@@ -28,7 +28,7 @@ namespace UnitTests.Cloning.BaseTests
         [TestMethod]
         public void GrandChildClass_AsInterface()
         {
-            MyInterface source = GrandChildClass.Generate();
+            MyInterface source = GrandChildClassHelper.Generate();
 
             var dest = GetClone(source, 1);
 

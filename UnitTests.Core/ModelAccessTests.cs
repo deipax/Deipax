@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Deipax.Core.Common;
+﻿using Deipax.Core.Common;
 using Deipax.Core.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnitTests.Common;
 
-namespace Integration.Core
+namespace UnitTests.Core
 {
     [TestClass]
     public class ModelAccessTests

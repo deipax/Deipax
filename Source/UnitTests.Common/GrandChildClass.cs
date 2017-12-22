@@ -58,7 +58,7 @@ namespace UnitTests.Common
         private string Child_Private_Get_AutoProp { get; }
     }
 
-    public class GrandChildClass : ChildAbstractClass
+    public class GrandChildClassHelper
     {
         #region Field Members
         private static List<FieldInfo> _fields = typeof(GrandChildClass)
@@ -93,7 +93,10 @@ namespace UnitTests.Common
                 Assert.AreEqual(one, two);
             });
         }
+    }
 
+    public class GrandChildClass : ChildAbstractClass
+    {
         public new string PublicFieldCommonName;
         private string PrivateFieldCommonName;
 

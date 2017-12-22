@@ -53,7 +53,7 @@ namespace Benchmarks.Cloning.BaseClasses_Old
                 _inheritListInt.Add(RandGen.GenerateInt());
             };
 
-            _grandChildClass = GrandChildClass.Generate();
+            _grandChildClass = GrandChildClassHelper.Generate();
 
             _listSimpleClasses = new List<Helper1>();
 

@@ -9,7 +9,7 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         public AbstractBase()
         {
             _readOnlyListString = RandGen.GenerateStringList(1000, 5);
-            _grandChildAsInterface = GrandChildClass.Generate();
+            _grandChildAsInterface = GrandChildClassHelper.Generate();
             _readOnlyListInterface = new List<MyTmpInterface>()
             {
                 new Helper1() { PropOne = RandGen.GenerateInt() },

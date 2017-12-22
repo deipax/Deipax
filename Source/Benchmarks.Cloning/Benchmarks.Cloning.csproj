@@ -13,12 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Deipax.Cloning\Deipax.Cloning.csproj" />
-    <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
+    <Folder Include="BenchmarkDotNet.Artifacts\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BenchmarkDotNet.Artifacts\" />
+    <ProjectReference Include="..\Deipax.Cloning\Deipax.Cloning.csproj" />
+    <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
   </ItemGroup>
 
 </Project>
