@@ -67,9 +67,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CloneFactory2.cs" />
     <Compile Include="DbHelper.cs" />
-    <Compile Include="DeepCloneHelper.cs" />
     <Compile Include="GrandChildClass.cs" />
     <Compile Include="RandGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
