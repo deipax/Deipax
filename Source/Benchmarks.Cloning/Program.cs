@@ -25,38 +25,36 @@ namespace Benchmarks.Cloning
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
+         
+            //BenchmarkRunner.Run<IntDeipax>(config);
+            //BenchmarkRunner.Run<StringDeipax>(config);
+            //BenchmarkRunner.Run<ComplexClassDeipax>(config);
+            //BenchmarkRunner.Run<ComplexStructDeipax>(config);
+            //BenchmarkRunner.Run<SimpleClassDeipax>(config);
+            //BenchmarkRunner.Run<SimpleStructDeipax>(config);
+            //BenchmarkRunner.Run<DoubleSimpleClassDeipax>(config);
+            //BenchmarkRunner.Run<NullableIntDeipax>(config);
+            //BenchmarkRunner.Run<NullableSimpleStructDeipax>(config);
+            //BenchmarkRunner.Run<NullableComplexStructDeipax>(config);
 
-            /*
-            BenchmarkRunner.Run<IntDeipax>(config);
-            BenchmarkRunner.Run<StringDeipax>(config);
-            BenchmarkRunner.Run<ComplexClassDeipax>(config);
-            BenchmarkRunner.Run<ComplexStructDeipax>(config);
-            BenchmarkRunner.Run<SimpleClassDeipax>(config);
-            BenchmarkRunner.Run<SimpleStructDeipax>(config);
-            BenchmarkRunner.Run<DoubleSimpleClassDeipax>(config);
-            BenchmarkRunner.Run<NullableIntDeipax>(config);
-            BenchmarkRunner.Run<NullableSimpleStructDeipax>(config);
-            BenchmarkRunner.Run<NullableComplexStructDeipax>(config);
+            //BenchmarkRunner.Run<AbstractDeipax>(config);
+            //BenchmarkRunner.Run<ArrayDeipax>(config);
+            //BenchmarkRunner.Run<ComplexRefTypeDeipax>(config);
+            //BenchmarkRunner.Run<ComplexValueTypeDeipax>(config);
+            //BenchmarkRunner.Run<KeyValueDeipax>(config);
+            //BenchmarkRunner.Run<NullableDeipax>(config);
+            //BenchmarkRunner.Run<PrimitiveDeipax>(config);
 
-            BenchmarkRunner.Run<AbstractDeipax>(config);
-            BenchmarkRunner.Run<ArrayDeipax>(config);
-            BenchmarkRunner.Run<ComplexRefTypeDeipax>(config);
-            BenchmarkRunner.Run<ComplexValueTypeDeipax>(config);
-            BenchmarkRunner.Run<KeyValueDeipax>(config);
-            BenchmarkRunner.Run<NullableDeipax>(config);
-            BenchmarkRunner.Run<PrimitiveDeipax>(config);
-            */
 
-            /*
-            BenchmarkRunner.Run<IntDeepCopy>(config);
-            BenchmarkRunner.Run<StringDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexClassDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexStructDeepCopy>(config);
-            BenchmarkRunner.Run<SimpleClassDeepCopy>(config);        
-            BenchmarkRunner.Run<SimpleStructDeepCopy>(config);
-            BenchmarkRunner.Run<DoubleSimpleClassDeepCopy>(config);
-            BenchmarkRunner.Run<NullableIntDeepCopy>(config);
-            BenchmarkRunner.Run<NullableSimpleStructDeepCopy>(config);
+            //BenchmarkRunner.Run<IntDeepCopy>(config);
+            //BenchmarkRunner.Run<StringDeepCopy>(config);
+            //BenchmarkRunner.Run<ComplexClassDeepCopy>(config);
+            //BenchmarkRunner.Run<ComplexStructDeepCopy>(config);
+            //BenchmarkRunner.Run<SimpleClassDeepCopy>(config);        
+            //BenchmarkRunner.Run<SimpleStructDeepCopy>(config);
+            //BenchmarkRunner.Run<DoubleSimpleClassDeepCopy>(config);
+            //BenchmarkRunner.Run<NullableIntDeepCopy>(config);
+            //BenchmarkRunner.Run<NullableSimpleStructDeepCopy>(config);
             BenchmarkRunner.Run<NullableComplexStructDeepCopy>(config);
 
             BenchmarkRunner.Run<AbstractDeepCopy>(config);
@@ -66,7 +64,6 @@ namespace Benchmarks.Cloning
             BenchmarkRunner.Run<KeyValueDeepCopy>(config);
             BenchmarkRunner.Run<NullableDeepCopy>(config);
             BenchmarkRunner.Run<PrimitiveDeepCopy>(config);
-            */
         }
     }
 }

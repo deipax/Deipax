@@ -156,6 +156,31 @@ namespace Deipax.Cloning.Common
                 Expression.Block(Expression.Empty());
         }
 
+        public static BlockExpression GetMemberAssignments2<T>(
+            ParameterExpression source,
+            ParameterExpression target,
+            ParameterExpression context)
+        {
+            List<Expression> expressions = new List<Expression>();
+
+            typeof(T)
+            .GetCopyableFields()
+            .ForEach(x =>
+            {
+                var cloneExpression = x.FieldType.CanShallowClone()
+                    ? (Expression)Expression.MakeMemberAccess(source, x)
+                    : (Expression)GetGuardedClone(x.FieldType, Expression.MakeMemberAccess(source, x), context);
+
+                expressions.Add(Expression.Assign(
+                    Expression.MakeMemberAccess(target, x),
+                    cloneExpression));
+            });
+
+            return expressions.Count > 0 ?
+                Expression.Block(expressions) :
+                Expression.Block(Expression.Empty());
+        }
+
         public static BlockExpression GetCollectionAssignment<T>(
             ParameterExpression source,
             ParameterExpression target,

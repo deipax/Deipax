@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using DeepCopy;
+﻿using DeepCopy;
 using Deipax.Cloning.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using UnitTests.Common;
 
 namespace UnitTests.Cloning
@@ -12,16 +12,17 @@ namespace UnitTests.Cloning
         [TestMethod]
         public void Tmp()
         {
-            IReadOnlyList<MyTmpInterface> source = new List<MyTmpInterface>()
-            {
-                new Helper1() { PropOne = RandGen.GenerateInt() },
-                new Helper1_1() { PropOne = RandGen.GenerateInt() },
-            };
+            var arrayDiff = Enumerable
+                .Range(0, 10)
+                .Select(x => GrandChildClassHelper.Generate())
+                .ToArray();
 
-            for (int i = 0; i < 1000000; i++)
+            var dictDiff = arrayDiff.ToDictionary(x => x, x => GrandChildClassHelper.Generate());
+
+            for (int i = 0; i < 10000000; i++)
             {
-                IReadOnlyList<MyTmpInterface> target1 = DeipaxClone(source);
-                IReadOnlyList<MyTmpInterface> target2 = DeepClone(source);
+                var target1 = DeipaxClone(dictDiff);
+                //var target2 = DeepClone(dictDiff);
             }
         }
 

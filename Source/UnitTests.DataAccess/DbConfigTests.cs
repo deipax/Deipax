@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using UnitTests.Common;
+using UnitTests.DataAccess.BaseTests;
 
-namespace Integration.DataAccess
+namespace UnitTests.DataAccess
 {
     [TestClass]
     public class DbConfigTests : BaseTest

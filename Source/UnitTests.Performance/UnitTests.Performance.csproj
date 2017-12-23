@@ -97,10 +97,6 @@
       <Project>{b9d6ff58-7ba4-4926-85bb-fe38f494186a}</Project>
       <Name>UnitTests.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UnitTests.Integration\UnitTests.Integration.csproj">
-      <Project>{167171b7-3aa6-4ec9-b045-4317dc1974e9}</Project>
-      <Name>UnitTests.Integration</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

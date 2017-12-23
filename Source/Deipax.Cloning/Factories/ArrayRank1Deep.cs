@@ -44,6 +44,7 @@ namespace Deipax.Cloning.Factories
             {
                 return (T[])existingCopy;
             }
+
             var length = source.Length;
             var target = new T[length];
 

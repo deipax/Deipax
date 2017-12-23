@@ -110,7 +110,7 @@
       <Name>Deipax.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj">
-      <Project>{e2f93f5c-1faf-4d44-a623-6fd85be13e64}</Project>
+      <Project>{b9d6ff58-7ba4-4926-85bb-fe38f494186a}</Project>
       <Name>UnitTests.Common</Name>
     </ProjectReference>
   </ItemGroup>
