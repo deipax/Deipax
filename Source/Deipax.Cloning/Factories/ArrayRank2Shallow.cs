@@ -1,10 +1,9 @@
 ﻿using Deipax.Cloning.Common;
+using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
 using System;
-using Deipax.Core.Extensions;
-using Deipax.Cloning.Extensions;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace Deipax.Cloning.Factories
 {

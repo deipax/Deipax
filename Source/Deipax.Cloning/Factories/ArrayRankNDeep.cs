@@ -1,7 +1,6 @@
 ﻿using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
-using Deipax.Core.Extensions;
 using System;
 
 namespace Deipax.Cloning.Factories

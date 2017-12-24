@@ -15,6 +15,8 @@ namespace Deipax.Cloning.Common
         private static Type _objectType = typeof(object);
         private static ConstantExpression _nullConstant = Expression.Constant(null, _objectType);
         private static ConstantExpression _dbNullConstant = Expression.Constant(DBNull.Value, _objectType);
+        private static MethodInfo _tryGetCopy = typeof(CopyContext).GetMethod("TryGetCopy");
+        private static MethodInfo _recordCopy = typeof(CopyContext).GetMethod("RecordCopy");
         #endregion
 
         #region Public Members
@@ -39,7 +41,7 @@ namespace Deipax.Cloning.Common
         {
             return Expression.Call(
                 context,
-                MethodInfos.TryGetCopy,
+                _tryGetCopy,
                 source,
                 target);
         }
@@ -51,7 +53,7 @@ namespace Deipax.Cloning.Common
         {
             return Expression.Call(
                 context,
-                MethodInfos.RecordCopy,
+                _recordCopy,
                 source,
                 target);
         }
@@ -148,31 +150,6 @@ namespace Deipax.Cloning.Common
 
                 expressions.Add(Expression.Assign(
                     Expression.MakeMemberAccess(target, memberInfo),
-                    cloneExpression));
-            });
-
-            return expressions.Count > 0 ?
-                Expression.Block(expressions) :
-                Expression.Block(Expression.Empty());
-        }
-
-        public static BlockExpression GetMemberAssignments2<T>(
-            ParameterExpression source,
-            ParameterExpression target,
-            ParameterExpression context)
-        {
-            List<Expression> expressions = new List<Expression>();
-
-            typeof(T)
-            .GetCopyableFields()
-            .ForEach(x =>
-            {
-                var cloneExpression = x.FieldType.CanShallowClone()
-                    ? (Expression)Expression.MakeMemberAccess(source, x)
-                    : (Expression)GetGuardedClone(x.FieldType, Expression.MakeMemberAccess(source, x), context);
-
-                expressions.Add(Expression.Assign(
-                    Expression.MakeMemberAccess(target, x),
                     cloneExpression));
             });
 

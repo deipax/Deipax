@@ -11,6 +11,7 @@ namespace Deipax.Cloning.Common
             UserFactories = new List<ICloneDelFactory>();
             DefaultFactories = new List<ICloneDelFactory>
             {
+                new DictionaryFactory(),
                 new KeyValueFactory(),
                 new TupleFactory(),
                 new ListDeep(),

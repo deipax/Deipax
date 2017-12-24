@@ -13,16 +13,16 @@ namespace UnitTests.Cloning
         public void Tmp()
         {
             var arrayDiff = Enumerable
-                .Range(0, 10)
-                .Select(x => GrandChildClassHelper.Generate())
+                .Range(0, 1000)
+                .Select(x => RandGen.GenerateInt())
                 .ToArray();
 
-            var dictDiff = arrayDiff.ToDictionary(x => x, x => GrandChildClassHelper.Generate());
+            var dictDiff = arrayDiff.ToDictionary(x => x, x => RandGen.GenerateInt());
 
-            for (int i = 0; i < 10000000; i++)
+            for (int i = 0; i < 100000; i++)
             {
                 var target1 = DeipaxClone(dictDiff);
-                //var target2 = DeepClone(dictDiff);
+                var target2 = DeepClone(dictDiff);
             }
         }
 

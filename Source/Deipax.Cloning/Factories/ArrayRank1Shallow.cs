@@ -1,12 +1,20 @@
-﻿using Deipax.Cloning.Common;
+﻿using System;
+using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Deipax.Cloning.Factories
 {
     internal class ArrayRank1Shallow : ICloneDelFactory
     {
+        #region Field Members
+        private static MethodInfo _arrayCopy = typeof(Array).GetRuntimeMethod(
+            "CopyTo",
+            new Type[2] { typeof(Array), typeof(int) });
+        #endregion
+
         #region ICloneDelFactory Members 
         public CloneDel<T> Get<T>()
         {
@@ -28,7 +36,7 @@ namespace Deipax.Cloning.Factories
 
                     var copy = Expression.Call(
                         args.Source,
-                        MethodInfos.ArrayCopy,
+                        _arrayCopy,
                         args.Target,
                         Expression.Constant(0));
 

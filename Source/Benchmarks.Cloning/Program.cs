@@ -55,15 +55,15 @@ namespace Benchmarks.Cloning
             //BenchmarkRunner.Run<DoubleSimpleClassDeepCopy>(config);
             //BenchmarkRunner.Run<NullableIntDeepCopy>(config);
             //BenchmarkRunner.Run<NullableSimpleStructDeepCopy>(config);
-            BenchmarkRunner.Run<NullableComplexStructDeepCopy>(config);
+            //BenchmarkRunner.Run<NullableComplexStructDeepCopy>(config);
 
-            BenchmarkRunner.Run<AbstractDeepCopy>(config);
-            BenchmarkRunner.Run<ArrayDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexRefTypeDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexValueTypeDeepCopy>(config);
-            BenchmarkRunner.Run<KeyValueDeepCopy>(config);
-            BenchmarkRunner.Run<NullableDeepCopy>(config);
-            BenchmarkRunner.Run<PrimitiveDeepCopy>(config);
+            //BenchmarkRunner.Run<AbstractDeepCopy>(config);
+            //BenchmarkRunner.Run<ArrayDeepCopy>(config);
+            //BenchmarkRunner.Run<ComplexRefTypeDeepCopy>(config);
+            //BenchmarkRunner.Run<ComplexValueTypeDeepCopy>(config);
+            //BenchmarkRunner.Run<KeyValueDeepCopy>(config);
+            //BenchmarkRunner.Run<NullableDeepCopy>(config);
+            //BenchmarkRunner.Run<PrimitiveDeepCopy>(config);
         }
     }
 }
