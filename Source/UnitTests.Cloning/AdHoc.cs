@@ -12,6 +12,7 @@ namespace UnitTests.Cloning
         [TestMethod]
         public void Tmp()
         {
+            /*
             var arrayDiff = Enumerable
                 .Range(0, 1000)
                 .Select(x => RandGen.GenerateInt())
@@ -23,7 +24,11 @@ namespace UnitTests.Cloning
             {
                 var target1 = DeipaxClone(dictDiff);
                 var target2 = DeepClone(dictDiff);
-            }
+            }*/
+
+            var tmp1 = typeof(ComplexClass).CanShallowClone();
+            var tmp2 = typeof(ComplexStruct).CanShallowClone();
+            var tmp3 = typeof(SimpleStruct).CanShallowClone();
         }
 
         #region Private Members

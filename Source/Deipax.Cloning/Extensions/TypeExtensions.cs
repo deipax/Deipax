@@ -1,6 +1,6 @@
-﻿using Deipax.Core.Extensions;
+﻿using Deipax.Cloning.Common;
+using Deipax.Core.Extensions;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +10,7 @@ namespace Deipax.Cloning.Extensions
     public static class TypeExtensions
     {
         #region Field Members
-        private static readonly ConcurrentDictionary<Type, bool> _canShallowClone = new ConcurrentDictionary<Type, bool>();
+        private static readonly QuickCache<Type, bool> _canShallowClone = new QuickCache<Type, bool>();
         private static readonly Func<Type, bool> _canShallowCloneHelper = CanShallowCloneHelper;
         #endregion
 
@@ -60,6 +60,7 @@ namespace Deipax.Cloning.Extensions
                 typeof(Delegate).IsAssignableFrom(source) ||
                 source.IsEnum() ||
                 source.IsPointer ||
+                (source.IsNullable() && Nullable.GetUnderlyingType(source).CanShallowClone()) ||
                 (source.IsValueType() && CanShallowCloneFields(source));
 
             bool CanShallowCloneFields(Type type)

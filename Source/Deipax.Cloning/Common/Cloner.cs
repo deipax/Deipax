@@ -1,7 +1,6 @@
 ﻿using Deipax.Cloning.Extensions;
 using Deipax.Core.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Deipax.Cloning.Common
@@ -9,16 +8,14 @@ namespace Deipax.Cloning.Common
     internal static class Cloner<T>
     {
         #region Field Members
-        private static readonly object _lock = new object();
-
         private static readonly Type _type = typeof(T).IsNullable()
             ? Nullable.GetUnderlyingType(typeof(T))
             : typeof(T);
 
         private static readonly CloneDel<T> _del = CloneDelConfig.Get<T>();
 
-        private static readonly Dictionary<object, CloneDel<T>> _cache =
-            new Dictionary<object, CloneDel<T>>(16, ReferenceEqualsComparer.Instance);
+        private static readonly QuickCache<Type, CloneDel<T>> _cache =
+            new QuickCache<Type, CloneDel<T>>(16, ReferenceEqualsComparer.Instance);
 
         private static readonly Func<Type, CloneDel<T>> _create = Create;
         #endregion
@@ -40,19 +37,7 @@ namespace Deipax.Cloning.Common
                 return _del(source, context);
             }
 
-            CloneDel<T> result = null;
-
-            if (!_cache.TryGetValue(type, out result))
-            {
-                lock (_lock)
-                {
-                    if (!_cache.TryGetValue(type, out result))
-                    {
-                        result = Create(type);
-                        _cache[type] = result;
-                    }
-                }
-            }
+            CloneDel<T> result = _cache.GetOrAdd(type, _create);
 
             return result(source, context);
         }
