@@ -1,4 +1,5 @@
 ﻿using Deipax.Cloning.Extensions;
+using Deipax.Cloning.Interfaces;
 using Deipax.Core.Extensions;
 using System;
 using System.Linq.Expressions;
@@ -23,7 +24,7 @@ namespace Deipax.Cloning.Common
         #region Public Members
         public static T Get(
             T source,
-            CopyContext context)
+            ICopyContext context)
         {
             if (source == null)
             {
@@ -44,7 +45,7 @@ namespace Deipax.Cloning.Common
 
         public static T GetUnsafe(
             T source,
-            CopyContext context)
+            ICopyContext context)
         {
             return _del(source, context);
         }
@@ -59,7 +60,7 @@ namespace Deipax.Cloning.Common
             }
 
             ParameterExpression source = Expression.Parameter(_type, "source");
-            ParameterExpression context = Expression.Parameter(typeof(CopyContext), "context");
+            ParameterExpression context = Expression.Parameter(typeof(ICopyContext), "context");
 
             ConstantExpression defaultValue = Expression.Constant(default(T), _type);
             LabelTarget returnTarget = Expression.Label(_type);
@@ -76,7 +77,7 @@ namespace Deipax.Cloning.Common
             return Expression.Lambda<CloneDel<T>>(block, source, context).Compile();
         }
 
-        private static T SimpleReturn(T source, CopyContext context)
+        private static T SimpleReturn(T source, ICopyContext context)
         {
             return source;
         }

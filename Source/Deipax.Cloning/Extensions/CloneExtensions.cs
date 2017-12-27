@@ -1,13 +1,14 @@
 ﻿using Deipax.Cloning.Common;
 using System.Threading;
+using Deipax.Cloning.Interfaces;
 
 namespace Deipax.Cloning.Extensions
 {
     public static class CloneExtensions
     {
         #region Field Members
-        private static readonly ThreadLocal<CopyContext> _context =
-            new ThreadLocal<CopyContext>(() => new CopyContext());
+        private static readonly ThreadLocal<ICopyContext> _context =
+            new ThreadLocal<ICopyContext>(() => new CopyContext());
         #endregion
 
         #region Public Members
@@ -27,7 +28,7 @@ namespace Deipax.Cloning.Extensions
 
         public static T GetClone<T>(
             this T source, 
-            CopyContext context)
+            ICopyContext context)
         {
             return Cloner<T>.Get(source, context);
         }

@@ -16,7 +16,7 @@ namespace Deipax.Cloning.Factories
         #region Private Members
         private static T ThrowNotSupportedType<T>(
             T source,
-            CopyContext context)
+            ICopyContext context)
         {
             throw new NotSupportedException($"Unable to copy object of type {typeof(T)}.");
         }

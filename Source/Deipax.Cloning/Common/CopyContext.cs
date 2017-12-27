@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Deipax.Cloning.Interfaces;
 
 namespace Deipax.Cloning.Common
 {
-    public sealed class CopyContext
+    public class CopyContext : ICopyContext
     {
         #region Field Members
         private readonly Dictionary<object, object> _dict = new Dictionary<object, object>(16, ReferenceEqualsComparer.Instance);
         #endregion
 
-        #region Public Members
+        #region ICopyContext Members
         public void RecordCopy(object original, object copy)
         {
             _dict[original] = copy;
@@ -24,10 +25,8 @@ namespace Deipax.Cloning.Common
         {
             return _dict.Count;
         }
-        #endregion
 
-        #region Internal
-        internal void Reset()
+        public void Reset()
         {
             _dict.Clear();
         }

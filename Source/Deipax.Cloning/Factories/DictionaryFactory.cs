@@ -56,7 +56,7 @@ namespace Deipax.Cloning.Factories
             return helper.GetClone;
         }
 
-        private static T SimpleReturn<T>(T source, CopyContext context)
+        private static T SimpleReturn<T>(T source, ICopyContext context)
         {
             return source;
         }
@@ -68,7 +68,7 @@ namespace Deipax.Cloning.Factories
             public CloneDel<X> KeyCloner { get; set; }
             public CloneDel<Y> ValueCloner { get; set; }
 
-            public Dictionary<X, Y> GetClone(Dictionary<X, Y> source, CopyContext context)
+            public Dictionary<X, Y> GetClone(Dictionary<X, Y> source, ICopyContext context)
             {
                 if (context.TryGetCopy(source, out var existingCopy))
                 {

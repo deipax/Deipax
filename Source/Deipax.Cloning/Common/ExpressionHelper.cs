@@ -1,4 +1,5 @@
 ﻿using Deipax.Cloning.Extensions;
+using Deipax.Cloning.Interfaces;
 using Deipax.Core.Extensions;
 using System;
 using System.Collections;
@@ -15,8 +16,8 @@ namespace Deipax.Cloning.Common
         private static Type _objectType = typeof(object);
         private static ConstantExpression _nullConstant = Expression.Constant(null, _objectType);
         private static ConstantExpression _dbNullConstant = Expression.Constant(DBNull.Value, _objectType);
-        private static MethodInfo _tryGetCopy = typeof(CopyContext).GetMethod("TryGetCopy");
-        private static MethodInfo _recordCopy = typeof(CopyContext).GetMethod("RecordCopy");
+        private static MethodInfo _tryGetCopy = typeof(ICopyContext).GetMethod("TryGetCopy");
+        private static MethodInfo _recordCopy = typeof(ICopyContext).GetMethod("RecordCopy");
         #endregion
 
         #region Public Members
