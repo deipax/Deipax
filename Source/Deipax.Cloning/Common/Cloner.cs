@@ -53,9 +53,9 @@ namespace Deipax.Cloning.Common
         #endregion
 
         #region Private Members
-        private static CloneDel<T> Create(Type t)
+        private static CloneDel<T> Create(Type runtimeType        )
         {
-            if (t.CanShallowClone())
+            if (runtimeType.CanShallowClone())
             {
                 return SimpleReturn;
             }
@@ -67,9 +67,15 @@ namespace Deipax.Cloning.Common
             LabelTarget returnTarget = Expression.Label(_type);
             LabelExpression returnLabel = Expression.Label(returnTarget, defaultValue);
 
-            var cloneCall = ExpressionHelper.GetUnGuardedClone(t, Expression.Convert(source, t), context);
+            var cloneCall = ExpressionHelper.GetUnGuardedClone(
+                runtimeType, 
+                Expression.Convert(source, runtimeType), 
+                context);
 
-            GotoExpression returnExpression = Expression.Return(returnTarget, Expression.Convert(cloneCall, _type), _type);
+            GotoExpression returnExpression = Expression.Return(
+                returnTarget, 
+                Expression.Convert(cloneCall, _type),
+                _type);
 
             var block = Expression.Block(
                 returnExpression,

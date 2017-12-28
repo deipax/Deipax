@@ -30,7 +30,7 @@ namespace Benchmarks.Cloning
             //BenchmarkRunner.Run<StringDeipax>(config);
             //BenchmarkRunner.Run<ComplexClassDeipax>(config);
             //BenchmarkRunner.Run<ComplexStructDeipax>(config);
-            //BenchmarkRunner.Run<SimpleClassDeipax>(config);
+            BenchmarkRunner.Run<SimpleClassDeipax>(config);
             //BenchmarkRunner.Run<SimpleStructDeipax>(config);
             //BenchmarkRunner.Run<DoubleSimpleClassDeipax>(config);
             //BenchmarkRunner.Run<NullableIntDeipax>(config);
@@ -39,7 +39,7 @@ namespace Benchmarks.Cloning
 
             //BenchmarkRunner.Run<AbstractDeipax>(config);
             //BenchmarkRunner.Run<ArrayDeipax>(config);
-            BenchmarkRunner.Run<ComplexRefTypeDeipax>(config);
+            //BenchmarkRunner.Run<ComplexRefTypeDeipax>(config);
             //BenchmarkRunner.Run<ComplexValueTypeDeipax>(config);
             //BenchmarkRunner.Run<KeyValueDeipax>(config);
             //BenchmarkRunner.Run<NullableDeipax>(config);

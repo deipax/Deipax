@@ -11,6 +11,7 @@ namespace Benchmarks.Cloning.BaseClasses
         {
             _default = default(T);
             _single = GenerateItem();
+            _object = _single;
 
             _arrayDiff = Enumerable
                 .Range(0, 10000)
@@ -65,6 +66,7 @@ namespace Benchmarks.Cloning.BaseClasses
         #region Field Members
         private readonly T _default;
         private readonly T _single;
+        private readonly object _object;
         private readonly T[] _arraySame;
         private readonly T[] _arrayDiff;
         private readonly object[] _arraySameObjects;
@@ -93,6 +95,13 @@ namespace Benchmarks.Cloning.BaseClasses
         public int SingleInstance()
         {
             var result = Clone(_single);
+            return 1;
+        }
+
+        [Benchmark]
+        public int ObjectInstance()
+        {
+            var result = Clone(_object);
             return 1;
         }
 

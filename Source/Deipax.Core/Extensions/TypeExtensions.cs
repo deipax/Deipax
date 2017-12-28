@@ -11,10 +11,9 @@ namespace Deipax.Core.Extensions
     public static class TypeExtensions
 	{
 		#region Field Members
-		private static HashSet<Type> _immutableTypes = new HashSet<Type>()
-		{
-			typeof(string), typeof(DateTime), typeof(TimeSpan)
-		};
+        private static readonly Type _stringType = typeof(string);
+	    private static readonly Type _dateTimeType = typeof(DateTime);
+	    private static readonly Type _timeSpanType = typeof(TimeSpan);
         #endregion
 
         #region Public Members
@@ -36,7 +35,9 @@ namespace Deipax.Core.Extensions
 
 		public static bool IsImmutable(this Type source)
 		{
-			return _immutableTypes.Contains(source);
+		    return source == _stringType ||
+		           source == _dateTimeType ||
+		           source == _timeSpanType;
 		}
 
 		public static bool HasDefaultConstructor(this Type t)
