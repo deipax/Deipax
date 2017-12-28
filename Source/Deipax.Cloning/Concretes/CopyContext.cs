@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Deipax.Cloning.Interfaces;
 
-namespace Deipax.Cloning.Common
+namespace Deipax.Cloning.Concretes
 {
     public class CopyContext : ICopyContext
     {

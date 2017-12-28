@@ -12,23 +12,16 @@ namespace UnitTests.Cloning
         [TestMethod]
         public void Tmp()
         {
-            /*
-            var arrayDiff = Enumerable
-                .Range(0, 1000)
-                .Select(x => RandGen.GenerateInt())
-                .ToArray();
+            var single = SimpleClass.Generate();
 
-            var dictDiff = arrayDiff.ToDictionary(x => x, x => RandGen.GenerateInt());
+            var arraySame = Enumerable.Repeat(single, 10000).ToArray();
+            var arraySameObjects = arraySame.Cast<object>().ToArray();
 
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 10000; i++)
             {
-                var target1 = DeipaxClone(dictDiff);
-                var target2 = DeepClone(dictDiff);
-            }*/
-
-            var tmp1 = typeof(ComplexClass).CanShallowClone();
-            var tmp2 = typeof(ComplexStruct).CanShallowClone();
-            var tmp3 = typeof(SimpleStruct).CanShallowClone();
+                var target1 = DeipaxClone(arraySameObjects);
+                var target2 = DeepClone(arraySameObjects);
+            }
         }
 
         #region Private Members

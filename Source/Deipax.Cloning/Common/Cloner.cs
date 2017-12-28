@@ -1,4 +1,5 @@
-﻿using Deipax.Cloning.Extensions;
+﻿using Deipax.Cloning.Concretes;
+using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
 using Deipax.Core.Extensions;
 using System;

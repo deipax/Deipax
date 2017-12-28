@@ -1,4 +1,4 @@
-﻿using Deipax.Cloning.Common;
+﻿using Deipax.Cloning.Concretes;
 using Deipax.Cloning.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Cloning.BaseTests;
