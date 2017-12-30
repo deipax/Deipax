@@ -32,11 +32,11 @@ namespace Deipax.Cloning.Factories
 
                 Expression cloneKey = keyType.CanShallowClone() ?
                     (Expression)Expression.Property(args.Source, "Key") :
-                    (Expression)ExpressionHelper.GetGuardedClone(keyType, Expression.Property(args.Source, "Key"), args.Context);
+                    (Expression)ExpressionHelper.GetSafeClone(keyType, Expression.Property(args.Source, "Key"), args.Context);
 
                 Expression cloneValue = valueType.CanShallowClone() ?
                     (Expression)Expression.Property(args.Source, "Value") :
-                    (Expression)ExpressionHelper.GetGuardedClone(valueType, Expression.Property(args.Source, "Value"), args.Context);
+                    (Expression)ExpressionHelper.GetSafeClone(valueType, Expression.Property(args.Source, "Value"), args.Context);
 
                 var newExpression = Expression.New(
                     _constructor,

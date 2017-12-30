@@ -30,7 +30,7 @@ namespace Benchmarks.Cloning
             //BenchmarkRunner.Run<StringDeipax>(config);
             //BenchmarkRunner.Run<ComplexClassDeipax>(config);
             //BenchmarkRunner.Run<ComplexStructDeipax>(config);
-            BenchmarkRunner.Run<SimpleClassDeipax>(config);
+            //BenchmarkRunner.Run<SimpleClassDeipax>(config);
             //BenchmarkRunner.Run<SimpleStructDeipax>(config);
             //BenchmarkRunner.Run<DoubleSimpleClassDeipax>(config);
             //BenchmarkRunner.Run<NullableIntDeipax>(config);
@@ -47,23 +47,23 @@ namespace Benchmarks.Cloning
 
 
             //BenchmarkRunner.Run<IntDeepCopy>(config);
-            //BenchmarkRunner.Run<StringDeepCopy>(config);
-            //BenchmarkRunner.Run<ComplexClassDeepCopy>(config);
-            //BenchmarkRunner.Run<ComplexStructDeepCopy>(config);
-            //BenchmarkRunner.Run<SimpleClassDeepCopy>(config);        
-            //BenchmarkRunner.Run<SimpleStructDeepCopy>(config);
-            //BenchmarkRunner.Run<DoubleSimpleClassDeepCopy>(config);
-            //BenchmarkRunner.Run<NullableIntDeepCopy>(config);
-            //BenchmarkRunner.Run<NullableSimpleStructDeepCopy>(config);
-            //BenchmarkRunner.Run<NullableComplexStructDeepCopy>(config);
+            ///BenchmarkRunner.Run<StringDeepCopy>(config);
+            ///BenchmarkRunner.Run<ComplexClassDeepCopy>(config);
+            ///BenchmarkRunner.Run<ComplexStructDeepCopy>(config);
+            ///BenchmarkRunner.Run<SimpleClassDeepCopy>(config);        
+            ///BenchmarkRunner.Run<SimpleStructDeepCopy>(config);
+            ///BenchmarkRunner.Run<DoubleSimpleClassDeepCopy>(config);
+            ///BenchmarkRunner.Run<NullableIntDeepCopy>(config);
+            ///BenchmarkRunner.Run<NullableSimpleStructDeepCopy>(config);
+            ///BenchmarkRunner.Run<NullableComplexStructDeepCopy>(config);
 
-            //BenchmarkRunner.Run<AbstractDeepCopy>(config);
-            //BenchmarkRunner.Run<ArrayDeepCopy>(config);
-            //BenchmarkRunner.Run<ComplexRefTypeDeepCopy>(config);
-            //BenchmarkRunner.Run<ComplexValueTypeDeepCopy>(config);
-            //BenchmarkRunner.Run<KeyValueDeepCopy>(config);
-            //BenchmarkRunner.Run<NullableDeepCopy>(config);
-            //BenchmarkRunner.Run<PrimitiveDeepCopy>(config);
+            ///BenchmarkRunner.Run<AbstractDeepCopy>(config);
+            ///BenchmarkRunner.Run<ArrayDeepCopy>(config);
+            ///BenchmarkRunner.Run<ComplexRefTypeDeepCopy>(config);
+            ///BenchmarkRunner.Run<ComplexValueTypeDeepCopy>(config);
+            ///BenchmarkRunner.Run<KeyValueDeepCopy>(config);
+            ///BenchmarkRunner.Run<NullableDeepCopy>(config);
+            ///BenchmarkRunner.Run<PrimitiveDeepCopy>(config);
         }
     }
 }

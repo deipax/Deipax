@@ -22,7 +22,7 @@ namespace Deipax.Cloning.Factories
                     var args = CloneArgs.Create(type, false);
                     var sourceProperty = Expression.Property(args.Source, "Value");
 
-                    var cloneCall = ExpressionHelper.GetUnGuardedClone(structType, sourceProperty, args.Context);
+                    var cloneCall = ExpressionHelper.GetUnSafeClone(structType, sourceProperty, args.Context);
                     var newNullable = Expression.New(typeof(T).GetConstructor(new[] { structType }), cloneCall);
                     args.CloneExpression = Expression.Assign(args.Target, newNullable);
                     return ExpressionHelper.Get<T>(args).Compile();

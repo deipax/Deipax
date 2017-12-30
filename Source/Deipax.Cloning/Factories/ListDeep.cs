@@ -38,7 +38,7 @@ namespace Deipax.Cloning.Factories
         #endregion
 
         #region Private Members
-        private static List<T> Copy<T>(List<T> source, ICopyContext context)
+        private static List<T> Copy<T>(List<T> source, CopyContext context)
         {
             if (context.TryGetCopy(source, out var existingCopy))
             {

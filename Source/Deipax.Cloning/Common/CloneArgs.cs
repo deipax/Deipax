@@ -1,5 +1,4 @@
-﻿using Deipax.Cloning.Interfaces;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
 namespace Deipax.Cloning.Common
@@ -17,7 +16,7 @@ namespace Deipax.Cloning.Common
             return new CloneArgs
             {
                 CheckContext = checkContext,
-                Context = Expression.Parameter(typeof(ICopyContext), "context"),
+                Context = Expression.Parameter(typeof(CopyContext), "context"),
                 Type = type,
                 Target = Expression.Variable(type, "target"),
                 Source = Expression.Parameter(type, "source")

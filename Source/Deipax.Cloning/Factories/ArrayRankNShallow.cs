@@ -29,7 +29,7 @@ namespace Deipax.Cloning.Factories
         #endregion
 
         #region Private Members
-        private static T Copy<T>(T source, ICopyContext context)
+        private static T Copy<T>(T source, CopyContext context)
         {
             if (context.TryGetCopy(source, out var existingCopy))
             {

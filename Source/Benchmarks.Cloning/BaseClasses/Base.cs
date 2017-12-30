@@ -59,8 +59,20 @@ namespace Benchmarks.Cloning.BaseClasses
             _keyValueDiff = new KeyValuePair<T, T>(GenerateItem(), GenerateItem());
             _tupleSame = new Tuple<T, T>(_single, _single);
             _tupleDiff = new Tuple<T, T>(GenerateItem(), GenerateItem());
-            _dictSame = _listDiff.ToDictionary(x => x, x => x);
-            _dictDiff = _listDiff.ToDictionary(x => x, x => GenerateItem());
+
+            _dictSame = new Dictionary<T, T>();
+            _dictDiff = new Dictionary<T, T>();
+
+            while (_dictSame.Count < 10000)
+            {
+                T item = GenerateItem();
+                _dictSame[item] = item;
+            }
+
+            while (_dictDiff.Count < 10000)
+            {
+                _dictDiff[GenerateItem()] = GenerateItem();
+            }
         }
 
         #region Field Members

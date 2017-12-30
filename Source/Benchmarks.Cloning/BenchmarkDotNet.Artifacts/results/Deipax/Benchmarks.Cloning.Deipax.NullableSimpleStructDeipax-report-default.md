@@ -3,32 +3,33 @@ BenchmarkDotNet=v0.10.11, OS=Windows 7 SP1 (6.1.7601.0)
 Processor=Intel Xeon CPU E5-1650 v3 3.50GHz, ProcessorCount=12
 Frequency=3410146 Hz, Resolution=293.2426 ns, Timer=TSC
 .NET Core SDK=2.0.2
-  [Host]     : .NET Core 2.0.0 (Framework 4.6.00001.0), 64bit RyuJIT  [AttachedDebugger]
+  [Host]     : .NET Core 2.0.0 (Framework 4.6.00001.0), 64bit RyuJIT
   DefaultJob : .NET Core 2.0.0 (Framework 4.6.00001.0), 64bit RyuJIT
 
 
-                     Method |            Mean |         Error |         StdDev |          Median |    Gen 0 |    Gen 1 |    Gen 2 | Allocated |
---------------------------- |----------------:|--------------:|---------------:|----------------:|---------:|---------:|---------:|----------:|
-             SingleInstance |       193.83 ns |      5.545 ns |      15.910 ns |       193.37 ns |   0.0050 |        - |        - |      32 B |
-            DefaultInstance |        44.85 ns |      1.670 ns |       4.872 ns |        43.89 ns |        - |        - |        - |       0 B |
-     ArrayOfDefaultInstance |   139,052.63 ns |  2,767.797 ns |   7,941.329 ns |   139,245.59 ns |  54.8267 |  54.8267 |  54.8267 |  240024 B |
-        ArrayOfDiffInstance |   168,653.97 ns |  6,019.760 ns |  17,749.398 ns |   168,120.91 ns |  57.9053 |  57.9053 |  57.9053 |  240024 B |
-        ArrayOfSameInstance |   159,555.54 ns |  7,036.042 ns |  20,635.493 ns |   157,814.82 ns |  53.3593 |  53.3429 |  53.3429 |  240024 B |
- ArrayOfObjectsDiffInstance |   300,767.53 ns |  2,325.215 ns |   2,061.242 ns |   299,968.98 ns |  12.2070 |        - |        - |   80024 B |
- ArrayOfObjectsSameInstance |   324,163.75 ns |  7,034.159 ns |  20,740.376 ns |   317,689.69 ns |  12.2070 |        - |        - |   80024 B |
-      Array2dOfDiffInstance |    36,687.05 ns |  1,083.084 ns |   3,193.498 ns |    36,350.60 ns |  38.6353 |  11.7188 |        - |  243224 B |
-      Array2dOfSameInstance |     4,752.67 ns |    104.725 ns |     303.827 ns |     4,717.81 ns |   0.5112 |        - |        - |    3248 B |
-   ArrayRank2OfDiffInstance |       465.50 ns |      9.921 ns |      28.305 ns |       461.54 ns |   0.3872 |        - |        - |    2440 B |
-   ArrayRank2OfSameInstance |       461.09 ns |      9.660 ns |      23.877 ns |       449.14 ns |   0.3872 |        - |        - |    2440 B |
-   ArrayRank3OfDiffInstance |     3,378.93 ns |     88.405 ns |     259.276 ns |     3,320.73 ns |   3.8147 |        - |        - |   24088 B |
-   ArrayRank3OfSameInstance |     3,527.45 ns |    130.660 ns |     385.253 ns |     3,407.95 ns |   3.8147 |        - |        - |   24088 B |
-         ListOfDiffInstance |   149,220.64 ns |  6,178.789 ns |  18,218.297 ns |   146,621.65 ns |  54.0302 |  54.0067 |  54.0067 |  240456 B |
-         ListOfSameInstance |   112,287.99 ns |  2,236.021 ns |   4,765.144 ns |   111,832.52 ns |  58.6890 |  58.6865 |  58.6865 |  240525 B |
-  ListOfObjectsDiffInstance |   319,487.74 ns | 12,013.424 ns |  11,798.787 ns |   314,315.96 ns |  12.2070 |   1.9531 |        - |   80064 B |
-  ListOfObjectsSameInstance |   322,730.55 ns |  6,376.102 ns |  12,284.584 ns |   316,799.16 ns |  12.2070 |   1.9531 |        - |   80064 B |
-           KeyValuePairSame |        79.21 ns |      2.426 ns |       7.078 ns |        79.41 ns |   0.0101 |        - |        - |      64 B |
-           KeyValuePairDiff |        77.32 ns |      2.904 ns |       8.562 ns |        76.94 ns |   0.0101 |        - |        - |      64 B |
-          TupleSameInstance |       144.19 ns |      4.668 ns |      13.765 ns |       143.08 ns |   0.0100 |        - |        - |      64 B |
-          TupleDiffInstance |       130.82 ns |      3.480 ns |      10.260 ns |       128.63 ns |   0.0100 |        - |        - |      64 B |
-     DictionarySameInstance | 1,752,277.63 ns | 56,030.640 ns | 165,207.607 ns | 1,738,970.03 ns | 197.2266 | 156.8750 | 140.5859 |  926502 B |
-     DictionaryDiffInstance | 1,363,302.01 ns | 29,716.320 ns |  85,261.692 ns | 1,360,070.33 ns | 191.4844 | 152.4219 | 136.7969 |  926504 B |
+                     Method |            Mean |          Error |         StdDev |          Median |    Gen 0 |    Gen 1 |    Gen 2 | Allocated |
+--------------------------- |----------------:|---------------:|---------------:|----------------:|---------:|---------:|---------:|----------:|
+             SingleInstance |       155.58 ns |      3.3550 ns |       5.787 ns |       155.63 ns |   0.0050 |        - |        - |      32 B |
+             ObjectInstance |        57.42 ns |      1.3817 ns |       4.031 ns |        55.72 ns |        - |        - |        - |       0 B |
+            DefaultInstance |        41.56 ns |      0.8599 ns |       2.425 ns |        41.37 ns |        - |        - |        - |       0 B |
+     ArrayOfDefaultInstance |   195,402.47 ns |  7,056.7048 ns |  20,696.094 ns |   194,317.69 ns |  57.0313 |  57.0313 |  57.0313 |  240024 B |
+        ArrayOfDiffInstance |   137,811.52 ns |  2,749.9167 ns |   7,527.853 ns |   137,811.92 ns |  50.2956 |  50.2956 |  50.2956 |  240024 B |
+        ArrayOfSameInstance |   192,469.04 ns |  7,838.3567 ns |  22,864.854 ns |   195,009.01 ns |  49.8551 |  49.8551 |  49.8551 |  240024 B |
+ ArrayOfObjectsDiffInstance |   330,133.31 ns |  6,570.0973 ns |  17,874.434 ns |   329,991.93 ns |  12.2070 |        - |        - |   80024 B |
+ ArrayOfObjectsSameInstance |   305,973.92 ns |  7,097.1103 ns |  20,814.596 ns |   300,215.22 ns |  12.2070 |        - |        - |   80024 B |
+      Array2dOfDiffInstance |    32,676.63 ns |    998.5988 ns |   2,928.717 ns |    32,787.66 ns |  38.6353 |  11.7493 |        - |  243224 B |
+      Array2dOfSameInstance |     4,494.06 ns |    103.6301 ns |     305.556 ns |     4,458.57 ns |   0.5112 |        - |        - |    3248 B |
+   ArrayRank2OfDiffInstance |       409.39 ns |      8.9174 ns |      26.293 ns |       407.62 ns |   0.3872 |        - |        - |    2440 B |
+   ArrayRank2OfSameInstance |       418.58 ns |     10.3524 ns |      30.362 ns |       414.84 ns |   0.3872 |        - |        - |    2440 B |
+   ArrayRank3OfDiffInstance |     2,878.11 ns |     71.5590 ns |     208.741 ns |     2,833.55 ns |   3.8147 |        - |        - |   24088 B |
+   ArrayRank3OfSameInstance |     2,817.73 ns |     71.4735 ns |     209.619 ns |     2,741.13 ns |   3.8147 |        - |        - |   24088 B |
+         ListOfDiffInstance |   142,208.35 ns |  3,349.5950 ns |   9,876.356 ns |   142,834.54 ns |  58.3398 |  58.3398 |  58.3398 |  240524 B |
+         ListOfSameInstance |   138,046.19 ns |  2,717.2870 ns |   5,489.054 ns |   137,899.44 ns |  54.7201 |  54.7201 |  54.7201 |  240502 B |
+  ListOfObjectsDiffInstance |   324,408.36 ns |  7,552.0157 ns |  22,148.755 ns |   321,378.07 ns |  12.2070 |   1.9531 |        - |   80064 B |
+  ListOfObjectsSameInstance |   347,119.05 ns |  8,298.1579 ns |  24,467.306 ns |   344,668.84 ns |  12.2070 |   1.9531 |        - |   80064 B |
+           KeyValuePairSame |        71.73 ns |      1.9591 ns |       5.715 ns |        71.36 ns |   0.0101 |        - |        - |      64 B |
+           KeyValuePairDiff |        59.79 ns |      1.2299 ns |       3.489 ns |        59.24 ns |   0.0101 |        - |        - |      64 B |
+          TupleSameInstance |       139.57 ns |      2.8372 ns |       8.321 ns |       138.56 ns |   0.0100 |        - |        - |      64 B |
+          TupleDiffInstance |       113.22 ns |      2.3003 ns |       5.377 ns |       113.86 ns |   0.0100 |        - |        - |      64 B |
+     DictionarySameInstance | 1,849,127.88 ns | 50,516.3500 ns | 148,155.710 ns | 1,856,861.05 ns | 195.2930 | 155.9570 | 138.6523 |  926470 B |
+     DictionaryDiffInstance | 1,852,572.97 ns | 56,994.1325 ns | 168,048.486 ns | 1,840,247.97 ns | 195.3320 | 155.9570 | 138.6914 |  926475 B |

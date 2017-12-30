@@ -41,7 +41,7 @@ namespace Deipax.Cloning.Factories
 
                     cloneItems[i] = itemType.CanShallowClone() ?
                         (Expression)Expression.Property(args.Source, itemName) :
-                        (Expression)ExpressionHelper.GetGuardedClone(itemType, Expression.Property(args.Source, itemName), args.Context);
+                        (Expression)ExpressionHelper.GetSafeClone(itemType, Expression.Property(args.Source, itemName), args.Context);
                 }
 
                 // add Rest expression if it's necessary
@@ -53,7 +53,7 @@ namespace Deipax.Cloning.Factories
 
                     cloneItems[7] = itemType.CanShallowClone() ?
                         (Expression)Expression.Property(args.Source, itemName) :
-                        (Expression)ExpressionHelper.GetGuardedClone(itemType, Expression.Property(args.Source, itemName), args.Context);
+                        (Expression)ExpressionHelper.GetSafeClone(itemType, Expression.Property(args.Source, itemName), args.Context);
                 }
 
                 ConstructorInfo constructor = args.Type.GetConstructors()[0];

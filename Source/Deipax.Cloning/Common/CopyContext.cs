@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Deipax.Cloning.Interfaces;
 
-namespace Deipax.Cloning.Concretes
+namespace Deipax.Cloning.Common
 {
-    public class CopyContext : ICopyContext
+    public class CopyContext
     {
         #region Field Members
         private readonly Dictionary<object, object> _dict = new Dictionary<object, object>(16, ReferenceEqualsComparer.Instance);

@@ -1,5 +1,4 @@
 ﻿using Deipax.Cloning.Extensions;
-using Deipax.Cloning.Interfaces;
 using Deipax.Core.Extensions;
 using System;
 using System.Collections;
@@ -13,28 +12,11 @@ namespace Deipax.Cloning.Common
     public static class ExpressionHelper
     {
         #region Field Members
-        private static Type _objectType = typeof(object);
-        private static ConstantExpression _nullConstant = Expression.Constant(null, _objectType);
-        private static ConstantExpression _dbNullConstant = Expression.Constant(DBNull.Value, _objectType);
-        private static MethodInfo _tryGetCopy = typeof(ICopyContext).GetMethod("TryGetCopy");
-        private static MethodInfo _recordCopy = typeof(ICopyContext).GetMethod("RecordCopy");
+        private static MethodInfo _tryGetCopy = typeof(CopyContext).GetMethod("TryGetCopy");
+        private static MethodInfo _recordCopy = typeof(CopyContext).GetMethod("RecordCopy");
         #endregion
 
         #region Public Members
-        public static BinaryExpression IsNull(
-            Expression source)
-        {
-            return Expression.Or(
-                Expression.Equal(source, _nullConstant),
-                Expression.Equal(source, _dbNullConstant));
-        }
-
-        public static UnaryExpression IsNotNull(
-            Expression source)
-        {
-            return Expression.Not(IsNull(source));
-        }
-
         public static MethodCallExpression TryGetCopy(
             ParameterExpression context,
             ParameterExpression source,
@@ -64,7 +46,7 @@ namespace Deipax.Cloning.Common
         {
             ConstantExpression defaultValue = Expression.Constant(default(T), args.Type);
             LabelTarget returnTarget = Expression.Label(args.Type);
-            ParameterExpression fromContext = Expression.Variable(_objectType, "fromContext");
+            ParameterExpression fromContext = Expression.Variable(typeof(object), "fromContext");
 
             List<Expression> expressions = new List<Expression>();
 
@@ -122,7 +104,7 @@ namespace Deipax.Cloning.Common
 
                 var cloneExpression = memberType.CanShallowClone()
                     ? (Expression)Expression.MakeMemberAccess(source, memberInfo)
-                    : (Expression)GetGuardedClone(memberType, Expression.MakeMemberAccess(source, memberInfo), context);
+                    : (Expression)GetSafeClone(memberType, Expression.MakeMemberAccess(source, memberInfo), context);
 
                 expressions.Add(Expression.Assign(
                     Expression.MakeMemberAccess(target, memberInfo),
@@ -147,7 +129,7 @@ namespace Deipax.Cloning.Common
 
                 var cloneExpression = memberType.CanShallowClone()
                     ? (Expression)Expression.MakeMemberAccess(source, memberInfo)
-                    : (Expression)GetGuardedClone(memberType, Expression.MakeMemberAccess(source, memberInfo), context);
+                    : (Expression)GetSafeClone(memberType, Expression.MakeMemberAccess(source, memberInfo), context);
 
                 expressions.Add(Expression.Assign(
                     Expression.MakeMemberAccess(target, memberInfo),
@@ -156,7 +138,7 @@ namespace Deipax.Cloning.Common
 
             return expressions.Count > 0 ?
                 Expression.Block(expressions) :
-                Expression.Block(Expression.Empty());
+                null;
         }
 
         public static BlockExpression GetCollectionAssignment<T>(
@@ -193,7 +175,7 @@ namespace Deipax.Cloning.Common
 
                 Expression cloneItem = itemType.CanShallowClone()
                     ? (Expression)currentProperty
-                    : (Expression)GetGuardedClone(itemType, currentProperty, context);
+                    : (Expression)GetSafeClone(itemType, currentProperty, context);
 
                 LoopExpression loop = Expression.Loop(
                     Expression.IfThenElse(
@@ -209,10 +191,10 @@ namespace Deipax.Cloning.Common
                     loop);
             }
 
-            return Expression.Block(Expression.Empty());
+            return null;
         }
 
-        public static MethodCallExpression GetGuardedClone(
+        public static MethodCallExpression GetSafeClone(
             Type t,
             Expression source,
             Expression context)
@@ -226,18 +208,44 @@ namespace Deipax.Cloning.Common
             return Expression.Call(null, methodInfo, source, context);
         }
 
-        public static MethodCallExpression GetUnGuardedClone(
+        public static InvocationExpression GetUnSafeClone(
             Type t,
             Expression source,
             Expression context)
         {
-            var methodInfo = typeof(Cloner<>)
+            var fieldInfo = typeof(Cloner<>)
                 .MakeGenericType(t)
-                .GetRuntimeMethods()
-                .Where(x => x.Name == "GetUnsafe")
+                .GetRuntimeFields()
+                .Where(x => x.Name == "_del")
                 .FirstOrDefault();
 
-            return Expression.Call(null, methodInfo, source, context);
+            var del = (Delegate)fieldInfo.GetValue(null);
+
+            return Expression.Invoke(
+                Expression.Constant(del),
+                Expression.Convert(source, t),
+                context);
+        }
+
+        public static CloneDel<T> CreateShallowClone<T>()
+        {
+            var type = typeof(T);
+            ParameterExpression source = Expression.Parameter(type, "source");
+            ParameterExpression context = Expression.Parameter(typeof(CopyContext), "context");
+            ConstantExpression defaultValue = Expression.Constant(default(T), type);
+            LabelTarget returnTarget = Expression.Label(type);
+            LabelExpression returnLabel = Expression.Label(returnTarget, defaultValue);
+
+            GotoExpression returnExpression = Expression.Return(
+                returnTarget,
+                source,
+                type);
+
+            var block = Expression.Block(
+                returnExpression,
+                returnLabel);
+
+            return Expression.Lambda<CloneDel<T>>(block, source, context).Compile();
         }
         #endregion
     }

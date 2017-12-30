@@ -1,6 +1,4 @@
-﻿using Deipax.Cloning.Concretes;
-using Deipax.Cloning.Extensions;
-using Deipax.Cloning.Interfaces;
+﻿using Deipax.Cloning.Extensions;
 using Deipax.Core.Extensions;
 using System;
 using System.Linq.Expressions;
@@ -23,9 +21,7 @@ namespace Deipax.Cloning.Common
         #endregion
 
         #region Public Members
-        public static T Get(
-            T source,
-            ICopyContext context)
+        public static T Get(T source, CopyContext context)
         {
             if (source == null)
             {
@@ -43,37 +39,31 @@ namespace Deipax.Cloning.Common
 
             return result(source, context);
         }
-
-        public static T GetUnsafe(
-            T source,
-            ICopyContext context)
-        {
-            return _del(source, context);
-        }
         #endregion
 
         #region Private Members
-        private static CloneDel<T> Create(Type runtimeType        )
+        private static CloneDel<T> Create(Type runtimeType)
         {
-            if (runtimeType.CanShallowClone())
-            {
-                return SimpleReturn;
-            }
+            return runtimeType.CanShallowClone()
+                ? ExpressionHelper.CreateShallowClone<T>()
+                : CreateUnSafeClone(runtimeType);
+        }
 
+        private static CloneDel<T> CreateUnSafeClone(Type runtimeType)
+        {
             ParameterExpression source = Expression.Parameter(_type, "source");
-            ParameterExpression context = Expression.Parameter(typeof(ICopyContext), "context");
-
+            ParameterExpression context = Expression.Parameter(typeof(CopyContext), "context");
             ConstantExpression defaultValue = Expression.Constant(default(T), _type);
             LabelTarget returnTarget = Expression.Label(_type);
             LabelExpression returnLabel = Expression.Label(returnTarget, defaultValue);
 
-            var cloneCall = ExpressionHelper.GetUnGuardedClone(
-                runtimeType, 
+            var cloneCall = ExpressionHelper.GetUnSafeClone(
+                runtimeType,
                 Expression.Convert(source, runtimeType), 
                 context);
 
             GotoExpression returnExpression = Expression.Return(
-                returnTarget, 
+                returnTarget,
                 Expression.Convert(cloneCall, _type),
                 _type);
 
@@ -82,11 +72,6 @@ namespace Deipax.Cloning.Common
                 returnLabel);
 
             return Expression.Lambda<CloneDel<T>>(block, source, context).Compile();
-        }
-
-        private static T SimpleReturn(T source, ICopyContext context)
-        {
-            return source;
         }
         #endregion
     }

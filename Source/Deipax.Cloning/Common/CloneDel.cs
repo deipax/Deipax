@@ -1,6 +1,4 @@
-﻿using Deipax.Cloning.Interfaces;
-
-namespace Deipax.Cloning.Common
+﻿namespace Deipax.Cloning.Common
 {
-    public delegate T CloneDel<T>(T source, ICopyContext context);
+    public delegate T CloneDel<T>(T source, CopyContext context);
 }

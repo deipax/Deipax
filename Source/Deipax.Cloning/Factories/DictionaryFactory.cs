@@ -46,19 +46,14 @@ namespace Deipax.Cloning.Factories
             var helper = new DictHelper<X, Y>()
             {
                 KeyCloner = keyType.CanShallowClone() ?
-                    (CloneDel<X>)SimpleReturn<X> :
+                    ExpressionHelper.CreateShallowClone<X>() :
                     Cloner<X>.Get,
                 ValueCloner = valueType.CanShallowClone() ?
-                    (CloneDel<Y>)SimpleReturn<Y> :
+                    ExpressionHelper.CreateShallowClone<Y>() :
                     Cloner<Y>.Get,
             };
 
             return helper.GetClone;
-        }
-
-        private static T SimpleReturn<T>(T source, ICopyContext context)
-        {
-            return source;
         }
         #endregion
 
@@ -68,7 +63,7 @@ namespace Deipax.Cloning.Factories
             public CloneDel<X> KeyCloner { get; set; }
             public CloneDel<Y> ValueCloner { get; set; }
 
-            public Dictionary<X, Y> GetClone(Dictionary<X, Y> source, ICopyContext context)
+            public Dictionary<X, Y> GetClone(Dictionary<X, Y> source, CopyContext context)
             {
                 if (context.TryGetCopy(source, out var existingCopy))
                 {
