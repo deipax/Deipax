@@ -58,6 +58,7 @@
     <Compile Include="BaseTests\Base.cs" />
     <Compile Include="BaseTests\StringBase.cs" />
     <Compile Include="BaseTests_Old\TupleBase.cs" />
+    <Compile Include="DeepCopyIssues.cs" />
     <Compile Include="DeepCopy\AbstractTests.cs" />
     <Compile Include="BaseTests_Old\ArrayBaseTests.cs" />
     <Compile Include="DeepCopy\ArrayTests.cs" />

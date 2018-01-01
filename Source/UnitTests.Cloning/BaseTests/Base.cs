@@ -15,6 +15,8 @@ namespace UnitTests.Cloning.BaseTests
 
             _single = GenerateItem();
 
+            _object = _single;
+
             _arrayDiff = Enumerable
                 .Range(0, 10)
                 .Select(x => GenerateItem())
@@ -72,6 +74,7 @@ namespace UnitTests.Cloning.BaseTests
         #region Field Members
         private readonly T _default;
         private readonly T _single;
+        private readonly object _object;
         private readonly T[] _arraySame;
         private readonly T[] _arrayDiff;
         private readonly object[] _arraySameObjects;
@@ -134,6 +137,14 @@ namespace UnitTests.Cloning.BaseTests
             var args = CreateArgs(_single);
             _cloneHelper.Clone(args);
             AfterSingleInstance(args);
+        }
+
+        [TestMethod]
+        public void ObjectInstance()
+        {
+            var args = CreateArgs(_object);
+            _cloneHelper.Clone(args);
+            AfterObjectInstance(args);
         }
 
         [TestMethod]
@@ -347,6 +358,12 @@ namespace UnitTests.Cloning.BaseTests
             CloneArguments<T> args)
         {
             AssertAreEqual(args.Source, args.Target);
+        }
+
+        protected virtual void AfterObjectInstance(
+            CloneArguments<object> args)
+        {
+            AssertAreEqual((T)args.Source, (T)args.Target);
         }
 
         protected virtual void AfterDefaultInstance(
