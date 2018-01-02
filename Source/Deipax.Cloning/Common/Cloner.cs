@@ -28,16 +28,13 @@ namespace Deipax.Cloning.Common
                 return source;
             }
 
-            var type = source.GetType();
+            var runtimeType = source.GetType();
 
-            if (type == _type)
-            {
-                return _del(source, context);
-            }
+            CloneDel<T> del = runtimeType == _type
+                ? _del
+                : _cache.GetOrAdd(runtimeType, _create);
 
-            CloneDel<T> result = _cache.GetOrAdd(type, _create);
-
-            return result(source, context);
+            return del(source, context);
         }
         #endregion
 
@@ -59,7 +56,7 @@ namespace Deipax.Cloning.Common
 
             var cloneCall = ExpressionHelper.GetUnSafeClone(
                 runtimeType,
-                Expression.Convert(source, runtimeType), 
+                Expression.Convert(source, runtimeType),
                 context);
 
             GotoExpression returnExpression = Expression.Return(
