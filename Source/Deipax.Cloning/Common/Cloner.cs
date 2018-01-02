@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Deipax.Cloning.Common
 {
-    internal static class Cloner<T>
+    public static class Cloner<T>
     {
         #region Field Members
         private static readonly Type _type = typeof(T).IsNullable()

@@ -1,5 +1,4 @@
 ﻿using Deipax.Cloning.Common;
-using Deipax.Cloning.Extensions;
 using UnitTests.Cloning.BaseTests;
 
 namespace UnitTests.Cloning.Deipax
@@ -14,9 +13,9 @@ namespace UnitTests.Cloning.Deipax
 
         public void Clone<T>(CloneArguments<T> args)
         {
-            CopyContext context = new CopyContext();
-            args.Target = args.Source.GetClone(context);
-            args.CacheCount = context.GetCount();
+            CopyContext c = new CopyContext();
+            args.Target = Cloner<T>.Get(args.Source, c);
+            args.CacheCount = c.GetCount();
         }
     }
 }

@@ -84,7 +84,7 @@ namespace Deipax.Cloning.Factories
 
                 if (sourceItem != null)
                 {
-                    target.SetValue(sourceItem.GetClone(context), index);
+                    target.SetValue(Cloner<object>.Get(sourceItem, context), index);
                 }
             }
 

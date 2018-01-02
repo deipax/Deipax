@@ -10,7 +10,8 @@ namespace Deipax.Cloning.Extensions
     public static class TypeExtensions
     {
         #region Field Members
-        private static readonly QuickCache<Type, bool> _canShallowClone = new QuickCache<Type, bool>();
+        private static readonly QuickCache<Type, bool> _canShallowClone = 
+            new QuickCache<Type, bool>(16, ReferenceEqualsComparer.Instance);
         private static readonly Func<Type, bool> _canShallowCloneHelper = CanShallowCloneHelper;
         #endregion
 

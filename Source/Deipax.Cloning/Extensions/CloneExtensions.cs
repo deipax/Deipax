@@ -24,13 +24,6 @@ namespace Deipax.Cloning.Extensions
                 context.Reset();
             }
         }
-
-        public static T GetClone<T>(
-            this T source,
-            CopyContext context)
-        {
-            return Cloner<T>.Get(source, context);
-        }
         #endregion
     }
 }
