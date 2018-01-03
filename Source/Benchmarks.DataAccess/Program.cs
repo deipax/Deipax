@@ -4,7 +4,6 @@ using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Running;
 using Benchmarks.DataAccess.Deipax;
 using System.Linq;
-using UnitTests.Common;
 
 namespace Benchmarks.DataAccess
 {
@@ -26,7 +25,9 @@ namespace Benchmarks.DataAccess
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            BenchmarkRunner.Run<SelectQueryBench>(config);
+            //BenchmarkRunner.Run<SelectQueryBench>(config);
+            //BenchmarkRunner.Run<DynamicBench>(config
+            BenchmarkRunner.Run<ObjectActivatorBench>(config);
         }
     }
 }

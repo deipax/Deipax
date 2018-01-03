@@ -159,6 +159,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Deipax\DynamicBench.cs" />
+    <Compile Include="Deipax\ObjectActivatorBench.cs" />
     <Compile Include="Deipax\SelectQueryBench.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,6 +171,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj">
+      <Project>{A3089AB5-9BDD-4429-96C4-E8DF1C2EC207}</Project>
+      <Name>Deipax.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Deipax.DataAccess\Deipax.DataAccess.csproj">
       <Project>{44D3DE58-8220-49CC-BE41-EA4277CBBC0B}</Project>
       <Name>Deipax.DataAccess</Name>
