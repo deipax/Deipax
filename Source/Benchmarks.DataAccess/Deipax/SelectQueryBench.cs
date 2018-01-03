@@ -1,13 +1,11 @@
-﻿using Deipax.DataAccess.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data;
+﻿using System.Data;
+using BenchmarkDotNet.Attributes;
+using Deipax.DataAccess.Interfaces;
 using UnitTests.Common;
 
-namespace Performance.DataAccess
+namespace Benchmarks.DataAccess.Deipax
 {
-    [TestClass]
-    public class IDbCmdExtensionsTests : BaseTest
+    public class SelectQueryBench
     {
         #region Field Members
         private static readonly string _sql = @"
@@ -63,52 +61,66 @@ namespace Performance.DataAccess
              inner join main.[Product] p on p.[Id] = od.[ProductId]
              inner join main.[Customer] c on c.[Id] = o.[CustomerId]
              inner join main.[Employee] e on e.[Id] = o.[EmployeeId]";
+
+        private IDbCon _dbCon;
         #endregion
 
-        [TestMethod]
-        public void IDbCmdExtensionsTests_AsList_AllFields()
+        [GlobalSetup]
+        public void GlobalSetup()
         {
-            DbHelper.GetNorthwind().AsBatch(dbBatch =>
-            {
-                InitAsList<QueryHelper1>(dbBatch);
-                var result = TimingHelper.GetPerformance(500, () => RunAsList<QueryHelper1>(dbBatch));
-                Console.WriteLine(result.GetReport());
-            });
+            DbHelper.SetDbInitializer();
+            DbHelper.SetDefaultConnectionFactory();
+            _dbCon = DbHelper.GetNorthwind().CreateDbCon();
         }
 
-        [TestMethod]
-        public void IDbCmdExtensionsTests_AsList_SingleFields()
+        [GlobalCleanup]
+        public void GlobalCleanup()
         {
-            DbHelper.GetNorthwind().AsBatch(dbBatch =>
-            {
-                InitAsList<QueryHelper2>(dbBatch);
-                var result = TimingHelper.GetPerformance(500, () => RunAsList<QueryHelper2>(dbBatch));
-                Console.WriteLine(result.GetReport());
-            });
+            _dbCon.Dispose();
         }
 
-        #region Private Members
-        public static void InitAsList<T>(IDbBatch dbBatch)
+        [Benchmark]
+        public void AllFieldsAsClass()
         {
-            var tmp = dbBatch
+            var tmp = _dbCon
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<T>();
+                .AsList<MultipleFieldClass>();
         }
 
-        public static void RunAsList<T>(IDbBatch dbBatch)
+        [Benchmark]
+        public void AllFieldsAsStruct()
         {
-            var tmp = dbBatch
+            var tmp = _dbCon
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<T>();
+                .AsList<MultipleFieldStruct>();
         }
-        #endregion
+
+        [Benchmark]
+        public void SingleFieldAsClass()
+        {
+            var tmp = _dbCon
+                .CreateDbCmd()
+                .SetCommandType(CommandType.Text)
+                .SetSql(_sql)
+                .AsList<SingleFieldClass>();
+        }
+
+        [Benchmark]
+        public void SingleFieldAsStruct()
+        {
+            var tmp = _dbCon
+                .CreateDbCmd()
+                .SetCommandType(CommandType.Text)
+                .SetSql(_sql)
+                .AsList<SingleFieldStruct>();
+        }
 
         #region Helpers
-        class QueryHelper1
+        class MultipleFieldClass
         {
             public string OrderDetailId { get; set; }
             public double Discount { get; set; }
@@ -158,7 +170,62 @@ namespace Performance.DataAccess
             public string EmployeeTitleOfCourtesy { get; set; }
         }
 
-        class QueryHelper2
+        struct MultipleFieldStruct
+        {
+            public string OrderDetailId { get; set; }
+            public double Discount { get; set; }
+            public int OrderId { get; set; }
+            public int Quantity { get; set; }
+            public decimal UnitPrice { get; set; }
+            public int ProductId { get; set; }
+            public string CustomerId { get; set; }
+            public int EmployeeId { get; set; }
+            public decimal Freight { get; set; }
+            public string OrderDate { get; set; }
+            public string RequiredDate { get; set; }
+            public string ShipAddress { get; set; }
+            public string ShipCity { get; set; }
+            public string ShipCountry { get; set; }
+            public string ShipName { get; set; }
+            public string ShippedDate { get; set; }
+            public string ShipPostalCode { get; set; }
+            public string ShipRegion { get; set; }
+            public int ShipVia { get; set; }
+            public string CustomerAddress { get; set; }
+            public string CustomerCity { get; set; }
+            public string CustomerCompanyName { get; set; }
+            public string CustomerContactName { get; set; }
+            public string CustomerContactTitle { get; set; }
+            public string CustomerCountry { get; set; }
+            public string CustomerFax { get; set; }
+            public string CustomerPhone { get; set; }
+            public string CustomerPostalCode { get; set; }
+            public string CustomerRegion { get; set; }
+            public string EmployeeAddress { get; set; }
+            public string EmployeeBirthDate { get; set; }
+            public string EmployeeCity { get; set; }
+            public string EmployeeCountry { get; set; }
+            public string EmployeeExtension { get; set; }
+            public string EmployeeFirstName { get; set; }
+            public string EmployeeHireDate { get; set; }
+            public string EmployeeHomePhone { get; set; }
+            public string EmployeeLastName { get; set; }
+            public string EmployeeNotes { get; set; }
+            public byte[] EmployeePhoto { get; set; }
+            public string EmployeePhotoPath { get; set; }
+            public string EmployeePostalCode { get; set; }
+            public string EmployeeRegion { get; set; }
+            public int EmployeeReportsTo { get; set; }
+            public string EmployeeTitle { get; set; }
+            public string EmployeeTitleOfCourtesy { get; set; }
+        }
+
+        class SingleFieldClass
+        {
+            public string OrderDetailId { get; set; }
+        }
+
+        struct SingleFieldStruct
         {
             public string OrderDetailId { get; set; }
         }
