@@ -6,7 +6,7 @@ Frequency=3410146 Hz, Resolution=293.2426 ns, Timer=TSC
   DefaultJob : .NET Framework 4.7 (CLR 4.0.30319.42000), 32bit LegacyJIT-v4.7.2117.0
 
 
-                  Method |     Mean |     Error |   StdDev |  Gen 0 | Allocated |
------------------------- |---------:|----------:|---------:|-------:|----------:|
-    IntializeClassByType | 62.78 ns | 2.3050 ns | 6.760 ns | 0.0312 |     164 B |
- IntializeClassByGeneric | 33.83 ns | 0.8345 ns | 2.381 ns | 0.0312 |     164 B |
+                  Method |     Mean |    Error |   StdDev |  Gen 0 | Allocated |
+------------------------ |---------:|---------:|---------:|-------:|----------:|
+    IntializeClassByType | 55.39 ns | 1.974 ns | 5.820 ns | 0.0312 |     164 B |
+ IntializeClassByGeneric | 34.59 ns | 1.133 ns | 3.304 ns | 0.0312 |     164 B |

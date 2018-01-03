@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Deipax.Cloning.Common
+namespace Deipax.Core.Common
 {
     public class QuickCache<TKey, TValue> : Dictionary<TKey, TValue>
     {

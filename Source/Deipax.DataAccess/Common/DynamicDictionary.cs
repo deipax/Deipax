@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 
@@ -11,7 +12,7 @@ namespace Deipax.DataAccess.Common
 		}
 
 		#region Field Members
-		private IDictionary<string, T> _items = new Dictionary<string, T>();
+		private IDictionary<string, T> _items = new Dictionary<string, T>(StringComparer.Ordinal);
 		#endregion
 
 		#region Public Members

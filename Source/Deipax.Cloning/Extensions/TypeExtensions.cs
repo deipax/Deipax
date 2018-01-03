@@ -1,4 +1,4 @@
-﻿using Deipax.Cloning.Common;
+﻿using Deipax.Core.Common;
 using Deipax.Core.Extensions;
 using System;
 using System.Collections.Generic;
