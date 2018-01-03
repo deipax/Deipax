@@ -167,6 +167,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.DynamicBench-report-default.md" />
+    <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.ObjectActivatorBench-report-default.md" />
     <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.SelectQueryBench-report-default.md" />
     <None Include="packages.config" />
   </ItemGroup>
