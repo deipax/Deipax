@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace Deipax.Cloning.Common
 {
+    public delegate T CloneDel<T>(T source, CopyContext context);
+
     public static class CloneDelConfig
     {
         static CloneDelConfig()
