@@ -66,7 +66,7 @@ namespace Deipax.Cloning.Common
             expressions.Add(Expression.Label(returnTarget, defaultValue));
 
             var block = Expression.Block(
-                new[] { args.Target, fromContext},
+                new[] { args.Target, fromContext },
                 expressions);
 
             return Expression.Lambda<CloneDel<T>>(block, args.Source, args.Context);
@@ -79,28 +79,27 @@ namespace Deipax.Cloning.Common
         {
             List<Expression> expressions = new List<Expression>();
 
-            var type = typeof(T);
-
-            bool cloneAll = type
-                .GetCustomAttributes<CloneAllAttribute>()
-                .Count() > 0;
-
-            var fields = type.GetAllFields();
-            var properties = type.GetFilteredProperties(fields);
-
-            fields.Where(x =>
-                x.CanRead &&
-                x.CanWrite &&
-                !x.IsStatic &&
-                !x.IsLiteral &&
-                !x.IsBackingField &&
-                (x.IsPublic || cloneAll || x.GetCustomAttributes<CloneAttribute>().Count() > 0) &&
-                x.GetCustomAttributes<NoCloneAttribute>().Count() == 0)
-            .ToList()
-            .ForEach(x =>
+            foreach (var field in CloneConfig<T>.GetFields())
             {
-                var memberType = x.Type;
-                var memberInfo = x.FieldInfo;
+                var memberType = field.Type;
+                var memberInfo = field.FieldInfo;
+
+                var cloneExpression = memberType.CanShallowClone()
+                    ? (Expression)Expression.MakeMemberAccess(source, memberInfo)
+                    : (Expression)GetSafeClone(memberType, Expression.MakeMemberAccess(source, memberInfo),
+                        context);
+
+                expressions.Add(Expression.Assign(
+                    Expression.MakeMemberAccess(target, memberInfo),
+                    cloneExpression));
+            }
+
+            foreach (var prop in CloneConfig<T>.GetProperties())
+            {
+                var memberType = prop.Type;
+                var memberInfo = prop.HasBackingField ?
+                    (MemberInfo)prop.BackingField.FieldInfo :
+                    (MemberInfo)prop.PropertyInfo;
 
                 var cloneExpression = memberType.CanShallowClone()
                     ? (Expression)Expression.MakeMemberAccess(source, memberInfo)
@@ -109,32 +108,7 @@ namespace Deipax.Cloning.Common
                 expressions.Add(Expression.Assign(
                     Expression.MakeMemberAccess(target, memberInfo),
                     cloneExpression));
-            });
-
-            properties.Where(x =>
-                x.CanRead &&
-                x.CanWrite &&
-                !x.IsLiteral &&
-                !x.IsStatic &&
-                !x.HasParameters &&
-                (x.IsPublic || cloneAll || x.GetCustomAttributes<CloneAttribute>().Count() > 0) &&
-                x.GetCustomAttributes<NoCloneAttribute>().Count() == 0)
-            .ToList()
-            .ForEach(x =>
-            {
-                var memberType = x.Type;
-                var memberInfo = x.HasBackingField ?
-                    (MemberInfo)x.BackingField.FieldInfo :
-                    (MemberInfo)x.PropertyInfo;
-
-                var cloneExpression = memberType.CanShallowClone()
-                    ? (Expression)Expression.MakeMemberAccess(source, memberInfo)
-                    : (Expression)GetSafeClone(memberType, Expression.MakeMemberAccess(source, memberInfo), context);
-
-                expressions.Add(Expression.Assign(
-                    Expression.MakeMemberAccess(target, memberInfo),
-                    cloneExpression));
-            });
+            }
 
             return expressions.Count > 0 ?
                 Expression.Block(expressions) :

@@ -168,6 +168,38 @@ namespace UnitTests.Cloning.Deipax
             private int PropFour { get; set; }
         }
 
+        [TestMethod]
+        public void NoCloneAttributeTests_TestClass4()
+        {
+            var source = new TestClass4(5, 6)
+            {
+                PropOne = 1,
+                PropTwo = 2,
+                PropThree = 3,
+                PropFour = 4
+            };
+
+            CloneConfig<TestClass4>.CloneAll(true);
+            CloneConfig<TestClass4>.Exclude(x => x.PropOne);
+            CloneConfig<TestClass4>.Exclude(x => x.PropTwo);
+            CloneConfig<TestClass4>.Exclude("PropSix");
+
+            var propFive = ModelAccess<TestClass4>.GetGetter("PropFive");
+            var propSix = ModelAccess<TestClass4>.GetGetter("PropSix");
+            var dest = source.GetClone();
+
+            Assert.AreEqual(default(int), dest.PropOne);
+            Assert.AreEqual(default(int), dest.PropTwo);
+            Assert.AreEqual(source.PropThree, dest.PropThree);
+            Assert.AreEqual(source.PropFour, dest.PropFour);
+
+            Assert.AreEqual(propFive.Get(source), propFive.Get(dest));
+            Assert.AreNotEqual(default(int), propFive.Get(dest));
+
+            Assert.AreNotEqual(default(int), propSix.Get(source));
+            Assert.AreEqual(default(int), propSix.Get(dest));
+        }
+
         [CloneAll]
         private class TestClass2
         {
@@ -293,6 +325,27 @@ namespace UnitTests.Cloning.Deipax
 
             [Clone]
             private int PropFour { get; set; }
+        }
+
+        private class TestClass4
+        {
+            public TestClass4(int propFive, int propSix)
+            {
+                PropFive = propFive;
+                PropSix = propSix;
+            }
+
+            public TestClass4()
+            {
+            }
+
+            public int PropOne { get; set; }
+            public int PropTwo { get; set; }
+            public int PropThree { get; set; }
+            public int PropFour { get; set; }
+
+            private int PropFive { get; set; }
+            private int PropSix { get; set; }
         }
         #endregion
     }
