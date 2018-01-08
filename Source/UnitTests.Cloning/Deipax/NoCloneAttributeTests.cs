@@ -146,28 +146,6 @@ namespace UnitTests.Cloning.Deipax
             Assert.AreEqual(destPropFour, 4);
         }
 
-        #region Helper
-        [CloneAll]
-        private class TestClass1
-        {
-            public TestClass1(
-                int propThree,
-                int propFour)
-            {
-                PropThree = propThree;
-                PropFour = propFour;
-            }
-
-            public TestClass1()
-            {
-            }
-
-            public int PropOne { get; set; }
-            public int PropTwo { get; set; }
-            private int PropThree { get; set; }
-            private int PropFour { get; set; }
-        }
-
         [TestMethod]
         public void NoCloneAttributeTests_TestClass4()
         {
@@ -179,7 +157,7 @@ namespace UnitTests.Cloning.Deipax
                 PropFour = 4
             };
 
-            CloneConfig<TestClass4>.CloneAll(true);
+            CloneConfig<TestClass4>.SetCloneCmd(CloneCmd.All);
             CloneConfig<TestClass4>.Exclude(x => x.PropOne);
             CloneConfig<TestClass4>.Exclude(x => x.PropTwo);
             CloneConfig<TestClass4>.Exclude("PropSix");
@@ -200,7 +178,64 @@ namespace UnitTests.Cloning.Deipax
             Assert.AreEqual(default(int), propSix.Get(dest));
         }
 
-        [CloneAll]
+        [TestMethod]
+        public void NoCloneAttributeTests_TestClass5()
+        {
+            var propOneGet = ModelAccess<TestClass5>.GetGetter("PropOne");
+            var propOneSet = ModelAccess<TestClass5>.GetSetter("PropOne");
+
+            var propTwoGet = ModelAccess<TestClass5>.GetGetter("PropTwo");
+            var propTwoSet = ModelAccess<TestClass5>.GetSetter("PropTwo");
+
+            var propThreeGet = ModelAccess<TestClass5>.GetGetter("PropThree");
+            var propThreeSet = ModelAccess<TestClass5>.GetSetter("PropThree");
+
+            var propFourGet = ModelAccess<TestClass5>.GetGetter("PropFour");
+            var propFourSet = ModelAccess<TestClass5>.GetSetter("PropFour");
+
+            var source = new TestClass5();
+
+            propOneSet.Set(source, 1);
+            propTwoSet.Set(source, 2);
+            propThreeSet.Set(source, 3);
+            propFourSet.Set(source, 4);
+
+            var dest = source.GetClone();
+
+            Assert.AreNotEqual(default(int), propOneGet.Get(source));
+            Assert.AreNotEqual(default(int), propTwoGet.Get(source));
+            Assert.AreNotEqual(default(int), propThreeGet.Get(source));
+            Assert.AreNotEqual(default(int), propFourGet.Get(source));
+
+            Assert.AreEqual(propOneGet.Get(source), propOneGet.Get(dest));
+            Assert.AreEqual(propTwoGet.Get(source), propTwoGet.Get(dest));
+            Assert.AreEqual(default(int), propThreeGet.Get(dest));
+            Assert.AreEqual(default(int), propFourGet.Get(dest));
+        }
+
+        #region Helper
+        [CloneCmd(CloneCmd.All)]
+        private class TestClass1
+        {
+            public TestClass1(
+                int propThree,
+                int propFour)
+            {
+                PropThree = propThree;
+                PropFour = propFour;
+            }
+
+            public TestClass1()
+            {
+            }
+
+            public int PropOne { get; set; }
+            public int PropTwo { get; set; }
+            private int PropThree { get; set; }
+            private int PropFour { get; set; }
+        }
+
+        [CloneCmd(CloneCmd.All)]
         private class TestClass2
         {
             public TestClass2(
@@ -253,7 +288,7 @@ namespace UnitTests.Cloning.Deipax
             private int PropFour { get; set; }
         }
 
-        [CloneAll]
+        [CloneCmd(CloneCmd.All)]
         private class TestStruct1
         {
             public TestStruct1(
@@ -274,7 +309,7 @@ namespace UnitTests.Cloning.Deipax
             private int PropFour { get; set; }
         }
 
-        [CloneAll]
+        [CloneCmd(CloneCmd.All)]
         private class TestStruct2
         {
             public TestStruct2(
@@ -346,6 +381,18 @@ namespace UnitTests.Cloning.Deipax
 
             private int PropFive { get; set; }
             private int PropSix { get; set; }
+        }
+
+        [CloneCmd(CloneCmd.None)]
+        private class TestClass5
+        {
+            [Clone]
+            private int PropOne { get; set; }
+
+            [Clone]
+            private int PropTwo { get; set; }
+            private int PropThree { get; set; }
+            private int PropFour { get; set; }
         }
         #endregion
     }

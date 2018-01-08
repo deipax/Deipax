@@ -29,7 +29,24 @@ namespace Deipax.Cloning.Common
         AttributeTargets.Struct,
         AllowMultiple = false,
         Inherited = true)]
-    public class CloneAllAttribute : Attribute
+    public class CloneCmdAttribute : Attribute
     {
+        public CloneCmdAttribute(CloneCmd cmd)
+        {
+            this.Cmd = cmd;
+        }
+
+        private CloneCmdAttribute()
+        {
+        }
+
+        public readonly CloneCmd Cmd;
+    }
+
+    public enum CloneCmd
+    {
+        All,
+        None,
+        Default
     }
 }

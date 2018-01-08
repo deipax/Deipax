@@ -14,9 +14,18 @@ namespace Deipax.Cloning.Common
         {
             var type = typeof(T);
 
-            _cloneAll = type
-                .GetCustomAttributes<CloneAllAttribute>()
-                .Count() > 0;
+            var cloneCmd = type
+                .GetCustomAttributes<CloneCmdAttribute>()
+                .FirstOrDefault();
+
+            if (cloneCmd != null)
+            {
+                SetCloneCmd(cloneCmd.Cmd);
+            }
+            else
+            {
+                SetCloneCmd(CloneCmd.Default);
+            }
 
             var fields = type
                 .GetAllFields()
@@ -54,7 +63,7 @@ namespace Deipax.Cloning.Common
         }
 
         #region Field Members
-        private static bool _cloneAll = false;
+        private static CloneCmd _cloneCmd;
         private static List<string> _include = new List<string>();
         private static List<string> _exclude = new List<string>();
         #endregion
@@ -62,9 +71,9 @@ namespace Deipax.Cloning.Common
         #region Public Members
         public static Func<T, T> Initializer { get; set; }
 
-        public static void CloneAll(bool value)
+        public static void SetCloneCmd(CloneCmd cmd)
         {
-            _cloneAll = value;
+            _cloneCmd = cmd;
         }
 
         public static void Include(string name)
@@ -89,30 +98,62 @@ namespace Deipax.Cloning.Common
 
         public static IReadOnlyList<IFieldModelInfo> GetFields()
         {
-            return typeof(T)
+            var allFields = typeof(T)
                 .GetAllFields()
                 .Where(x =>
                     x.CanRead &&
                     x.CanWrite &&
                     !x.IsStatic &&
                     !x.IsLiteral &&
-                    !x.IsBackingField &&
-                    (x.IsPublic || _cloneAll || _include.Contains(x.Name)) &&
+                    !x.IsBackingField);
+
+            if (_cloneCmd == CloneCmd.All)
+            {
+                return allFields
+                    .Where(x => !_exclude.Contains(x.Name))
+                    .ToList();
+            }
+            else if (_cloneCmd == CloneCmd.None)
+            {
+                return allFields
+                    .Where(x => _include.Contains(x.Name))
+                    .ToList();
+            }
+
+            return allFields
+                .Where(x =>
+                    (x.IsPublic || _include.Contains(x.Name)) &&
                     !_exclude.Contains(x.Name))
                 .ToList();
         }
 
         public static IReadOnlyList<IPropertyModelInfo> GetProperties()
         {
-            return typeof(T)
+            var allProps = typeof(T)
                 .GetFilteredProperties()
                 .Where(x =>
                     x.CanRead &&
                     x.CanWrite &&
                     !x.IsLiteral &&
                     !x.IsStatic &&
-                    !x.HasParameters &&
-                    (x.IsPublic || _cloneAll || _include.Contains(x.Name)) &&
+                    !x.HasParameters);
+
+            if (_cloneCmd == CloneCmd.All)
+            {
+                return allProps
+                    .Where(x => !_exclude.Contains(x.Name))
+                    .ToList();
+            }
+            else if (_cloneCmd == CloneCmd.None)
+            {
+                return allProps
+                    .Where(x => _include.Contains(x.Name))
+                    .ToList();
+            }
+
+            return allProps
+                .Where(x =>
+                    (x.IsPublic || _include.Contains(x.Name)) &&
                     !_exclude.Contains(x.Name))
                 .ToList();
         }
