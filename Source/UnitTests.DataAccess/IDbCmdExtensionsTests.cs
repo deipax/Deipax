@@ -336,13 +336,13 @@ namespace UnitTests.DataAccess
         }
 
         [TestMethod]
-        public void TimeIt()
+        public void ExecuteConnection()
         {
             SetupAndAssert(dbCmd =>
             {
                 bool funcCalled = false;
 
-                dbCmd.TimeIt(dbConnection =>
+                dbCmd.ExecuteConnection(dbConnection =>
                 {
                     funcCalled = true;
                 });
@@ -352,13 +352,47 @@ namespace UnitTests.DataAccess
         }
 
         [TestMethod]
-        public void TimeIt_WithReturn()
+        public void ExecuteCommand()
         {
             SetupAndAssert(dbCmd =>
             {
                 bool funcCalled = false;
 
-                var result = dbCmd.TimeIt(dbConnection =>
+                dbCmd.ExecuteCommand(dbCommand =>
+                {
+                    funcCalled = true;
+                });
+
+                Assert.IsTrue(funcCalled);
+            });
+        }
+
+        [TestMethod]
+        public void ExecuteConnection_WithReturn()
+        {
+            SetupAndAssert(dbCmd =>
+            {
+                bool funcCalled = false;
+
+                var result = dbCmd.ExecuteConnection(dbConnection =>
+                {
+                    funcCalled = true;
+                    return 12;
+                });
+
+                Assert.IsTrue(result == 12);
+                Assert.IsTrue(funcCalled);
+            });
+        }
+
+        [TestMethod]
+        public void ExecuteCommand_WithReturn()
+        {
+            SetupAndAssert(dbCmd =>
+            {
+                bool funcCalled = false;
+
+                var result = dbCmd.ExecuteCommand(dbCommand =>
                 {
                     funcCalled = true;
                     return 12;

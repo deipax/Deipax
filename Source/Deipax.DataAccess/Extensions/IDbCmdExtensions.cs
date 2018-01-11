@@ -172,7 +172,7 @@ namespace Deipax.DataAccess.Interfaces
 			return ConvertTo<T>.From(obj);
 		}
 
-		public static void TimeIt(
+		public static void ExecuteConnection(
 			this IDbCmd source, 
 			Action<IDbConnection> func)
 		{
@@ -182,7 +182,7 @@ namespace Deipax.DataAccess.Interfaces
 			}
 		}
 
-		public static T TimeIt<T>(
+		public static T ExecuteConnection<T>(
 			this IDbCmd source, 
 			Func<IDbConnection, T> func)
 		{
@@ -191,10 +191,32 @@ namespace Deipax.DataAccess.Interfaces
 				return func(source.Connection);
 			}
 		}
-		#endregion
 
-		#region Private Members
-		private static IDbCommand CreateCommand(
+	    public static void ExecuteCommand(
+	        this IDbCmd source,
+            Action<IDbCommand> action)
+	    {
+	        using (var timer = RunTimer.Create(source))
+	        using (var dbCmd = source.CreateCommand())
+	        {
+	            action(dbCmd);
+	        }
+        }
+    
+	    public static T ExecuteCommand<T>(
+	        this IDbCmd source,
+	        Func<IDbCommand, T> func)
+	    {
+	        using (var timer = RunTimer.Create(source))
+	        using (var dbCmd = source.CreateCommand())
+	        {
+	            return func(dbCmd);
+	        }
+	    }
+        #endregion
+
+        #region Private Members
+        private static IDbCommand CreateCommand(
 			this IDbCmd source)
 		{
 			var cmd = source.Connection.CreateCommand();

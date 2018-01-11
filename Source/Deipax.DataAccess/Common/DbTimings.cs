@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Deipax.DataAccess.Interfaces;
 
 namespace Deipax.DataAccess.Common
@@ -21,8 +22,8 @@ namespace Deipax.DataAccess.Common
 		{
 		}
 
-		private DateTime _start = DateTime.Now;
-		private IDb _db;
+	    private Stopwatch _watch = Stopwatch.StartNew();
+        private IDb _db;
 
 		public static OpenTimer Create(IDb db)
 		{
@@ -33,8 +34,7 @@ namespace Deipax.DataAccess.Common
 		{
 			if (DbTimings.Open != null && _db != null)
 			{
-				var elapsed = DateTime.Now.Subtract(_start).TotalMilliseconds;
-				DbTimings.Open(_db, elapsed);
+				DbTimings.Open(_db, _watch.ElapsedMilliseconds);
 			}
 		}
 	}
@@ -50,8 +50,8 @@ namespace Deipax.DataAccess.Common
 		{
 		}
 
-		private DateTime _start = DateTime.Now;
-		private IDb _db;
+	    private Stopwatch _watch = Stopwatch.StartNew();
+        private IDb _db;
 
 		public static CloseTimer Create(IDb db)
 		{
@@ -62,8 +62,7 @@ namespace Deipax.DataAccess.Common
 		{
 			if (DbTimings.Close != null && _db != null)
 			{
-				var elapsed = DateTime.Now.Subtract(_start).TotalMilliseconds;
-				DbTimings.Close(_db, elapsed);
+				DbTimings.Close(_db, _watch.ElapsedMilliseconds);
 			}
 		}
 	}
@@ -79,7 +78,7 @@ namespace Deipax.DataAccess.Common
 		{
 		}
 
-		private DateTime _start = DateTime.Now;
+		private Stopwatch _watch = Stopwatch.StartNew();
 		private IDbCmd _dbCmd;
 
 		public static RunTimer Create(IDbCmd dbCmd)
@@ -91,8 +90,7 @@ namespace Deipax.DataAccess.Common
 		{
 			if (DbTimings.RunQuery != null && _dbCmd != null)
 			{
-				var elapsed = DateTime.Now.Subtract(_start).TotalMilliseconds;
-				DbTimings.RunQuery(_dbCmd, elapsed);
+				DbTimings.RunQuery(_dbCmd, _watch.ElapsedMilliseconds);
 			}
 		}
 	}
