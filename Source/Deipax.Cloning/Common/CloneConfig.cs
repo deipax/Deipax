@@ -71,6 +71,8 @@ namespace Deipax.Cloning.Common
         #region Public Members
         public static Func<T, T> Initializer { get; set; }
 
+        public static CloneDel<T> CloneDel { get; set; }
+
         public static void SetCloneCmd(CloneCmd cmd)
         {
             _cloneCmd = cmd;

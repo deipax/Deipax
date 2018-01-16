@@ -13,7 +13,7 @@ namespace Deipax.Cloning.Common
             ? Nullable.GetUnderlyingType(typeof(T))
             : typeof(T);
 
-        private static readonly CloneDel<T> _del = CloneDelConfig.Get<T>();
+        private static CloneDel<T> _del = CloneConfigHelper.Get<T>();
 
         private static readonly QuickCache<Type, CloneDel<T>> _cache =
             new QuickCache<Type, CloneDel<T>>(16, ReferenceEqualsComparer.Instance);
@@ -36,6 +36,12 @@ namespace Deipax.Cloning.Common
                 : _cache.GetOrAdd(runtimeType, _create);
 
             return del(source, context);
+        }
+
+        public static void Reset()
+        {   
+            _cache.Clear();
+            _del = CloneConfigHelper.Get<T>();
         }
         #endregion
 

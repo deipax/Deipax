@@ -2,6 +2,7 @@
 using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using UnitTests.Common;
 
 namespace UnitTests.Cloning.Deipax
@@ -19,24 +20,24 @@ namespace UnitTests.Cloning.Deipax
 
                 HelperFactory<Helper1> helperFactory = new HelperFactory<Helper1>()
                 {
-                    MyFunc = (source, context) =>
+                    MyFunc = (x, y) =>
                     {
                         callCount++;
                         return mysource;
                     }
                 };
 
-                CloneDelConfig.UserFactories.Add(helperFactory);
+                Reset<Helper1>(factory: helperFactory);
 
-                var del = CloneDelConfig.Get<Helper1>();
-                var target = del(new Helper1(), new CopyContext());
+                var source = new Helper1();
+                var target = source.GetClone();
 
                 Assert.AreSame(mysource, target);
                 Assert.AreEqual(1, callCount);
             }
             finally
             {
-                CloneDelConfig.UserFactories.Clear();
+                Reset<Helper1>();
             }
         }
 
@@ -47,17 +48,16 @@ namespace UnitTests.Cloning.Deipax
             {
                 int methodCalled = 0;
 
-                CloneConfig<Helper5>.Initializer = (x) =>
+                Func<Helper5, Helper5> func = (x) =>
                 {
                     methodCalled++;
                     return new Helper5(x.Prop);
                 };
 
-                var cloneDelegate = CloneDelConfig.Get<Helper5>();
-                var context = new CopyContext();
+                Reset(initializer: func);
 
                 var source = new Helper5(6);
-                var dest = cloneDelegate(source, context);
+                var dest = source.GetClone();
 
                 Assert.IsNotNull(dest);
                 Assert.AreNotSame(source, dest);
@@ -67,7 +67,7 @@ namespace UnitTests.Cloning.Deipax
             }
             finally
             {
-                CloneConfig<Helper5>.Initializer = null;
+                Reset<Helper5>();
             }
         }
 
@@ -78,29 +78,107 @@ namespace UnitTests.Cloning.Deipax
             {
                 int methodCalled = 0;
 
-                CloneConfig<HelperStruct6>.Initializer = (x) =>
+                Func<HelperStruct6, HelperStruct6> func = (x) =>
                 {
                     methodCalled++;
                     return new HelperStruct6(x.Prop);
                 };
 
-                var cloneDelegate = CloneDelConfig.Get<HelperStruct6>();
-                var context = new CopyContext();
+                Reset(initializer: func);
 
                 var source = new HelperStruct6(6);
-
                 var dest = source.GetClone();
 
                 Assert.IsNotNull(dest);
                 Assert.AreEqual(source.Prop, dest.Prop);
                 Assert.AreEqual(dest.Prop, 6);
-                Assert.AreEqual(methodCalled, 1);       
+                Assert.AreEqual(methodCalled, 1);
             }
             finally
             {
-                CloneConfig<HelperStruct6>.Initializer = null;
+                Reset<HelperStruct6>();
             }
         }
+
+        [TestMethod]
+        public void CloneDel_Override_Class()
+        {
+            try
+            {
+                int methodCalled = 0;
+
+                CloneDel<Helper1_1> cloneDel = (x, y) =>
+                {
+                    methodCalled++;
+                    return x;
+                };
+
+                Reset(cloneDel: cloneDel);
+
+                var source = new Helper1_1();
+                source.PropOne = 6;
+
+                var dest = source.GetClone();
+
+                Assert.IsNotNull(dest);
+                Assert.AreSame(source, dest);
+                Assert.AreEqual(source.PropOne, dest.PropOne);
+                Assert.AreEqual(dest.PropOne, 6);
+                Assert.AreEqual(methodCalled, 1);
+            }
+            finally
+            {
+                Reset<Helper1_1>();
+            }
+        }
+
+        [TestMethod]
+        public void CloneDel_Override_Struct()
+        {
+            try
+            {
+                int methodCalled = 0;
+
+                CloneDel<HelperStruct6> cloneDel = (x, y) =>
+                {
+                    methodCalled++;
+                    return x;
+                };
+
+                Reset(cloneDel: cloneDel);
+
+                var source = new HelperStruct6(6);
+                var dest = source.GetClone();
+
+                Assert.IsNotNull(dest);
+                Assert.AreEqual(source.Prop, dest.Prop);
+                Assert.AreEqual(dest.Prop, 6);
+                Assert.AreEqual(methodCalled, 1);
+            }
+            finally
+            {
+                Reset<HelperStruct6>();
+            }
+        }
+
+        #region Private Members
+        private static void Reset<T>(
+            Func<T, T> initializer = null,
+            CloneDel<T> cloneDel = null,
+            ICloneDelFactory factory = null)
+        {
+            CloneConfigHelper.UserFactories.Clear();
+
+            if (factory != null)
+            {
+                CloneConfigHelper.UserFactories.Add(factory);
+            }
+
+            CloneConfig<T>.Initializer = initializer;
+            CloneConfig<T>.CloneDel = cloneDel;
+            Cloner<T>.Reset();
+        }
+        #endregion
 
         #region Helpers
         class HelperFactory<X> : ICloneDelFactory

@@ -6,9 +6,9 @@ namespace Deipax.Cloning.Common
 {
     public delegate T CloneDel<T>(T source, CopyContext context);
 
-    public static class CloneDelConfig
+    public static class CloneConfigHelper
     {
-        static CloneDelConfig()
+        static CloneConfigHelper()
         {
             UserFactories = new List<ICloneDelFactory>();
             DefaultFactories = new List<ICloneDelFactory>
@@ -38,7 +38,12 @@ namespace Deipax.Cloning.Common
 
         public static CloneDel<T> Get<T>()
         {
-            CloneDel<T> cloneDel = null;
+            CloneDel<T> cloneDel = CloneConfig<T>.CloneDel;
+
+            if (cloneDel != null)
+            {
+                return cloneDel;
+            }
 
             foreach (var factory in UserFactories)
             {
