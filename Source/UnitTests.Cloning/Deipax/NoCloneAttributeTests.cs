@@ -157,7 +157,7 @@ namespace UnitTests.Cloning.Deipax
                 PropFour = 4
             };
 
-            CloneConfig<TestClass4>.SetCloneCmd(CloneCmd.All);
+            CloneConfig<TestClass4>.CloneCmd = CloneCmd.All;
             CloneConfig<TestClass4>.Exclude(x => x.PropOne);
             CloneConfig<TestClass4>.Exclude(x => x.PropTwo);
             CloneConfig<TestClass4>.Exclude("PropSix");

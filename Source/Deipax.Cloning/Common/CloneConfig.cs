@@ -16,9 +16,9 @@ namespace Deipax.Cloning.Common
         }
 
         #region Field Members
-        private static CloneCmd _cloneCmd;
         private static List<string> _include = new List<string>();
         private static List<string> _exclude = new List<string>();
+        private static List<string> _shallow = new List<string>();
         #endregion
 
         #region Public Members
@@ -26,9 +26,18 @@ namespace Deipax.Cloning.Common
 
         public static CloneDel<T> CloneDel { get; set; }
 
-        public static void SetCloneCmd(CloneCmd cmd)
+        public static CloneCmd CloneCmd { get; set; }
+
+        public static bool ShallowClone { get; set; }
+
+        public static void AddShallowClone(string name)
         {
-            _cloneCmd = cmd;
+            _shallow.Add(name);
+        }
+
+        public static void AddShallowClone(Expression<Func<T, object>> expression)
+        {
+            AddShallowClone(expression.ExtractMemberName());
         }
 
         public static void Include(string name)
@@ -51,6 +60,16 @@ namespace Deipax.Cloning.Common
             Exclude(expression.ExtractMemberName());
         }
 
+        public static bool ShouldShallowClone(string name)
+        {
+            return _shallow.Contains(name);
+        }
+
+        public static bool ShouldShallowClone(Expression<Func<T, object>> expression)
+        {
+            return ShouldShallowClone(expression.ExtractMemberName());
+        }
+
         public static IReadOnlyList<IFieldModelInfo> GetFields()
         {
             var allFields = typeof(T)
@@ -60,15 +79,16 @@ namespace Deipax.Cloning.Common
                     x.CanWrite &&
                     !x.IsStatic &&
                     !x.IsLiteral &&
-                    !x.IsBackingField);
+                    !x.IsBackingField)
+                .ToList();
 
-            if (_cloneCmd == CloneCmd.All)
+            if (CloneCmd == CloneCmd.All)
             {
                 return allFields
                     .Where(x => !_exclude.Contains(x.Name))
                     .ToList();
             }
-            else if (_cloneCmd == CloneCmd.None)
+            else if (CloneCmd == CloneCmd.None)
             {
                 return allFields
                     .Where(x => _include.Contains(x.Name))
@@ -91,15 +111,16 @@ namespace Deipax.Cloning.Common
                     x.CanWrite &&
                     !x.IsLiteral &&
                     !x.IsStatic &&
-                    !x.HasParameters);
+                    !x.HasParameters)
+                .ToList();
 
-            if (_cloneCmd == CloneCmd.All)
+            if (CloneCmd == CloneCmd.All)
             {
                 return allProps
                     .Where(x => !_exclude.Contains(x.Name))
                     .ToList();
             }
-            else if (_cloneCmd == CloneCmd.None)
+            else if (CloneCmd == CloneCmd.None)
             {
                 return allProps
                     .Where(x => _include.Contains(x.Name))
@@ -119,55 +140,61 @@ namespace Deipax.Cloning.Common
             CloneDel = null;
             _include.Clear();
             _exclude.Clear();
+            _shallow.Clear();
 
             var type = typeof(T);
 
-            var cloneCmd = type
+            var cloneCmdAttr = type
                 .GetCustomAttributes<CloneCmdAttribute>()
                 .FirstOrDefault();
 
-            if (cloneCmd != null)
+            var shallowAttr = type
+                .GetCustomAttributes<ShallowCloneAttribute>()
+                .FirstOrDefault();
+
+            CloneCmd = cloneCmdAttr != null
+                ? cloneCmdAttr.Cmd
+                : CloneCmd.Default;
+
+            ShallowClone = shallowAttr != null;
+
+            var fields = type.GetAllFields();
+
+            foreach (var field in fields)
             {
-                SetCloneCmd(cloneCmd.Cmd);
+                if (field.GetCustomAttributes<CloneAttribute>().Count() > 0)
+                {
+                    Include(field.Name);
+                }
+
+                if (field.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
+                {
+                    Exclude(field.Name);
+                }
+
+                if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)
+                {
+                    AddShallowClone(field.Name);
+                }
             }
-            else
+
+            foreach(var prop in type.GetFilteredProperties(fields))
             {
-                SetCloneCmd(CloneCmd.Default);
+                if (prop.GetCustomAttributes<CloneAttribute>().Count() > 0)
+                {
+                    Include(prop.Name);
+                }
+
+                if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
+                {
+                    Exclude(prop.Name);
+                }
+
+                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)
+                {
+                    AddShallowClone(prop.Name);
+                }
             }
-
-            var fields = type
-                .GetAllFields()
-                .ToList();
-
-            fields.ForEach(x =>
-            {
-                if (x.GetCustomAttributes<CloneAttribute>().Count() > 0)
-                {
-                    Include(x.Name);
-                }
-
-                if (x.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
-                {
-                    Exclude(x.Name);
-                }
-            });
-
-            var properties = type
-                .GetFilteredProperties(fields)
-                .ToList();
-
-            properties.ForEach(x =>
-            {
-                if (x.GetCustomAttributes<CloneAttribute>().Count() > 0)
-                {
-                    Include(x.Name);
-                }
-
-                if (x.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
-                {
-                    Exclude(x.Name);
-                }
-            });
         }
         #endregion
     }
