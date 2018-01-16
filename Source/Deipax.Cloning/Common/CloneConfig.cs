@@ -12,54 +12,7 @@ namespace Deipax.Cloning.Common
     {
         static CloneConfig()
         {
-            var type = typeof(T);
-
-            var cloneCmd = type
-                .GetCustomAttributes<CloneCmdAttribute>()
-                .FirstOrDefault();
-
-            if (cloneCmd != null)
-            {
-                SetCloneCmd(cloneCmd.Cmd);
-            }
-            else
-            {
-                SetCloneCmd(CloneCmd.Default);
-            }
-
-            var fields = type
-                .GetAllFields()
-                .ToList();
-
-            fields.ForEach(x =>
-            {
-                if (x.GetCustomAttributes<CloneAttribute>().Count() > 0)
-                {
-                    Include(x.Name);
-                }
-
-                if (x.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
-                {
-                    Exclude(x.Name);
-                }
-            });
-
-            var properties = type
-                .GetFilteredProperties(fields)
-                .ToList();
-
-            properties.ForEach(x =>
-            {
-                if (x.GetCustomAttributes<CloneAttribute>().Count() > 0)
-                {
-                    Include(x.Name);
-                }
-
-                if (x.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
-                {
-                    Exclude(x.Name);
-                }
-            });
+            Reset();
         }
 
         #region Field Members
@@ -158,6 +111,63 @@ namespace Deipax.Cloning.Common
                     (x.IsPublic || _include.Contains(x.Name)) &&
                     !_exclude.Contains(x.Name))
                 .ToList();
+        }
+
+        public static void Reset()
+        {
+            Initializer = null;
+            CloneDel = null;
+            _include.Clear();
+            _exclude.Clear();
+
+            var type = typeof(T);
+
+            var cloneCmd = type
+                .GetCustomAttributes<CloneCmdAttribute>()
+                .FirstOrDefault();
+
+            if (cloneCmd != null)
+            {
+                SetCloneCmd(cloneCmd.Cmd);
+            }
+            else
+            {
+                SetCloneCmd(CloneCmd.Default);
+            }
+
+            var fields = type
+                .GetAllFields()
+                .ToList();
+
+            fields.ForEach(x =>
+            {
+                if (x.GetCustomAttributes<CloneAttribute>().Count() > 0)
+                {
+                    Include(x.Name);
+                }
+
+                if (x.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
+                {
+                    Exclude(x.Name);
+                }
+            });
+
+            var properties = type
+                .GetFilteredProperties(fields)
+                .ToList();
+
+            properties.ForEach(x =>
+            {
+                if (x.GetCustomAttributes<CloneAttribute>().Count() > 0)
+                {
+                    Include(x.Name);
+                }
+
+                if (x.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
+                {
+                    Exclude(x.Name);
+                }
+            });
         }
         #endregion
     }

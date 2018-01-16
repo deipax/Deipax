@@ -167,6 +167,7 @@ namespace UnitTests.Cloning.Deipax
             CloneDel<T> cloneDel = null,
             ICloneDelFactory factory = null)
         {
+            CloneConfig<T>.Reset();
             CloneConfigHelper.UserFactories.Clear();
 
             if (factory != null)
