@@ -80,6 +80,7 @@
     <Compile Include="DeepCopy\TupleTests.cs" />
     <Compile Include="Deipax\AbstractTests.cs" />
     <Compile Include="Deipax\ArrayTests.cs" />
+    <Compile Include="Deipax\CanShallowCloneTests.cs" />
     <Compile Include="Deipax\CloneConfigTests.cs" />
     <Compile Include="Deipax\ComplexClassTests.cs" />
     <Compile Include="Deipax\ComplexRefTypeTests.cs" />

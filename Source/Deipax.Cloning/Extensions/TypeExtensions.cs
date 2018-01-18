@@ -10,21 +10,27 @@ namespace Deipax.Cloning.Extensions
     public static class TypeExtensions
     {
         #region Field Members
+        private static readonly RuntimeTypeHandle _intPtrTypeHandle = typeof(IntPtr).TypeHandle;
+        private static readonly RuntimeTypeHandle _uIntPtrTypeHandle = typeof(UIntPtr).TypeHandle;
+
         private static readonly QuickCache<Type, bool> _canShallowClone = 
             new QuickCache<Type, bool>(16, ReferenceEqualsComparer.Instance);
+
         private static readonly Func<Type, bool> _canShallowCloneHelper = CanShallowCloneHelper;
         #endregion
 
         #region Public Members
-        public static bool CanShallowClone(this Type source)
+        public static bool CanShallowClone(
+            this Type source)
         {
             return _canShallowClone.GetOrAdd(source, _canShallowCloneHelper);
         }
 
-        public static List<FieldInfo> GetCopyableFields(this Type type)
+        public static List<FieldInfo> GetCopyableFields(
+            this Type type)
         {
             return GetAllFields(type)
-                .Where(fieldInfo => fieldInfo.IsSupportedField())
+                .Where(fieldInfo => fieldInfo.IsSupported())
                 .OrderBy(x => x.Name)
                 .ToList();
 
@@ -51,10 +57,23 @@ namespace Deipax.Cloning.Extensions
                 }
             }
         }
+
+        public static bool IsSupported(
+            this Type source)
+        {
+            if (source.IsPointer || source.IsByRef) return false;
+
+            var handle = source.TypeHandle;
+            if (handle.Equals(_intPtrTypeHandle)) return false;
+            if (handle.Equals(_uIntPtrTypeHandle)) return false;
+
+            return true;
+        }
         #endregion
 
         #region Private Members
-        private static bool CanShallowCloneHelper(Type source)
+        private static bool CanShallowCloneHelper(
+            Type source)
         {
             return source.IsPrimitive() ||
                 source.IsImmutable() ||

@@ -44,6 +44,7 @@ namespace Benchmarks.Cloning
             //BenchmarkRunner.Run<KeyValueDeipax>(config);
             //BenchmarkRunner.Run<NullableDeipax>(config);
             //BenchmarkRunner.Run<PrimitiveDeipax>(config);
+            BenchmarkRunner.Run<CanShallowCloneDeipax>(config);
 
 
             //BenchmarkRunner.Run<IntDeepCopy>(config);
