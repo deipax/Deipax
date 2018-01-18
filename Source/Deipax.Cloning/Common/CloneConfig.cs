@@ -18,7 +18,6 @@ namespace Deipax.Cloning.Common
         #region Field Members
         private static List<string> _include = new List<string>();
         private static List<string> _exclude = new List<string>();
-        private static List<string> _shallow = new List<string>();
         #endregion
 
         #region Public Members
@@ -27,18 +26,6 @@ namespace Deipax.Cloning.Common
         public static CloneDel<T> CloneDel { get; set; }
 
         public static CloneCmd CloneCmd { get; set; }
-
-        public static bool ShallowClone { get; set; }
-
-        public static void AddShallowClone(string name)
-        {
-            _shallow.Add(name);
-        }
-
-        public static void AddShallowClone(Expression<Func<T, object>> expression)
-        {
-            AddShallowClone(expression.ExtractMemberName());
-        }
 
         public static void Include(string name)
         {
@@ -58,16 +45,6 @@ namespace Deipax.Cloning.Common
         public static void Exclude(Expression<Func<T, object>> expression)
         {
             Exclude(expression.ExtractMemberName());
-        }
-
-        public static bool ShouldShallowClone(string name)
-        {
-            return _shallow.Contains(name);
-        }
-
-        public static bool ShouldShallowClone(Expression<Func<T, object>> expression)
-        {
-            return ShouldShallowClone(expression.ExtractMemberName());
         }
 
         public static IReadOnlyList<IFieldModelInfo> GetFields()
@@ -140,7 +117,6 @@ namespace Deipax.Cloning.Common
             CloneDel = null;
             _include.Clear();
             _exclude.Clear();
-            _shallow.Clear();
 
             var type = typeof(T);
 
@@ -148,15 +124,9 @@ namespace Deipax.Cloning.Common
                 .GetCustomAttributes<CloneCmdAttribute>()
                 .FirstOrDefault();
 
-            var shallowAttr = type
-                .GetCustomAttributes<ShallowCloneAttribute>()
-                .FirstOrDefault();
-
             CloneCmd = cloneCmdAttr != null
                 ? cloneCmdAttr.Cmd
                 : CloneCmd.Default;
-
-            ShallowClone = shallowAttr != null;
 
             var fields = type.GetAllFields();
 
@@ -171,11 +141,6 @@ namespace Deipax.Cloning.Common
                 {
                     Exclude(field.Name);
                 }
-
-                if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)
-                {
-                    AddShallowClone(field.Name);
-                }
             }
 
             foreach(var prop in type.GetFilteredProperties(fields))
@@ -188,11 +153,6 @@ namespace Deipax.Cloning.Common
                 if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
                 {
                     Exclude(prop.Name);
-                }
-
-                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)
-                {
-                    AddShallowClone(prop.Name);
                 }
             }
         }
