@@ -37,33 +37,12 @@ namespace Deipax.Cloning.Extensions
         public static List<FieldInfo> GetCopyableFields(
             this Type type)
         {
-            return GetAllFields(type)
-                .Where(fieldInfo => fieldInfo.IsSupported())
+            return type
+                .GetAllFields()
+                .Where(x => x.FieldInfo.IsSupported() && !x.IsStatic)
+                .Select(x => x.FieldInfo)
                 .OrderBy(x => x.Name)
                 .ToList();
-
-            IEnumerable<FieldInfo> GetAllFields(Type containingType)
-            {
-                BindingFlags allFields =
-                    BindingFlags.Instance |
-                    BindingFlags.Public |
-                    BindingFlags.NonPublic |
-                    BindingFlags.DeclaredOnly;
-
-                var current = containingType;
-
-                while (current != typeof(object) && current != null)
-                {
-                    var fields = current.GetFields(allFields);
-
-                    foreach (var field in fields)
-                    {
-                        yield return field;
-                    }
-
-                    current = current.BaseType;
-                }
-            }
         }
 
         public static bool IsSupported(
