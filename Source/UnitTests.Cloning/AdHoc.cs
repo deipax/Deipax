@@ -17,10 +17,13 @@ namespace UnitTests.Cloning
             var arraySame = Enumerable.Repeat(single, 10000).ToArray();
             var arraySameObjects = arraySame.Cast<object>().ToArray();
 
-            for (int i = 0; i < 10000; i++)
+            var type = typeof(ComplexStruct);
+
+            for (int i = 0; i < 10000000; i++)
             {
-                var target1 = DeipaxClone(arraySameObjects);
-                var target2 = DeepClone(arraySameObjects);
+                //var target1 = DeipaxClone(arraySameObjects);
+                //var target2 = DeepClone(arraySameObjects);
+                var tmp = type.CanShallowClone();
             }
         }
 

@@ -4,12 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Deipax.Cloning.Common;
 
 namespace Deipax.Cloning.Extensions
 {
     public static class TypeExtensions
     {
         #region Field Members
+
+        private static MethodInfo _cloneConfigHelper = typeof(TypeExtensions)
+            .GetRuntimeMethods()
+            .Where(x => x.Name == "CheckCloneConfigHelper")
+            .FirstOrDefault();
+
         private static readonly RuntimeTypeHandle _intPtrTypeHandle = typeof(IntPtr).TypeHandle;
         private static readonly RuntimeTypeHandle _uIntPtrTypeHandle = typeof(UIntPtr).TypeHandle;
 
@@ -23,7 +30,8 @@ namespace Deipax.Cloning.Extensions
         public static bool CanShallowClone(
             this Type source)
         {
-            return _canShallowClone.GetOrAdd(source, _canShallowCloneHelper);
+            return _canShallowClone.GetOrAdd(source, _canShallowCloneHelper) || 
+                CheckCloneConfig(source);
         }
 
         public static List<FieldInfo> GetCopyableFields(
@@ -95,6 +103,18 @@ namespace Deipax.Cloning.Extensions
 
                 return true;
             }
+        }
+
+        private static bool CheckCloneConfig(Type type)
+        {
+            return (bool)_cloneConfigHelper
+                .MakeGenericMethod(type)
+                .Invoke(null, null);
+        }
+
+        private static bool CheckCloneConfigHelper<T>()
+        {
+            return CloneConfig<T>.ShallowCloneType;
         }
         #endregion
     }
