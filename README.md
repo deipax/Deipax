@@ -12,6 +12,6 @@ Many good cloning libraries exist, I chose to write this one out of curiosity (a
 - Able to return properties/fields from the source without cloning using registration.  Good for classes/structs not authored by you.
 - Able register a custom delegate factory for structs/classes not supported out of the box or if you want to supply your own clone logic.
 
-*work in progress
+*Documentation work in progress*
 
 Must mention credits - The cloning functionality is based off of CloneExtensions written by Marci Juraszek.  The data access is based off work by jhgbrt/yadal (yet another data access library).  Many changes I have made were to remove inefficiencies, to add or change functionality and to organize the code according my personal preferences and needs.  All bugs or inefficiencies found in the original source, I have offered modifications back to the original authors.
