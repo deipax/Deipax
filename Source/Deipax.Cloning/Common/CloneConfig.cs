@@ -16,8 +16,8 @@ namespace Deipax.Cloning.Common
         }
 
         #region Field Members
-        private static List<string> _include = new List<string>();
-        private static List<string> _exclude = new List<string>();
+        private static List<string> _clone = new List<string>();
+        private static List<string> _noClone = new List<string>();
         private static List<string> _shallow = new List<string>();
         #endregion
 
@@ -40,24 +40,24 @@ namespace Deipax.Cloning.Common
            ShallowClone(expression.ExtractMemberName());
         }
 
-        public static void Include(string name)
+        public static void Clone(string name)
         {
-            _include.Add(name);
+            _clone.Add(name);
         }
 
-        public static void Include(Expression<Func<T, object>> expression)
+        public static void Clone(Expression<Func<T, object>> expression)
         {
-            Include(expression.ExtractMemberName());
+            Clone(expression.ExtractMemberName());
         }
 
-        public static void Exclude(string name)
+        public static void NoClone(string name)
         {
-            _exclude.Add(name);
+            _noClone.Add(name);
         }
 
-        public static void Exclude(Expression<Func<T, object>> expression)
+        public static void NoClone(Expression<Func<T, object>> expression)
         {
-            Exclude(expression.ExtractMemberName());
+            NoClone(expression.ExtractMemberName());
         }
 
         public static bool CanShallowClone(string name)
@@ -85,20 +85,20 @@ namespace Deipax.Cloning.Common
             if (CloneCmd == CloneCmd.All)
             {
                 return allFields
-                    .Where(x => !_exclude.Contains(x.Name))
+                    .Where(x => !_noClone.Contains(x.Name))
                     .ToList();
             }
             else if (CloneCmd == CloneCmd.None)
             {
                 return allFields
-                    .Where(x => _include.Contains(x.Name))
+                    .Where(x => _clone.Contains(x.Name))
                     .ToList();
             }
 
             return allFields
                 .Where(x =>
-                    (x.IsPublic || _include.Contains(x.Name)) &&
-                    !_exclude.Contains(x.Name))
+                    (x.IsPublic || _clone.Contains(x.Name)) &&
+                    !_noClone.Contains(x.Name))
                 .ToList();
         }
 
@@ -117,20 +117,20 @@ namespace Deipax.Cloning.Common
             if (CloneCmd == CloneCmd.All)
             {
                 return allProps
-                    .Where(x => !_exclude.Contains(x.Name))
+                    .Where(x => !_noClone.Contains(x.Name))
                     .ToList();
             }
             else if (CloneCmd == CloneCmd.None)
             {
                 return allProps
-                    .Where(x => _include.Contains(x.Name))
+                    .Where(x => _clone.Contains(x.Name))
                     .ToList();
             }
 
             return allProps
                 .Where(x =>
-                    (x.IsPublic || _include.Contains(x.Name)) &&
-                    !_exclude.Contains(x.Name))
+                    (x.IsPublic || _clone.Contains(x.Name)) &&
+                    !_noClone.Contains(x.Name))
                 .ToList();
         }
 
@@ -138,8 +138,8 @@ namespace Deipax.Cloning.Common
         {
             Initializer = null;
             CloneDel = null;
-            _include.Clear();
-            _exclude.Clear();
+            _clone.Clear();
+            _noClone.Clear();
             _shallow.Clear();
 
             var type = typeof(T);
@@ -164,12 +164,12 @@ namespace Deipax.Cloning.Common
             {
                 if (field.GetCustomAttributes<CloneAttribute>().Count() > 0)
                 {
-                    Include(field.Name);
+                    Clone(field.Name);
                 }
 
                 if (field.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
                 {
-                    Exclude(field.Name);
+                    NoClone(field.Name);
                 }
 
                 if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)
@@ -182,12 +182,12 @@ namespace Deipax.Cloning.Common
             {
                 if (prop.GetCustomAttributes<CloneAttribute>().Count() > 0)
                 {
-                    Include(prop.Name);
+                    Clone(prop.Name);
                 }
 
                 if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
                 {
-                    Exclude(prop.Name);
+                    NoClone(prop.Name);
                 }
 
                 if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)

@@ -158,9 +158,9 @@ namespace UnitTests.Cloning.Deipax
             };
 
             CloneConfig<TestClass4>.CloneCmd = CloneCmd.All;
-            CloneConfig<TestClass4>.Exclude(x => x.PropOne);
-            CloneConfig<TestClass4>.Exclude(x => x.PropTwo);
-            CloneConfig<TestClass4>.Exclude("PropSix");
+            CloneConfig<TestClass4>.NoClone(x => x.PropOne);
+            CloneConfig<TestClass4>.NoClone(x => x.PropTwo);
+            CloneConfig<TestClass4>.NoClone("PropSix");
 
             var propFive = ModelAccess<TestClass4>.GetGetter("PropFive");
             var propSix = ModelAccess<TestClass4>.GetGetter("PropSix");
