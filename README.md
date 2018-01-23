@@ -35,7 +35,7 @@ Attributes are a good way to change default cloning behavior on classes authored
 - ShallowCloneAttribute (classes, structs, properties and fields)
 
 #### CloneCmd, Clone and NoClone Attributes
-The constructor for the CloneCmdAttribute accepts an enum with values of "Default", "All" or "None".  If "Default" is selected the default behavior is used.  If "All" is selected, all properties and fields will be cloned EXCEPT for the properties and fields (even private members) which are decorated with the NoCloneAttribute.  If "None" is selected no properties or fields will be cloned EXCEPT for the properties and fields (even private members) which are decorated with the CloneAttribute.
+The constructor for the CloneCmdAttribute accepts an enum with values of "Default", "All" or "None".  If "Default" is selected the default behavior is used (the Clone and NoClone attributes are taken into consideration).  If "All" is selected, all properties and fields will be cloned EXCEPT for the properties and fields (even private members) which are decorated with the NoCloneAttribute.  If "None" is selected no properties or fields will be cloned EXCEPT for the properties and fields (even private members) which are decorated with the CloneAttribute.
 
 Examples:
 
@@ -94,7 +94,7 @@ Examples:
             public HelperClass2 FieldTwo;
         }
         
-Since HelperClass1 is decorated, anytime it is found in an object graph it will returned without cloning.  So if you were to clone and instance of HelperClass5 both the target and source would be pointing at the exact same instance of HelperClass1.  For HelperClass7, only that field on that class would be shallow cloned.  Any other instance of HelperClass2 would go through the normal cloning procedure.
+Since HelperClass1 is decorated, anytime an instance of this type is found in the object graph it will be returned without cloning.  So if you were to clone an instance of HelperClass5 both the target and source would be pointing at the same instance of HelperClass1.  For HelperClass7, only that FieldOne would be shallow cloned.  Any other instance of HelperClass2 would go through the normal cloning procedure.
 
 
 ## Programmatic Configuration
@@ -109,11 +109,69 @@ Examples:
 - `CloneConfig<HelperClass7>.ShallowClone(x => x.FieldOne);`
 
 
+## Registering a initialization delegate
+Sometimes it is necessary to provide a way of initializing a class or struct before proceeding with the cloning procedure. Some classes do not have a default constructors or the user may need to do some custom work, for this purpose you can use `CloneConfig<T>.Initializer`.  If an initializer is registered, it will be called by the framework instead of the default constructor and then normal cloning work will commence.
+
+Example:
+
+        CloneConfig<Helper5>.Initializer = (x) =>
+        {
+             return new Helper5(x.Prop);
+        };
+
+
+## Registering a clone delegate
+If the customization options available are not enough, the user can register a clone degelate.  That delegate is responsible for the entire cloning procedure of a type including initialization and checking the CopyContext if necessary to prevent cyclical traversal of the object graph.
+
+Example:
+       
+       CloneConfig<Helper1>.CloneDel = (source, context) =>
+       {
+           // Perform instantiation and clone work here
+           ...
+           return clonedInstance;
+       };
+
+
+## Registering a clone delegate factory
+If the customization options available are not enough, the user can register a clone degelate factory.  The factory is responsible for determining if it supports a type for cloning and if so returning a delegate which will peform the clone.  That delegate is responsible for the entire cloning procedure of a type including initialization and checking the CopyContext if necessary to prevent cyclical traversal of the object graph.  Typically the factories are useful for generics.
+
+Example:
+
+        class HelperFactory : ICloneDelFactory
+        {
+            public CloneDel<T> Get<T>()
+            {
+                if (typeof(T).GetGenericTypeDefinition() == typeof(Helper<>))
+                {
+                    return CloneHelper;
+                }
+
+                return null;
+            }
+
+            private static T CloneHelper(T source, CopyContext c)
+            {
+               // Perform instantiation and clone work here
+               ...
+               return clonedInstance;
+            }
+        }
+
+        class Helper<T>
+        {
+            public T PropOne { get; set; }
+        }
+
+        // Register the factory
+        CloneConfigHelper.UserFactories.Add(new HelperFactory());
+
+
 *Documentation work in progress*
 
 ## Credits 
- - The cloning functionality is heavily based off of the CloneExtensions project authored by Marcin Juraszek.
+ - The cloning functionality is heavily base off the CloneExtensions project authored by Marcin Juraszek.
  - Many performance tweaks and observations came from the DeepCopy project authored by Reuben Bond.
- - The data access is based off work by jhgbrt/yadal (yet another data access library).
+ - The data access was inspired by the author of jhgbrt/yadal (yet another data access library).
  
 Many changes I have made were to remove inefficiencies and bugs or to add or change functionality and to organize code according my personal preferences.  All bugs or inefficiencies found in the original source, I have offered fixes/observations back to the original authors.
