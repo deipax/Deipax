@@ -1,6 +1,6 @@
 # Deipax - Cloning library
 
-A high performance, customizable, deep cloning library. Access any relational database in a linq like fashion using extension methods built around Ado.Net.
+A high performance, customizable, deep cloning library.
 
 
 ## Why use this cloning library?
@@ -168,6 +168,8 @@ Example:
 
 
 # Deipax - DataAccess library
+
+Access any relational database that provides an Ado.Net implementation in a linq like fashion using extension methods.
 
 *Documentation work in progress*
 
