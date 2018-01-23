@@ -1,4 +1,4 @@
-# Deipax - Cloning and Data Access library
+# Deipax - Cloning library
 
 A high performance, customizable, deep cloning library. Access any relational database in a linq like fashion using extension methods built around Ado.Net.
 
@@ -121,7 +121,7 @@ Example:
 
 
 ## Registering a clone delegate
-If the customization options available are not enough, the user can register a clone degelate.  That delegate is responsible for the entire cloning procedure of a type including initialization and checking the CopyContext if necessary to prevent cyclical traversal of the object graph.
+If the customization options available are not enough, the user can register a clone degelate.  That delegate is responsible for the entire cloning procedure of an object including initialization and checking the CopyContext if necessary to prevent cyclical traversal of the object graph.
 
 Example:
        
@@ -134,7 +134,7 @@ Example:
 
 
 ## Registering a clone delegate factory
-If the customization options available are not enough, the user can register a clone degelate factory.  The factory is responsible for determining if it supports a type for cloning and if so returning a delegate which will peform the clone.  That delegate is responsible for the entire cloning procedure of a type including initialization and checking the CopyContext if necessary to prevent cyclical traversal of the object graph.  Typically the factories are useful for generics.
+If the customization options available are not enough, the user can register a clone degelate factory.  The factory is responsible for determining if it supports a type for cloning and if so returning a delegate which will peform the clone.  That delegate is responsible for the entire cloning procedure of an object including initialization and checking the CopyContext if necessary to prevent cyclical traversal of the object graph.  Typically the factories are useful for generics.
 
 Example:
 
@@ -167,7 +167,10 @@ Example:
         CloneConfigHelper.UserFactories.Add(new HelperFactory());
 
 
+# Deipax - DataAccess library
+
 *Documentation work in progress*
+
 
 ## Credits 
  - The cloning functionality is heavily base off the CloneExtensions project authored by Marcin Juraszek.
