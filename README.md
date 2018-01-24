@@ -175,8 +175,8 @@ Access any relational database that provides an Ado.Net implementation in a linq
 
 
 ## Credits 
- - The cloning functionality is heavily base off the CloneExtensions project authored by Marcin Juraszek.
- - Many performance tweaks and observations came from the DeepCopy project authored by Reuben Bond.
- - The data access was inspired by the author of jhgbrt/yadal (yet another data access library).
+ - The cloning functionality is heavily base off the [CloneExtensions](https://github.com/MarcinJuraszek/CloneExtensions) project authored by [Marcin Juraszek](https://github.com/MarcinJuraszek).
+ - Many performance tweaks and observations came from the [DeepCopy](https://github.com/ReubenBond/DeepCopy) project authored by [Reuben Bond](https://github.com/ReubenBond).
+ - The data access was inspired by the [YADAL(Yet Another Data Access Library)](https://github.com/jhgbrt/yadal) project authored by [jhgbrt](https://github.com/jhgbrt).
  
 Many changes I have made were to remove inefficiencies and bugs or to add or change functionality and to organize code according my personal preferences.  All bugs or inefficiencies found in the original source, I have offered fixes/observations back to the original authors.
