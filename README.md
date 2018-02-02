@@ -65,7 +65,7 @@ Examples:
             private int PropFour { get; set; }
         }
 
-Why would you not want to clone some fields?  In my case I had a web service that logged all requests sent to it so that we could track work and troubleshoot production issues.  One endpoint was for saving images which took up a lot of database space and provided no benefit.
+Why would you not want to clone some fields?  In my case I had a web service that logged all requests sent to it so that we could track work and troubleshoot production issues.  One endpoint was for saving images which took up a lot of database space and provided no benefit, so I decorated the property on the request which held the image byte array with a NoClone attribute.  I would then clone the request, serialize it and then save it to the database without the extra image data.
 
 #### ShallowClone
 The ShallowClone attribute is rather simple.  If a class, struct, property or field is decorated with this attribute, anytime it is encountered it will be returned from the source without cloning or manipulation of any kind.
