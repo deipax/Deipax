@@ -1,4 +1,5 @@
-﻿using Deipax.DataAccess.Common;
+﻿using System;
+using Deipax.DataAccess.Common;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -28,6 +29,10 @@ namespace Deipax.DataAccess.Interfaces
 				if (value != null)
 				{
 					p.Value = value;
+				}
+				else
+				{
+				    p.Value = DBNull.Value;
 				}
 
 				if (direction.HasValue)
