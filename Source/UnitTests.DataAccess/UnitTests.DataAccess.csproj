@@ -41,7 +41,6 @@
     <Compile Include="Category.cs" />
     <Compile Include="Concretes\TestTransaction.cs" />
     <Compile Include="DbConfigTests.cs" />
-    <Compile Include="DbManagerTests.cs" />
     <Compile Include="IDbBatchExtensionsTests.cs" />
     <Compile Include="IDbCmdExtensionsTests.cs" />
     <Compile Include="IDbConExtensionsTests.cs" />

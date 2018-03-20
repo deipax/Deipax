@@ -3,6 +3,7 @@ using Deipax.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 
 namespace Deipax.DataAccess.Common
 {
@@ -18,15 +19,21 @@ namespace Deipax.DataAccess.Common
 
     public static class DbConfig
     {
-        /// <summary>
-        /// Used to populate the DbManager.  This must be set.
-        /// </summary>
-        public static Func<IReadOnlyDictionary<string, IDb>> DbInitializer { get; set; }
+        static DbConfig()
+        {
+            _dbs = new Lazy<IReadOnlyDictionary<string, IDb>>(
+                () => new Dictionary<string, IDb>(),
+                LazyThreadSafetyMode.ExecutionAndPublication);
+        }
+
+        #region Field Members
+        private static Lazy<IReadOnlyDictionary<string, IDb>> _dbs;
+        #endregion
 
         /// <summary>
-        /// The default method to create a DbConnection.  This must be set.
+        /// The default method to create a DbConnection.
         /// </summary>
-        public static Func<IDb, IDbConnection> DefaultDbConnectionFactory { get; set; }
+        public static Func<IDb, IDbConnection> DbConnectionFactory { get; set; }
 
         /// <summary>
         /// Set this if you want to provide your own implementation of a IDb.
@@ -60,14 +67,14 @@ namespace Deipax.DataAccess.Common
                     name ?? string.Empty,
                     cs ?? string.Empty,
                     provider ?? string.Empty,
-                    connectionFactory ?? DbConfig.DefaultDbConnectionFactory);
+                    connectionFactory ?? DbConnectionFactory);
             }
 
             return new Db(
                 name ?? string.Empty,
                 cs ?? string.Empty,
                 provider ?? string.Empty,
-                connectionFactory ?? DbConfig.DefaultDbConnectionFactory);
+                connectionFactory ?? DbConnectionFactory);
         }
 
         public static IDb CreateSqLiteDb(
@@ -124,6 +131,30 @@ namespace Deipax.DataAccess.Common
             return DbCmdFactoryOverride != null ?
                 DbCmdFactoryOverride(db) :
                 new DbCmd(db);
+        }
+
+        public static IDb Get(string name)
+        {
+            if (_dbs.Value.ContainsKey(name))
+            {
+                return _dbs.Value[name];
+            }
+
+            return null;
+        }
+
+        public static IEnumerable<IDb> GetAll()
+        {
+            return _dbs.Value.Values;
+        }
+
+        public static void SetDbInitializer(
+            Func<IReadOnlyDictionary<string, IDb>> valueFactory)
+        {
+            if (valueFactory != null)
+            {
+                _dbs = new Lazy<IReadOnlyDictionary<string, IDb>>(valueFactory, LazyThreadSafetyMode.ExecutionAndPublication);
+            }
         }
     }
 }

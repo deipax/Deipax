@@ -12,17 +12,17 @@ namespace UnitTests.Common
     {
         public static IDb GetNorthwind()
         {
-            return DbManager.Get("Northwind");
+            return DbConfig.Get("Northwind");
         }
 
         public static void SetDefaultConnectionFactory()
         {
-            DbConfig.DefaultDbConnectionFactory = CreateDbConnection;
+            DbConfig.DbConnectionFactory = CreateDbConnection;
         }
 
         public static void SetDbInitializer()
         {
-            DbConfig.DbInitializer = Initialize;
+            DbConfig.SetDbInitializer(Initialize);
         }
 
         #region Private Members

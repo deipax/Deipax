@@ -6,7 +6,7 @@ using UnitTests.Common;
 
 namespace UnitTests.Cloning
 {
-    [TestClass]
+    //[TestClass]
     public class DeepCopyIssues
     {
         [TestMethod]

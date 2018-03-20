@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using UnitTests.Common;
 using UnitTests.DataAccess.BaseTests;
 
@@ -214,6 +215,40 @@ namespace UnitTests.DataAccess
             Assert.IsTrue(db.ProviderName == "System.Data.SqlClient");
             Assert.IsTrue(db.ConnectionString == "cs");
             Assert.AreSame(db.ConnectionFactory, func);
+        }
+
+        [TestMethod]
+        public void DbConfigTests_Get()
+        {
+            var db1 = DbConfig.Get("Northwind");
+            Assert.IsTrue(db1 != null);
+
+            var db2 = DbConfig.Get("BogusName");
+            Assert.IsTrue(db2 == null);
+
+            var db3 = DbConfig.Get("Northwind");
+            Assert.AreSame(db1, db3);
+        }
+
+        [TestMethod]
+        public void DbConfigTests_GetAll()
+        {
+            var dbs = DbConfig.GetAll();
+
+            Assert.IsTrue(dbs != null);
+            Assert.IsTrue(dbs.Count() > 0);
+        }
+
+        [TestMethod]
+        public void DbConfigTests_Clear()
+        {
+            var db1 = DbConfig.Get("Northwind");
+            // Verify that resetting the initializer, clears the IDbs.
+            DbHelper.SetDbInitializer();
+            var db2 = DbConfig.Get("Northwind");
+            Assert.IsNotNull(db1);
+            Assert.IsNotNull(db2);
+            Assert.AreNotSame(db1, db2);
         }
 
         #region Private Members

@@ -9,7 +9,6 @@ namespace UnitTests.Cloning
     [TestClass]
     public class AdHoc
     {
-        [TestMethod]
         public void Tmp()
         {
             var single = SimpleClass.Generate();
