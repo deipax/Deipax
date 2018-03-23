@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.10.11" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.13" />
     <PackageReference Include="DeepCopy" Version="1.0.3" />
   </ItemGroup>
 
