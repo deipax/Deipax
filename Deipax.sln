@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.DataAccess", "Sou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks.DataAccess", "Source\Benchmarks.DataAccess\Benchmarks.DataAccess.csproj", "{48683E45-AF5D-423A-8D46-10181EF7C569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks.Core", "Source\Benchmarks.Core\Benchmarks.Core.csproj", "{36FD3415-2B74-480A-A1EC-3259643EF1A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.Core", "Source\Benchmarks.Core\Benchmarks.Core.csproj", "{36FD3415-2B74-480A-A1EC-3259643EF1A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
