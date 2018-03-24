@@ -1,14 +1,9 @@
-﻿using System.Data;
-using BenchmarkDotNet.Attributes;
-using Deipax.DataAccess.Interfaces;
-using UnitTests.Common;
-
-namespace Benchmarks.DataAccess.Deipax
+﻿namespace Benchmarks.DataAccess.BaseClasses
 {
-    public class SelectQueryBench
+    public abstract class BaseSelect
     {
         #region Field Members
-        private static readonly string _sql = @"
+        protected static readonly string _sql = @"
         select
               od.[Id] as OrderDetailId,      
               od.[Discount] as Discount,      
@@ -61,66 +56,15 @@ namespace Benchmarks.DataAccess.Deipax
              inner join main.[Product] p on p.[Id] = od.[ProductId]
              inner join main.[Customer] c on c.[Id] = o.[CustomerId]
              inner join main.[Employee] e on e.[Id] = o.[EmployeeId]";
-
-        private IDbCon _dbCon;
         #endregion
 
-        [GlobalSetup]
-        public void GlobalSetup()
-        {
-            DbHelper.SetDbInitializer();
-            DbHelper.SetDefaultConnectionFactory();
-            _dbCon = DbHelper.GetNorthwind().CreateDbCon();
-        }
-
-        [GlobalCleanup]
-        public void GlobalCleanup()
-        {
-            _dbCon.Dispose();
-        }
-
-        [Benchmark]
-        public void AllFieldsAsClass()
-        {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsList<MultipleFieldClass>();
-        }
-
-        [Benchmark]
-        public void AllFieldsAsStruct()
-        {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsList<MultipleFieldStruct>();
-        }
-
-        [Benchmark]
-        public void SingleFieldAsClass()
-        {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsList<SingleFieldClass>();
-        }
-
-        [Benchmark]
-        public void SingleFieldAsStruct()
-        {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsList<SingleFieldStruct>();
-        }
+        public abstract void AllFieldsAsClass();
+        public abstract void AllFieldsAsStruct();
+        public abstract void SingleFieldAsClass();
+        public abstract void SingleFieldAsStruct();
 
         #region Helpers
-        class MultipleFieldClass
+        protected class MultipleFieldClass
         {
             public string OrderDetailId { get; set; }
             public double Discount { get; set; }
@@ -170,7 +114,7 @@ namespace Benchmarks.DataAccess.Deipax
             public string EmployeeTitleOfCourtesy { get; set; }
         }
 
-        struct MultipleFieldStruct
+        protected struct MultipleFieldStruct
         {
             public string OrderDetailId { get; set; }
             public double Discount { get; set; }
@@ -220,12 +164,12 @@ namespace Benchmarks.DataAccess.Deipax
             public string EmployeeTitleOfCourtesy { get; set; }
         }
 
-        class SingleFieldClass
+        protected class SingleFieldClass
         {
             public string OrderDetailId { get; set; }
         }
 
-        struct SingleFieldStruct
+        protected struct SingleFieldStruct
         {
             public string OrderDetailId { get; set; }
         }

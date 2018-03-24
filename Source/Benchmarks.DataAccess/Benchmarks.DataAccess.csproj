@@ -43,6 +43,9 @@
     <Reference Include="BenchmarkDotNet.Toolchains.Roslyn, Version=0.10.13.0, Culture=neutral, PublicKeyToken=aa0ca2f9092cefc4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BenchmarkDotNet.Toolchains.Roslyn.0.10.13\lib\net46\BenchmarkDotNet.Toolchains.Roslyn.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.1.50.4\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeAnalysis.Common.2.7.0\lib\netstandard1.3\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
@@ -95,9 +98,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseClasses\BaseSelect.cs" />
+    <Compile Include="Dapper\DapperSelect.cs" />
+    <Compile Include="Deipax\DeipaxSelect.cs" />
     <Compile Include="Deipax\DynamicBench.cs" />
     <Compile Include="Deipax\ObjectActivatorBench.cs" />
-    <Compile Include="Deipax\SelectQueryBench.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -107,7 +112,8 @@
     </None>
     <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.DynamicBench-report-default.md" />
     <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.ObjectActivatorBench-report-default.md" />
-    <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.SelectQueryBench-report-default.md" />
+    <None Include="BenchmarkDotNet.Artifacts\results\DapperSelect-report-default.md" />
+    <None Include="BenchmarkDotNet.Artifacts\results\DeipaxSelect-report-default.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
