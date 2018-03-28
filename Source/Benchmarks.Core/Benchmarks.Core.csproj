@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
+    <ProjectReference Include="..\Deipax.Experimental\Deipax.Experimental.csproj" />
   </ItemGroup>
 
 </Project>
