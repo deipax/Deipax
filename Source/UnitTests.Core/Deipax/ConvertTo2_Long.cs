@@ -10,7 +10,7 @@ namespace UnitTests.Core.Deipax.Convert
     {
         protected override long ConvertFrom<X>(X from)
         {
-            return ConvertTo2<long, X>.From(from);
+            return ConvertTo2<long>.From(from);
         }
 
         [TestMethod]

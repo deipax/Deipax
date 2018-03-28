@@ -2,27 +2,16 @@
 
 namespace Deipax.Core.Conversion
 {
-    public static class ConvertTo2<T,X>
+    public static class ConvertTo2<TOut>
     {
-        static ConvertTo2()
+        public static TOut From<TIn>(TIn from)
         {
-            Reset();
+            return Helper<TIn>.From(from);
         }
 
-        #region Field Members
-        private static Func<X, T> _func;
-        #endregion
-
-        #region Public Members
-        public static T From(X from)
+        static class Helper<TIn>
         {
-            return _func(from);
+            public static readonly Func<TIn, TOut> From = ConvertConfig.Get<TIn, TOut>();
         }
-
-        public static void Reset()
-        {
-            _func = ConvertConfig.Get<X, T>();
-        }
-        #endregion
     }
 }
