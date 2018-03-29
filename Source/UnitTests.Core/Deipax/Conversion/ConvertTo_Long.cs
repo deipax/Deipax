@@ -1,9 +1,9 @@
 ﻿using Deipax.Core.Conversion;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using UnitTests.Core.BaseClasses;
+using UnitTests.Core.BaseClasses.Conversion;
 
-namespace UnitTests.Core.Deipax.Convert
+namespace UnitTests.Core.Deipax.Conversion
 {
     [TestClass]
     public class ConvertTo_Long : BaseConvertTo<long>

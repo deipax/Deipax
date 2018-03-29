@@ -2,7 +2,7 @@
 using System;
 using UnitTests.Core.TestClasses;
 
-namespace UnitTests.Core.BaseClasses
+namespace UnitTests.Core.BaseClasses.Conversion
 {
     [TestClass]
     public abstract class BaseConvertTo<TTo>

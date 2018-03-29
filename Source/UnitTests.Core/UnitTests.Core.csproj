@@ -43,12 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdHoc.cs" />
-    <Compile Include="BaseClasses\BaseConvertTo.cs" />
+    <Compile Include="BaseClasses\Conversion\BaseConvertTo.cs" />
     <Compile Include="TestClasses\ConvertibleClass.cs" />
     <Compile Include="TestClasses\ConvertibleStruct.cs" />
     <Compile Include="ConvertMapTests.cs" />
-    <Compile Include="Deipax\ConvertTo2_Long.cs" />
-    <Compile Include="Deipax\ConvertTo_Long.cs" />
+    <Compile Include="Deipax\Conversion\ConvertTo2_Long.cs" />
+    <Compile Include="Deipax\Conversion\ConvertTo_Long.cs" />
     <Compile Include="FieldPropCountTests.cs" />
     <Compile Include="ModelAccessTests.cs" />
     <Compile Include="ObjectActivatorTests.cs" />

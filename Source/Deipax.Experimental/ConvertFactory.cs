@@ -162,6 +162,24 @@ namespace Deipax.Core.Conversion
                         isNullOrDbNullExpression,
                         Expression.Return(returnTarget, Expression.Default(toType)));
 
+                    Expression returnIfSameAsTargetTypeExpression = Expression.Empty();
+
+                    if (fromType == typeof(object))
+                    {
+                        if (toType == underlyingToType)
+                        {
+                            returnIfSameAsTargetTypeExpression = Expression.IfThen(
+                                Expression.TypeEqual(input, toType),
+                                Expression.Return(returnTarget, Expression.Convert(input, toType)));
+                        }
+                        else
+                        {
+                            returnIfSameAsTargetTypeExpression = Expression.IfThen(
+                                Expression.TypeEqual(input, underlyingToType),
+                                Expression.Return(returnTarget, Expression.Convert(input, toType)));
+                        }
+                    }
+
                     var assignConverter = Expression.Assign(converter, Expression.TypeAs(input, typeof(IConvertible)));
 
                     var ifConverter = Expression.IfThen(
@@ -180,6 +198,7 @@ namespace Deipax.Core.Conversion
                     BlockExpression block = Expression.Block(
                         new[] { converter },
                         ifNullReturnExpression,
+                        returnIfSameAsTargetTypeExpression,
                         assignConverter,
                         ifConverter,
                         returnExpression,

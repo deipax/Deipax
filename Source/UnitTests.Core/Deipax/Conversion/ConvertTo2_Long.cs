@@ -1,16 +1,16 @@
 ﻿using Deipax.Core.Conversion;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using UnitTests.Core.BaseClasses;
+using UnitTests.Core.BaseClasses.Conversion;
 
-namespace UnitTests.Core.Deipax.Convert
+namespace UnitTests.Core.Deipax.Conversion
 {
     [TestClass]
     public class ConvertTo2_Long : BaseConvertTo<long>
     {
         protected override long ConvertFrom<X>(X from)
         {
-            return ConvertTo2<long>.From(from);
+            return ConvertTo2<long, X>.From(from);
         }
 
         [TestMethod]
