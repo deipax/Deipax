@@ -11,62 +11,62 @@ namespace UnitTests.Core.TestClasses
 
         public bool ToBoolean(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public byte ToByte(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public char ToChar(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 'c';
         }
 
         public DateTime ToDateTime(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return DateTime.MinValue;
         }
 
         public decimal ToDecimal(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public double ToDouble(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public short ToInt16(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public int ToInt32(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public long ToInt64(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public sbyte ToSByte(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public float ToSingle(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public string ToString(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return "1";
         }
 
         public object ToType(Type conversionType, IFormatProvider provider)
@@ -76,17 +76,17 @@ namespace UnitTests.Core.TestClasses
 
         public ushort ToUInt16(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public uint ToUInt32(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public ulong ToUInt64(IFormatProvider provider)
         {
-            throw new NotImplementedException();
+            return 1;
         }
     }
 }

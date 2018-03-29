@@ -10,16 +10,9 @@ namespace UnitTests.Core
         [TestMethod]
         public void Temp()
         {
-            MyEnum tmp = MyEnum.Hello;
-            IConvertible x = tmp;
+            MyEnum? tmp = null;
 
-            var bool1 = tmp.GetType().IsAssignableFrom(typeof(IConvertible));
-            var bool2 = typeof(IConvertible).IsAssignableFrom(tmp.GetType());
-
-            if (x != null)
-            {
-                var y = x.ToInt32(CultureInfo.InvariantCulture);
-            }
+            int x = (int)tmp;
         }
 
         enum MyEnum

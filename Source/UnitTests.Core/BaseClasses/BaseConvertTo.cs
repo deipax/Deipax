@@ -5,11 +5,11 @@ using UnitTests.Core.TestClasses;
 namespace UnitTests.Core.BaseClasses
 {
     [TestClass]
-    public abstract class BaseConvertTo<T>
+    public abstract class BaseConvertTo<TTo>
     {
         public BaseConvertTo()
         {
-            DefaultValue = default(T);
+            DefaultValue = default(TTo);
 
             _fromBool_AsObject = _fromBool = true;
             _fromBoolNullableWithValue_AsObject = _fromBoolNullableWithValue = true;
@@ -70,6 +70,20 @@ namespace UnitTests.Core.BaseClasses
             _fromULong_AsObject = _fromULong = 1;
             _fromULongNullableWithValue_AsObject = _fromULongNullableWithValue = 1;
             _fromULongNullableNoValue_AsObject = _fromULongNullableNoValue = null;
+
+            _convertibleClass_AsObject = _convertibleClass = new ConvertibleClass();
+            _convertibleClassNoValue_AsObject = _convertibleClassNoValue = null;
+
+            _nonConvertibleClass_AsObject = _nonConvertibleClass = new NonConvertibleClass();
+            _nonConvertibleClassNoValue_AsObject = _nonConvertibleClassNoValue = null;
+
+            _convertibleStruct_AsObject = _convertibleStruct = new ConvertibleStruct();
+            _convertibleStructNullableWithValue_AsObject = _convertibleStructNullableWithValue = new ConvertibleStruct();
+            _convertibleStructNullableNoValue_AsObject = _convertibleStructNullableNoValue = null;
+
+            _nonConvertibleStruct_AsObject = _nonConvertibleStruct = new NonConvertibleStruct();
+            _nonConvertibleStructNullableWithValue_AsObject = _nonConvertibleStructNullableWithValue = new NonConvertibleStruct();
+            _nonConvertibleStructNullableNoValue_AsObject = _nonConvertibleStructNullableNoValue = null;
 
             _fromEnum_AsObject = _fromEnum = TestEnum.One;
             _fromEnumNullableWithValue_AsObject = _fromEnumNullableWithValue = TestEnum.One; ;
@@ -184,15 +198,29 @@ namespace UnitTests.Core.BaseClasses
 
         private object _nullObject = null;
 
-        private ConvertibleClass _convertibleClass = new ConvertibleClass();
-        private object _convertibleClass_AsObject = new ConvertibleClass();
-        private NonConvertibleClass _nonConvertibleClass = new NonConvertibleClass();
-        private object _nonConvertibleClass_AsObject = new NonConvertibleClass();
+        private ConvertibleClass _convertibleClass;
+        private ConvertibleClass _convertibleClassNoValue;
+        private object _convertibleClass_AsObject;
+        private object _convertibleClassNoValue_AsObject;
 
-        private ConvertibleStruct _convertibleStruct = new ConvertibleStruct();
-        private object _convertibleStruct_AsObject = new ConvertibleStruct();
-        private NonConvertibleStruct _nonConvertibleStruct = new NonConvertibleStruct();
-        private object _nonConvertibleStruct_AsObject = new NonConvertibleStruct();
+        private NonConvertibleClass _nonConvertibleClass;
+        private NonConvertibleClass _nonConvertibleClassNoValue;
+        private object _nonConvertibleClass_AsObject;
+        private object _nonConvertibleClassNoValue_AsObject;
+
+        private ConvertibleStruct _convertibleStruct;
+        private ConvertibleStruct? _convertibleStructNullableWithValue;
+        private ConvertibleStruct? _convertibleStructNullableNoValue;
+        private object _convertibleStruct_AsObject;
+        private object _convertibleStructNullableWithValue_AsObject;
+        private object _convertibleStructNullableNoValue_AsObject;
+
+        private NonConvertibleStruct _nonConvertibleStruct;
+        private NonConvertibleStruct? _nonConvertibleStructNullableWithValue;
+        private NonConvertibleStruct? _nonConvertibleStructNullableNoValue;
+        private object _nonConvertibleStruct_AsObject;
+        private object _nonConvertibleStructNullableWithValue_AsObject;
+        private object _nonConvertibleStructNullableNoValue_AsObject;
 
         private TestEnum _fromEnum;
         private TestEnum? _fromEnumNullableWithValue;
@@ -203,29 +231,34 @@ namespace UnitTests.Core.BaseClasses
         #endregion
 
         #region Protected Members
-        protected T DefaultValue { get; private set; }
+        protected TTo DefaultValue { get; private set; }
 
         protected virtual void TestConvertFrom<X>(
             X from,
-            T expectedResult)
+            TTo expectedResult)
         {
-            T actualResult = ConvertFrom(from);
+            TTo actualResult = ConvertFrom(from);
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         protected virtual void TestConvertFrom<X>(
             X from)
         {
-            T expectedResult = GetExpected(from);
-            T actualResult = ConvertFrom(from);
+            TTo expectedResult = GetExpected(from);
+            TTo actualResult = ConvertFrom(from);
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        protected abstract T ConvertFrom<X>(X from);
+        protected abstract TTo ConvertFrom<X>(X from);
 
-        protected virtual T GetExpected<X>(X source)
+        protected virtual TTo GetExpected<TFrom>(TFrom from)
         {
-            return (T)Convert.ChangeType(source, typeof(T));
+            if (from != null)
+            {
+                return (TTo)Convert.ChangeType(from, typeof(TTo));
+            }
+
+            return default(TTo);
         }
         #endregion
 
@@ -813,27 +846,33 @@ namespace UnitTests.Core.BaseClasses
         }
         #endregion
 
-        #region Classes
+        #region From IConvertible Classes
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public virtual void From_ConvertibleClass()
         {
-            // The ConvertibleClass implements the IConvertible interface 
-            // but throws exceptions.  So if a NotImplementedException is thrown,
-            // the interface was called.
             TestConvertFrom(_convertibleClass);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public virtual void From_ConvertibleClass_AsObject()
         {
-            // The ConvertibleClass implements the IConvertible interface 
-            // but throws exceptions.  So if a NotImplementedException is thrown,
-            // the interface was called.
             TestConvertFrom(_convertibleClass_AsObject);
         }
 
+        [TestMethod]
+        public virtual void From_ConvertibleClass_NoValue()
+        {
+            TestConvertFrom(_convertibleClassNoValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ConvertibleClass_NoValue_AsObject()
+        {
+            TestConvertFrom(_convertibleClassNoValue_AsObject);
+        }
+        #endregion
+
+        #region From Non-IConvertible Classes
         [TestMethod]
         public virtual void From_NonConvertibleClass()
         {
@@ -845,29 +884,59 @@ namespace UnitTests.Core.BaseClasses
         {
             TestConvertFrom(_nonConvertibleClass_AsObject, DefaultValue);
         }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleClass_NoValue()
+        {
+            TestConvertFrom(_nonConvertibleClassNoValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleClass_NoValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleClassNoValue_AsObject, DefaultValue);
+        }
         #endregion
 
-        #region Structs
+        #region From IConvertible Structs
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public virtual void From_ConvertibleStruct()
         {
-            // The ConvertibleStruct implements the IConvertible interface 
-            // but throws exceptions.  So if a NotImplementedException is thrown,
-            // the interface was called.
             TestConvertFrom(_convertibleStruct);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public virtual void From_ConvertibleStruct_AsObject()
         {
-            // The ConvertibleStruct implements the IConvertible interface 
-            // but throws exceptions.  So if a NotImplementedException is thrown,
-            // the interface was called.
             TestConvertFrom(_convertibleStruct_AsObject);
         }
 
+        [TestMethod]
+        public virtual void From_ConvertibleStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_convertibleStructNullableWithValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ConvertibleStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_convertibleStructNullableWithValue_AsObject);
+        }
+
+        [TestMethod]
+        public virtual void From_ConvertibleStruct_Nullable_NoValue()
+        {
+            TestConvertFrom(_convertibleStructNullableNoValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ConvertibleStruct_Nullable_NoValue_AsObject()
+        {
+            TestConvertFrom(_convertibleStructNullableNoValue_AsObject);
+        }
+        #endregion
+
+        #region From Non-IConvertible Structs
         [TestMethod]
         public virtual void From_NonConvertibleStruct()
         {
@@ -879,9 +948,33 @@ namespace UnitTests.Core.BaseClasses
         {
             TestConvertFrom(_nonConvertibleStruct_AsObject, DefaultValue);
         }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue_AsObject, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_NoValue()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableNoValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_NoValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableNoValue_AsObject, DefaultValue);
+        }
         #endregion
 
-        #region Enum
+        #region From Enums
         [TestMethod]
         public virtual void From_Enum()
         {

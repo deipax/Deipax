@@ -82,5 +82,19 @@ namespace UnitTests.Core.Deipax.Convert
         {
             base.From_NonConvertibleStruct_AsObject();
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
+        public override void From_NonConvertibleStruct_Nullable_WithValue()
+        {
+            base.From_NonConvertibleStruct_Nullable_WithValue();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
+        public override void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
+        {
+            base.From_NonConvertibleStruct_Nullable_WithValue_AsObject();
+        }
     }
 }
