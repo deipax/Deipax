@@ -35,25 +35,28 @@ namespace Deipax.Core.Conversion.Factories
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
                     var returnTarget = Expression.Label(toType);
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-                    var returnValue = Expression.Variable(underlyingToType, "returnValue");
+                    var returnValue = Expression.Variable(toType, "returnValue");
 
                     MethodCallExpression callExpression = Expression.Call(
                         methodInfo,
                         Expression.Property(input, "Value"));
 
+                    Expression convertedCall = callExpression;
+
+                    if (toType != underlyingToType)
+                    {
+                        convertedCall = Expression.Convert(callExpression, toType);
+                    }
+
                     var ifThenElse = Expression.IfThenElse(
                         Expression.Property(input, "HasValue"),
-                        Expression.Assign(returnValue, callExpression),
-                        Expression.Assign(returnValue, Expression.Default(underlyingToType)));
-
-                    GotoExpression returnExpression = underlyingToType == toType
-                        ? Expression.Return(returnTarget, returnValue)
-                        : Expression.Return(returnTarget, Expression.Convert(returnValue, toType));
+                        Expression.Assign(returnValue, convertedCall),
+                        Expression.Assign(returnValue, Expression.Default(toType)));
 
                     BlockExpression block = Expression.Block(
                         new[] { returnValue },
                         ifThenElse,
-                        returnExpression,
+                        Expression.Return(returnTarget, returnValue),
                         returnLabel);
 
                     return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();

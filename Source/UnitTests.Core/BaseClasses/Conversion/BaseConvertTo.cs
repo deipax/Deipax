@@ -253,9 +253,12 @@ namespace UnitTests.Core.BaseClasses.Conversion
 
         protected virtual TTo GetExpected<TFrom>(TFrom from)
         {
+            var toType = typeof(TTo);
+            var underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
+
             if (from != null)
             {
-                return (TTo)Convert.ChangeType(from, typeof(TTo));
+                return (TTo)Convert.ChangeType(from, underlyingToType);
             }
 
             return default(TTo);

@@ -6,11 +6,11 @@ using UnitTests.Core.BaseClasses.Conversion;
 namespace UnitTests.Core.Deipax.Conversion
 {
     [TestClass]
-    public class ConvertTo_Long : BaseConvertTo<long>
+    public class ConvertTo_Base<TTo> : BaseConvertTo<TTo>
     {
-        protected override long ConvertFrom<X>(X from)
+        protected override TTo ConvertFrom<TFrom>(TFrom from)
         {
-            return ConvertTo<long>.From(from);
+            return ConvertTo<TTo>.From(from);
         }
 
         [TestMethod]
