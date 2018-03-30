@@ -22,8 +22,8 @@ namespace UnitTests.Core
         {
             for (int i = 0; i < 1000000000; i++)
             {
-                var tmp1 = ConvertTo2<long, object>.From(_longAsObject);
-                //var tmp2 = ConvertTo<long>.From(_longAsObject);
+                //var tmp1 = ConvertTo2<long, object>.From(_longAsObject);
+                var tmp2 = ConvertTo<long>.From(_longAsObject);
             }
         }
     }

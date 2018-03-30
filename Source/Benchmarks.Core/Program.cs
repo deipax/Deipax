@@ -26,7 +26,7 @@ namespace Benchmarks.Core
                 .With(MemoryDiagnoser.Default);
 
             BenchmarkRunner.Run<ConvertTo2_Long>(config);
-            //BenchmarkRunner.Run<ConvertTo_Long>(config);
+            BenchmarkRunner.Run<ConvertTo_Long>(config);
             //BenchmarkRunner.Run<ChangeType_Long>(config);
         }
     }

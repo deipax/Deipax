@@ -236,6 +236,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         protected abstract TTo ConvertFrom<X>(X from);
         #endregion
 
+        /*
         #region From Bool
         [Benchmark]
         public virtual void From_Bool()
@@ -501,7 +502,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
             TTo to = ConvertFrom(_fromShortNullableNoValue_AsObject);
         }
         #endregion
-
+        */
         #region From Int
         [Benchmark]
         public virtual void From_Int()
@@ -539,7 +540,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
             TTo to = ConvertFrom(_fromIntNullableNoValue_AsObject);
         }
         #endregion
-
+        
         #region From Long
         [Benchmark]
         public virtual void From_Long()
@@ -577,7 +578,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
             TTo to = ConvertFrom(_fromLongNullableNoValue_AsObject);
         }
         #endregion
-
+        /*
         #region From SByte
         [Benchmark]
         public virtual void From_SByte()
@@ -985,5 +986,6 @@ namespace Benchmarks.Core.BaseClasses.Conversion
             TTo to = ConvertFrom(_fromEnumNullableNoValue_AsObject);
         }
         #endregion
+    */
     }
 }

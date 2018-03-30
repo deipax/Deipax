@@ -52,14 +52,6 @@ namespace Deipax.Core.Conversion.Factories
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
-                    var isNullOrDbNullExpression = Expression.Or(
-                        Expression.Equal(input, Expression.Constant(null, typeof(object))),
-                        Expression.Equal(input, Expression.Constant(DBNull.Value, typeof(object))));
-
-                    var ifNullReturnExpression = Expression.IfThen(
-                        isNullOrDbNullExpression,
-                        Expression.Return(returnTarget, Expression.Default(toType)));
-
                     Expression returnIfSameAsTargetTypeExpression = Expression.Empty();
 
                     if (fromType == typeof(object))
@@ -95,7 +87,6 @@ namespace Deipax.Core.Conversion.Factories
 
                     BlockExpression block = Expression.Block(
                         new[] { converter },
-                        ifNullReturnExpression,
                         returnIfSameAsTargetTypeExpression,
                         assignConverter,
                         ifConverter,
