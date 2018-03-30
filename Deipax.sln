@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks.DataAccess", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.Core", "Source\Benchmarks.Core\Benchmarks.Core.csproj", "{36FD3415-2B74-480A-A1EC-3259643EF1A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deipax.Experimental", "Source\Deipax.Experimental\Deipax.Experimental.csproj", "{61E9A6B8-D2C8-4B14-AE46-BEA81D830170}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,10 +73,6 @@ Global
 		{36FD3415-2B74-480A-A1EC-3259643EF1A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36FD3415-2B74-480A-A1EC-3259643EF1A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36FD3415-2B74-480A-A1EC-3259643EF1A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{61E9A6B8-D2C8-4B14-AE46-BEA81D830170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{61E9A6B8-D2C8-4B14-AE46-BEA81D830170}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{61E9A6B8-D2C8-4B14-AE46-BEA81D830170}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{61E9A6B8-D2C8-4B14-AE46-BEA81D830170}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

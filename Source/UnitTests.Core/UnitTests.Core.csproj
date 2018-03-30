@@ -62,10 +62,6 @@
       <Project>{A3089AB5-9BDD-4429-96C4-E8DF1C2EC207}</Project>
       <Name>Deipax.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Deipax.Experimental\Deipax.Experimental.csproj">
-      <Project>{61e9a6b8-d2c8-4b14-ae46-bea81d830170}</Project>
-      <Name>Deipax.Experimental</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj">
       <Project>{B9D6FF58-7BA4-4926-85BB-FE38F494186A}</Project>
       <Name>UnitTests.Common</Name>
