@@ -1,9 +1,9 @@
 ﻿using Deipax.Core.Conversion.Factories;
+using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Deipax.Core.Extensions;
 
 namespace Deipax.Core.Conversion
 {
@@ -13,6 +13,10 @@ namespace Deipax.Core.Conversion
         {
             _defaults = new List<IConvertFactory>()
             {
+                new ToObjectFactory(),
+                new ToStringFactory(),
+                new ToOrFromDBNullFactory(),
+                new FromEnumFactory(),
                 new FromStringFactory(),
                 new FromNonNullablePrimitive(),
                 new FromNullablePrimitive(),
@@ -38,7 +42,9 @@ namespace Deipax.Core.Conversion
                     return new Result<TFrom, TTo>()
                     {
                         Factory = factory,
-                        Converter = Guard(func)
+                        Converter = factory.GuardCall
+                            ? Guard(func)
+                            : func
                     };
                 }
             }
@@ -64,29 +70,7 @@ namespace Deipax.Core.Conversion
 
             BlockExpression block = null;
 
-            if (toType == typeof(DBNull))
-            {
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    Expression.Constant(DBNull.Value),
-                    toType);
-
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
-            }
-            else if (fromType == typeof(DBNull))
-            {
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    defaultValue,
-                    toType);
-
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
-            }
-            else if (fromType == toType)
+            if (fromType == toType)
             {
                 GotoExpression returnExpression = Expression.Return(
                     returnTarget,
@@ -188,6 +172,20 @@ namespace Deipax.Core.Conversion
                     toType,
                     ifNullReturnExpression,
                     invokeExpression,
+                    returnLabel);
+            }
+            else if (fromType.IsNullable())
+            {
+                var hasValue = Expression.Property(input, "HasValue");
+
+                var ifThenElse = Expression.IfThenElse(
+                    hasValue,
+                    invokeExpression,
+                    Expression.Return(returnTarget, defaultValue));
+
+                block = Expression.Block(
+                    toType,
+                    ifThenElse,
                     returnLabel);
             }
 

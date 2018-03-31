@@ -9,14 +9,22 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class FromNonNullablePrimitive : IConvertFactory
     {
+        public FromNonNullablePrimitive()
+        {
+            GuardCall = true;
+        }
+
         #region IConvertFactory Members
+        public bool GuardCall { get; set; }
+
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
 
             // Avoid calling Convert.ToXXX(object)
             if (!fromType.IsNullable() &&
-                fromType != typeof(object))
+                fromType != typeof(object) &&
+                fromType != typeof(string))
             {
                 Type toType = typeof(TTo);
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;

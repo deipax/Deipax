@@ -6,7 +6,14 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class DefaultFactory : IConvertFactory
     {
+        public DefaultFactory()
+        {
+            GuardCall = true;
+        }
+
         #region IConvertFactory Members
+        public bool GuardCall { get; set; }
+
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             var fromType = typeof(TFrom);

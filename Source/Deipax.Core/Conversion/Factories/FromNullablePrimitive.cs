@@ -9,14 +9,22 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class FromNullablePrimitive : IConvertFactory
     {
+        public FromNullablePrimitive()
+        {
+            GuardCall = true;
+        }
+
         #region IConvertFactory Members
+        public bool GuardCall { get; set; }
+
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
 
             // Avoid calling Convert.ToXXX(object)
             if (fromType.IsNullable() &&
-                fromType != typeof(object))
+                fromType != typeof(object) &&
+                fromType != typeof(string))
             {
                 Type toType = typeof(TTo);
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
@@ -35,7 +43,6 @@ namespace Deipax.Core.Conversion.Factories
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
                     var returnTarget = Expression.Label(toType);
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-                    var returnValue = Expression.Variable(toType, "returnValue");
 
                     MethodCallExpression callExpression = Expression.Call(
                         methodInfo,
@@ -48,15 +55,8 @@ namespace Deipax.Core.Conversion.Factories
                         convertedCall = Expression.Convert(callExpression, toType);
                     }
 
-                    var ifThenElse = Expression.IfThenElse(
-                        Expression.Property(input, "HasValue"),
-                        Expression.Assign(returnValue, convertedCall),
-                        Expression.Assign(returnValue, Expression.Default(toType)));
-
                     BlockExpression block = Expression.Block(
-                        new[] { returnValue },
-                        ifThenElse,
-                        Expression.Return(returnTarget, returnValue),
+                        Expression.Return(returnTarget, convertedCall),
                         returnLabel);
 
                     return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();

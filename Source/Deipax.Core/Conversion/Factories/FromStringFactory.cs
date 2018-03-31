@@ -16,6 +16,7 @@ namespace Deipax.Core.Conversion.Factories
         public FromStringFactory(IFormatProvider provider)
         {
             _provider = provider;
+            GuardCall = true;
         }
 
         #region Field Members
@@ -23,13 +24,16 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
+        public bool GuardCall { get; set; }
+
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
+            Type toType = typeof(TTo);
 
-            if (fromType == typeof(string))
+            if (fromType == typeof(string) &&
+                toType != typeof(object))
             {
-                Type toType = typeof(TTo);
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
                 var methodInfo = typeof(Convert)

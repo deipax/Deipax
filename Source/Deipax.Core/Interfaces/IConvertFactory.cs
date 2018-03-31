@@ -4,6 +4,7 @@ namespace Deipax.Core.Interfaces
 {
     public interface IConvertFactory
     {
+        bool GuardCall { get; }
         Func<TFrom, TTo> Get<TFrom, TTo>();
     }
 

@@ -16,6 +16,7 @@ namespace Deipax.Core.Conversion.Factories
         public FromConvertibleRefType(IFormatProvider provider)
         {
             _provider = provider;
+            GuardCall = true;
         }
 
         #region Field Members
@@ -23,6 +24,8 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
+        public bool GuardCall { get; set; }
+
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             // This will only return a func IF TFrom is an object

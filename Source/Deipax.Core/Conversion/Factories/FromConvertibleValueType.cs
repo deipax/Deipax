@@ -16,6 +16,7 @@ namespace Deipax.Core.Conversion.Factories
         public FromConvertibleValueType(IFormatProvider provider)
         {
             _provider = provider;
+            GuardCall = true;
         }
 
         #region Field Members
@@ -23,6 +24,8 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
+        public bool GuardCall { get; set; }
+
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
