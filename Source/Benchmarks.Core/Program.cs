@@ -3,6 +3,7 @@ using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Running;
 using System.Linq;
+using Benchmarks.Core.Deipax.Conversion;
 
 namespace Benchmarks.Core
 {
@@ -24,10 +25,10 @@ namespace Benchmarks.Core
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            BenchmarkRunner.Run<AdHoc>(config);
+            //BenchmarkRunner.Run<AdHoc>(config);
 
-            //BenchmarkRunner.Run<ConvertTo2_Long>(config);
-            //BenchmarkRunner.Run<ConvertTo2_LongNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_Long>(config);
+            BenchmarkRunner.Run<ConvertTo2_LongNullable>(config);
 
             //BenchmarkRunner.Run<ConvertTo_Long>(config);
             //BenchmarkRunner.Run<ConvertTo_LongNullable>(config);

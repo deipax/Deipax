@@ -36,7 +36,7 @@ namespace UnitTests.Core
             }
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Temp2()
         {
             for (int i = 0; i < 1000000000; i++)

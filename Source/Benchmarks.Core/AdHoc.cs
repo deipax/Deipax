@@ -17,29 +17,35 @@ namespace Benchmarks.Core
         }
         #endregion
 
-        [Benchmark]
+        //[Benchmark]
         public void Enum_Cast()
         {
             string value = _myEnum.ToString();
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void IConvertable_Enum()
         {
             IConvertible x = _myEnum as IConvertible;
             string value = x.ToString(CultureInfo.InvariantCulture);
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void ConvertTO_Enum()
         {
             string value = ConvertTo<string>.From(_myEnum);
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void ConvertTO_Enum_AsObject()
         {
             string value = ConvertTo<string>.From(_myEnumAsObject);
+        }
+
+        [Benchmark]
+        public void IsObjectEnum()
+        {
+            var tmp = _myEnumAsObject.GetType().IsEnum;
         }
     }
 }

@@ -7,7 +7,6 @@ Frequency=3435892 Hz, Resolution=291.0452 ns, Timer=TSC
   DefaultJob : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
 
 
-      Method |      Mean |     Error |    StdDev |  Gen 0 | Allocated |
------------- |----------:|----------:|----------:|-------:|----------:|
- IsNullable1 |  89.26 ns | 0.5074 ns | 0.4498 ns |      - |       0 B |
- IsNullable2 | 227.40 ns | 2.2035 ns | 2.0612 ns | 0.0074 |      32 B |
+       Method |     Mean |     Error |    StdDev | Allocated |
+------------- |---------:|----------:|----------:|----------:|
+ IsObjectEnum | 31.13 ns | 0.0461 ns | 0.0409 ns |       0 B |

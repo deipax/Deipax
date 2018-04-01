@@ -20,6 +20,7 @@ namespace Deipax.Core.Conversion
                 new FromStringFactory(),
                 new FromNonNullablePrimitive(),
                 new FromNullablePrimitive(),
+                new FromObjectFactory(),
                 new FromConvertibleRefType(),
                 new FromNonNullableConvertibleValueType(),
                 new FromNullableConvertibleValueType(),

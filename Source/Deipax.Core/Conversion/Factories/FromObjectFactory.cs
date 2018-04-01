@@ -1,19 +1,21 @@
-﻿using Deipax.Core.Interfaces;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
+using Deipax.Core.Interfaces;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    public class FromConvertibleRefType : IConvertFactory
+    public class FromObjectFactory : IConvertFactory
     {
-        public FromConvertibleRefType() : this(CultureInfo.InvariantCulture)
+        public FromObjectFactory() : this(CultureInfo.InvariantCulture)
         {
         }
 
-        public FromConvertibleRefType(IFormatProvider provider)
+        public FromObjectFactory(IFormatProvider provider)
         {
             _provider = provider;
             GuardCall = true;
@@ -34,8 +36,7 @@ namespace Deipax.Core.Conversion.Factories
             Type fromType = typeof(TFrom);
             Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
 
-            if (!fromType.IsValueType && 
-                typeof(IConvertible).IsAssignableFrom(fromType))
+            if (fromType == typeof(object))
             {
                 Type toType = typeof(TTo);
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
@@ -55,6 +56,21 @@ namespace Deipax.Core.Conversion.Factories
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
+                    Expression returnIfSameAsTargetTypeExpression = null;
+
+                    if (toType == underlyingToType)
+                    {
+                        returnIfSameAsTargetTypeExpression = Expression.IfThen(
+                            Expression.TypeEqual(input, toType),
+                            Expression.Return(returnTarget, Expression.Convert(input, toType)));
+                    }
+                    else
+                    {
+                        returnIfSameAsTargetTypeExpression = Expression.IfThen(
+                            Expression.TypeEqual(input, underlyingToType),
+                            Expression.Return(returnTarget, Expression.Convert(input, toType)));
+                    }
+
                     var assignConverter = Expression.Assign(converter, Expression.TypeAs(input, typeof(IConvertible)));
 
                     var ifConverter = Expression.IfThen(
@@ -72,6 +88,7 @@ namespace Deipax.Core.Conversion.Factories
 
                     BlockExpression block = Expression.Block(
                         new[] { converter },
+                        returnIfSameAsTargetTypeExpression,
                         assignConverter,
                         ifConverter,
                         returnExpression,
