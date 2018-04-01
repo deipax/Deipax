@@ -24,7 +24,11 @@ namespace Deipax.Core.Conversion.Factories
 
             if (underlyingFromType.IsEnum &&
                 toType != typeof(string) &&
-                toType != typeof(object))
+                toType != typeof(object) &&
+                fromType != typeof(DateTime) &&
+                fromType != typeof(DateTime?) &&
+                toType != typeof(DateTime) &&
+                toType != typeof(DateTime?))
             {
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
@@ -33,12 +37,11 @@ namespace Deipax.Core.Conversion.Factories
                     .Where(x => x.ReturnType == underlyingToType)
                     .FirstOrDefault();
 
-                ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                var returnTarget = Expression.Label(toType);
-                var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-
                 if (methodInfo != null)
                 {
+                    ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    var returnTarget = Expression.Label(toType);
+                    var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression returnValue = Expression.Variable(toType, "returnValue");
 
                     var assignExpression = Expression.Assign(

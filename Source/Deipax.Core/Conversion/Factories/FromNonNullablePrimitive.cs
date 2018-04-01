@@ -20,13 +20,16 @@ namespace Deipax.Core.Conversion.Factories
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
+            Type toType = typeof(TTo);
 
-            // Avoid calling Convert.ToXXX(object)
             if (!fromType.IsNullable() &&
                 fromType != typeof(object) &&
-                fromType != typeof(string))
+                fromType != typeof(string) &&
+                fromType != typeof(DateTime) &&
+                fromType != typeof(DateTime?) &&
+                toType != typeof(DateTime) &&
+                toType != typeof(DateTime?))
             {
-                Type toType = typeof(TTo);
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
                 var methodInfo = typeof(Convert)
@@ -47,13 +50,15 @@ namespace Deipax.Core.Conversion.Factories
                         methodInfo,
                         input);
 
-                    GotoExpression returnExpression = underlyingToType == toType
-                        ? Expression.Return(returnTarget, callExpression)
-                        : Expression.Return(returnTarget, Expression.Convert(callExpression, toType));
+                    Expression convertedCall = callExpression;
+
+                    if (toType != underlyingToType)
+                    {
+                        convertedCall = Expression.Convert(callExpression, toType);
+                    }
 
                     BlockExpression block = Expression.Block(
-                        toType,
-                        returnExpression,
+                        Expression.Return(returnTarget, convertedCall),
                         returnLabel);
 
                     return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();

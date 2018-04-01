@@ -20,13 +20,16 @@ namespace Deipax.Core.Conversion.Factories
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
+            Type toType = typeof(TTo);
 
-            // Avoid calling Convert.ToXXX(object)
             if (fromType.IsNullable() &&
                 fromType != typeof(object) &&
-                fromType != typeof(string))
-            {
-                Type toType = typeof(TTo);
+                fromType != typeof(string) &&
+                fromType != typeof(DateTime) &&
+                fromType != typeof(DateTime?) &&
+                toType != typeof(DateTime) &&
+                toType != typeof(DateTime?))
+            {             
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
                 Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
 

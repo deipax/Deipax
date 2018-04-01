@@ -1,4 +1,5 @@
-﻿using Deipax.Core.Interfaces;
+﻿using Deipax.Core.Extensions;
+using Deipax.Core.Interfaces;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Reflection;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    public class FromConvertibleValueType : IConvertFactory
+    public class FromNonNullableConvertibleValueType : IConvertFactory
     {
-        public FromConvertibleValueType() : this(CultureInfo.InvariantCulture)
+        public FromNonNullableConvertibleValueType() : this(CultureInfo.InvariantCulture)
         {
         }
 
-        public FromConvertibleValueType(IFormatProvider provider)
+        public FromNonNullableConvertibleValueType(IFormatProvider provider)
         {
             _provider = provider;
             GuardCall = true;
@@ -32,6 +33,7 @@ namespace Deipax.Core.Conversion.Factories
             Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
 
             if (fromType.IsValueType &&
+                !fromType.IsNullable() &&
                 typeof(IConvertible).IsAssignableFrom(underlyingFromType))
             {
                 Type toType = typeof(TTo);
@@ -52,7 +54,9 @@ namespace Deipax.Core.Conversion.Factories
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
-                    var assignConverter = Expression.Assign(converter, Expression.TypeAs(input, typeof(IConvertible)));
+                    var assignConverter = Expression.Assign(
+                        converter, 
+                        Expression.TypeAs(input, typeof(IConvertible)));
 
                     var ifConverter = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),

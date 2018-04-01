@@ -21,7 +21,8 @@ namespace Deipax.Core.Conversion
                 new FromNonNullablePrimitive(),
                 new FromNullablePrimitive(),
                 new FromConvertibleRefType(),
-                new FromConvertibleValueType(),
+                new FromNonNullableConvertibleValueType(),
+                new FromNullableConvertibleValueType(),
                 new DefaultFactory()
             };
         }
