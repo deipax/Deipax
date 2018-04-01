@@ -28,8 +28,8 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<ConvertTo2_Long>(config);
             BenchmarkRunner.Run<ConvertTo2_LongNullable>(config);
 
-            //BenchmarkRunner.Run<ConvertTo_Long>(config);
-            //BenchmarkRunner.Run<ConvertTo_LongNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Long>(config);
+            BenchmarkRunner.Run<ConvertTo_LongNullable>(config);
         }
     }
 }
