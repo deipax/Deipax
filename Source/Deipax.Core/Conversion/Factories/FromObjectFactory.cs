@@ -56,24 +56,9 @@ namespace Deipax.Core.Conversion.Factories
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
-                    Expression returnIfSameAsTargetTypeExpression = null;
-
-                    if (toType == underlyingToType)
-                    {
-                        returnIfSameAsTargetTypeExpression = Expression.IfThen(
-                            Expression.TypeEqual(input, toType),
-                            Expression.Return(returnTarget, Expression.Convert(input, toType)));
-                    }
-                    else
-                    {
-                        returnIfSameAsTargetTypeExpression = Expression.IfThen(
-                            Expression.TypeEqual(input, underlyingToType),
-                            Expression.Return(returnTarget, Expression.Convert(input, toType)));
-                    }
-
                     var assignConverter = Expression.Assign(converter, Expression.TypeAs(input, typeof(IConvertible)));
 
-                    var ifConverter = Expression.IfThen(
+                    var ifConverterNull = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
                         Expression.Return(returnTarget, Expression.Default(toType)));
 
@@ -88,9 +73,8 @@ namespace Deipax.Core.Conversion.Factories
 
                     BlockExpression block = Expression.Block(
                         new[] { converter },
-                        returnIfSameAsTargetTypeExpression,
                         assignConverter,
-                        ifConverter,
+                        ifConverterNull,
                         returnExpression,
                         returnLabel);
 
