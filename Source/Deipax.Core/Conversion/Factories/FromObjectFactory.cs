@@ -56,9 +56,27 @@ namespace Deipax.Core.Conversion.Factories
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
+                    var isDateTimeExpression = Expression.Or(
+                        Expression.TypeEqual(input, typeof(DateTime)),
+                        Expression.TypeEqual(input, typeof(DateTime?)));
+
+                    var ifDateTimeReturn = Expression.IfThen(
+                        isDateTimeExpression,
+                        Expression.Return(returnTarget, Expression.Default(toType)));
+
+                    MethodCallExpression isNullOrEmpty = Expression.Call(
+                        typeof(string),
+                        "IsNullOrEmpty",
+                        null,
+                        Expression.TypeAs(input, typeof(string)));
+
+                    var isNullOrEmptyReturn = Expression.IfThen(
+                        Expression.And(Expression.TypeEqual(input, typeof(string)), isNullOrEmpty),
+                        Expression.Return(returnTarget, Expression.Default(toType)));
+
                     var assignConverter = Expression.Assign(converter, Expression.TypeAs(input, typeof(IConvertible)));
 
-                    var ifConverterNull = Expression.IfThen(
+                    var ifConverterNullReturn = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
                         Expression.Return(returnTarget, Expression.Default(toType)));
 
@@ -73,8 +91,10 @@ namespace Deipax.Core.Conversion.Factories
 
                     BlockExpression block = Expression.Block(
                         new[] { converter },
+                        ifDateTimeReturn,
+                        isNullOrEmptyReturn,
                         assignConverter,
-                        ifConverterNull,
+                        ifConverterNullReturn,
                         returnExpression,
                         returnLabel);
 

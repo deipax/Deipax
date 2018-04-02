@@ -23,12 +23,14 @@ namespace Deipax.Core.Conversion.Factories
             Type toType = typeof(TTo);
 
             if (fromType.IsNullable() &&
-                fromType != typeof(object) &&
-                fromType != typeof(string) &&
                 fromType != typeof(DateTime) &&
                 fromType != typeof(DateTime?) &&
+                fromType != typeof(string) &&
+                fromType != typeof(object) &&
                 toType != typeof(DateTime) &&
-                toType != typeof(DateTime?))
+                toType != typeof(DateTime?) &&
+                toType != typeof(string) &&
+                toType != typeof(object))
             {             
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
                 Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;

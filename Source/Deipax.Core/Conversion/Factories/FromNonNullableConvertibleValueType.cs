@@ -30,13 +30,21 @@ namespace Deipax.Core.Conversion.Factories
         public Func<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
+            Type toType = typeof(TTo);
             Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
 
             if (fromType.IsValueType &&
                 !fromType.IsNullable() &&
+                fromType != typeof(DateTime) &&
+                fromType != typeof(DateTime?) &&
+                fromType != typeof(string) &&
+                fromType != typeof(object) &&
+                toType != typeof(DateTime) &&
+                toType != typeof(DateTime?) &&
+                toType != typeof(string) &&
+                toType != typeof(object) &&
                 typeof(IConvertible).IsAssignableFrom(underlyingFromType))
-            {
-                Type toType = typeof(TTo);
+            {         
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
                 var methodInfo = typeof(IConvertible)

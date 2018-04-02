@@ -32,12 +32,20 @@ namespace Deipax.Core.Conversion.Factories
             // or implements IConvertible and the TTo is supported by 
             // IConvertible.
             Type fromType = typeof(TFrom);
+            Type toType = typeof(TTo);
             Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
 
-            if (!fromType.IsValueType && 
+            if (!fromType.IsValueType &&
+                fromType != typeof(DateTime) &&
+                fromType != typeof(DateTime?) &&
+                fromType != typeof(string) &&
+                fromType != typeof(object) &&
+                toType != typeof(DateTime) &&
+                toType != typeof(DateTime?) &&
+                toType != typeof(string) &&
+                toType != typeof(object) &&
                 typeof(IConvertible).IsAssignableFrom(fromType))
-            {
-                Type toType = typeof(TTo);
+            {                
                 Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
                 var methodInfo = typeof(IConvertible)
