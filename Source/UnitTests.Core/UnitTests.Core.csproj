@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="AdHoc.cs" />
     <Compile Include="BaseClasses\Conversion\BaseConvertTo.cs" />
-    <Compile Include="Deipax\Conversion\ConvertTo2_Base.cs" />
     <Compile Include="TestClasses\ConvertibleClass.cs" />
     <Compile Include="TestClasses\ConvertibleStruct.cs" />
     <Compile Include="ConvertMapTests.cs" />

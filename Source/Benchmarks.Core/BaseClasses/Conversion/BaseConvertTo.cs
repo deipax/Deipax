@@ -91,143 +91,143 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         #region Field Members
-        private bool _fromBool;
-        private bool? _fromBoolNullableWithValue;
-        private bool? _fromBoolNullableNoValue;
-        private object _fromBool_AsObject;
-        private object _fromBoolNullableWithValue_AsObject;
-        private object _fromBoolNullableNoValue_AsObject;
+        protected bool _fromBool;
+        protected bool? _fromBoolNullableWithValue;
+        protected bool? _fromBoolNullableNoValue;
+        protected object _fromBool_AsObject;
+        protected object _fromBoolNullableWithValue_AsObject;
+        protected object _fromBoolNullableNoValue_AsObject;
 
-        private byte _fromByte;
-        private byte? _fromByteNullableWithValue;
-        private byte? _fromByteNullableNoValue;
-        private object _fromByte_AsObject;
-        private object _fromByteNullableWithValue_AsObject;
-        private object _fromByteNullableNoValue_AsObject;
+        protected byte _fromByte;
+        protected byte? _fromByteNullableWithValue;
+        protected byte? _fromByteNullableNoValue;
+        protected object _fromByte_AsObject;
+        protected object _fromByteNullableWithValue_AsObject;
+        protected object _fromByteNullableNoValue_AsObject;
 
-        private char _fromChar;
-        private char? _fromCharNullableWithValue;
-        private char? _fromCharNullableNoValue;
-        private object _fromChar_AsObject;
-        private object _fromCharNullableWithValue_AsObject;
-        private object _fromCharNullableNoValue_AsObject;
+        protected char _fromChar;
+        protected char? _fromCharNullableWithValue;
+        protected char? _fromCharNullableNoValue;
+        protected object _fromChar_AsObject;
+        protected object _fromCharNullableWithValue_AsObject;
+        protected object _fromCharNullableNoValue_AsObject;
 
-        private DateTime _fromDateTime;
-        private DateTime? _fromDateTimeNullableWithValue;
-        private DateTime? _fromDateTimeNullableNoValue;
-        private object _fromDateTime_AsObject;
-        private object _fromDateTimeNullableWithValue_AsObject;
-        private object _fromDateTimeNullableNoValue_AsObject;
+        protected DateTime _fromDateTime;
+        protected DateTime? _fromDateTimeNullableWithValue;
+        protected DateTime? _fromDateTimeNullableNoValue;
+        protected object _fromDateTime_AsObject;
+        protected object _fromDateTimeNullableWithValue_AsObject;
+        protected object _fromDateTimeNullableNoValue_AsObject;
 
-        private decimal _fromDecimal;
-        private decimal? _fromDecimalNullableWithValue;
-        private decimal? _fromDecimalNullableNoValue;
-        private object _fromDecimal_AsObject;
-        private object _fromDecimalNullableWithValue_AsObject;
-        private object _fromDecimalNullableNoValue_AsObject;
+        protected decimal _fromDecimal;
+        protected decimal? _fromDecimalNullableWithValue;
+        protected decimal? _fromDecimalNullableNoValue;
+        protected object _fromDecimal_AsObject;
+        protected object _fromDecimalNullableWithValue_AsObject;
+        protected object _fromDecimalNullableNoValue_AsObject;
 
-        private double _fromDouble;
-        private double? _fromDoubleNullableWithValue;
-        private double? _fromDoubleNullableNoValue;
-        private object _fromDouble_AsObject;
-        private object _fromDoubleNullableWithValue_AsObject;
-        private object _fromDoubleNullableNoValue_AsObject;
+        protected double _fromDouble;
+        protected double? _fromDoubleNullableWithValue;
+        protected double? _fromDoubleNullableNoValue;
+        protected object _fromDouble_AsObject;
+        protected object _fromDoubleNullableWithValue_AsObject;
+        protected object _fromDoubleNullableNoValue_AsObject;
 
-        private short _fromShort;
-        private short? _fromShortNullableWithValue;
-        private short? _fromShortNullableNoValue;
-        private object _fromShort_AsObject;
-        private object _fromShortNullableWithValue_AsObject;
-        private object _fromShortNullableNoValue_AsObject;
+        protected short _fromShort;
+        protected short? _fromShortNullableWithValue;
+        protected short? _fromShortNullableNoValue;
+        protected object _fromShort_AsObject;
+        protected object _fromShortNullableWithValue_AsObject;
+        protected object _fromShortNullableNoValue_AsObject;
 
-        private int _fromInt;
-        private int? _fromIntNullableWithValue;
-        private int? _fromIntNullableNoValue;
-        private object _fromInt_AsObject;
-        private object _fromIntNullableWithValue_AsObject;
-        private object _fromIntNullableNoValue_AsObject;
+        protected int _fromInt;
+        protected int? _fromIntNullableWithValue;
+        protected int? _fromIntNullableNoValue;
+        protected object _fromInt_AsObject;
+        protected object _fromIntNullableWithValue_AsObject;
+        protected object _fromIntNullableNoValue_AsObject;
 
-        private long _fromLong;
-        private long? _fromLongNullableWithValue;
-        private long? _fromLongNullableNoValue;
-        private object _fromLong_AsObject;
-        private object _fromLongNullableWithValue_AsObject;
-        private object _fromLongNullableNoValue_AsObject;
+        protected long _fromLong;
+        protected long? _fromLongNullableWithValue;
+        protected long? _fromLongNullableNoValue;
+        protected object _fromLong_AsObject;
+        protected object _fromLongNullableWithValue_AsObject;
+        protected object _fromLongNullableNoValue_AsObject;
 
-        private sbyte _fromSbyte;
-        private sbyte? _fromSbyteNullableWithValue;
-        private sbyte? _fromSbyteNullableNoValue;
-        private object _fromSbyte_AsObject;
-        private object _fromSbyteNullableWithValue_AsObject;
-        private object _fromSbyteNullableNoValue_AsObject;
+        protected sbyte _fromSbyte;
+        protected sbyte? _fromSbyteNullableWithValue;
+        protected sbyte? _fromSbyteNullableNoValue;
+        protected object _fromSbyte_AsObject;
+        protected object _fromSbyteNullableWithValue_AsObject;
+        protected object _fromSbyteNullableNoValue_AsObject;
 
-        private float _fromFloat;
-        private float? _fromFloatNullableWithValue;
-        private float? _fromFloatNullableNoValue;
-        private object _fromFloat_AsObject;
-        private object _fromFloatNullableWithValue_AsObject;
-        private object _fromFloatNullableNoValue_AsObject;
+        protected float _fromFloat;
+        protected float? _fromFloatNullableWithValue;
+        protected float? _fromFloatNullableNoValue;
+        protected object _fromFloat_AsObject;
+        protected object _fromFloatNullableWithValue_AsObject;
+        protected object _fromFloatNullableNoValue_AsObject;
 
-        private string _fromString;
-        private string _fromStringNull;
-        private string _fromStringEmpty;
-        private object _fromString_AsObject;
-        private object _fromStringNull_AsObject;
-        private object _fromStringEmpty_AsObject;
+        protected string _fromString;
+        protected string _fromStringNull;
+        protected string _fromStringEmpty;
+        protected object _fromString_AsObject;
+        protected object _fromStringNull_AsObject;
+        protected object _fromStringEmpty_AsObject;
 
-        private ushort _fromUShort;
-        private ushort? _fromUShortNullableWithValue;
-        private ushort? _fromUShortNullableNoValue;
-        private object _fromUShort_AsObject;
-        private object _fromUShortNullableWithValue_AsObject;
-        private object _fromUShortNullableNoValue_AsObject;
+        protected ushort _fromUShort;
+        protected ushort? _fromUShortNullableWithValue;
+        protected ushort? _fromUShortNullableNoValue;
+        protected object _fromUShort_AsObject;
+        protected object _fromUShortNullableWithValue_AsObject;
+        protected object _fromUShortNullableNoValue_AsObject;
 
-        private uint _fromUInt;
-        private uint? _fromUIntNullableWithValue;
-        private uint? _fromUIntNullableNoValue;
-        private object _fromUInt_AsObject;
-        private object _fromUIntNullableWithValue_AsObject;
-        private object _fromUIntNullableNoValue_AsObject;
+        protected uint _fromUInt;
+        protected uint? _fromUIntNullableWithValue;
+        protected uint? _fromUIntNullableNoValue;
+        protected object _fromUInt_AsObject;
+        protected object _fromUIntNullableWithValue_AsObject;
+        protected object _fromUIntNullableNoValue_AsObject;
 
-        private ulong _fromULong;
-        private ulong? _fromULongNullableWithValue;
-        private ulong? _fromULongNullableNoValue;
-        private object _fromULong_AsObject;
-        private object _fromULongNullableWithValue_AsObject;
-        private object _fromULongNullableNoValue_AsObject;
+        protected ulong _fromULong;
+        protected ulong? _fromULongNullableWithValue;
+        protected ulong? _fromULongNullableNoValue;
+        protected object _fromULong_AsObject;
+        protected object _fromULongNullableWithValue_AsObject;
+        protected object _fromULongNullableNoValue_AsObject;
 
-        private object _nullObject = null;
+        protected object _nullObject = null;
 
-        private ConvertibleClass _convertibleClass;
-        private ConvertibleClass _convertibleClassNoValue;
-        private object _convertibleClass_AsObject;
-        private object _convertibleClassNoValue_AsObject;
+        protected ConvertibleClass _convertibleClass;
+        protected ConvertibleClass _convertibleClassNoValue;
+        protected object _convertibleClass_AsObject;
+        protected object _convertibleClassNoValue_AsObject;
 
-        private NonConvertibleClass _nonConvertibleClass;
-        private NonConvertibleClass _nonConvertibleClassNoValue;
-        private object _nonConvertibleClass_AsObject;
-        private object _nonConvertibleClassNoValue_AsObject;
+        protected NonConvertibleClass _nonConvertibleClass;
+        protected NonConvertibleClass _nonConvertibleClassNoValue;
+        protected object _nonConvertibleClass_AsObject;
+        protected object _nonConvertibleClassNoValue_AsObject;
 
-        private ConvertibleStruct _convertibleStruct;
-        private ConvertibleStruct? _convertibleStructNullableWithValue;
-        private ConvertibleStruct? _convertibleStructNullableNoValue;
-        private object _convertibleStruct_AsObject;
-        private object _convertibleStructNullableWithValue_AsObject;
-        private object _convertibleStructNullableNoValue_AsObject;
+        protected ConvertibleStruct _convertibleStruct;
+        protected ConvertibleStruct? _convertibleStructNullableWithValue;
+        protected ConvertibleStruct? _convertibleStructNullableNoValue;
+        protected object _convertibleStruct_AsObject;
+        protected object _convertibleStructNullableWithValue_AsObject;
+        protected object _convertibleStructNullableNoValue_AsObject;
 
-        private NonConvertibleStruct _nonConvertibleStruct;
-        private NonConvertibleStruct? _nonConvertibleStructNullableWithValue;
-        private NonConvertibleStruct? _nonConvertibleStructNullableNoValue;
-        private object _nonConvertibleStruct_AsObject;
-        private object _nonConvertibleStructNullableWithValue_AsObject;
-        private object _nonConvertibleStructNullableNoValue_AsObject;
+        protected NonConvertibleStruct _nonConvertibleStruct;
+        protected NonConvertibleStruct? _nonConvertibleStructNullableWithValue;
+        protected NonConvertibleStruct? _nonConvertibleStructNullableNoValue;
+        protected object _nonConvertibleStruct_AsObject;
+        protected object _nonConvertibleStructNullableWithValue_AsObject;
+        protected object _nonConvertibleStructNullableNoValue_AsObject;
 
-        private TestEnum _fromEnum;
-        private TestEnum? _fromEnumNullableWithValue;
-        private TestEnum? _fromEnumNullableNoValue;
-        private object _fromEnum_AsObject;
-        private object _fromEnumNullableWithValue_AsObject;
-        private object _fromEnumNullableNoValue_AsObject;
+        protected TestEnum _fromEnum;
+        protected TestEnum? _fromEnumNullableWithValue;
+        protected TestEnum? _fromEnumNullableNoValue;
+        protected object _fromEnum_AsObject;
+        protected object _fromEnumNullableWithValue_AsObject;
+        protected object _fromEnumNullableNoValue_AsObject;
         #endregion
 
         #region Protected Members

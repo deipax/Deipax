@@ -1,6 +1,6 @@
 ﻿namespace Benchmarks.Core.TestClasses
 {
-    enum TestEnum
+    public enum TestEnum
     {
         One = 1,
         Two = 2,

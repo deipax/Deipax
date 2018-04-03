@@ -34,7 +34,10 @@ namespace Deipax.Core.Conversion.Factories
 
                 var methodInfo = typeof(Convert)
                     .GetRuntimeMethods()
-                    .Where(x => x.ReturnType == underlyingToType)
+                    .Where(x => 
+                        x.ReturnType == underlyingToType &&
+                        x.GetParameters().Length == 1 &&
+                        x.GetParameters()[0].ParameterType == typeof(int))
                     .FirstOrDefault();
 
                 if (methodInfo != null)
@@ -42,16 +45,13 @@ namespace Deipax.Core.Conversion.Factories
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
                     var returnTarget = Expression.Label(toType);
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-                    ParameterExpression returnValue = Expression.Variable(toType, "returnValue");
 
-                    var assignExpression = Expression.Assign(
-                        returnValue,
-                        Expression.Convert(input, toType));
+                    var callExpression = Expression.Call(
+                        methodInfo,
+                        Expression.Convert(input, typeof(int)));
 
                     BlockExpression block = Expression.Block(
-                        new[] { returnValue },
-                        assignExpression,
-                        Expression.Return(returnTarget, returnValue),
+                        Expression.Return(returnTarget, Expression.Convert(callExpression, toType)),
                         returnLabel);
 
                     return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
