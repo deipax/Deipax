@@ -27,13 +27,17 @@ namespace Benchmarks.Core
 
             //BenchmarkRunner.Run<AdHoc>(config);
 
-            BenchmarkRunner.Run<ConvertTo2_Bool>(config);
-            BenchmarkRunner.Run<ConvertTo2_BoolNullable>(config);
+            //BenchmarkRunner.Run<ConvertTo2_Bool>(config);
+            //BenchmarkRunner.Run<ConvertTo2_BoolNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_Byte>(config);
+            BenchmarkRunner.Run<ConvertTo2_ByteNullable>(config);
             //BenchmarkRunner.Run<ConvertTo2_Long>(config);
             //BenchmarkRunner.Run<ConvertTo2_LongNullable>(config);
 
-            BenchmarkRunner.Run<ConvertTo_Bool>(config);
-            BenchmarkRunner.Run<ConvertTo_BoolNullable>(config);
+            //BenchmarkRunner.Run<ConvertTo_Bool>(config);
+            //BenchmarkRunner.Run<ConvertTo_BoolNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Byte>(config);
+            BenchmarkRunner.Run<ConvertTo_ByteNullable>(config);
             //BenchmarkRunner.Run<ConvertTo_Long>(config);
             //BenchmarkRunner.Run<ConvertTo_LongNullable>(config);
         }

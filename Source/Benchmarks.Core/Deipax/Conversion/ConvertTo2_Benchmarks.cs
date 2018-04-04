@@ -29,6 +29,16 @@ namespace Benchmarks.Core.Deipax.Conversion
     }
     #endregion
 
+    #region Byte/ByteNullable
+    public class ConvertTo2_Byte : ConvertTo2_Base<byte>
+    {
+    }
+
+    public class ConvertTo2_ByteNullable : ConvertTo2_Base<byte?>
+    {
+    }
+    #endregion
+
     #region Long/LongNullable
     public class ConvertTo2_Long : ConvertTo2_Base<long>
     {

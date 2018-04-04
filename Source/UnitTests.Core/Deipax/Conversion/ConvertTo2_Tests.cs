@@ -90,6 +90,18 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     }
     #endregion
 
+    #region Byte/ByteNullable
+    [TestClass]
+    public class ConvertTo2_Byte : ConvertTo2_Base<byte>
+    {
+    }
+
+    [TestClass]
+    public class ConvertTo2_ByteNullable : ConvertTo2_Base<byte?>
+    {
+    }
+    #endregion
+
     #region Long/LongNullable
     [TestClass]
     public class ConvertTo2_Long : ConvertTo2_Base<long>
