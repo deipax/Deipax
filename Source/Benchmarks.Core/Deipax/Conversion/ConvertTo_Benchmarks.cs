@@ -39,6 +39,16 @@ namespace Benchmarks.Core.Deipax.Conversion
     }
     #endregion
 
+    #region Char/CharNullable
+    public class ConvertTo_Char : ConvertTo_Base<char>
+    {
+    }
+
+    public class ConvertTo_CharNullable : ConvertTo_Base<char?>
+    {
+    }
+    #endregion
+
     #region Long/LongNullable
     public class ConvertTo_Long : ConvertTo_Base<long>
     {
