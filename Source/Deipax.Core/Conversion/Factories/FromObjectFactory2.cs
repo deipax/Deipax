@@ -7,17 +7,15 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class FromObjectFactory2 : IConvertFactory
     {
-        public FromObjectFactory2()
-        {
-            GuardCall = true;
-        }
-
         #region IConvertFactory Members
-        public bool GuardCall { get; private set; }
-
-        public Func<TFrom, TTo> Get<TFrom, TTo>()
+        public IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
-            return FromObject<TTo>.Create<TFrom>();
+            return new Result<TFrom, TTo>()
+            {
+                Factory = this,
+                GuardCall = true,
+                Func = FromObject<TTo>.Create<TFrom>()
+            };
         }
         #endregion
     }

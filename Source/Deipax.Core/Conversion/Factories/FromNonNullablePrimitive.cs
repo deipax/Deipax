@@ -9,15 +9,8 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class FromNonNullablePrimitive : IConvertFactory
     {
-        public FromNonNullablePrimitive()
-        {
-            GuardCall = true;
-        }
-
         #region IConvertFactory Members
-        public bool GuardCall { get; set; }
-
-        public Func<TFrom, TTo> Get<TFrom, TTo>()
+        public IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
@@ -63,7 +56,12 @@ namespace Deipax.Core.Conversion.Factories
                         Expression.Return(returnTarget, convertedCall),
                         returnLabel);
 
-                    return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
+                    return new Result<TFrom, TTo>()
+                    {
+                        GuardCall = true,
+                        Factory = this,
+                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                    };
                 }
             }
 

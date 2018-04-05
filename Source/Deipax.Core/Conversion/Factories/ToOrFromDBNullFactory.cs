@@ -6,15 +6,8 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class ToOrFromDBNullFactory : IConvertFactory
     {
-        public ToOrFromDBNullFactory()
-        {
-            GuardCall = false;
-        }
-
         #region IConvertFactory Members
-        public bool GuardCall { get; set; }
-
-        public Func<TFrom, TTo> Get<TFrom, TTo>()
+        public IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type toType = typeof(TTo);
             Type fromType = typeof(TFrom);
@@ -50,7 +43,12 @@ namespace Deipax.Core.Conversion.Factories
 
             if (block != null)
             {
-                return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
+                return new Result<TFrom, TTo>()
+                {
+                    Factory = this,
+                    GuardCall = false,
+                    Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                };
             }
 
             return null;

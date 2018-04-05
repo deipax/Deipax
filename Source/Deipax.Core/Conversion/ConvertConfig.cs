@@ -37,16 +37,17 @@ namespace Deipax.Core.Conversion
         {
             foreach (var factory in _defaults)
             {
-                var func = factory.Get<TFrom, TTo>();
+                var result = factory.Get<TFrom, TTo>();
 
-                if (func != null)
+                if (result != null)
                 {
                     return new Result<TFrom, TTo>()
                     {
-                        Factory = factory,
-                        Converter = factory.GuardCall
-                            ? Guard(func)
-                            : func
+                        Factory = result.Factory,
+                        GuardCall = result.GuardCall,
+                        Func = result.GuardCall
+                            ? Guard(result.Func)
+                            : result.Func
                     };
                 }
             }
@@ -199,13 +200,12 @@ namespace Deipax.Core.Conversion
             return convertFunc;
         }
         #endregion
+    }
 
-        #region Helpers
-        class Result<TFrom, TTo> : IResult<TFrom, TTo>
-        {
-            public IConvertFactory Factory { get; set; }
-            public Func<TFrom, TTo> Converter { get; set; }
-        }
-        #endregion
+    internal class Result<TFrom, TTo> : IResult<TFrom, TTo>
+    {
+        public IConvertFactory Factory { get; set; }
+        public Func<TFrom, TTo> Func { get; set; }
+        public bool GuardCall { get; set; }
     }
 }

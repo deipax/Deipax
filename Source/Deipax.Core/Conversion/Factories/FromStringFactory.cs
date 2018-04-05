@@ -16,7 +16,6 @@ namespace Deipax.Core.Conversion.Factories
         public FromStringFactory(IFormatProvider provider)
         {
             _provider = provider;
-            GuardCall = true;
         }
 
         #region Field Members
@@ -24,9 +23,7 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
-        public bool GuardCall { get; set; }
-
-        public Func<TFrom, TTo> Get<TFrom, TTo>()
+        public IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
@@ -76,7 +73,12 @@ namespace Deipax.Core.Conversion.Factories
                         ifThenElse,
                         returnLabel);
 
-                    return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
+                    return new Result<TFrom, TTo>()
+                    {
+                        Factory = this,
+                        GuardCall = true,
+                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                    };
                 }
             }
 

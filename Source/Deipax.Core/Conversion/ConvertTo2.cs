@@ -6,7 +6,7 @@ namespace Deipax.Core.Conversion
     {
         static ConvertTo2()
         {
-            From = ConvertConfig.Get<TFrom, TTo>()?.Converter;
+            From = ConvertConfig.Get<TFrom, TTo>()?.Func;
         }
 
         public static readonly Func<TFrom, TTo> From;

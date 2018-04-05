@@ -18,7 +18,6 @@ namespace Deipax.Core.Conversion.Factories
         public FromObjectFactory(IFormatProvider provider)
         {
             _provider = provider;
-            GuardCall = true;
         }
 
         #region Field Members
@@ -26,9 +25,7 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
-        public bool GuardCall { get; set; }
-
-        public Func<TFrom, TTo> Get<TFrom, TTo>()
+        public IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             // This will only return a func IF TFrom is an object
             // or implements IConvertible and the TTo is supported by 
@@ -98,7 +95,12 @@ namespace Deipax.Core.Conversion.Factories
                         returnExpression,
                         returnLabel);
 
-                    return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
+                    return new Result<TFrom, TTo>()
+                    {
+                        GuardCall = true,
+                        Factory = this,
+                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                    };
                 }
             }
 

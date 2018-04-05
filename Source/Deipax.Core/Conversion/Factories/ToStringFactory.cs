@@ -6,15 +6,8 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class ToStringFactory : IConvertFactory
     {
-        public ToStringFactory()
-        {
-            GuardCall = true;
-        }
-
         #region IConvertFactory Members
-        public bool GuardCall { get; set; }
-
-        public Func<TFrom, TTo> Get<TFrom, TTo>()
+        public IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type toType = typeof(TTo);
 
@@ -35,7 +28,12 @@ namespace Deipax.Core.Conversion.Factories
                     Expression.Return(returnTarget, callExpression),
                     returnLabel);
 
-                return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
+                return new Result<TFrom, TTo>()
+                {
+                    Factory = this,
+                    GuardCall = true,
+                    Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                };
             }
 
             return null;
