@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    public class ToOrFromDBNullFactory : IConvertFactory
+    public class ToOrFromDBNull : IConvertFactory
     {
         #region IConvertFactory Members
         public IResult<TFrom, TTo> Get<TFrom, TTo>()

@@ -74,16 +74,9 @@ namespace Benchmarks.Core.BaseClasses.Conversion
             _convertibleClass_AsObject = _convertibleClass = new ConvertibleClass();
             _convertibleClassNoValue_AsObject = _convertibleClassNoValue = null;
 
-            _nonConvertibleClass_AsObject = _nonConvertibleClass = new NonConvertibleClass();
-            _nonConvertibleClassNoValue_AsObject = _nonConvertibleClassNoValue = null;
-
             _convertibleStruct_AsObject = _convertibleStruct = new ConvertibleStruct();
             _convertibleStructNullableWithValue_AsObject = _convertibleStructNullableWithValue = new ConvertibleStruct();
             _convertibleStructNullableNoValue_AsObject = _convertibleStructNullableNoValue = null;
-
-            _nonConvertibleStruct_AsObject = _nonConvertibleStruct = new NonConvertibleStruct();
-            _nonConvertibleStructNullableWithValue_AsObject = _nonConvertibleStructNullableWithValue = new NonConvertibleStruct();
-            _nonConvertibleStructNullableNoValue_AsObject = _nonConvertibleStructNullableNoValue = null;
 
             _fromEnum_AsObject = _fromEnum = TestEnum.One;
             _fromEnumNullableWithValue_AsObject = _fromEnumNullableWithValue = TestEnum.One; ;
@@ -203,24 +196,12 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         protected object _convertibleClass_AsObject;
         protected object _convertibleClassNoValue_AsObject;
 
-        protected NonConvertibleClass _nonConvertibleClass;
-        protected NonConvertibleClass _nonConvertibleClassNoValue;
-        protected object _nonConvertibleClass_AsObject;
-        protected object _nonConvertibleClassNoValue_AsObject;
-
         protected ConvertibleStruct _convertibleStruct;
         protected ConvertibleStruct? _convertibleStructNullableWithValue;
         protected ConvertibleStruct? _convertibleStructNullableNoValue;
         protected object _convertibleStruct_AsObject;
         protected object _convertibleStructNullableWithValue_AsObject;
         protected object _convertibleStructNullableNoValue_AsObject;
-
-        protected NonConvertibleStruct _nonConvertibleStruct;
-        protected NonConvertibleStruct? _nonConvertibleStructNullableWithValue;
-        protected NonConvertibleStruct? _nonConvertibleStructNullableNoValue;
-        protected object _nonConvertibleStruct_AsObject;
-        protected object _nonConvertibleStructNullableWithValue_AsObject;
-        protected object _nonConvertibleStructNullableNoValue_AsObject;
 
         protected TestEnum _fromEnum;
         protected TestEnum? _fromEnumNullableWithValue;
@@ -846,32 +827,6 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
         #endregion
 
-        #region From Non-IConvertible Classes
-        [Benchmark]
-        public virtual void From_NonConvertibleClass()
-        {
-            TTo to = ConvertFrom(_nonConvertibleClass);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleClass_AsObject()
-        {
-            TTo to = ConvertFrom(_nonConvertibleClass_AsObject);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleClass_NoValue()
-        {
-            TTo to = ConvertFrom(_nonConvertibleClassNoValue);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleClass_NoValue_AsObject()
-        {
-            TTo to = ConvertFrom(_nonConvertibleClassNoValue_AsObject);
-        }
-        #endregion
-
         #region From IConvertible Structs
         [Benchmark]
         public virtual void From_ConvertibleStruct()
@@ -907,44 +862,6 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         public virtual void From_ConvertibleStruct_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_convertibleStructNullableNoValue_AsObject);
-        }
-        #endregion
-
-        #region From Non-IConvertible Structs
-        [Benchmark]
-        public virtual void From_NonConvertibleStruct()
-        {
-            TTo to = ConvertFrom(_nonConvertibleStruct);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleStruct_AsObject()
-        {
-            TTo to = ConvertFrom(_nonConvertibleStruct_AsObject);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleStruct_Nullable_WithValue()
-        {
-            TTo to = ConvertFrom(_nonConvertibleStructNullableWithValue);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
-        {
-            TTo to = ConvertFrom(_nonConvertibleStructNullableWithValue_AsObject);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleStruct_Nullable_NoValue()
-        {
-            TTo to = ConvertFrom(_nonConvertibleStructNullableNoValue);
-        }
-
-        [Benchmark]
-        public virtual void From_NonConvertibleStruct_Nullable_NoValue_AsObject()
-        {
-            TTo to = ConvertFrom(_nonConvertibleStructNullableNoValue_AsObject);
         }
         #endregion
 

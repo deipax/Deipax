@@ -11,20 +11,25 @@ namespace Deipax.Core.Conversion
     {
         static ConvertConfig()
         {
+            Default = new DefaultFactory();
+
             _defaults = new List<IConvertFactory>()
             {
-                new ToObjectFactory(),
-                new ToStringFactory(),
-                new ToOrFromDBNullFactory(),
+                new ToObject(),
+                new ToString(),
+                new ToOrFromDBNull(),
+                new ToBool(),
+                new ToChar(),
+                new ToByte(),
+                new ToLong(),
+
+
                 new FromEnumFactory(),
                 new FromStringFactory(),
-                new FromNonNullablePrimitive(),
-                new FromNullablePrimitive(),
                 new FromObjectFactory(),
                 new FromConvertibleRefType(),
                 new FromNonNullableConvertibleValueType(),
-                new FromNullableConvertibleValueType(),
-                new DefaultFactory()
+                new FromNullableConvertibleValueType()
             };
         }
 
@@ -33,6 +38,8 @@ namespace Deipax.Core.Conversion
         #endregion
 
         #region Public Members
+        public static IConvertFactory Default { get; private set; }
+
         public static IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             foreach (var factory in _defaults)
