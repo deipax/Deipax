@@ -34,7 +34,7 @@ namespace Deipax.Core.Conversion
                 new FromEnumFactory(),
                 new FromStringFactory(),
                 new FromIConvertible(),
-                new FromObjectFactory(),               
+                new FromObjectFactory(),
             };
         }
 
@@ -57,7 +57,8 @@ namespace Deipax.Core.Conversion
                     {
                         Factory = result.Factory,
                         GuardCall = result.GuardCall,
-                        Func = result.GuardCall
+                        Func = result.Func,
+                        GuardedFunc = result.GuardCall
                             ? Guard(result.Func)
                             : result.Func
                     };
@@ -214,10 +215,19 @@ namespace Deipax.Core.Conversion
         #endregion
     }
 
+    public interface IResult<TFrom, TTo>
+    {
+        IConvertFactory Factory { get; }
+        Func<TFrom, TTo> Func { get; }
+        Func<TFrom, TTo> GuardedFunc { get; }
+        bool GuardCall { get; }
+    }
+
     internal class Result<TFrom, TTo> : IResult<TFrom, TTo>
     {
         public IConvertFactory Factory { get; set; }
         public Func<TFrom, TTo> Func { get; set; }
+        public Func<TFrom, TTo> GuardedFunc { get; set; }
         public bool GuardCall { get; set; }
     }
 }

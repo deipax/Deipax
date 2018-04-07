@@ -134,7 +134,7 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
-        public IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             var toType = typeof(TTo);
             var underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
@@ -181,7 +181,7 @@ namespace Deipax.Core.Conversion.Factories
                             returnExpression,
                             returnLabel);
 
-                        return new Result<TFrom, TTo>()
+                        return new ConvertFactoryResult<TFrom, TTo>()
                         {
                             GuardCall = true,
                             Factory = this,

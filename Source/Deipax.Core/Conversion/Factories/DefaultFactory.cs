@@ -7,7 +7,7 @@ namespace Deipax.Core.Conversion.Factories
     public class DefaultFactory : IConvertFactory
     {
         #region IConvertFactory Members
-        public IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             var fromType = typeof(TFrom);
             var toType = typeof(TTo);
@@ -15,7 +15,7 @@ namespace Deipax.Core.Conversion.Factories
             var returnTarget = Expression.Label(toType);
             var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
 
-            return new Result<TFrom, TTo>()
+            return new ConvertFactoryResult<TFrom, TTo>()
             {
                 GuardCall = false,
                 Factory = this,

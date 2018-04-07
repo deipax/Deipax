@@ -215,6 +215,8 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         protected Type Type { get; private set; }
         protected TTo Default { get; private set; }
         protected abstract TTo ConvertFrom<X>(X from);
+
+        private const string OBJECT = "Object";
         #endregion
 
         #region From Bool
@@ -225,6 +227,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Bool_AsObject()
         {
             TTo to = ConvertFrom(_fromBool_AsObject);
@@ -237,6 +240,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Bool_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromBoolNullableWithValue_AsObject);
@@ -249,6 +253,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Bool_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromBoolNullableNoValue_AsObject);
@@ -263,6 +268,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Byte_AsObject()
         {
             TTo to = ConvertFrom(_fromByte_AsObject);
@@ -275,6 +281,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Byte_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromByteNullableWithValue_AsObject);
@@ -287,6 +294,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Byte_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromByteNullableNoValue_AsObject);
@@ -301,6 +309,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Char_AsObject()
         {
             TTo to = ConvertFrom(_fromChar_AsObject);
@@ -313,6 +322,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Char_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromCharNullableWithValue_AsObject);
@@ -325,6 +335,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Char_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromCharNullableNoValue_AsObject);
@@ -339,6 +350,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_DateTime_AsObject()
         {
             TTo to = ConvertFrom(_fromDateTime_AsObject);
@@ -351,6 +363,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_DateTime_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromDateTimeNullableWithValue_AsObject);
@@ -363,6 +376,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_DateTime_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromDateTimeNullableNoValue_AsObject);
@@ -377,6 +391,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Decimal_AsObject()
         {
             TTo to = ConvertFrom(_fromDecimal_AsObject);
@@ -389,6 +404,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Decimal_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromDecimalNullableWithValue_AsObject);
@@ -401,6 +417,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Decimal_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromDecimalNullableNoValue_AsObject);
@@ -415,6 +432,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Double_AsObject()
         {
             TTo to = ConvertFrom(_fromDouble_AsObject);
@@ -427,6 +445,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Double_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromDoubleNullableWithValue_AsObject);
@@ -439,6 +458,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Double_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromDoubleNullableNoValue_AsObject);
@@ -453,6 +473,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Short_AsObject()
         {
             TTo to = ConvertFrom(_fromShort_AsObject);
@@ -465,6 +486,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Short_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromShortNullableWithValue_AsObject);
@@ -477,6 +499,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Short_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromShortNullableNoValue_AsObject);
@@ -491,6 +514,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Int_AsObject()
         {
             TTo to = ConvertFrom(_fromInt_AsObject);
@@ -503,6 +527,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Int_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromIntNullableWithValue_AsObject);
@@ -515,6 +540,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Int_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromIntNullableNoValue_AsObject);
@@ -529,6 +555,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Long_AsObject()
         {
             TTo to = ConvertFrom(_fromLong_AsObject);
@@ -541,6 +568,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Long_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromLongNullableWithValue_AsObject);
@@ -553,6 +581,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Long_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromLongNullableNoValue_AsObject);
@@ -567,6 +596,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_SByte_AsObject()
         {
             TTo to = ConvertFrom(_fromSbyte_AsObject);
@@ -579,6 +609,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_SByte_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromSbyteNullableWithValue_AsObject);
@@ -591,6 +622,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_SByte_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromSbyteNullableNoValue_AsObject);
@@ -605,6 +637,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Float_AsObject()
         {
             TTo to = ConvertFrom(_fromFloat_AsObject);
@@ -617,6 +650,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Float_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromFloatNullableWithValue_AsObject);
@@ -629,6 +663,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Float_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromFloatNullableNoValue_AsObject);
@@ -643,6 +678,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_String_AsObject()
         {
             TTo to = ConvertFrom(_fromString_AsObject);
@@ -655,6 +691,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_String_Null_AsObject()
         {
             TTo to = ConvertFrom(_fromStringNull_AsObject);
@@ -667,6 +704,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_String_Empty_AsObject()
         {
             TTo to = ConvertFrom(_fromStringEmpty_AsObject);
@@ -681,6 +719,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_UShort_AsObject()
         {
             TTo to = ConvertFrom(_fromUShort_AsObject);
@@ -693,6 +732,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_UShort_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromUShortNullableWithValue_AsObject);
@@ -705,6 +745,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_UShort_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromUShortNullableNoValue_AsObject);
@@ -719,6 +760,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_UInt_AsObject()
         {
             TTo to = ConvertFrom(_fromUInt_AsObject);
@@ -731,6 +773,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_UInt_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromUIntNullableWithValue_AsObject);
@@ -743,6 +786,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_UInt_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromUIntNullableNoValue_AsObject);
@@ -757,6 +801,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ULong_AsObject()
         {
             TTo to = ConvertFrom(_fromULong_AsObject);
@@ -769,6 +814,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ULong_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromULongNullableWithValue_AsObject);
@@ -781,6 +827,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ULong_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromULongNullableNoValue_AsObject);
@@ -809,6 +856,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ConvertibleClass_AsObject()
         {
             TTo to = ConvertFrom(_convertibleClass_AsObject);
@@ -821,6 +869,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ConvertibleClass_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_convertibleClassNoValue_AsObject);
@@ -835,6 +884,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ConvertibleStruct_AsObject()
         {
             TTo to = ConvertFrom(_convertibleStruct_AsObject);
@@ -847,6 +897,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ConvertibleStruct_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_convertibleStructNullableWithValue_AsObject);
@@ -859,6 +910,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_ConvertibleStruct_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_convertibleStructNullableNoValue_AsObject);
@@ -873,6 +925,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Enum_AsObject()
         {
             TTo to = ConvertFrom(_fromEnum_AsObject);
@@ -885,6 +938,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Enum_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromEnumNullableWithValue_AsObject);
@@ -897,6 +951,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         }
 
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_Enum_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromEnumNullableNoValue_AsObject);

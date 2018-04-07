@@ -23,7 +23,7 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
-        public IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
@@ -73,7 +73,7 @@ namespace Deipax.Core.Conversion.Factories
                         ifThenElse,
                         returnLabel);
 
-                    return new Result<TFrom, TTo>()
+                    return new ConvertFactoryResult<TFrom, TTo>()
                     {
                         Factory = this,
                         GuardCall = false,

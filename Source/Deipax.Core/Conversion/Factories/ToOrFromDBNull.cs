@@ -7,7 +7,7 @@ namespace Deipax.Core.Conversion.Factories
     public class ToOrFromDBNull : IConvertFactory
     {
         #region IConvertFactory Members
-        public IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type toType = typeof(TTo);
             Type fromType = typeof(TFrom);
@@ -43,7 +43,7 @@ namespace Deipax.Core.Conversion.Factories
 
             if (block != null)
             {
-                return new Result<TFrom, TTo>()
+                return new ConvertFactoryResult<TFrom, TTo>()
                 {
                     Factory = this,
                     GuardCall = false,

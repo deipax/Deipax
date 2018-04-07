@@ -6,9 +6,11 @@ namespace Deipax.Core.Conversion
     {
         static ConvertTo2()
         {
-            From = ConvertConfig.Get<TFrom, TTo>()?.Func;
+            Result = ConvertConfig.Get<TFrom, TTo>();
+            From = Result?.GuardedFunc;
         }
 
         public static readonly Func<TFrom, TTo> From;
+        public static readonly IResult<TFrom, TTo> Result;
     }
 }

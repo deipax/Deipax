@@ -8,12 +8,12 @@ namespace Deipax.Core.Conversion.Factories
     public class FromObjectFactory2 : IConvertFactory
     {
         #region IConvertFactory Members
-        public IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
-            return new Result<TFrom, TTo>()
+            return new ConvertFactoryResult<TFrom, TTo>()
             {
                 Factory = this,
-                GuardCall = true,
+                GuardCall = false,
                 Func = FromObject<TTo>.Create<TFrom>()
             };
         }
@@ -27,6 +27,8 @@ namespace Deipax.Core.Conversion.Factories
         }
 
         #region Field Members
+        private static TTo _default = default(TTo);
+
         private static Type _toType = typeof(TTo);
 
         private static readonly QuickCache<Type, Func<object, TTo>> _cache =
@@ -72,6 +74,11 @@ namespace Deipax.Core.Conversion.Factories
 
         public static TTo Convert(object from)
         {
+            if (from == null || from == DBNull.Value)
+            {
+                return _default;
+            }
+
             var runtimeType = from.GetType();
 
             if (runtimeType == _toType)

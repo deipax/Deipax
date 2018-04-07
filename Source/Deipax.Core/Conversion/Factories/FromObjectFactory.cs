@@ -25,7 +25,7 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
-        public IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             // This will only return a func IF TFrom is an object
             // or implements IConvertible and the TTo is supported by 
@@ -95,7 +95,7 @@ namespace Deipax.Core.Conversion.Factories
                         returnExpression,
                         returnLabel);
 
-                    return new Result<TFrom, TTo>()
+                    return new ConvertFactoryResult<TFrom, TTo>()
                     {
                         GuardCall = true,
                         Factory = this,

@@ -9,7 +9,7 @@ namespace Deipax.Core.Conversion.Factories
     public class FromEnumFactory : IConvertFactory
     {
         #region IConvertFactory Members
-        public IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
@@ -47,7 +47,7 @@ namespace Deipax.Core.Conversion.Factories
                         Expression.Return(returnTarget, Expression.Convert(callExpression, toType)),
                         returnLabel);
 
-                    return new Result<TFrom, TTo>()
+                    return new ConvertFactoryResult<TFrom, TTo>()
                     {
                         GuardCall = true,
                         Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile(),
