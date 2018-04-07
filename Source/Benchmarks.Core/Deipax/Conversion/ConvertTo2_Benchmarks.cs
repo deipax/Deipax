@@ -138,4 +138,14 @@ namespace Benchmarks.Core.Deipax.Conversion
     {
     }
     #endregion
+
+    #region Decimal/DecimalNullable
+    public class ConvertTo2_Decimal : ConvertTo2_Base<decimal>
+    {
+    }
+
+    public class ConvertTo2_DecimalNullable : ConvertTo2_Base<decimal?>
+    {
+    }
+    #endregion
 }

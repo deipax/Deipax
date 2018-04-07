@@ -274,4 +274,34 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     {
     }
     #endregion
+
+    #region Decimal/DecimalNullable
+    [TestClass]
+    public class ConvertTo2_DecimalBase<TTo> : ConvertTo2_Base<TTo>
+    {
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
+        public override void From_Char_AsObject()
+        {
+            base.From_Char_AsObject();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
+        public override void From_Char_Nullable_WithValue_AsObject()
+        {
+            base.From_Char_Nullable_WithValue_AsObject();
+        }
+    }
+
+    [TestClass]
+    public class ConvertTo2_Decimal : ConvertTo2_DecimalBase<decimal>
+    {
+    }
+
+    [TestClass]
+    public class ConvertTo2_DecimalNullable : ConvertTo2_DecimalBase<decimal?>
+    {
+    }
+    #endregion
 }

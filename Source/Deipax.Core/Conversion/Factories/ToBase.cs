@@ -1,6 +1,7 @@
 ﻿using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -110,6 +111,15 @@ namespace Deipax.Core.Conversion.Factories
         }
     }
 
+    public class ToDecimal : ToBase<decimal>
+    {
+        public ToDecimal() : base(
+            typeof(char),
+            typeof(DateTime))
+        {
+        }
+    }
+
     public abstract class ToBase<T> : IConvertFactory
     {
         public ToBase(params Type[] invalidCastTypes)
@@ -117,8 +127,10 @@ namespace Deipax.Core.Conversion.Factories
             _invalidCastTypes = invalidCastTypes?.ToList() ?? new List<Type>();
         }
 
-        #region Field Members
+        #region Field Member
+
         private List<Type> _invalidCastTypes;
+
         #endregion
 
         #region IConvertFactory Members
@@ -153,13 +165,13 @@ namespace Deipax.Core.Conversion.Factories
                         var returnTarget = Expression.Label(toType);
                         var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
 
-                        Expression fromConvert = fromType != underlyingFromType
+                        Expression guardedInput = fromType != underlyingFromType
                             ? Expression.Property(input, "Value")
-                            : (Expression)input;
+                            : (Expression) input;
 
                         MethodCallExpression callExpression = Expression.Call(
                             methodInfo,
-                            fromConvert);
+                            guardedInput);
 
                         GotoExpression returnExpression = toType != underlyingToType
                             ? Expression.Return(returnTarget, Expression.Convert(callExpression, toType))

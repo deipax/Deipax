@@ -30,13 +30,11 @@ namespace Deipax.Core.Conversion
                 new ToULong(),
                 new ToFloat(),
                 new ToDouble(),
-
+                new ToDecimal(),
                 new FromEnumFactory(),
                 new FromStringFactory(),
-                new FromObjectFactory(),
-                new FromConvertibleRefType(),
-                new FromNonNullableConvertibleValueType(),
-                new FromNullableConvertibleValueType()
+                new FromIConvertible(),
+                new FromObjectFactory(),               
             };
         }
 

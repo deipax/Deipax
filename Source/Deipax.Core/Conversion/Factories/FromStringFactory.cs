@@ -76,7 +76,7 @@ namespace Deipax.Core.Conversion.Factories
                     return new Result<TFrom, TTo>()
                     {
                         Factory = this,
-                        GuardCall = true,
+                        GuardCall = false,
                         Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
                     };
                 }

@@ -1,5 +1,4 @@
-﻿using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Core.Interfaces;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -8,13 +7,13 @@ using System.Reflection;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    class FromNullableConvertibleValueType : IConvertFactory
+    public class FromIConvertible : IConvertFactory
     {
-        public FromNullableConvertibleValueType() : this(CultureInfo.InvariantCulture)
+        public FromIConvertible() : this(CultureInfo.InvariantCulture)
         {
         }
 
-        public FromNullableConvertibleValueType(IFormatProvider provider)
+        public FromIConvertible(IFormatProvider provider)
         {
             _provider = provider;
         }
@@ -23,27 +22,18 @@ namespace Deipax.Core.Conversion.Factories
         private IFormatProvider _provider;
         #endregion
 
+
         #region IConvertFactory Members
         public IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
             Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
+            Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
-            if (fromType.IsValueType &&
-                fromType.IsNullable() &&
-                fromType != typeof(DateTime) &&
-                fromType != typeof(DateTime?) &&
-                fromType != typeof(string) &&
-                fromType != typeof(object) &&
-                toType != typeof(DateTime) &&
-                toType != typeof(DateTime?) &&
-                toType != typeof(string) &&
-                toType != typeof(object) &&
-                typeof(IConvertible).IsAssignableFrom(underlyingFromType))
+            if (typeof(IConvertible).IsAssignableFrom(underlyingFromType) &&
+                underlyingFromType != typeof(object))
             {
-                Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-
                 var methodInfo = typeof(IConvertible)
                     .GetRuntimeMethods()
                     .Where(x =>
@@ -59,9 +49,13 @@ namespace Deipax.Core.Conversion.Factories
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
+                    Expression guardedInput = fromType != underlyingFromType
+                        ? Expression.Property(input, "Value")
+                        : (Expression)input;
+
                     var assignConverter = Expression.Assign(
                         converter,
-                        Expression.TypeAs(Expression.Property(input, "Value"), typeof(IConvertible)));
+                        Expression.TypeAs(guardedInput, typeof(IConvertible)));
 
                     var ifConverter = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
