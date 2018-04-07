@@ -21,8 +21,15 @@ namespace Deipax.Core.Conversion
                 new ToBool(),
                 new ToChar(),
                 new ToByte(),
+                new ToSByte(),
+                new ToShort(),
+                new ToUShort(),
+                new ToInt(),
+                new ToUInt(),
                 new ToLong(),
-
+                new ToULong(),
+                new ToFloat(),
+                new ToDouble(),
 
                 new FromEnumFactory(),
                 new FromStringFactory(),

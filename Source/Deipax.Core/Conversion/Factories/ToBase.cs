@@ -28,6 +28,14 @@ namespace Deipax.Core.Conversion.Factories
         }
     }
 
+    public class ToSByte : ToBase<sbyte>
+    {
+        public ToSByte() : base(
+            typeof(DateTime))
+        {
+        }
+    }
+
     public class ToByte : ToBase<byte>
     {
         public ToByte() : base(
@@ -36,9 +44,67 @@ namespace Deipax.Core.Conversion.Factories
         }
     }
 
+    public class ToShort : ToBase<short>
+    {
+        public ToShort() : base(
+            typeof(DateTime))
+        {
+        }
+    }
+
+    public class ToUShort : ToBase<ushort>
+    {
+        public ToUShort() : base(
+            typeof(DateTime))
+        {
+        }
+    }
+
+    public class ToInt : ToBase<int>
+    {
+        public ToInt() : base(
+            typeof(DateTime))
+        {
+        }
+    }
+
+    public class ToUInt : ToBase<uint>
+    {
+        public ToUInt() : base(
+            typeof(DateTime))
+        {
+        }
+    }
+
     public class ToLong : ToBase<long>
     {
         public ToLong() : base(
+            typeof(DateTime))
+        {
+        }
+    }
+
+    public class ToULong : ToBase<ulong>
+    {
+        public ToULong() : base(
+            typeof(DateTime))
+        {
+        }
+    }
+
+    public class ToFloat : ToBase<float>
+    {
+        public ToFloat() : base(
+            typeof(char),
+            typeof(DateTime))
+        {
+        }
+    }
+
+    public class ToDouble : ToBase<double>
+    {
+        public ToDouble() : base(
+            typeof(char),
             typeof(DateTime))
         {
         }
