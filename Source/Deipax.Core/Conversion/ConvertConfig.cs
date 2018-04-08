@@ -15,7 +15,7 @@ namespace Deipax.Core.Conversion
 
             _defaults = new List<IConvertFactory>()
             {
-                new ToObject(),
+                new NoConvert(),
                 new ToString(),
                 new ToOrFromDBNull(),
                 new ToBool(),
@@ -31,10 +31,10 @@ namespace Deipax.Core.Conversion
                 new ToFloat(),
                 new ToDouble(),
                 new ToDecimal(),
-                new FromEnumFactory(),
-                new FromStringFactory(),
+                new FromEnum(),
+                new FromString(),
                 new FromIConvertible(),
-                new FromObjectFactory(),
+                new FromObject(),
             };
         }
 
@@ -86,55 +86,7 @@ namespace Deipax.Core.Conversion
 
             BlockExpression block = null;
 
-            if (fromType == toType)
-            {
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    input,
-                    toType);
-
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
-            }
-            else if (!fromType.IsNullable() &&
-                     toType.IsNullable() &&
-                     fromType == Nullable.GetUnderlyingType(toType))
-            {
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    Expression.Convert(input, toType),
-                    toType);
-
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
-            }
-            else if (fromType.IsNullable() &&
-                     !toType.IsNullable() &&
-                     Nullable.GetUnderlyingType(fromType) == toType)
-            {
-                var returnValue = Expression.Variable(toType, "returnValue");
-                var hasValue = Expression.Property(input, "HasValue");
-                var assignDefault = Expression.Assign(returnValue, defaultValue);
-
-                var ifThen = Expression.IfThen(
-                    hasValue,
-                    Expression.Assign(returnValue, Expression.Convert(input, toType)));
-
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    returnValue,
-                    toType);
-
-                block = Expression.Block(
-                    new[] { returnValue },
-                    assignDefault,
-                    ifThen,
-                    returnExpression,
-                    returnLabel);
-            }
-            else if (fromType == typeof(object))
+            if (fromType == typeof(object))
             {
                 var isNullOrDbNullExpression = Expression.Or(
                     Expression.Equal(input, Expression.Constant(null, typeof(object))),

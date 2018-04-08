@@ -9,13 +9,13 @@ using Deipax.Core.Interfaces;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    public class FromObjectFactory : IConvertFactory
+    public class FromObject : IConvertFactory
     {
-        public FromObjectFactory() : this(CultureInfo.InvariantCulture)
+        public FromObject() : this(CultureInfo.InvariantCulture)
         {
         }
 
-        public FromObjectFactory(IFormatProvider provider)
+        public FromObject(IFormatProvider provider)
         {
             _provider = provider;
         }

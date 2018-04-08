@@ -1,11 +1,13 @@
 ﻿using Deipax.Core.Common;
 using Deipax.Core.Interfaces;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    public class FromObjectFactory2 : IConvertFactory
+    public class FromObject2 : IConvertFactory
     {
         #region IConvertFactory Members
         public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
@@ -24,12 +26,19 @@ namespace Deipax.Core.Conversion.Factories
     {
         static FromObject()
         {
+            _underlyingToType = Nullable.GetUnderlyingType(_toType) ?? _toType;
         }
 
         #region Field Members
         private static TTo _default = default(TTo);
 
         private static Type _toType = typeof(TTo);
+        private static Type _underlyingToType;
+
+        private static MethodInfo _helper = typeof(FromObject<TTo>)
+            .GetRuntimeMethods()
+            .Where(x => x.Name == "GetHelper")
+            .FirstOrDefault();
 
         private static readonly QuickCache<Type, Func<object, TTo>> _cache =
             new QuickCache<Type, Func<object, TTo>>(16, ReferenceEqualsComparer.Instance);
@@ -74,14 +83,16 @@ namespace Deipax.Core.Conversion.Factories
 
         public static TTo Convert(object from)
         {
-            if (from == null || from == DBNull.Value)
+            if (from == null ||
+                from == DBNull.Value)
             {
                 return _default;
             }
 
             var runtimeType = from.GetType();
 
-            if (runtimeType == _toType)
+            if (runtimeType == _toType ||
+                runtimeType == _underlyingToType)
             {
                 return (TTo)from;
             }
@@ -101,13 +112,12 @@ namespace Deipax.Core.Conversion.Factories
 
             ParameterExpression input = Expression.Parameter(typeof(object), "input");
 
-            var convertTo = typeof(ConvertTo2<,>)
-                .MakeGenericType(new[] { _toType, runtimeType });
-
-            var fromField = Expression.Field(null, convertTo, "From");
+            var convertTo = (Delegate)_helper
+                    .MakeGenericMethod(new[] { runtimeType })
+                    .Invoke(null, null);
 
             var callExpression = Expression.Invoke(
-                fromField,
+                Expression.Constant(convertTo),
                 Expression.Convert(input, runtimeType));
 
             GotoExpression returnExpression = Expression.Return(
@@ -120,6 +130,11 @@ namespace Deipax.Core.Conversion.Factories
                 returnLabel);
 
             return Expression.Lambda<Func<object, TTo>>(block, input).Compile();
+        }
+
+        private static Delegate GetHelper<TFrom>()
+        {
+            return ConvertTo2<TTo, TFrom>.Result?.Func;
         }
         #endregion
     }

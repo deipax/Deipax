@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    public class FromEnumFactory : IConvertFactory
+    public class FromEnum : IConvertFactory
     {
         #region IConvertFactory Members
         public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()

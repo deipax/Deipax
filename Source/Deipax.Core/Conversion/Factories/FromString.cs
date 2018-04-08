@@ -7,13 +7,13 @@ using System.Reflection;
 
 namespace Deipax.Core.Conversion.Factories
 {
-    public class FromStringFactory : IConvertFactory
+    public class FromString : IConvertFactory
     {
-        public FromStringFactory() : this(CultureInfo.InvariantCulture)
+        public FromString() : this(CultureInfo.InvariantCulture)
         {
         }
 
-        public FromStringFactory(IFormatProvider provider)
+        public FromString(IFormatProvider provider)
         {
             _provider = provider;
         }
