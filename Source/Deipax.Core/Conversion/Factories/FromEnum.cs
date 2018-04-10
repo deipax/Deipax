@@ -14,17 +14,12 @@ namespace Deipax.Core.Conversion.Factories
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
             Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
+            Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
             if (underlyingFromType.IsEnum &&
                 toType != typeof(string) &&
-                toType != typeof(object) &&
-                fromType != typeof(DateTime) &&
-                fromType != typeof(DateTime?) &&
-                toType != typeof(DateTime) &&
-                toType != typeof(DateTime?))
+                toType != typeof(object))
             {
-                Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-
                 var methodInfo = typeof(Convert)
                     .GetRuntimeMethods()
                     .Where(x => 
@@ -33,7 +28,8 @@ namespace Deipax.Core.Conversion.Factories
                         x.GetParameters()[0].ParameterType == typeof(int))
                     .FirstOrDefault();
 
-                if (methodInfo != null)
+                if (methodInfo != null &&
+                    underlyingToType != typeof(DateTime))
                 {
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
                     var returnTarget = Expression.Label(toType);
@@ -53,6 +49,10 @@ namespace Deipax.Core.Conversion.Factories
                         Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile(),
                         Factory = this
                     };
+                }
+                else if (underlyingToType == typeof(DateTime))
+                {
+                    return ConvertConfig.Default?.Get<TFrom, TTo>();
                 }
             }
 

@@ -21,20 +21,6 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
         {
             _fromString_AsObject = _fromString = "true";
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_AsObject()
-        {
-            base.From_Char_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_Nullable_WithValue_AsObject()
-        {
-            base.From_Char_Nullable_WithValue_AsObject();
-        }
     }
 
     [TestClass]
@@ -52,60 +38,6 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     [TestClass]
     public class ConvertTo2_CharBase<TTo> : ConvertTo2_Base<TTo>
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Bool_AsObject()
-        {
-            base.From_Bool_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Bool_Nullable_WithValue_AsObject()
-        {
-            base.From_Bool_Nullable_WithValue_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Decimal_AsObject()
-        {
-            base.From_Decimal_AsObject();
-        }
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Decimal_Nullable_WithValue_AsObject()
-        {
-            base.From_Decimal_Nullable_WithValue_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Double_AsObject()
-        {
-            base.From_Double_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Double_Nullable_WithValue_AsObject()
-        {
-            base.From_Double_Nullable_WithValue_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Float_AsObject()
-        {
-            base.From_Float_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Float_Nullable_WithValue_AsObject()
-        {
-            base.From_Float_Nullable_WithValue_AsObject();
-        }
     }
 
     [TestClass]
@@ -219,19 +151,6 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     [TestClass]
     public class ConvertTo2_FloatBase<TTo> : ConvertTo2_Base<TTo>
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_AsObject()
-        {
-            base.From_Char_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_Nullable_WithValue_AsObject()
-        {
-            base.From_Char_Nullable_WithValue_AsObject();
-        }
     }
 
     [TestClass]
@@ -249,19 +168,6 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     [TestClass]
     public class ConvertTo2_DoubleBase<TTo> : ConvertTo2_Base<TTo>
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_AsObject()
-        {
-            base.From_Char_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_Nullable_WithValue_AsObject()
-        {
-            base.From_Char_Nullable_WithValue_AsObject();
-        }
     }
 
     [TestClass]
@@ -279,19 +185,6 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     [TestClass]
     public class ConvertTo2_DecimalBase<TTo> : ConvertTo2_Base<TTo>
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_AsObject()
-        {
-            base.From_Char_AsObject();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public override void From_Char_Nullable_WithValue_AsObject()
-        {
-            base.From_Char_Nullable_WithValue_AsObject();
-        }
     }
 
     [TestClass]
@@ -301,6 +194,34 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
 
     [TestClass]
     public class ConvertTo2_DecimalNullable : ConvertTo2_DecimalBase<decimal?>
+    {
+    }
+    #endregion
+
+    #region DateTime/DateTimeNullable
+    [TestClass]
+    public class ConvertTo2_DateTimeBase<TTo> : ConvertTo2_Base<TTo>
+    {
+        public ConvertTo2_DateTimeBase()
+        {
+            _fromString_AsObject = _fromString = DateTime.MinValue.ToString();
+        }
+    }
+
+    [TestClass]
+    public class ConvertTo2_DateTime : ConvertTo2_DateTimeBase<DateTime>
+    {
+    }
+
+    [TestClass]
+    public class ConvertTo2_DateTimeNullable : ConvertTo2_DateTimeBase<DateTime?>
+    {
+    }
+    #endregion
+
+    #region String
+    [TestClass]
+    public class ConvertTo2_String : ConvertTo2_Base<string>
     {
     }
     #endregion

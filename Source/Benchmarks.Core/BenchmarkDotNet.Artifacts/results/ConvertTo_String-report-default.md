@@ -1,0 +1,119 @@
+
+BenchmarkDotNet=v0.10.13, OS=Windows 10 Redstone 3 [1709, Fall Creators Update] (10.0.16299.334)
+Intel Core i7-3770K CPU 3.50GHz (Ivy Bridge), 1 CPU, 8 logical cores and 4 physical cores
+Frequency=3435890 Hz, Resolution=291.0454 ns, Timer=TSC
+.NET Core SDK=2.1.103
+  [Host]     : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
+  DefaultJob : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
+
+
+                                             Method |      Mean |     Error |    StdDev |  Gen 0 | Allocated |
+--------------------------------------------------- |----------:|----------:|----------:|-------:|----------:|
+                                          From_Bool |  36.23 ns | 0.2049 ns | 0.1599 ns | 0.0057 |      24 B |
+                                 From_Bool_AsObject |  33.02 ns | 0.0413 ns | 0.0345 ns |      - |       0 B |
+                       From_Bool_Nullable_WithValue | 115.41 ns | 0.1080 ns | 0.1010 ns | 0.0056 |      24 B |
+              From_Bool_Nullable_WithValue_AsObject |  34.03 ns | 0.0925 ns | 0.0865 ns |      - |       0 B |
+                         From_Bool_Nullable_NoValue |  46.72 ns | 0.0289 ns | 0.0257 ns |      - |       0 B |
+                From_Bool_Nullable_NoValue_AsObject |  19.39 ns | 0.0292 ns | 0.0259 ns |      - |       0 B |
+                                          From_Byte |  82.18 ns | 0.0968 ns | 0.0858 ns | 0.0132 |      56 B |
+                                 From_Byte_AsObject |  79.43 ns | 0.0943 ns | 0.0836 ns | 0.0075 |      32 B |
+                       From_Byte_Nullable_WithValue | 157.06 ns | 0.2977 ns | 0.2639 ns | 0.0131 |      56 B |
+              From_Byte_Nullable_WithValue_AsObject |  78.99 ns | 0.1997 ns | 0.1868 ns | 0.0075 |      32 B |
+                         From_Byte_Nullable_NoValue |  47.38 ns | 0.0589 ns | 0.0551 ns |      - |       0 B |
+                From_Byte_Nullable_NoValue_AsObject |  19.39 ns | 0.0458 ns | 0.0406 ns |      - |       0 B |
+                                          From_Char |  40.30 ns | 0.0341 ns | 0.0302 ns | 0.0133 |      56 B |
+                                 From_Char_AsObject |  37.09 ns | 0.0331 ns | 0.0259 ns | 0.0076 |      32 B |
+                       From_Char_Nullable_WithValue | 114.98 ns | 0.0710 ns | 0.0554 ns | 0.0132 |      56 B |
+              From_Char_Nullable_WithValue_AsObject |  37.12 ns | 0.0474 ns | 0.0396 ns | 0.0076 |      32 B |
+                         From_Char_Nullable_NoValue |  46.66 ns | 0.0664 ns | 0.0588 ns |      - |       0 B |
+                From_Char_Nullable_NoValue_AsObject |  19.62 ns | 0.0228 ns | 0.0202 ns |      - |       0 B |
+                                      From_DateTime | 489.69 ns | 2.1075 ns | 1.9713 ns | 0.0448 |     192 B |
+                             From_DateTime_AsObject | 485.94 ns | 1.1378 ns | 1.0643 ns | 0.0401 |     168 B |
+                   From_DateTime_Nullable_WithValue | 593.70 ns | 1.4522 ns | 1.2873 ns | 0.0448 |     192 B |
+          From_DateTime_Nullable_WithValue_AsObject | 483.20 ns | 0.6286 ns | 0.5572 ns | 0.0401 |     168 B |
+                     From_DateTime_Nullable_NoValue |  47.37 ns | 0.0686 ns | 0.0642 ns |      - |       0 B |
+            From_DateTime_Nullable_NoValue_AsObject |  19.42 ns | 0.0398 ns | 0.0373 ns |      - |       0 B |
+                                       From_Decimal | 176.51 ns | 0.2611 ns | 0.2314 ns | 0.0150 |      64 B |
+                              From_Decimal_AsObject | 104.04 ns | 0.2199 ns | 0.1950 ns | 0.0075 |      32 B |
+                    From_Decimal_Nullable_WithValue | 183.67 ns | 0.4771 ns | 0.4229 ns | 0.0150 |      64 B |
+           From_Decimal_Nullable_WithValue_AsObject | 172.20 ns | 0.1433 ns | 0.1270 ns | 0.0074 |      32 B |
+                      From_Decimal_Nullable_NoValue |  46.33 ns | 0.0539 ns | 0.0504 ns |      - |       0 B |
+             From_Decimal_Nullable_NoValue_AsObject |  19.36 ns | 0.0252 ns | 0.0236 ns |      - |       0 B |
+                                        From_Double | 400.90 ns | 0.4558 ns | 0.3806 ns | 0.0129 |      56 B |
+                               From_Double_AsObject | 369.35 ns | 0.3479 ns | 0.3254 ns | 0.0072 |      32 B |
+                     From_Double_Nullable_WithValue | 467.01 ns | 0.9207 ns | 0.8613 ns | 0.0129 |      56 B |
+            From_Double_Nullable_WithValue_AsObject | 378.44 ns | 0.2586 ns | 0.2293 ns | 0.0072 |      32 B |
+                       From_Double_Nullable_NoValue |  46.45 ns | 0.0679 ns | 0.0602 ns |      - |       0 B |
+              From_Double_Nullable_NoValue_AsObject |  20.77 ns | 0.0130 ns | 0.0122 ns |      - |       0 B |
+                                         From_Short |  81.67 ns | 0.1957 ns | 0.1831 ns | 0.0132 |      56 B |
+                                From_Short_AsObject |  79.62 ns | 0.2215 ns | 0.2072 ns | 0.0075 |      32 B |
+                      From_Short_Nullable_WithValue | 157.85 ns | 0.3404 ns | 0.3184 ns | 0.0131 |      56 B |
+             From_Short_Nullable_WithValue_AsObject |  80.44 ns | 0.1311 ns | 0.1162 ns | 0.0075 |      32 B |
+                        From_Short_Nullable_NoValue |  47.95 ns | 0.0579 ns | 0.0542 ns |      - |       0 B |
+               From_Short_Nullable_NoValue_AsObject |  20.94 ns | 0.0380 ns | 0.0355 ns |      - |       0 B |
+                                           From_Int |  81.65 ns | 0.0902 ns | 0.0753 ns | 0.0132 |      56 B |
+                                  From_Int_AsObject |  79.26 ns | 0.3172 ns | 0.2967 ns | 0.0075 |      32 B |
+                        From_Int_Nullable_WithValue | 159.69 ns | 0.3833 ns | 0.3585 ns | 0.0131 |      56 B |
+               From_Int_Nullable_WithValue_AsObject |  80.40 ns | 0.2514 ns | 0.2352 ns | 0.0075 |      32 B |
+                          From_Int_Nullable_NoValue |  48.41 ns | 0.0390 ns | 0.0365 ns |      - |       0 B |
+                 From_Int_Nullable_NoValue_AsObject |  20.21 ns | 0.0217 ns | 0.0192 ns |      - |       0 B |
+                                          From_Long |  88.79 ns | 0.2001 ns | 0.1872 ns | 0.0132 |      56 B |
+                                 From_Long_AsObject |  83.21 ns | 0.1122 ns | 0.1049 ns | 0.0075 |      32 B |
+                       From_Long_Nullable_WithValue | 165.08 ns | 0.3030 ns | 0.2686 ns | 0.0131 |      56 B |
+              From_Long_Nullable_WithValue_AsObject |  83.07 ns | 0.0809 ns | 0.0675 ns | 0.0075 |      32 B |
+                         From_Long_Nullable_NoValue |  47.51 ns | 0.0702 ns | 0.0656 ns |      - |       0 B |
+                From_Long_Nullable_NoValue_AsObject |  18.99 ns | 0.0184 ns | 0.0172 ns |      - |       0 B |
+                                         From_SByte |  83.20 ns | 0.1602 ns | 0.1498 ns | 0.0132 |      56 B |
+                                From_SByte_AsObject |  85.03 ns | 0.0812 ns | 0.0760 ns | 0.0075 |      32 B |
+                      From_SByte_Nullable_WithValue | 159.01 ns | 0.3185 ns | 0.2823 ns | 0.0131 |      56 B |
+             From_SByte_Nullable_WithValue_AsObject |  79.92 ns | 0.0856 ns | 0.0800 ns | 0.0075 |      32 B |
+                        From_SByte_Nullable_NoValue |  48.94 ns | 0.0387 ns | 0.0323 ns |      - |       0 B |
+               From_SByte_Nullable_NoValue_AsObject |  19.59 ns | 0.0165 ns | 0.0155 ns |      - |       0 B |
+                                         From_Float | 357.08 ns | 0.4106 ns | 0.3429 ns | 0.0129 |      56 B |
+                                From_Float_AsObject | 332.87 ns | 0.7657 ns | 0.7162 ns | 0.0072 |      32 B |
+                      From_Float_Nullable_WithValue | 492.38 ns | 1.3099 ns | 1.1612 ns | 0.0124 |      56 B |
+             From_Float_Nullable_WithValue_AsObject | 355.81 ns | 0.7715 ns | 0.7216 ns | 0.0072 |      32 B |
+                        From_Float_Nullable_NoValue |  46.91 ns | 0.0484 ns | 0.0453 ns |      - |       0 B |
+               From_Float_Nullable_NoValue_AsObject |  19.29 ns | 0.0126 ns | 0.0105 ns |      - |       0 B |
+                                        From_String |  21.76 ns | 0.0310 ns | 0.0290 ns |      - |       0 B |
+                               From_String_AsObject |  19.92 ns | 0.0337 ns | 0.0315 ns |      - |       0 B |
+                                   From_String_Null |  19.29 ns | 0.0078 ns | 0.0073 ns |      - |       0 B |
+                          From_String_Null_AsObject |  19.29 ns | 0.0172 ns | 0.0152 ns |      - |       0 B |
+                                  From_String_Empty |  21.24 ns | 0.0272 ns | 0.0254 ns |      - |       0 B |
+                         From_String_Empty_AsObject |  19.92 ns | 0.0353 ns | 0.0331 ns |      - |       0 B |
+                                        From_UShort |  74.95 ns | 0.0897 ns | 0.0795 ns | 0.0132 |      56 B |
+                               From_UShort_AsObject |  73.01 ns | 0.1454 ns | 0.1289 ns | 0.0075 |      32 B |
+                     From_UShort_Nullable_WithValue | 153.35 ns | 0.3184 ns | 0.2823 ns | 0.0131 |      56 B |
+            From_UShort_Nullable_WithValue_AsObject |  74.31 ns | 0.0452 ns | 0.0353 ns | 0.0075 |      32 B |
+                       From_UShort_Nullable_NoValue |  49.17 ns | 0.0205 ns | 0.0182 ns |      - |       0 B |
+              From_UShort_Nullable_NoValue_AsObject |  19.29 ns | 0.0260 ns | 0.0217 ns |      - |       0 B |
+                                          From_UInt |  80.00 ns | 0.1026 ns | 0.0857 ns | 0.0132 |      56 B |
+                                 From_UInt_AsObject |  77.33 ns | 0.2819 ns | 0.2637 ns | 0.0075 |      32 B |
+                       From_UInt_Nullable_WithValue | 155.91 ns | 0.1082 ns | 0.1012 ns | 0.0131 |      56 B |
+              From_UInt_Nullable_WithValue_AsObject |  76.47 ns | 0.2172 ns | 0.2031 ns | 0.0075 |      32 B |
+                         From_UInt_Nullable_NoValue |  46.53 ns | 0.0805 ns | 0.0753 ns |      - |       0 B |
+                From_UInt_Nullable_NoValue_AsObject |  20.21 ns | 0.0224 ns | 0.0199 ns |      - |       0 B |
+                                         From_ULong |  83.20 ns | 0.1808 ns | 0.1691 ns | 0.0132 |      56 B |
+                                From_ULong_AsObject |  81.04 ns | 0.1993 ns | 0.1664 ns | 0.0075 |      32 B |
+                      From_ULong_Nullable_WithValue | 161.22 ns | 0.1653 ns | 0.1466 ns | 0.0131 |      56 B |
+             From_ULong_Nullable_WithValue_AsObject |  81.59 ns | 0.1256 ns | 0.1049 ns | 0.0075 |      32 B |
+                        From_ULong_Nullable_NoValue |  46.41 ns | 0.0381 ns | 0.0357 ns |      - |       0 B |
+               From_ULong_Nullable_NoValue_AsObject |  19.31 ns | 0.0212 ns | 0.0199 ns |      - |       0 B |
+                                    From_NullObject |  19.33 ns | 0.0210 ns | 0.0186 ns |      - |       0 B |
+                                        From_DBNull |  20.55 ns | 0.0386 ns | 0.0361 ns |      - |       0 B |
+                              From_ConvertibleClass |  32.10 ns | 0.0406 ns | 0.0380 ns |      - |       0 B |
+                     From_ConvertibleClass_AsObject |  32.13 ns | 0.0151 ns | 0.0126 ns |      - |       0 B |
+                      From_ConvertibleClass_NoValue |  20.37 ns | 0.0399 ns | 0.0373 ns |      - |       0 B |
+             From_ConvertibleClass_NoValue_AsObject |  19.29 ns | 0.0336 ns | 0.0314 ns |      - |       0 B |
+                             From_ConvertibleStruct |  38.50 ns | 0.0466 ns | 0.0413 ns | 0.0057 |      24 B |
+                    From_ConvertibleStruct_AsObject |  35.37 ns | 0.0289 ns | 0.0270 ns |      - |       0 B |
+          From_ConvertibleStruct_Nullable_WithValue | 124.65 ns | 0.0680 ns | 0.0568 ns | 0.0055 |      24 B |
+ From_ConvertibleStruct_Nullable_WithValue_AsObject |  35.59 ns | 0.0605 ns | 0.0566 ns |      - |       0 B |
+            From_ConvertibleStruct_Nullable_NoValue |  47.60 ns | 0.0213 ns | 0.0177 ns |      - |       0 B |
+   From_ConvertibleStruct_Nullable_NoValue_AsObject |  19.32 ns | 0.0155 ns | 0.0137 ns |      - |       0 B |
+                                          From_Enum |  99.30 ns | 0.1403 ns | 0.1244 ns | 0.0057 |      24 B |
+                                 From_Enum_AsObject |  96.64 ns | 0.1117 ns | 0.1045 ns |      - |       0 B |
+                       From_Enum_Nullable_WithValue | 209.40 ns | 1.2842 ns | 1.2013 ns | 0.0057 |      24 B |
+              From_Enum_Nullable_WithValue_AsObject |  97.45 ns | 0.0719 ns | 0.0672 ns |      - |       0 B |
+                         From_Enum_Nullable_NoValue |  47.88 ns | 0.0499 ns | 0.0467 ns |      - |       0 B |
+                From_Enum_Nullable_NoValue_AsObject |  19.38 ns | 0.0085 ns | 0.0056 ns |      - |       0 B |

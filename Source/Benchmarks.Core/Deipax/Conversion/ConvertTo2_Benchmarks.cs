@@ -1,4 +1,5 @@
-﻿using Benchmarks.Core.BaseClasses.Conversion;
+﻿using System;
+using Benchmarks.Core.BaseClasses.Conversion;
 using Deipax.Core.Conversion;
 
 namespace Benchmarks.Core.Deipax.Conversion
@@ -145,6 +146,30 @@ namespace Benchmarks.Core.Deipax.Conversion
     }
 
     public class ConvertTo2_DecimalNullable : ConvertTo2_Base<decimal?>
+    {
+    }
+    #endregion
+
+    #region DateTime/DateTimeNullable
+    public class ConvertTo2_DateTimeBase<TTo> : ConvertTo2_Base<TTo>
+    {
+        public ConvertTo2_DateTimeBase()
+        {
+            _fromString_AsObject = _fromString = DateTime.MinValue.ToString();
+        }
+    }
+
+    public class ConvertTo2_DateTime : ConvertTo2_DateTimeBase<DateTime>
+    {
+    }
+
+    public class ConvertTo2_DateTimeNullable : ConvertTo2_DateTimeBase<DateTime?>
+    {
+    }
+    #endregion
+
+    #region String
+    public class ConvertTo2_String : ConvertTo2_Base<string>
     {
     }
     #endregion

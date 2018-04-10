@@ -12,43 +12,6 @@ namespace Deipax.Core.Conversion.Factories
         #region IConvertFactory Members
         public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
-            return new ConvertFactoryResult<TFrom, TTo>()
-            {
-                Factory = this,
-                GuardCall = false,
-                Func = FromObject<TTo>.Create<TFrom>()
-            };
-        }
-        #endregion
-    }
-
-    public static class FromObject<TTo>
-    {
-        static FromObject()
-        {
-            _underlyingToType = Nullable.GetUnderlyingType(_toType) ?? _toType;
-        }
-
-        #region Field Members
-        private static TTo _default = default(TTo);
-
-        private static Type _toType = typeof(TTo);
-        private static Type _underlyingToType;
-
-        private static MethodInfo _helper = typeof(FromObject<TTo>)
-            .GetRuntimeMethods()
-            .Where(x => x.Name == "GetHelper")
-            .FirstOrDefault();
-
-        private static readonly QuickCache<Type, Func<object, TTo>> _cache =
-            new QuickCache<Type, Func<object, TTo>>(16, ReferenceEqualsComparer.Instance);
-
-        private static readonly Func<Type, Func<object, TTo>> _create = Create;
-        #endregion
-
-        #region Public Members
-        public static Func<TFrom, TTo> Create<TFrom>()
-        {
             Type fromType = typeof(TFrom);
 
             if (fromType == typeof(object))
@@ -75,12 +38,38 @@ namespace Deipax.Core.Conversion.Factories
                     returnExpression,
                     returnLabel);
 
-                return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
+                return new ConvertFactoryResult<TFrom, TTo>()
+                {
+                    Factory = this,
+                    GuardCall = false,
+                    Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                };
             }
 
             return null;
         }
+        #endregion
+    }
 
+    public static class FromObject<TTo>
+    {
+        #region Field Members
+        private static TTo _default = default(TTo);
+
+        private static Type _toType = typeof(TTo);
+
+        private static MethodInfo _helper = typeof(FromObject<TTo>)
+            .GetRuntimeMethods()
+            .Where(x => x.Name == "GetHelper")
+            .FirstOrDefault();
+
+        private static readonly QuickCache<Type, Func<object, TTo>> _cache =
+            new QuickCache<Type, Func<object, TTo>>(16, ReferenceEqualsComparer.Instance);
+
+        private static readonly Func<Type, Func<object, TTo>> _create = Create;
+        #endregion
+
+        #region Public Members
         public static TTo Convert(object from)
         {
             if (from == null ||
@@ -91,8 +80,7 @@ namespace Deipax.Core.Conversion.Factories
 
             var runtimeType = from.GetType();
 
-            if (runtimeType == _toType ||
-                runtimeType == _underlyingToType)
+            if (runtimeType == _toType)
             {
                 return (TTo)from;
             }

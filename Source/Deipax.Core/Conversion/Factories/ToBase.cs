@@ -120,6 +120,26 @@ namespace Deipax.Core.Conversion.Factories
         }
     }
 
+    public class ToDateTime : ToBase<DateTime>
+    {
+        public ToDateTime() : base(
+            typeof(bool),
+            typeof(char),
+            typeof(sbyte),
+            typeof(byte),
+            typeof(short),
+            typeof(ushort),
+            typeof(int),
+            typeof(uint),
+            typeof(long),
+            typeof(ulong),
+            typeof(float),
+            typeof(double),
+            typeof(decimal))
+        {
+        }
+    }
+
     public abstract class ToBase<T> : IConvertFactory
     {
         public ToBase(params Type[] invalidCastTypes)

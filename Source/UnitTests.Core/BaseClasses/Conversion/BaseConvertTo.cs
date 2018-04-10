@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using UnitTests.Core.TestClasses;
 
 namespace UnitTests.Core.BaseClasses.Conversion
@@ -237,11 +238,22 @@ namespace UnitTests.Core.BaseClasses.Conversion
             try
             {
                 var toType = typeof(TTo);
+                var fromType = typeof(TFrom);
                 var underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
+                var underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
+                var runtimeType = from.GetType();
+                var underlyingRuntimeType = Nullable.GetUnderlyingType(runtimeType) ?? runtimeType;
+
+                if (underlyingToType == underlyingFromType ||
+                    runtimeType == underlyingToType ||
+                    underlyingRuntimeType == underlyingToType)
+                {
+                    return (TTo)((object)from);
+                }
 
                 if (from != null)
                 {
-                    return (TTo) Convert.ChangeType(from, underlyingToType);
+                    return (TTo)Convert.ChangeType(from, underlyingToType, CultureInfo.InvariantCulture);
                 }
             }
             catch
@@ -698,13 +710,13 @@ namespace UnitTests.Core.BaseClasses.Conversion
         [TestMethod]
         public virtual void From_String_Empty()
         {
-            TestConvertFrom(_fromStringEmpty, DefaultValue);
+            TestConvertFrom(_fromStringEmpty, GetExpected(_fromStringEmpty));
         }
 
         [TestMethod]
         public virtual void From_String_Empty_AsObject()
         {
-            TestConvertFrom(_fromStringEmpty_AsObject, DefaultValue);
+            TestConvertFrom(_fromStringEmpty_AsObject, GetExpected(_fromStringEmpty_AsObject));
         }
         #endregion
 

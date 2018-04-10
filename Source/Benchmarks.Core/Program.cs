@@ -2,9 +2,8 @@
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Running;
-using System.Linq;
-using BenchmarkDotNet.Filters;
 using Benchmarks.Core.Deipax.Conversion;
+using System.Linq;
 
 namespace Benchmarks.Core
 {
@@ -49,7 +48,7 @@ namespace Benchmarks.Core
             //BenchmarkRunner.Run<ConvertTo2_IntNullable>(config);
             //BenchmarkRunner.Run<ConvertTo2_UInt>(config);
             //BenchmarkRunner.Run<ConvertTo2_UIntNullable>(config);
-            BenchmarkRunner.Run<ConvertTo2_Long>(config);
+            //BenchmarkRunner.Run<ConvertTo2_Long>(config);
             //BenchmarkRunner.Run<ConvertTo2_LongNullable>(config);
             //BenchmarkRunner.Run<ConvertTo2_ULong>(config);
             //BenchmarkRunner.Run<ConvertTo2_ULongNullable>(config);
@@ -59,6 +58,9 @@ namespace Benchmarks.Core
             //BenchmarkRunner.Run<ConvertTo2_DoubleNullable>(config);
             //BenchmarkRunner.Run<ConvertTo2_Decimal>(config);
             //BenchmarkRunner.Run<ConvertTo2_DecimalNullable>(config);
+            //BenchmarkRunner.Run<ConvertTo2_DateTime>(config);
+            //BenchmarkRunner.Run<ConvertTo2_DateTimeNullable>(config);
+            //BenchmarkRunner.Run<ConvertTo2_String>(config);
 
 
             //BenchmarkRunner.Run<ConvertTo_Bool>(config);
@@ -87,6 +89,9 @@ namespace Benchmarks.Core
             //BenchmarkRunner.Run<ConvertTo_DoubleNullable>(config);
             //BenchmarkRunner.Run<ConvertTo_Decimal>(config);
             //BenchmarkRunner.Run<ConvertTo_DecimalNullable>(config);
+            //BenchmarkRunner.Run<ConvertTo_DateTime>(config);
+            //BenchmarkRunner.Run<ConvertTo_DateTimeNullable>(config);
+            //BenchmarkRunner.Run<ConvertTo_String>(config);
         }
     }
 }

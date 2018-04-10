@@ -31,10 +31,11 @@ namespace Deipax.Core.Conversion
                 new ToFloat(),
                 new ToDouble(),
                 new ToDecimal(),
+                new ToDateTime(),
                 new FromEnum(),
                 new FromString(),
                 new FromIConvertible(),
-                new FromObject(),
+                new FromObject2(),
             };
         }
 
