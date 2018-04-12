@@ -9,20 +9,6 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class FromIConvertible : IConvertFactory
     {
-        public FromIConvertible() : this(CultureInfo.InvariantCulture)
-        {
-        }
-
-        public FromIConvertible(IFormatProvider provider)
-        {
-            _provider = provider;
-        }
-
-        #region Field Members
-        private IFormatProvider _provider;
-        #endregion
-
-
         #region IConvertFactory Members
         public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
@@ -45,6 +31,7 @@ namespace Deipax.Core.Conversion.Factories
                 if (methodInfo != null)
                 {
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
                     var returnTarget = Expression.Label(toType);
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
@@ -64,7 +51,7 @@ namespace Deipax.Core.Conversion.Factories
                     var callExpression = Expression.Call(
                         converter,
                         methodInfo,
-                        Expression.Constant(_provider));
+                        Expression.Coalesce(provider, Expression.Constant(ConvertConfig.DefaultProvider)));
 
                     GotoExpression returnExpression = toType == underlyingToType
                         ? Expression.Return(returnTarget, callExpression)
@@ -81,7 +68,7 @@ namespace Deipax.Core.Conversion.Factories
                     {
                         GuardCall = true,
                         Factory = this,
-                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                     };
                 }
             }

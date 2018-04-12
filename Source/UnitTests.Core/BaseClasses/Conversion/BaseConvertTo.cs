@@ -241,7 +241,7 @@ namespace UnitTests.Core.BaseClasses.Conversion
                 var fromType = typeof(TFrom);
                 var underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
                 var underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
-                var runtimeType = from.GetType();
+                var runtimeType = from?.GetType();
                 var underlyingRuntimeType = Nullable.GetUnderlyingType(runtimeType) ?? runtimeType;
 
                 if (underlyingToType == underlyingFromType ||

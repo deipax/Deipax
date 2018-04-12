@@ -8,9 +8,14 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     [TestClass]
     public class ConvertTo2_Base<TTo> : BaseConvertTo<TTo>
     {
+        public ConvertTo2_Base()
+        {
+            ConvertConfig.SafeConvert = true;
+        }
+
         protected override TTo ConvertFrom<TFrom>(TFrom from)
         {
-            return ConvertTo2<TTo, TFrom>.From(from);
+            return ConvertTo2<TTo, TFrom>.From(from, ConvertConfig.DefaultProvider);
         }
     }
 

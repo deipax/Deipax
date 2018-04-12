@@ -60,7 +60,7 @@ namespace Benchmarks.Core
             //BenchmarkRunner.Run<ConvertTo2_DecimalNullable>(config);
             //BenchmarkRunner.Run<ConvertTo2_DateTime>(config);
             //BenchmarkRunner.Run<ConvertTo2_DateTimeNullable>(config);
-            //BenchmarkRunner.Run<ConvertTo2_String>(config);
+            BenchmarkRunner.Run<ConvertTo2_String>(config);
 
 
             //BenchmarkRunner.Run<ConvertTo_Bool>(config);

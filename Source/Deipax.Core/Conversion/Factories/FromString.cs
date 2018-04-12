@@ -9,19 +9,6 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class FromString : IConvertFactory
     {
-        public FromString() : this(CultureInfo.InvariantCulture)
-        {
-        }
-
-        public FromString(IFormatProvider provider)
-        {
-            _provider = provider;
-        }
-
-        #region Field Members
-        private IFormatProvider _provider;
-        #endregion
-
         #region IConvertFactory Members
         public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
@@ -45,6 +32,7 @@ namespace Deipax.Core.Conversion.Factories
                 if (methodInfo != null)
                 {
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
                     var returnTarget = Expression.Label(toType);
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
 
@@ -57,7 +45,7 @@ namespace Deipax.Core.Conversion.Factories
                     MethodCallExpression convertExpression = Expression.Call(
                         methodInfo,
                         input,
-                        Expression.Constant(_provider));
+                        Expression.Coalesce(provider, Expression.Constant(ConvertConfig.DefaultProvider)));
 
                     GotoExpression returnExpression = toType == underlyingToType
                         ? Expression.Return(returnTarget, convertExpression)
@@ -77,7 +65,7 @@ namespace Deipax.Core.Conversion.Factories
                     {
                         Factory = this,
                         GuardCall = false,
-                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                     };
                 }
             }

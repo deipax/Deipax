@@ -8,7 +8,7 @@ namespace Benchmarks.Core.Deipax.Conversion
     {
         protected override TTo ConvertFrom<TFrom>(TFrom from)
         {
-            return ConvertTo2<TTo, TFrom>.From(from);
+            return ConvertTo2<TTo, TFrom>.From(from, ConvertConfig.DefaultProvider);
         }
     }
 

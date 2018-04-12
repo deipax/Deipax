@@ -1,29 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using Deipax.Core.Interfaces;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using Deipax.Core.Interfaces;
 
 namespace Deipax.Core.Conversion.Factories
 {
     public class FromObject : IConvertFactory
     {
-        public FromObject() : this(CultureInfo.InvariantCulture)
-        {
-        }
-
-        public FromObject(IFormatProvider provider)
-        {
-            _provider = provider;
-        }
-
-        #region Field Members
-        private IFormatProvider _provider;
-        #endregion
-
         #region IConvertFactory Members
         public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
@@ -49,27 +33,10 @@ namespace Deipax.Core.Conversion.Factories
                 if (methodInfo != null)
                 {
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
                     var returnTarget = Expression.Label(toType);
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
-
-                    var isDateTimeExpression = Expression.Or(
-                        Expression.TypeEqual(input, typeof(DateTime)),
-                        Expression.TypeEqual(input, typeof(DateTime?)));
-
-                    var ifDateTimeReturn = Expression.IfThen(
-                        isDateTimeExpression,
-                        Expression.Return(returnTarget, Expression.Default(toType)));
-
-                    MethodCallExpression isNullOrEmpty = Expression.Call(
-                        typeof(string),
-                        "IsNullOrEmpty",
-                        null,
-                        Expression.TypeAs(input, typeof(string)));
-
-                    var isNullOrEmptyReturn = Expression.IfThen(
-                        Expression.And(Expression.TypeEqual(input, typeof(string)), isNullOrEmpty),
-                        Expression.Return(returnTarget, Expression.Default(toType)));
 
                     var assignConverter = Expression.Assign(converter, Expression.TypeAs(input, typeof(IConvertible)));
 
@@ -77,29 +44,43 @@ namespace Deipax.Core.Conversion.Factories
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
                         Expression.Return(returnTarget, Expression.Default(toType)));
 
-                    var callExpression = Expression.Call(
+                    Expression callExpression = Expression.Call(
                         converter,
                         methodInfo,
-                        Expression.Constant(_provider));
+                        Expression.Coalesce(provider, Expression.Constant(ConvertConfig.DefaultProvider)));
 
                     GotoExpression returnExpression = toType == underlyingToType
                         ? Expression.Return(returnTarget, callExpression)
                         : Expression.Return(returnTarget, Expression.Convert(callExpression, toType));
 
-                    BlockExpression block = Expression.Block(
+                    Expression block = Expression.Block(
                         new[] { converter },
-                        ifDateTimeReturn,
-                        isNullOrEmptyReturn,
                         assignConverter,
                         ifConverterNullReturn,
                         returnExpression,
                         returnLabel);
 
+                    if (ConvertConfig.SafeConvert)
+                    {
+                        ParameterExpression ex = Expression.Parameter(typeof(Exception), "ex");
+
+                        Expression tryCatchExpression = Expression.TryCatch(
+                            returnExpression,
+                            Expression.Catch(ex, Expression.Return(returnTarget, Expression.Default(toType))));
+
+                        block = Expression.Block(
+                            new[] { converter },
+                            assignConverter,
+                            ifConverterNullReturn,
+                            tryCatchExpression,
+                            returnLabel);
+                    }
+
                     return new ConvertFactoryResult<TFrom, TTo>()
                     {
                         GuardCall = true,
                         Factory = this,
-                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                     };
                 }
             }

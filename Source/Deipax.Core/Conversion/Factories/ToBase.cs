@@ -148,9 +148,7 @@ namespace Deipax.Core.Conversion.Factories
         }
 
         #region Field Member
-
         private List<Type> _invalidCastTypes;
-
         #endregion
 
         #region IConvertFactory Members
@@ -182,12 +180,13 @@ namespace Deipax.Core.Conversion.Factories
                     else
                     {
                         ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                        ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
                         var returnTarget = Expression.Label(toType);
                         var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
 
                         Expression guardedInput = fromType != underlyingFromType
                             ? Expression.Property(input, "Value")
-                            : (Expression) input;
+                            : (Expression)input;
 
                         MethodCallExpression callExpression = Expression.Call(
                             methodInfo,
@@ -205,7 +204,7 @@ namespace Deipax.Core.Conversion.Factories
                         {
                             GuardCall = true,
                             Factory = this,
-                            Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                            Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                         };
                     }
                 }

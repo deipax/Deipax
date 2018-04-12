@@ -3,6 +3,7 @@ using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq.Expressions;
 
 namespace Deipax.Core.Conversion
@@ -11,13 +12,15 @@ namespace Deipax.Core.Conversion
     {
         static ConvertConfig()
         {
+            DefaultProvider = CultureInfo.InvariantCulture;
             Default = new DefaultFactory();
+            SafeConvert = false;
 
             _defaults = new List<IConvertFactory>()
             {
                 new NoConvert(),
-                new ToString(),
                 new ToOrFromDBNull(),
+                new ToString(),
                 new ToBool(),
                 new ToChar(),
                 new ToByte(),
@@ -35,7 +38,7 @@ namespace Deipax.Core.Conversion
                 new FromEnum(),
                 new FromString(),
                 new FromIConvertible(),
-                new FromObject2(),
+                new FromObject(),
             };
         }
 
@@ -44,7 +47,9 @@ namespace Deipax.Core.Conversion
         #endregion
 
         #region Public Members
-        public static IConvertFactory Default { get; private set; }
+        public static bool SafeConvert { get; set; }
+        public static IFormatProvider DefaultProvider { get; set; }
+        public static IConvertFactory Default { get; set; }
 
         public static IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
@@ -71,19 +76,20 @@ namespace Deipax.Core.Conversion
         #endregion
 
         #region Private Members
-        private static Func<TFrom, TTo> Guard<TFrom, TTo>(Func<TFrom, TTo> convertFunc)
+        private static Convert<TFrom, TTo> Guard<TFrom, TTo>(Convert<TFrom, TTo> convertFunc)
         {
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
 
             ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+            ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
             DefaultExpression defaultValue = Expression.Default(toType);
             LabelTarget returnTarget = Expression.Label(toType);
             LabelExpression returnLabel = Expression.Label(returnTarget, defaultValue);
 
             var invokeExpression = Expression.Return(
                 returnTarget,
-                Expression.Invoke(Expression.Constant(convertFunc), input));
+                Expression.Invoke(Expression.Constant(convertFunc), input, provider));
 
             BlockExpression block = null;
 
@@ -160,7 +166,7 @@ namespace Deipax.Core.Conversion
 
             if (block != null)
             {
-                return Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile();
+                return Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile();
             }
 
             return convertFunc;
@@ -171,16 +177,16 @@ namespace Deipax.Core.Conversion
     public interface IResult<TFrom, TTo>
     {
         IConvertFactory Factory { get; }
-        Func<TFrom, TTo> Func { get; }
-        Func<TFrom, TTo> GuardedFunc { get; }
+        Convert<TFrom, TTo> Func { get; }
+        Convert<TFrom, TTo> GuardedFunc { get; }
         bool GuardCall { get; }
     }
 
     internal class Result<TFrom, TTo> : IResult<TFrom, TTo>
     {
         public IConvertFactory Factory { get; set; }
-        public Func<TFrom, TTo> Func { get; set; }
-        public Func<TFrom, TTo> GuardedFunc { get; set; }
+        public Convert<TFrom, TTo> Func { get; set; }
+        public Convert<TFrom, TTo> GuardedFunc { get; set; }
         public bool GuardCall { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Deipax.Core.Interfaces;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -9,81 +8,51 @@ namespace Deipax.Core.Conversion.Factories
 {
     public class ToString : IConvertFactory
     {
-        public ToString() : this(CultureInfo.InvariantCulture)
-        {
-        }
-
-        public ToString(IFormatProvider provider)
-        {
-            _provider = provider;
-        }
-
-        #region  Field Members
-        private IFormatProvider _provider;
-        #endregion
-
         #region IConvertFactory Members
         public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             Type toType = typeof(TTo);
+            Type fromType = typeof(TFrom);
+            Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
 
             if (toType == typeof(string))
             {
-                ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                var returnTarget = Expression.Label(toType);
-                var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-
-                var method = typeof(TFrom)
+                var method = typeof(Convert)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.Name == "ToString" &&
-                        x.GetParameters().Length == 1 &&
-                        x.GetParameters()[0].ParameterType == typeof(IFormatProvider))
+                        x.ReturnType == typeof(string) &&
+                        x.GetParameters().Length == 2 &&
+                        x.GetParameters()[0].ParameterType == underlyingFromType &&
+                        x.GetParameters()[1].ParameterType == typeof(IFormatProvider))
                     .FirstOrDefault();
 
                 if (method != null)
                 {
+                    ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
+                    var returnTarget = Expression.Label(toType);
+                    var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
+
+                    Expression guardedInput = fromType != underlyingFromType
+                        ? Expression.Property(input, "Value")
+                        : (Expression)input;
+
                     MethodCallExpression callExpression = Expression.Call(
-                        input,
                         method,
-                        Expression.Constant(_provider));
+                        guardedInput,
+                        Expression.Coalesce(provider, Expression.Constant(ConvertConfig.DefaultProvider)));
+
+                    GotoExpression returnExpression = Expression.Return(returnTarget, callExpression);
 
                     BlockExpression block = Expression.Block(
-                        toType,
-                        Expression.Return(returnTarget, callExpression),
+                        returnExpression,
                         returnLabel);
 
                     return new ConvertFactoryResult<TFrom, TTo>()
                     {
-                        Factory = this,
                         GuardCall = true,
-                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
-                    };
-                }
-
-                method = typeof(TFrom)
-                    .GetRuntimeMethods()
-                    .Where(x =>
-                        x.Name == "ToString" &&
-                        x.GetParameters().Length == 0)
-                    .FirstOrDefault();
-
-                if (method != null)
-                {
-                    MethodCallExpression callExpression = Expression.Call(
-                        input,
-                        method);
-
-                    BlockExpression block = Expression.Block(
-                        toType,
-                        Expression.Return(returnTarget, callExpression),
-                        returnLabel);
-
-                    return new ConvertFactoryResult<TFrom, TTo>()
-                    {
                         Factory = this,
-                        GuardCall = true,
-                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                     };
                 }
             }

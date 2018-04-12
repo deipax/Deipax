@@ -12,6 +12,7 @@ namespace Deipax.Core.Conversion.Factories
             var fromType = typeof(TFrom);
             var toType = typeof(TTo);
             var input = Expression.Parameter(fromType, "input");
+            var provider = Expression.Parameter(typeof(IFormatProvider), "provider");
             var returnTarget = Expression.Label(toType);
             var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
 
@@ -19,7 +20,7 @@ namespace Deipax.Core.Conversion.Factories
             {
                 GuardCall = false,
                 Factory = this,
-                Func = Expression.Lambda<Func<TFrom, TTo>>(returnLabel, input).Compile()
+                Func = Expression.Lambda<Convert<TFrom, TTo>>(returnLabel, input, provider).Compile()
             };
         }
         #endregion

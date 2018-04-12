@@ -13,6 +13,7 @@ namespace Deipax.Core.Conversion.Factories
             Type fromType = typeof(TFrom);
 
             ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+            ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
             DefaultExpression defaultValue = Expression.Default(toType);
             var returnTarget = Expression.Label(toType);
             var returnLabel = Expression.Label(returnTarget, defaultValue);
@@ -47,7 +48,7 @@ namespace Deipax.Core.Conversion.Factories
                 {
                     Factory = this,
                     GuardCall = false,
-                    Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile()
+                    Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                 };
             }
 

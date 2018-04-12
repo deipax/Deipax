@@ -32,6 +32,7 @@ namespace Deipax.Core.Conversion.Factories
                     underlyingToType != typeof(DateTime))
                 {
                     ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
                     var returnTarget = Expression.Label(toType);
                     var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
 
@@ -46,7 +47,7 @@ namespace Deipax.Core.Conversion.Factories
                     return new ConvertFactoryResult<TFrom, TTo>()
                     {
                         GuardCall = true,
-                        Func = Expression.Lambda<Func<TFrom, TTo>>(block, input).Compile(),
+                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile(),
                         Factory = this
                     };
                 }
