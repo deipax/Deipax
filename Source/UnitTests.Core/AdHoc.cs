@@ -20,12 +20,8 @@ namespace UnitTests.Core
         //[TestMethod]
         public void Temp1()
         {
-            long to;
-
-            for (int i = 0; i < 100000000; i++)
-            {
-                to = ConvertTo2<long, object>.From(_intValueAsObject);
-            }
+            int? tmp = null;
+            object tmp1 = (object)tmp;
         }
     }
 }

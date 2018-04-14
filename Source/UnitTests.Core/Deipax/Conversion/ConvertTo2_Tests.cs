@@ -230,4 +230,16 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     {
     }
     #endregion
+
+    #region Object
+    [TestClass]
+    public class ConvertTo2_Object : ConvertTo2_Base<object>
+    {
+        [TestMethod]
+        public override void From_DBNull()
+        {
+            TestConvertFrom(DBNull.Value);
+        }
+    }
+    #endregion
 }

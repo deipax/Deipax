@@ -60,7 +60,8 @@ namespace Benchmarks.Core
             //BenchmarkRunner.Run<ConvertTo2_DecimalNullable>(config);
             //BenchmarkRunner.Run<ConvertTo2_DateTime>(config);
             //BenchmarkRunner.Run<ConvertTo2_DateTimeNullable>(config);
-            BenchmarkRunner.Run<ConvertTo2_String>(config);
+            //BenchmarkRunner.Run<ConvertTo2_String>(config);
+            //BenchmarkRunner.Run<ConvertTo2_Object>(config);
 
 
             //BenchmarkRunner.Run<ConvertTo_Bool>(config);
@@ -92,6 +93,7 @@ namespace Benchmarks.Core
             //BenchmarkRunner.Run<ConvertTo_DateTime>(config);
             //BenchmarkRunner.Run<ConvertTo_DateTimeNullable>(config);
             //BenchmarkRunner.Run<ConvertTo_String>(config);
+            BenchmarkRunner.Run<ConvertTo_Object>(config);
         }
     }
 }

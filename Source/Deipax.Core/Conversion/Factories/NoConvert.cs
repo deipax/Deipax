@@ -12,6 +12,7 @@ namespace Deipax.Core.Conversion.Factories
         {
             Type fromType = typeof(TFrom);
             Type toType = typeof(TTo);
+            Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
 
             ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
             ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
@@ -71,14 +72,41 @@ namespace Deipax.Core.Conversion.Factories
             }
             else if (toType == typeof(object))
             {
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    Expression.Convert(input, typeof(object)),
-                    toType);
+                if (!fromType.IsNullable())
+                {
+                    GotoExpression returnExpression = Expression.Return(
+                        returnTarget,
+                        Expression.Convert(input, typeof(object)),
+                        toType);
 
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
+                    block = Expression.Block(
+                        returnExpression,
+                        returnLabel);
+                }
+                else
+                {             
+                    var hasValue = Expression.Property(input, "HasValue");
+                    var value = Expression.Property(input, "Value");
+
+                    GotoExpression returnValue = Expression.Return(
+                        returnTarget,
+                        Expression.Convert(value, toType),
+                        toType);
+
+                    GotoExpression returnDefault = Expression.Return(
+                        returnTarget,
+                        Expression.Default(toType),
+                        toType);
+
+                    var ifThenElse = Expression.IfThenElse(
+                        hasValue,
+                        returnValue,
+                        returnDefault);
+
+                    block = Expression.Block(
+                        ifThenElse,
+                        returnLabel);
+                }
             }
 
             if (block != null)

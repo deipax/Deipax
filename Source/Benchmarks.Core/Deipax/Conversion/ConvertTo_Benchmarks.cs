@@ -173,4 +173,10 @@ namespace Benchmarks.Core.Deipax.Conversion
     {
     }
     #endregion
+
+    #region Object
+    public class ConvertTo_Object : ConvertTo_Base<object>
+    {
+    }
+    #endregion
 }
