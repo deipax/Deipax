@@ -19,6 +19,7 @@ namespace Deipax.Core.Conversion
             _defaults = new List<IConvertFactory>()
             {
                 new NoConvert(),
+                new ToEnum(),
                 new ToOrFromDBNull(),
                 new ToString(),
                 new ToBool(),

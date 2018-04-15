@@ -1,5 +1,6 @@
 ﻿using System;
 using Benchmarks.Core.BaseClasses.Conversion;
+using Benchmarks.Core.TestClasses;
 using Deipax.Core.Conversion;
 
 namespace Benchmarks.Core.Deipax.Conversion
@@ -176,6 +177,12 @@ namespace Benchmarks.Core.Deipax.Conversion
 
     #region Object
     public class ConvertTo2_Object : ConvertTo2_Base<object>
+    {
+    }
+    #endregion
+
+    #region Enum
+    public class ConvertTo2_Enum : ConvertTo2_Base<TestEnum>
     {
     }
     #endregion

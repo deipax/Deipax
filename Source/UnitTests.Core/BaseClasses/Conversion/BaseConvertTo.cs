@@ -12,6 +12,7 @@ namespace UnitTests.Core.BaseClasses.Conversion
         {
             DefaultValue = default(TTo);
 
+
             _fromBool_AsObject = _fromBool = true;
             _fromBoolNullableWithValue_AsObject = _fromBoolNullableWithValue = true;
             _fromBoolNullableNoValue_AsObject = _fromBoolNullableNoValue = null;
@@ -253,6 +254,23 @@ namespace UnitTests.Core.BaseClasses.Conversion
 
                 if (from != null)
                 {
+                    if (toType.IsEnum)
+                    {
+                        if (fromType == typeof(string))
+                        {
+                            return (TTo)Enum.Parse(toType, from as string, true);
+                        }
+                        else
+                        {
+                            var intValue = Convert.ChangeType(from, typeof(int), CultureInfo.InvariantCulture);
+
+                            if (Enum.IsDefined(toType, intValue))
+                            {
+                                return (TTo)intValue;
+                            }
+                        }
+                    }
+
                     return (TTo)Convert.ChangeType(from, underlyingToType, CultureInfo.InvariantCulture);
                 }
             }
@@ -260,7 +278,7 @@ namespace UnitTests.Core.BaseClasses.Conversion
             {
             }
 
-            return default(TTo);
+            return DefaultValue;
         }
         #endregion
 

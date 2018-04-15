@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using UnitTests.Core.BaseClasses.Conversion;
+using UnitTests.Core.TestClasses;
 
 namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
 {
@@ -239,6 +240,17 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
         public override void From_DBNull()
         {
             TestConvertFrom(DBNull.Value);
+        }
+    }
+    #endregion
+
+    #region Enum
+    [TestClass]
+    public class ConvertTo2_Enum : ConvertTo2_Base<TestEnum>
+    {
+        protected override TestEnum GetExpected<TFrom>(TFrom @from)
+        {
+            return base.GetExpected(@from);
         }
     }
     #endregion
