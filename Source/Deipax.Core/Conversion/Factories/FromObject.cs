@@ -83,6 +83,33 @@ namespace Deipax.Core.Conversion.Factories
                         Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                     };
                 }
+                else
+                {
+                    // To type is not ICovertible.  Try casting the from object to target type
+                    ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
+                    var returnTarget = Expression.Label(toType);
+                    var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
+
+                    var returnExpression = Expression.Return(returnTarget, Expression.TypeAs(input, toType));
+
+                    ParameterExpression ex = Expression.Parameter(typeof(Exception), "ex");
+
+                    Expression tryCatchExpression = Expression.TryCatch(
+                        returnExpression,
+                        Expression.Catch(ex, Expression.Return(returnTarget, Expression.Default(toType))));
+
+                    BlockExpression block = Expression.Block(
+                        tryCatchExpression,
+                        returnLabel);
+
+                    return new ConvertFactoryResult<TFrom, TTo>()
+                    {
+                        GuardCall = true,
+                        Factory = this,
+                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
+                    };
+                }
             }
 
             return null;

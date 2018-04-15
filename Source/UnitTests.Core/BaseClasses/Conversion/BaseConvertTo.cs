@@ -12,7 +12,6 @@ namespace UnitTests.Core.BaseClasses.Conversion
         {
             DefaultValue = default(TTo);
 
-
             _fromBool_AsObject = _fromBool = true;
             _fromBoolNullableWithValue_AsObject = _fromBoolNullableWithValue = true;
             _fromBoolNullableNoValue_AsObject = _fromBoolNullableNoValue = null;
@@ -76,13 +75,27 @@ namespace UnitTests.Core.BaseClasses.Conversion
             _convertibleClass_AsObject = _convertibleClass = new ConvertibleClass();
             _convertibleClassNoValue_AsObject = _convertibleClassNoValue = null;
 
+            _nonConvertibleClass_AsObject = _nonConvertibleClass = new NonConvertibleClass();
+            _nonConvertibleClassNoValue_AsObject = _nonConvertibleClassNoValue = null;
+
             _convertibleStruct_AsObject = _convertibleStruct = new ConvertibleStruct();
             _convertibleStructNullableWithValue_AsObject = _convertibleStructNullableWithValue = new ConvertibleStruct();
             _convertibleStructNullableNoValue_AsObject = _convertibleStructNullableNoValue = null;
 
+            _nonConvertibleStruct_AsObject = _nonConvertibleStruct = new NonConvertibleStruct();
+            _nonConvertibleStructNullableWithValue_AsObject = _nonConvertibleStructNullableWithValue = new NonConvertibleStruct();
+            _nonConvertibleStructNullableNoValue_AsObject = _nonConvertibleStructNullableNoValue = null;
+
             _fromEnum_AsObject = _fromEnum = TestEnum.One;
             _fromEnumNullableWithValue_AsObject = _fromEnumNullableWithValue = TestEnum.One; ;
             _fromEnumNullableNoValue_AsObject = _fromEnumNullableNoValue = null;
+
+            _parentClass_AsObject = _parentClass = new ParentClass();
+            _parentClassNoValue_AsObject = _parentClassNoValue_AsObject = null;
+
+            _parentStruct_AsObject = _parentStruct = new ParentStruct();
+            _parentStructNullableWithValue_AsObject = _parentStructNullableWithValue = new ParentStruct();
+            _parentStructNullableNoValue_AsObject = _parentStructNullableNoValue = null;
         }
 
         #region Field Members
@@ -198,6 +211,11 @@ namespace UnitTests.Core.BaseClasses.Conversion
         protected object _convertibleClass_AsObject;
         protected object _convertibleClassNoValue_AsObject;
 
+        protected NonConvertibleClass _nonConvertibleClass;
+        protected NonConvertibleClass _nonConvertibleClassNoValue;
+        protected object _nonConvertibleClass_AsObject;
+        protected object _nonConvertibleClassNoValue_AsObject;
+
         protected ConvertibleStruct _convertibleStruct;
         protected ConvertibleStruct? _convertibleStructNullableWithValue;
         protected ConvertibleStruct? _convertibleStructNullableNoValue;
@@ -205,12 +223,31 @@ namespace UnitTests.Core.BaseClasses.Conversion
         protected object _convertibleStructNullableWithValue_AsObject;
         protected object _convertibleStructNullableNoValue_AsObject;
 
+        protected NonConvertibleStruct _nonConvertibleStruct;
+        protected NonConvertibleStruct? _nonConvertibleStructNullableWithValue;
+        protected NonConvertibleStruct? _nonConvertibleStructNullableNoValue;
+        protected object _nonConvertibleStruct_AsObject;
+        protected object _nonConvertibleStructNullableWithValue_AsObject;
+        protected object _nonConvertibleStructNullableNoValue_AsObject;
+
         protected TestEnum _fromEnum;
         protected TestEnum? _fromEnumNullableWithValue;
         protected TestEnum? _fromEnumNullableNoValue;
         protected object _fromEnum_AsObject;
         protected object _fromEnumNullableWithValue_AsObject;
         protected object _fromEnumNullableNoValue_AsObject;
+
+        protected ParentClass _parentClass;
+        protected ParentClass _parentClassNoValue;
+        protected object _parentClass_AsObject;
+        protected object _parentClassNoValue_AsObject;
+
+        protected ParentStruct _parentStruct;
+        protected ParentStruct? _parentStructNullableWithValue;
+        protected ParentStruct? _parentStructNullableNoValue;
+        protected object _parentStruct_AsObject;
+        protected object _parentStructNullableWithValue_AsObject;
+        protected object _parentStructNullableNoValue_AsObject;
         #endregion
 
         #region Protected Members
@@ -892,6 +929,32 @@ namespace UnitTests.Core.BaseClasses.Conversion
         }
         #endregion
 
+        #region From Non-IConvertible Classes
+        [TestMethod]
+        public virtual void From_NonConvertibleClass()
+        {
+            TestConvertFrom(_nonConvertibleClass, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleClass_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleClass_AsObject, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleClass_NoValue()
+        {
+            TestConvertFrom(_nonConvertibleClassNoValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleClass_NoValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleClassNoValue_AsObject, DefaultValue);
+        }
+        #endregion
+
         #region From IConvertible Structs
         [TestMethod]
         public virtual void From_ConvertibleStruct()
@@ -930,6 +993,44 @@ namespace UnitTests.Core.BaseClasses.Conversion
         }
         #endregion
 
+        #region From Non-IConvertible Structs
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct()
+        {
+            TestConvertFrom(_nonConvertibleStruct, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStruct_AsObject, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue_AsObject, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_NoValue()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableNoValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_NonConvertibleStruct_Nullable_NoValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableNoValue_AsObject, DefaultValue);
+        }
+        #endregion
+
         #region From Enums
         [TestMethod]
         public virtual void From_Enum()
@@ -965,6 +1066,70 @@ namespace UnitTests.Core.BaseClasses.Conversion
         public virtual void From_Enum_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromEnumNullableNoValue_AsObject);
+        }
+        #endregion
+
+        #region From ParentClass
+        [TestMethod]
+        public virtual void From_ParentClass()
+        {
+            TestConvertFrom(_parentClass, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentClass_AsObject()
+        {
+            TestConvertFrom(_parentClass_AsObject, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentClass_NoValue()
+        {
+            TestConvertFrom(_parentClassNoValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentClass_NoValue_AsObject()
+        {
+            TestConvertFrom(_parentClassNoValue_AsObject, DefaultValue);
+        }
+        #endregion
+
+        #region From ParentStruct
+        [TestMethod]
+        public virtual void From_ParentStruct()
+        {
+            TestConvertFrom(_parentStruct, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentStruct_AsObject()
+        {
+            TestConvertFrom(_parentStruct_AsObject, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_parentStructNullableWithValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_parentStructNullableWithValue_AsObject, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentStruct_Nullable_NoValue()
+        {
+            TestConvertFrom(_parentStructNullableNoValue, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_ParentStruct_Nullable_NoValue_AsObject()
+        {
+            TestConvertFrom(_parentStructNullableNoValue_AsObject, DefaultValue);
         }
         #endregion
     }

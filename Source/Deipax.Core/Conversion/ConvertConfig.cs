@@ -54,22 +54,31 @@ namespace Deipax.Core.Conversion
 
         public static IResult<TFrom, TTo> Get<TFrom, TTo>()
         {
+            IConvertFactoryResult<TFrom, TTo> result = null;
+
             foreach (var factory in _defaults)
             {
-                var result = factory.Get<TFrom, TTo>();
+                result = factory.Get<TFrom, TTo>();
 
                 if (result != null)
                 {
-                    return new Result<TFrom, TTo>()
-                    {
-                        Factory = result.Factory,
-                        GuardCall = result.GuardCall,
-                        Func = result.Func,
-                        GuardedFunc = result.GuardCall
-                            ? Guard(result.Func)
-                            : result.Func
-                    };
+                    break;
                 }
+            }
+
+            result = result ?? Default?.Get<TFrom, TTo>();
+
+            if (result != null)
+            {
+                return new Result<TFrom, TTo>()
+                {
+                    Factory = result.Factory,
+                    GuardCall = result.GuardCall,
+                    Func = result.Func,
+                    GuardedFunc = result.GuardCall
+                        ? Guard(result.Func)
+                        : result.Func
+                };
             }
 
             return null;

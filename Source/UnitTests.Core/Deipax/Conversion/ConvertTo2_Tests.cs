@@ -229,6 +229,77 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
     [TestClass]
     public class ConvertTo2_String : ConvertTo2_Base<string>
     {
+        [TestMethod]
+        public override void From_NonConvertibleClass()
+        {
+            TestConvertFrom(_nonConvertibleClass, _nonConvertibleClass.ToString());
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleClass_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleClass_AsObject, _nonConvertibleClass_AsObject.ToString());
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct()
+        {
+            TestConvertFrom(_nonConvertibleStruct, _nonConvertibleStruct.ToString());
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStruct_AsObject, _nonConvertibleStruct_AsObject.ToString());
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue, _nonConvertibleStructNullableWithValue.ToString());
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue_AsObject, _nonConvertibleStructNullableWithValue_AsObject.ToString());
+        }
+
+        [TestMethod]
+        public override void From_ParentClass()
+        {
+            TestConvertFrom(_parentClass, _parentClass.ToString());
+        }
+
+        [TestMethod]
+        public override void From_ParentClass_AsObject()
+        {
+            TestConvertFrom(_parentClass_AsObject, _parentClass_AsObject.ToString());
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct()
+        {
+            TestConvertFrom(_parentStruct, _parentStruct.ToString());
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_AsObject()
+        {
+            TestConvertFrom(_parentStruct_AsObject, _parentStruct_AsObject.ToString());
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_parentStructNullableWithValue, _parentStructNullableWithValue.ToString());
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_parentStructNullableWithValue_AsObject, _parentStructNullableWithValue_AsObject.ToString());
+        }
     }
     #endregion
 
@@ -239,7 +310,78 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
         [TestMethod]
         public override void From_DBNull()
         {
-            TestConvertFrom(DBNull.Value);
+            TestConvertFrom(DBNull.Value, DBNull.Value);
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleClass()
+        {
+            TestConvertFrom(_nonConvertibleClass, _nonConvertibleClass);
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleClass_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleClass_AsObject, _nonConvertibleClass_AsObject);
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct()
+        {
+            TestConvertFrom(_nonConvertibleStruct, _nonConvertibleStruct);
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStruct_AsObject, _nonConvertibleStruct_AsObject);
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue, _nonConvertibleStructNullableWithValue);
+        }
+
+        [TestMethod]
+        public override void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_nonConvertibleStructNullableWithValue_AsObject, _nonConvertibleStructNullableWithValue_AsObject);
+        }
+
+        [TestMethod]
+        public override void From_ParentClass()
+        {
+            TestConvertFrom(_parentClass, _parentClass);
+        }
+
+        [TestMethod]
+        public override void From_ParentClass_AsObject()
+        {
+            TestConvertFrom(_parentClass_AsObject, _parentClass_AsObject);
+        }
+
+        public override void From_ParentStruct()
+        {
+            TestConvertFrom(_parentStruct, _parentStruct);
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_AsObject()
+        {
+            TestConvertFrom(_parentStruct_AsObject, _parentStruct_AsObject);
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_parentStructNullableWithValue, _parentStructNullableWithValue);
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_parentStructNullableWithValue_AsObject, _parentStructNullableWithValue_AsObject);
         }
     }
     #endregion
@@ -251,6 +393,48 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
         protected override TestEnum GetExpected<TFrom>(TFrom @from)
         {
             return base.GetExpected(@from);
+        }
+    }
+    #endregion
+
+    #region IParent
+    [TestClass]
+    public class ConvertTo2_IParent : ConvertTo2_Base<IParent>
+    {
+        [TestMethod]
+        public override void From_ParentClass()
+        {
+            TestConvertFrom(_parentClass, _parentClass);
+        }
+
+        [TestMethod]
+        public override void From_ParentClass_AsObject()
+        {
+            TestConvertFrom(_parentClass_AsObject, (IParent)_parentClass_AsObject);
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct()
+        {
+            TestConvertFrom(_parentStruct, _parentStruct);
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_AsObject()
+        {
+            TestConvertFrom(_parentStruct_AsObject, (IParent)_parentStruct_AsObject);
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_Nullable_WithValue()
+        {
+            TestConvertFrom(_parentStructNullableWithValue, _parentStructNullableWithValue);
+        }
+
+        [TestMethod]
+        public override void From_ParentStruct_Nullable_WithValue_AsObject()
+        {
+            TestConvertFrom(_parentStructNullableWithValue_AsObject, (IParent)_parentStructNullableWithValue_AsObject);
         }
     }
     #endregion

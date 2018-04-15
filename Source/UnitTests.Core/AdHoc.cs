@@ -1,5 +1,7 @@
-﻿using Deipax.Core.Conversion;
+﻿using System;
+using Deipax.Core.Conversion;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using UnitTests.Core.TestClasses;
 
 namespace UnitTests.Core
 {
@@ -20,8 +22,21 @@ namespace UnitTests.Core
         //[TestMethod]
         public void Temp1()
         {
-            int? tmp = null;
-            object tmp1 = (object)tmp;
+            Type intType = typeof(int);
+            Type longType = typeof(long);
+
+            var tmp1 = intType.IsAssignableFrom(longType);
+            var tmp2 = longType.IsAssignableFrom(intType);
+
+            Type iType = typeof(IParent);
+            Type pType = typeof(ParentClass);
+
+            var tmp3 = iType.IsAssignableFrom(pType);
+            var tmp4 = pType.IsAssignableFrom(iType);
+
+            ParentClass p = new ParentClass();
+
+            IParent tmp10 = ConvertTo2<IParent, ParentClass>.From(p);
         }
     }
 }

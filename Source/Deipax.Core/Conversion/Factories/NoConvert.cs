@@ -108,6 +108,41 @@ namespace Deipax.Core.Conversion.Factories
                         returnLabel);
                 }
             }
+            else if (toType.IsAssignableFrom(fromType))
+            {
+                GotoExpression returnExpression = Expression.Return(
+                    returnTarget,
+                    Expression.Convert(input, toType),
+                    toType);
+
+                block = Expression.Block(
+                    returnExpression,
+                    returnLabel);
+            }
+            else if (toType.IsAssignableFrom(underlyingFromType))
+            {
+                var hasValue = Expression.Property(input, "HasValue");
+                var value = Expression.Property(input, "Value");
+
+                GotoExpression returnValue = Expression.Return(
+                    returnTarget,
+                    Expression.Convert(input, toType),
+                    toType);
+
+                GotoExpression returnDefault = Expression.Return(
+                    returnTarget,
+                    Expression.Default(toType),
+                    toType);
+
+                var ifThenElse = Expression.IfThenElse(
+                    hasValue,
+                    returnValue,
+                    returnDefault);
+
+                block = Expression.Block(
+                    ifThenElse,
+                    returnLabel);
+            }
 
             if (block != null)
             {

@@ -55,6 +55,47 @@ namespace Deipax.Core.Conversion.Factories
                         Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                     };
                 }
+
+                var result = new FromIConvertible().Get<TFrom, TTo>();
+
+                if (result != null)
+                {
+                    return result;
+                }
+
+                method = underlyingFromType
+                    .GetRuntimeMethods()
+                    .Where(x => x.Name == "ToString")
+                    .FirstOrDefault();
+
+                if (method != null)
+                {
+                    ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
+                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
+                    var returnTarget = Expression.Label(toType);
+                    var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
+
+                    Expression guardedInput = fromType != underlyingFromType
+                        ? Expression.Property(input, "Value")
+                        : (Expression)input;
+
+                    MethodCallExpression callExpression = Expression.Call(
+                        guardedInput,
+                        method);
+
+                    GotoExpression returnExpression = Expression.Return(returnTarget, callExpression);
+
+                    BlockExpression block = Expression.Block(
+                        returnExpression,
+                        returnLabel);
+
+                    return new ConvertFactoryResult<TFrom, TTo>()
+                    {
+                        GuardCall = true,
+                        Factory = this,
+                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
+                    };
+                }
             }
 
             return null;
