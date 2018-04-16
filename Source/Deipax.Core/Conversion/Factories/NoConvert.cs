@@ -126,7 +126,7 @@ namespace Deipax.Core.Conversion.Factories
 
                 GotoExpression returnValue = Expression.Return(
                     returnTarget,
-                    Expression.Convert(input, toType),
+                    Expression.Convert(value, toType),
                     toType);
 
                 GotoExpression returnDefault = Expression.Return(
