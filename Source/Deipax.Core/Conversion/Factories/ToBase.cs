@@ -196,13 +196,30 @@ namespace Deipax.Core.Conversion.Factories
                             ? Expression.Return(returnTarget, Expression.Convert(callExpression, toType))
                             : Expression.Return(returnTarget, callExpression);
 
-                        BlockExpression block = Expression.Block(
-                            returnExpression,
-                            returnLabel);
+                        BlockExpression block = null;
+
+                        if (fromType == underlyingFromType)
+                        {
+                            block = Expression.Block(
+                                returnExpression,
+                                returnLabel);
+                        }
+                        else
+                        {
+                            var hasValue = Expression.Property(input, "HasValue");
+                            var ifNoValueReturn = Expression.IfThen(
+                                Expression.Not(hasValue),
+                                Expression.Return(returnTarget, Expression.Default(toType)));
+
+                            block = Expression.Block(
+                                ifNoValueReturn,
+                                returnExpression,
+                                returnLabel);
+                        }
 
                         return new ConvertFactoryResult<TFrom, TTo>()
                         {
-                            GuardCall = true,
+                            GuardCall = false,
                             Factory = this,
                             Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
                         };
