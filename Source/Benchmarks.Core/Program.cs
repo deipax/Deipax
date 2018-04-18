@@ -1,8 +1,6 @@
 ﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
-using BenchmarkDotNet.Running;
-using Benchmarks.Core.Deipax.Conversion;
 using System.Linq;
 
 namespace Benchmarks.Core
