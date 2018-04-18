@@ -32,21 +32,21 @@ namespace Benchmarks.Core
 
             //BenchmarkRunner.Run<AdHoc>(config);
 
-            
-            //BenchmarkRunner.Run<ConvertTo2_Bool>(config);
-            //BenchmarkRunner.Run<ConvertTo2_BoolNullable>(config);
-            //BenchmarkRunner.Run<ConvertTo2_Char>(config);
-            //BenchmarkRunner.Run<ConvertTo2_CharNullable>(config);
-            //BenchmarkRunner.Run<ConvertTo2_SByte>(config);
-            //BenchmarkRunner.Run<ConvertTo2_SByteNullable>(config);
-            //BenchmarkRunner.Run<ConvertTo2_Byte>(config);
-            //BenchmarkRunner.Run<ConvertTo2_ByteNullable>(config);
-            //BenchmarkRunner.Run<ConvertTo2_Short>(config);
-            //BenchmarkRunner.Run<ConvertTo2_ShortNullable>(config);
-            //BenchmarkRunner.Run<ConvertTo2_UShort>(config);
-            //BenchmarkRunner.Run<ConvertTo2_UShortNullable>(config);
-            //BenchmarkRunner.Run<ConvertTo2_Int>(config);
-            //BenchmarkRunner.Run<ConvertTo2_IntNullable>(config);
+            /*
+            BenchmarkRunner.Run<ConvertTo2_Bool>(config);
+            BenchmarkRunner.Run<ConvertTo2_BoolNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_Char>(config);
+            BenchmarkRunner.Run<ConvertTo2_CharNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_SByte>(config);
+            BenchmarkRunner.Run<ConvertTo2_SByteNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_Byte>(config);
+            BenchmarkRunner.Run<ConvertTo2_ByteNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_Short>(config);
+            BenchmarkRunner.Run<ConvertTo2_ShortNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_UShort>(config);
+            BenchmarkRunner.Run<ConvertTo2_UShortNullable>(config);
+            BenchmarkRunner.Run<ConvertTo2_Int>(config);
+            BenchmarkRunner.Run<ConvertTo2_IntNullable>(config);
             BenchmarkRunner.Run<ConvertTo2_UInt>(config);
             BenchmarkRunner.Run<ConvertTo2_UIntNullable>(config);
             BenchmarkRunner.Run<ConvertTo2_Long>(config);
@@ -65,6 +65,7 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<ConvertTo2_Object>(config);
             BenchmarkRunner.Run<ConvertTo2_Enum>(config);
             BenchmarkRunner.Run<ConvertTo2_IParent>(config);
+            */
 
             /*
             BenchmarkRunner.Run<ConvertTo_Bool>(config);
