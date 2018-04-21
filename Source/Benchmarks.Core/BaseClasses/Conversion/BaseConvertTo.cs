@@ -8,8 +8,9 @@ namespace Benchmarks.Core.BaseClasses.Conversion
     {
         public BaseConvertTo()
         {
-            Type = typeof(TTo);
             Default = default(TTo);
+
+            _dbNull_AsObject = DBNull.Value;
 
             _fromBool_AsObject = _fromBool = true;
             _fromBoolNullableWithValue_AsObject = _fromBoolNullableWithValue = true;
@@ -204,6 +205,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         protected object _fromULongNullableNoValue_AsObject;
 
         protected object _nullObject = null;
+        protected object _dbNull_AsObject;
 
         protected ConvertibleClass _convertibleClass;
         protected ConvertibleClass _convertibleClassNoValue;
@@ -250,7 +252,6 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         #endregion
 
         #region Protected Members
-        protected Type Type { get; private set; }
         protected TTo Default { get; private set; }
         protected abstract TTo ConvertFrom<X>(X from);
 
@@ -874,6 +875,7 @@ namespace Benchmarks.Core.BaseClasses.Conversion
 
         #region Null/DbNull
         [Benchmark]
+        [BenchmarkCategory(OBJECT)]
         public virtual void From_NullObject()
         {
             TTo to = ConvertFrom(_nullObject);
@@ -883,6 +885,13 @@ namespace Benchmarks.Core.BaseClasses.Conversion
         public virtual void From_DBNull()
         {
             TTo to = ConvertFrom(DBNull.Value);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory(OBJECT)]
+        public virtual void From_DBNull_AsObject()
+        {
+            TTo to = ConvertFrom(_dbNull_AsObject);
         }
         #endregion
 

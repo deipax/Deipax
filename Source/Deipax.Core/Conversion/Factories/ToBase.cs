@@ -1,4 +1,5 @@
-﻿using Deipax.Core.Interfaces;
+﻿using Deipax.Core.Extensions;
+using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -152,77 +153,46 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
-        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
+        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
-            var toType = typeof(TTo);
-            var underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-            var fromType = typeof(TFrom);
-            var underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
-
-            if (underlyingToType == typeof(T) &&
-                underlyingFromType != typeof(string) &&
-                underlyingFromType != typeof(object))
+            if (args.UnderlyingToType == typeof(T) &&
+                args.UnderlyingFromType != typeof(string) &&
+                args.UnderlyingFromType != typeof(object))
             {
                 var methodInfo = typeof(Convert)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.ReturnType == underlyingToType &&
+                        x.ReturnType == args.UnderlyingToType &&
                         x.GetParameters().Count() == 1 &&
-                        x.GetParameters()[0].ParameterType == underlyingFromType)
+                        x.GetParameters()[0].ParameterType == args.UnderlyingFromType)
                     .FirstOrDefault();
 
                 if (methodInfo != null)
                 {
-                    if (_invalidCastTypes.Exists(x => x == underlyingFromType))
+                    if (_invalidCastTypes.Exists(x => x == args.UnderlyingFromType))
                     {
-                        return ConvertConfig.Default?.Get<TFrom, TTo>();
+                        return ConvertConfig.Default?.Get<TFrom, TTo>(args);
                     }
                     else
                     {
-                        ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                        ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-                        var returnTarget = Expression.Label(toType);
-                        var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-
-                        Expression guardedInput = fromType != underlyingFromType
-                            ? Expression.Property(input, "Value")
-                            : (Expression)input;
+                        Expression guardedInput = args.FromType.IsNullable()
+                            ? Expression.Property(args.Input, "Value")
+                            : (Expression)args.Input;
 
                         MethodCallExpression callExpression = Expression.Call(
                             methodInfo,
                             guardedInput);
 
-                        GotoExpression returnExpression = toType != underlyingToType
-                            ? Expression.Return(returnTarget, Expression.Convert(callExpression, toType))
-                            : Expression.Return(returnTarget, callExpression);
+                        GotoExpression returnExpression = args.ToType.IsNullable()
+                            ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
+                            : Expression.Return(args.LabelTarget, callExpression);
 
-                        BlockExpression block = null;
+                        args.AddGuards();
+                        args.Add(returnExpression);
+                        args.Add(args.LabelExpression);
 
-                        if (fromType == underlyingFromType)
-                        {
-                            block = Expression.Block(
-                                returnExpression,
-                                returnLabel);
-                        }
-                        else
-                        {
-                            var hasValue = Expression.Property(input, "HasValue");
-                            var ifNoValueReturn = Expression.IfThen(
-                                Expression.Not(hasValue),
-                                Expression.Return(returnTarget, Expression.Default(toType)));
-
-                            block = Expression.Block(
-                                ifNoValueReturn,
-                                returnExpression,
-                                returnLabel);
-                        }
-
-                        return new ConvertFactoryResult<TFrom, TTo>()
-                        {
-                            GuardCall = false,
-                            Factory = this,
-                            Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
-                        };
+                        return args.GetConvertResult();
                     }
                 }
             }

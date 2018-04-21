@@ -1,4 +1,5 @@
-﻿using Deipax.Core.Interfaces;
+﻿using Deipax.Core.Extensions;
+using Deipax.Core.Interfaces;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,56 +10,47 @@ namespace Deipax.Core.Conversion.Factories
     public class FromObject : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
+        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
             // This will only return a func IF TFrom is an object
             // or implements IConvertible and the TTo is supported by 
             // IConvertible.
-            Type fromType = typeof(TFrom);
-            Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
-
-            if (fromType == typeof(object))
+            if (args.FromType == typeof(object))
             {
-                Type toType = typeof(TTo);
-                Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-
                 var methodInfo = typeof(IConvertible)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.ReturnType == underlyingToType &&
+                        x.ReturnType == args.UnderlyingToType &&
                         x.GetParameters().Count() == 1 &&
                         x.GetParameters()[0].ParameterType == typeof(IFormatProvider))
                     .FirstOrDefault();
 
                 if (methodInfo != null)
                 {
-                    ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-                    var returnTarget = Expression.Label(toType);
-                    var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
-                    var assignConverter = Expression.Assign(converter, Expression.TypeAs(input, typeof(IConvertible)));
+                    var assignConverter = Expression.Assign(
+                        converter, 
+                        Expression.TypeAs(args.Input, typeof(IConvertible)));
 
                     var ifConverterNullReturn = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
-                        Expression.Return(returnTarget, Expression.Default(toType)));
+                        Expression.Return(args.LabelTarget, args.Default));
 
                     Expression callExpression = Expression.Call(
                         converter,
                         methodInfo,
-                        Expression.Coalesce(provider, Expression.Constant(ConvertConfig.DefaultProvider)));
+                        args.GetDefaultProvider());
 
-                    GotoExpression returnExpression = toType == underlyingToType
-                        ? Expression.Return(returnTarget, callExpression)
-                        : Expression.Return(returnTarget, Expression.Convert(callExpression, toType));
+                    GotoExpression returnExpression = args.ToType.IsNullable()
+                        ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
+                        : Expression.Return(args.LabelTarget, callExpression);
 
-                    Expression block = Expression.Block(
-                        new[] { converter },
-                        assignConverter,
-                        ifConverterNullReturn,
-                        returnExpression,
-                        returnLabel);
+                    args.AddVariable(converter);
+                    args.AddGuards();
+                    args.Add(assignConverter);
+                    args.Add(ifConverterNullReturn);
 
                     if (ConvertConfig.SafeConvert)
                     {
@@ -66,49 +58,35 @@ namespace Deipax.Core.Conversion.Factories
 
                         Expression tryCatchExpression = Expression.TryCatch(
                             returnExpression,
-                            Expression.Catch(ex, Expression.Return(returnTarget, Expression.Default(toType))));
+                            Expression.Catch(ex, Expression.Return(args.LabelTarget, args.Default)));
 
-                        block = Expression.Block(
-                            new[] { converter },
-                            assignConverter,
-                            ifConverterNullReturn,
-                            tryCatchExpression,
-                            returnLabel);
+                        args.Add(tryCatchExpression);
+                    }
+                    else
+                    {                  
+                        args.Add(returnExpression);         
                     }
 
-                    return new ConvertFactoryResult<TFrom, TTo>()
-                    {
-                        GuardCall = true,
-                        Factory = this,
-                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
-                    };
+                    args.Add(args.LabelExpression);
+                    return args.GetConvertResult();
                 }
                 else
                 {
                     // To type is not ICovertible.  Try casting the from object to target type
-                    ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-                    var returnTarget = Expression.Label(toType);
-                    var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-
-                    var returnExpression = Expression.Return(returnTarget, Expression.TypeAs(input, toType));
+                    var returnExpression = Expression.Return(
+                        args.LabelTarget, 
+                        Expression.TypeAs(args.Input, args.ToType));
 
                     ParameterExpression ex = Expression.Parameter(typeof(Exception), "ex");
 
                     Expression tryCatchExpression = Expression.TryCatch(
                         returnExpression,
-                        Expression.Catch(ex, Expression.Return(returnTarget, Expression.Default(toType))));
+                        Expression.Catch(ex, Expression.Return(args.LabelTarget, args.Default)));
 
-                    BlockExpression block = Expression.Block(
-                        tryCatchExpression,
-                        returnLabel);
-
-                    return new ConvertFactoryResult<TFrom, TTo>()
-                    {
-                        GuardCall = true,
-                        Factory = this,
-                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
-                    };
+                    args.AddGuards();
+                    args.Add(tryCatchExpression);
+                    args.Add(args.LabelExpression);
+                    return args.GetConvertResult();
                 }
             }
 

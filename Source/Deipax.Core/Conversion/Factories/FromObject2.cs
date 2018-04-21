@@ -1,4 +1,5 @@
 ﻿using Deipax.Core.Common;
+using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
 using System.Linq;
@@ -10,42 +11,26 @@ namespace Deipax.Core.Conversion.Factories
     public class FromObject2 : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
+        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
-            Type fromType = typeof(TFrom);
-
-            if (fromType == typeof(object))
+            if (args.FromType == typeof(object))
             {
-                Type toType = typeof(TTo);
-                Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-
-                ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-                var returnTarget = Expression.Label(toType);
-                var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-
                 var callExpression = Expression.Call(
                     typeof(FromObject<TTo>),
                     "Convert",
                     null,
-                    input,
-                    provider);
+                    args.Input,
+                    args.GetDefaultProvider());
 
-                GotoExpression returnExpression = toType == underlyingToType
-                    ? Expression.Return(returnTarget, callExpression)
-                    : Expression.Return(returnTarget, Expression.Convert(callExpression, toType));
+                GotoExpression returnExpression = args.ToType.IsNullable()
+                    ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
+                    : Expression.Return(args.LabelTarget, callExpression);
 
-                BlockExpression block = Expression.Block(
-                    toType,
-                    returnExpression,
-                    returnLabel);
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
 
-                return new ConvertFactoryResult<TFrom, TTo>()
-                {
-                    Factory = this,
-                    GuardCall = false,
-                    Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
-                };
+                return args.GetConvertResult();
             }
 
             return null;
@@ -104,8 +89,8 @@ namespace Deipax.Core.Conversion.Factories
                 ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
 
                 var convertTo = (Delegate)_helper
-                        .MakeGenericMethod(new[] { runtimeType })
-                        .Invoke(null, null);
+                    .MakeGenericMethod(new[] { runtimeType })
+                    .Invoke(null, null);
 
                 var callExpression = Expression.Invoke(
                     Expression.Constant(convertTo),

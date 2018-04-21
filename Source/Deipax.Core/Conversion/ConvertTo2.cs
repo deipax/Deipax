@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Reflection.Emit;
+﻿using Deipax.Core.Interfaces;
 
 namespace Deipax.Core.Conversion
 {
@@ -9,12 +7,10 @@ namespace Deipax.Core.Conversion
         static ConvertTo2()
         {
             Result = ConvertConfig.Get<TFrom, TTo>();
-            From = Result?.GuardedFunc;
+            From = Result?.Func;
         }
 
         public static readonly Convert<TFrom, TTo> From;
-        public static readonly IResult<TFrom, TTo> Result;
+        public static readonly IConvertResult<TFrom, TTo> Result;
     }
-
-    public delegate TTo Convert<TFrom, TTo>(TFrom from, IFormatProvider provider = null);
 }

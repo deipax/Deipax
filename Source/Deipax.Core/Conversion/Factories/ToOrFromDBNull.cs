@@ -7,52 +7,29 @@ namespace Deipax.Core.Conversion.Factories
     public class ToOrFromDBNull : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
+        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
-            Type toType = typeof(TTo);
-            Type fromType = typeof(TFrom);
-
-            ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-            ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-            DefaultExpression defaultValue = Expression.Default(toType);
-            var returnTarget = Expression.Label(toType);
-            var returnLabel = Expression.Label(returnTarget, defaultValue);
-            BlockExpression block = null;
-
-            if (toType == typeof(DBNull))
+            if (args.ToType == typeof(DBNull))
             {
                 GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    Expression.Constant(DBNull.Value),
-                    toType);
+                    args.LabelTarget,
+                    Expression.Constant(DBNull.Value));
 
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
             }
-            else if (fromType == typeof(DBNull))
+            else if (args.FromType == typeof(DBNull))
             {
                 GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    defaultValue,
-                    toType);
+                    args.LabelTarget,
+                    args.Default);
 
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
             }
 
-            if (block != null)
-            {
-                return new ConvertFactoryResult<TFrom, TTo>()
-                {
-                    Factory = this,
-                    GuardCall = false,
-                    Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
-                };
-            }
-
-            return null;
+            return args.GetConvertResult();
         }
         #endregion
     }

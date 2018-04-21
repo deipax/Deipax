@@ -12,6 +12,8 @@ namespace UnitTests.Core.BaseClasses.Conversion
         {
             DefaultValue = default(TTo);
 
+            _dbNull_AsObject = DBNull.Value;
+
             _fromBool_AsObject = _fromBool = true;
             _fromBoolNullableWithValue_AsObject = _fromBoolNullableWithValue = true;
             _fromBoolNullableNoValue_AsObject = _fromBoolNullableNoValue = null;
@@ -205,6 +207,7 @@ namespace UnitTests.Core.BaseClasses.Conversion
         protected object _fromULongNullableNoValue_AsObject;
 
         protected object _nullObject = null;
+        protected object _dbNull_AsObject;
 
         protected ConvertibleClass _convertibleClass;
         protected ConvertibleClass _convertibleClassNoValue;
@@ -900,6 +903,12 @@ namespace UnitTests.Core.BaseClasses.Conversion
         public virtual void From_DBNull()
         {
             TestConvertFrom(DBNull.Value, DefaultValue);
+        }
+
+        [TestMethod]
+        public virtual void From_DBNull_AsObject()
+        {
+            TestConvertFrom(_dbNull_AsObject, DefaultValue);
         }
         #endregion
 

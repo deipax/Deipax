@@ -314,6 +314,12 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
         }
 
         [TestMethod]
+        public override void From_DBNull_AsObject()
+        {
+            TestConvertFrom(DBNull.Value, DBNull.Value);
+        }
+
+        [TestMethod]
         public override void From_NonConvertibleClass()
         {
             TestConvertFrom(_nonConvertibleClass, _nonConvertibleClass);
@@ -361,6 +367,7 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
             TestConvertFrom(_parentClass_AsObject, _parentClass_AsObject);
         }
 
+        [TestMethod]
         public override void From_ParentStruct()
         {
             TestConvertFrom(_parentStruct, _parentStruct);

@@ -1,6 +1,5 @@
 ﻿using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
-using System;
 using System.Linq.Expressions;
 
 namespace Deipax.Core.Conversion.Factories
@@ -8,153 +7,88 @@ namespace Deipax.Core.Conversion.Factories
     public class NoConvert : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
+        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
-            Type fromType = typeof(TFrom);
-            Type toType = typeof(TTo);
-            Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
-
-            ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-            ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-            DefaultExpression defaultValue = Expression.Default(toType);
-            LabelTarget returnTarget = Expression.Label(toType);
-            LabelExpression returnLabel = Expression.Label(returnTarget, defaultValue);
-
-            BlockExpression block = null;
-
-            if (fromType == toType)
+            if (args.FromType == args.ToType)
             {
                 GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    input,
-                    toType);
+                    args.LabelTarget,
+                    args.Input);
 
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
             }
-            else if (!fromType.IsNullable() &&
-                     toType.IsNullable() &&
-                     fromType == Nullable.GetUnderlyingType(toType))
+            else if (args.UnderlyingToType == args.UnderlyingFromType)
             {
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    Expression.Convert(input, toType),
-                    toType);
+                Expression guardedInput = args.FromType.IsNullable()
+                    ? Expression.Property(args.Input, "Value")
+                    : (Expression)args.Input;
 
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
+                GotoExpression returnExpression = args.ToType.IsNullable()
+                    ? Expression.Return(args.LabelTarget, Expression.Convert(guardedInput, args.ToType))
+                    : Expression.Return(args.LabelTarget, guardedInput);
+
+                args.AddGuards();
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
             }
-            else if (fromType.IsNullable() &&
-                     !toType.IsNullable() &&
-                     Nullable.GetUnderlyingType(fromType) == toType)
+            else if (args.ToType == typeof(object))
             {
-                var returnValue = Expression.Variable(toType, "returnValue");
-                var hasValue = Expression.Property(input, "HasValue");
-                var assignDefault = Expression.Assign(returnValue, defaultValue);
-
-                var ifThen = Expression.IfThen(
-                    hasValue,
-                    Expression.Assign(returnValue, Expression.Convert(input, toType)));
-
-                GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    returnValue,
-                    toType);
-
-                block = Expression.Block(
-                    new[] { returnValue },
-                    assignDefault,
-                    ifThen,
-                    returnExpression,
-                    returnLabel);
-            }
-            else if (toType == typeof(object))
-            {
-                if (!fromType.IsNullable())
+                if (args.FromType.IsNullable())
                 {
-                    GotoExpression returnExpression = Expression.Return(
-                        returnTarget,
-                        Expression.Convert(input, typeof(object)),
-                        toType);
-
-                    block = Expression.Block(
-                        returnExpression,
-                        returnLabel);
-                }
-                else
-                {             
-                    var hasValue = Expression.Property(input, "HasValue");
-                    var value = Expression.Property(input, "Value");
+                    var hasValue = Expression.Property(args.Input, "HasValue");
+                    var value = Expression.Property(args.Input, "Value");
 
                     GotoExpression returnValue = Expression.Return(
-                        returnTarget,
-                        Expression.Convert(value, toType),
-                        toType);
+                        args.LabelTarget,
+                        Expression.Convert(value, args.ToType));
 
                     GotoExpression returnDefault = Expression.Return(
-                        returnTarget,
-                        Expression.Default(toType),
-                        toType);
+                        args.LabelTarget,
+                        args.Default);
 
                     var ifThenElse = Expression.IfThenElse(
                         hasValue,
                         returnValue,
                         returnDefault);
 
-                    block = Expression.Block(
-                        ifThenElse,
-                        returnLabel);
+                    args.Add(ifThenElse);
+                    args.Add(args.LabelExpression);
+                }
+                else
+                {
+                    GotoExpression returnExpression = Expression.Return(
+                        args.LabelTarget,
+                        Expression.Convert(args.Input, typeof(object)));
+
+                    args.Add(returnExpression);
+                    args.Add(args.LabelExpression);
                 }
             }
-            else if (toType.IsAssignableFrom(fromType))
+            else if (args.ToType.IsAssignableFrom(args.FromType))
             {
                 GotoExpression returnExpression = Expression.Return(
-                    returnTarget,
-                    Expression.Convert(input, toType),
-                    toType);
+                    args.LabelTarget,
+                    Expression.Convert(args.Input, args.ToType));
 
-                block = Expression.Block(
-                    returnExpression,
-                    returnLabel);
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
             }
-            else if (toType.IsAssignableFrom(underlyingFromType))
+            else if (args.ToType.IsAssignableFrom(args.UnderlyingFromType))
             {
-                var hasValue = Expression.Property(input, "HasValue");
-                var value = Expression.Property(input, "Value");
+                var value = Expression.Property(args.Input, "Value");
 
-                GotoExpression returnValue = Expression.Return(
-                    returnTarget,
-                    Expression.Convert(value, toType),
-                    toType);
+                GotoExpression returnExpression = Expression.Return(
+                    args.LabelTarget,
+                    Expression.Convert(value, args.ToType));
 
-                GotoExpression returnDefault = Expression.Return(
-                    returnTarget,
-                    Expression.Default(toType),
-                    toType);
-
-                var ifThenElse = Expression.IfThenElse(
-                    hasValue,
-                    returnValue,
-                    returnDefault);
-
-                block = Expression.Block(
-                    ifThenElse,
-                    returnLabel);
+                args.AddGuards();
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
             }
 
-            if (block != null)
-            {
-                return new ConvertFactoryResult<TFrom, TTo>()
-                {
-                    Factory = this,
-                    GuardCall = false,
-                    Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
-                };
-            }
-
-            return null;
+            return args.GetConvertResult();
         }
         #endregion
     }

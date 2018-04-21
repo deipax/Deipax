@@ -1,6 +1,8 @@
 ﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Running;
+using Benchmarks.Core.Deipax.Conversion;
 using System.Linq;
 
 namespace Benchmarks.Core
@@ -30,7 +32,6 @@ namespace Benchmarks.Core
 
             //BenchmarkRunner.Run<AdHoc>(config);
 
-            /*
             BenchmarkRunner.Run<ConvertTo2_Bool>(config);
             BenchmarkRunner.Run<ConvertTo2_BoolNullable>(config);
             BenchmarkRunner.Run<ConvertTo2_Char>(config);
@@ -63,7 +64,6 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<ConvertTo2_Object>(config);
             BenchmarkRunner.Run<ConvertTo2_Enum>(config);
             BenchmarkRunner.Run<ConvertTo2_IParent>(config);
-            */
 
             /*
             BenchmarkRunner.Run<ConvertTo_Bool>(config);

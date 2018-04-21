@@ -1,5 +1,4 @@
 ﻿using Deipax.Core.Conversion.Factories;
-using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -52,32 +51,34 @@ namespace Deipax.Core.Conversion
         public static IFormatProvider DefaultProvider { get; set; }
         public static IConvertFactory Default { get; set; }
 
-        public static IResult<TFrom, TTo> Get<TFrom, TTo>()
+        public static IConvertResult<TFrom, TTo> Get<TFrom, TTo>()
         {
-            IConvertFactoryResult<TFrom, TTo> result = null;
+            IExpArgs<TFrom, TTo> args = new ExpArgs<TFrom, TTo>();
+
+            Convert<TFrom, TTo> result = null;
 
             foreach (var factory in _defaults)
             {
-                result = factory.Get<TFrom, TTo>();
+                result = factory.Get(args);
 
                 if (result != null)
                 {
-                    break;
+                    return new Result<TFrom, TTo>()
+                    {
+                        Factory = factory,
+                        Func = result,
+                    };
                 }
             }
 
-            result = result ?? Default?.Get<TFrom, TTo>();
+            result = Default?.Get(args);
 
             if (result != null)
             {
                 return new Result<TFrom, TTo>()
                 {
-                    Factory = result.Factory,
-                    GuardCall = result.GuardCall,
-                    Func = result.Func,
-                    GuardedFunc = result.GuardCall
-                        ? Guard(result.Func)
-                        : result.Func
+                    Factory = Default,
+                    Func = result,
                 };
             }
 
@@ -85,118 +86,86 @@ namespace Deipax.Core.Conversion
         }
         #endregion
 
-        #region Private Members
-        private static Convert<TFrom, TTo> Guard<TFrom, TTo>(Convert<TFrom, TTo> convertFunc)
+        #region Helpers
+        class Result<TFrom, TTo> : IConvertResult<TFrom, TTo>
         {
-            Type fromType = typeof(TFrom);
-            Type toType = typeof(TTo);
+            public IConvertFactory Factory { get; set; }
+            public Convert<TFrom, TTo> Func { get; set; }
+        }
 
-            ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-            ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-            DefaultExpression defaultValue = Expression.Default(toType);
-            LabelTarget returnTarget = Expression.Label(toType);
-            LabelExpression returnLabel = Expression.Label(returnTarget, defaultValue);
-
-            var invokeExpression = Expression.Return(
-                returnTarget,
-                Expression.Invoke(Expression.Constant(convertFunc), input, provider));
-
-            BlockExpression block = null;
-
-            if (fromType == typeof(object))
+        class ExpArgs<TFrom, TTo> : IExpArgs<TFrom, TTo>
+        {
+            public ExpArgs()
             {
-                var isNullOrDbNullExpression = Expression.Or(
-                    Expression.Equal(input, Expression.Constant(null, typeof(object))),
-                    Expression.Equal(input, Expression.Constant(DBNull.Value, typeof(object))));
+                FromType = typeof(TFrom);
+                UnderlyingFromType = Nullable.GetUnderlyingType(FromType) ?? FromType;
+                ToType = typeof(TTo);
+                UnderlyingToType = Nullable.GetUnderlyingType(ToType) ?? ToType;
 
-                var ifNullReturnExpression = Expression.IfThen(
-                    isNullOrDbNullExpression,
-                    Expression.Return(returnTarget, defaultValue));
+                Input = Expression.Parameter(typeof(TFrom), "input");
+                Provider = Expression.Parameter(typeof(IFormatProvider), "provider");
+                LabelTarget = Expression.Label(ToType);
+                LabelExpression = Expression.Label(LabelTarget, Expression.Default(ToType));
+                Default = Expression.Default(ToType);
+            }
 
-                var returnIfSameAsTargetTypeExpression = Expression.IfThen(
-                    Expression.TypeEqual(input, toType),
-                    Expression.Return(returnTarget, Expression.Convert(input, toType)));
+            #region Field Members
+            private List<Expression> _expressions = new List<Expression>();
+            private List<ParameterExpression> _variables = new List<ParameterExpression>();
+            #endregion
 
-                if (toType.IsNullable())
+            #region Public Members
+            public Type FromType { get; private set; }
+            public Type UnderlyingFromType { get; private set; }
+            public Type ToType { get; private set; }
+            public Type UnderlyingToType { get; private set; }
+            public ParameterExpression Input { get; private set; }
+            public ParameterExpression Provider { get; private set; }
+            public LabelTarget LabelTarget { get; private set; }
+            public LabelExpression LabelExpression { get; private set; }
+            public DefaultExpression Default { get; private set; }
+
+            public void Add(Expression expr)
+            {
+                if (expr != null)
                 {
-                    var underlyingType = Nullable.GetUnderlyingType(toType);
+                    _expressions.Add(expr);
+                }
+            }
 
-                    var returnIfSameAsUnderlyingTypeExpression = Expression.IfThen(
-                        Expression.TypeEqual(input, underlyingType),
-                        Expression.Return(returnTarget, Expression.Convert(input, toType)));
+            public void AddVariable(ParameterExpression variable)
+            {
+                if (variable != null)
+                {
+                    _variables.Add(variable);
+                }
+            }
 
+            public Convert<TFrom, TTo> GetConvertResult()
+            {
+                if (_expressions.Count <= 0)
+                {
+                    return null;
+                }
+
+                BlockExpression block = null;
+
+                if (_variables.Count > 0)
+                {
                     block = Expression.Block(
-                        toType,
-                        ifNullReturnExpression,
-                        returnIfSameAsTargetTypeExpression,
-                        returnIfSameAsUnderlyingTypeExpression,
-                        invokeExpression,
-                        returnLabel);
+                        ToType,
+                        _variables,
+                        _expressions);
                 }
                 else
                 {
-                    block = Expression.Block(
-                        toType,
-                        ifNullReturnExpression,
-                        returnIfSameAsTargetTypeExpression,
-                        invokeExpression,
-                        returnLabel);
+                    block = Expression.Block(ToType, _expressions);
                 }
+
+                return Expression.Lambda<Convert<TFrom, TTo>>(block, Input, Provider).Compile();
             }
-            else if (!fromType.IsValueType)
-            {
-                var isNullOrDbNullExpression = Expression.Or(
-                    Expression.Equal(input, Expression.Constant(null, typeof(object))),
-                    Expression.Equal(input, Expression.Constant(DBNull.Value, typeof(object))));
-
-                var ifNullReturnExpression = Expression.IfThen(
-                    isNullOrDbNullExpression,
-                    Expression.Return(returnTarget, defaultValue));
-
-                block = Expression.Block(
-                    toType,
-                    ifNullReturnExpression,
-                    invokeExpression,
-                    returnLabel);
-            }
-            else if (fromType.IsNullable())
-            {
-                var hasValue = Expression.Property(input, "HasValue");
-
-                var ifThenElse = Expression.IfThenElse(
-                    hasValue,
-                    invokeExpression,
-                    Expression.Return(returnTarget, defaultValue));
-
-                block = Expression.Block(
-                    toType,
-                    ifThenElse,
-                    returnLabel);
-            }
-
-            if (block != null)
-            {
-                return Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile();
-            }
-
-            return convertFunc;
+            #endregion
         }
         #endregion
-    }
-
-    public interface IResult<TFrom, TTo>
-    {
-        IConvertFactory Factory { get; }
-        Convert<TFrom, TTo> Func { get; }
-        Convert<TFrom, TTo> GuardedFunc { get; }
-        bool GuardCall { get; }
-    }
-
-    internal class Result<TFrom, TTo> : IResult<TFrom, TTo>
-    {
-        public IConvertFactory Factory { get; set; }
-        public Convert<TFrom, TTo> Func { get; set; }
-        public Convert<TFrom, TTo> GuardedFunc { get; set; }
-        public bool GuardCall { get; set; }
     }
 }

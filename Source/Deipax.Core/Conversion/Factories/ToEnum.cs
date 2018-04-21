@@ -1,4 +1,5 @@
-﻿using Deipax.Core.Interfaces;
+﻿using Deipax.Core.Extensions;
+using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,46 +10,31 @@ namespace Deipax.Core.Conversion.Factories
     public class ToEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
+        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
-            Type toType = typeof(TTo);
-            Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-            Type fromType = typeof(TFrom);
-            Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
-
-            if (underlyingToType.IsEnum)
+            if (args.UnderlyingToType.IsEnum)
             {
-                ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-                var returnTarget = Expression.Label(toType);
-                var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
-
-                Expression guardedInput = fromType != underlyingFromType
-                    ? Expression.Property(input, "Value")
-                    : (Expression)input;
+                Expression guardedInput = args.FromType.IsNullable()
+                    ? Expression.Property(args.Input, "Value")
+                    : (Expression)args.Input;
 
                 var callExpression = Expression.Call(
-                    typeof(ToEnumHelper<TTo>),
+                    typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
                     "Convert",
-                    new [] { underlyingFromType },
+                    new[] { args.UnderlyingFromType },
                     guardedInput,
-                    provider);
+                    args.GetDefaultProvider());
 
-                GotoExpression returnExpression = toType == underlyingToType
-                    ? Expression.Return(returnTarget, callExpression)
-                    : Expression.Return(returnTarget, Expression.Convert(callExpression, toType));
+                GotoExpression returnExpression = args.ToType.IsNullable()
+                    ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
+                    : Expression.Return(args.LabelTarget, callExpression);
 
-                BlockExpression block = Expression.Block(
-                    toType,
-                    returnExpression,
-                    returnLabel);
+                args.AddGuards();
+                args.Add(returnExpression);
+                args.Add(args.LabelExpression);
 
-                return new ConvertFactoryResult<TFrom, TTo>()
-                {
-                    Factory = this,
-                    GuardCall = true,
-                    Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile()
-                };
+                return args.GetConvertResult();
             }
 
             return null;
@@ -84,7 +70,9 @@ namespace Deipax.Core.Conversion.Factories
             #endregion
 
             #region Public Members
-            public static TTo Convert<TFrom>(TFrom from, IFormatProvider provider = null)
+            public static TTo Convert<TFrom>(
+                TFrom from, 
+                IFormatProvider provider = null)
             {
                 TTo returnValue = _default;
                 string key = from as string;

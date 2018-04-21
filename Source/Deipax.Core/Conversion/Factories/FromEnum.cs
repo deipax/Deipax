@@ -1,4 +1,5 @@
-﻿using Deipax.Core.Interfaces;
+﻿using Deipax.Core.Extensions;
+using Deipax.Core.Interfaces;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,51 +10,45 @@ namespace Deipax.Core.Conversion.Factories
     public class FromEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertFactoryResult<TFrom, TTo> Get<TFrom, TTo>()
+        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
-            Type fromType = typeof(TFrom);
-            Type toType = typeof(TTo);
-            Type underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
-            Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-
-            if (underlyingFromType.IsEnum &&
-                toType != typeof(string) &&
-                toType != typeof(object))
+            if (args.UnderlyingFromType.IsEnum &&
+                args.ToType != typeof(string) &&
+                args.ToType != typeof(object))
             {
                 var methodInfo = typeof(Convert)
                     .GetRuntimeMethods()
-                    .Where(x => 
-                        x.ReturnType == underlyingToType &&
+                    .Where(x =>
+                        x.ReturnType == args.UnderlyingToType &&
                         x.GetParameters().Length == 1 &&
                         x.GetParameters()[0].ParameterType == typeof(int))
                     .FirstOrDefault();
 
                 if (methodInfo != null &&
-                    underlyingToType != typeof(DateTime))
+                    args.UnderlyingToType != typeof(DateTime))
                 {
-                    ParameterExpression input = Expression.Parameter(typeof(TFrom), "input");
-                    ParameterExpression provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-                    var returnTarget = Expression.Label(toType);
-                    var returnLabel = Expression.Label(returnTarget, Expression.Default(toType));
+                    Expression guardedInput = args.FromType.IsNullable()
+                        ? Expression.Property(args.Input, "Value")
+                        : (Expression)args.Input;
 
                     var callExpression = Expression.Call(
                         methodInfo,
-                        Expression.Convert(input, typeof(int)));
+                        Expression.Convert(guardedInput, typeof(int)));
 
-                    BlockExpression block = Expression.Block(
-                        Expression.Return(returnTarget, Expression.Convert(callExpression, toType)),
-                        returnLabel);
+                    var returnExpression = Expression.Return(
+                        args.LabelTarget,
+                        Expression.Convert(callExpression, args.ToType));
 
-                    return new ConvertFactoryResult<TFrom, TTo>()
-                    {
-                        GuardCall = true,
-                        Func = Expression.Lambda<Convert<TFrom, TTo>>(block, input, provider).Compile(),
-                        Factory = this
-                    };
+                    args.AddGuards();
+                    args.Add(returnExpression);
+                    args.Add(args.LabelExpression);
+
+                    return args.GetConvertResult();
                 }
-                else if (underlyingToType == typeof(DateTime))
+                else if (args.UnderlyingToType == typeof(DateTime))
                 {
-                    return ConvertConfig.Default?.Get<TFrom, TTo>();
+                    return ConvertConfig.Default?.Get<TFrom, TTo>(args);
                 }
             }
 
