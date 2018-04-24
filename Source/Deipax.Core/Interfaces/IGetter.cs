@@ -9,4 +9,8 @@ namespace Deipax.Core.Interfaces
 		IModelInfo ModelInfo { get; }
 		Func<object, object> Get { get; }
 	}
+
+    public interface IGetter<T> : IGetter
+    {
+    }
 }

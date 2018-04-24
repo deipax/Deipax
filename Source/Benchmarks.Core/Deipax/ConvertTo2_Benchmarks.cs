@@ -1,9 +1,9 @@
-﻿using System;
-using Benchmarks.Core.BaseClasses.Conversion;
-using Benchmarks.Core.TestClasses;
+﻿using Benchmarks.Core.TestClasses;
 using Deipax.Core.Conversion;
+using System;
+using Benchmarks.Core.BaseClasses;
 
-namespace Benchmarks.Core.Deipax.Conversion
+namespace Benchmarks.Core.Deipax
 {
     public class ConvertTo2_Base<TTo> : BaseConvertTo<TTo>
     {

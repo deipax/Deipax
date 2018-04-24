@@ -2,7 +2,7 @@
 using Benchmarks.Core.TestClasses;
 using System;
 
-namespace Benchmarks.Core.BaseClasses.Conversion
+namespace Benchmarks.Core.BaseClasses
 {
     public abstract class BaseConvertTo<TTo>
     {

@@ -2,7 +2,6 @@
 using Benchmarks.DataAccess.BaseClasses;
 using Dapper;
 using Deipax.DataAccess.Interfaces;
-using System;
 using System.Data;
 using UnitTests.Common;
 

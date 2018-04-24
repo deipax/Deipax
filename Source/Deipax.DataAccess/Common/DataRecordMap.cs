@@ -31,7 +31,7 @@ namespace Deipax.DataAccess.Common
 
             for (var i = 0; i < fieldCount; i++)
             {
-                ISetter setter;
+                ISetter<T> setter;
                 if (setters.TryGetValue(r.GetName(i), out setter) && setter != null)
                 {
                     tmp.Add(SetHelper.Create(i, setter).Set);

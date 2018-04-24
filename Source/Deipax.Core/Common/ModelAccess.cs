@@ -2,31 +2,23 @@
 using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Deipax.Core.Common
 {
-    public class ModelAccess
+    public static class ModelAccess<T>
     {
         static ModelAccess()
         {
-            _cache = new ConcurrentDictionary<Type, ModelAccess>();
-        }
-
-        private ModelAccess(Type t)
-        {
-            this.Type = t;
-
+            var t = typeof(T);
             var fields = t.GetAllFields();
             var props = t.GetFilteredProperties(fields);
 
-            AllGetters = GetAllGetters(t, props, fields);
-            AllSetters = GetAllSetters(t, props, fields);
+            AllGetters = GetAllGetters(props, fields);
+            AllSetters = GetAllSetters(props, fields);
 
             Getters = AllGetters
                 .GroupBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
@@ -39,98 +31,67 @@ namespace Deipax.Core.Common
                 .ToDictionary(x => x.Name, x => x, StringComparer.OrdinalIgnoreCase);
         }
 
-        private ModelAccess()
-        {
-        }
-
-        #region Field Members
-        private static ConcurrentDictionary<Type, ModelAccess> _cache;
-
-        private static MethodInfo _setterGenericHelper = typeof(ModelAccess)
-            .GetRuntimeMethods()
-            .Where(x =>
-                x.Name == "CreateSetterDelegateHelper" &&
-                x.IsStatic &&
-                x.IsPrivate)
-            .FirstOrDefault();
-
-        private static MethodInfo _getterGenericHelper = typeof(ModelAccess)
-            .GetRuntimeMethods()
-            .Where(x =>
-                x.Name == "CreateGetterDelegateHelper" &&
-                x.IsStatic &&
-                x.IsPrivate)
-            .FirstOrDefault();
-        #endregion
-
         #region Public Members
-        public static ModelAccess Create(Type t)
-        {
-            if (t != null)
-            {
-                return _cache.GetOrAdd(t, (x) =>
-                {
-                    return new ModelAccess(x);
-                });
-            }
+        public static IReadOnlyDictionary<string, ISetter<T>> Setters { get; private set; }
+        public static IReadOnlyDictionary<string, IGetter<T>> Getters { get; private set; }
+        public static IReadOnlyList<ISetter<T>> AllSetters { get; private set; }
+        public static IReadOnlyList<IGetter<T>> AllGetters { get; private set; }
 
-            return null;
-        }
-
-        public Type Type { get; private set; }
-        public IReadOnlyDictionary<string, ISetter> Setters { get; private set; }
-        public IReadOnlyDictionary<string, IGetter> Getters { get; private set; }
-        public IReadOnlyList<ISetter> AllSetters { get; private set; }
-        public IReadOnlyList<IGetter> AllGetters { get; private set; }
-
-        public IGetter GetGetter(string name)
+        public static IGetter<T> GetGetter(string name)
         {
             return Getters.TryGetValue(name);
         }
 
-        public IGetter GetGetter<T>(Expression<Func<T, object>> expression)
+        public static IGetter<T> GetGetter<P>(Expression<Func<T, P>> expression)
         {
             return GetGetter(expression.ExtractMemberName());
         }
 
-        public ISetter GetSetter(string name)
+        public static ISetter<T> GetSetter(string name)
         {
             return Setters.TryGetValue(name);
         }
 
-        public ISetter GetSetter<T>(Expression<Func<T, object>> expression)
+        public static ISetter<T> GetSetter<P>(Expression<Func<T, P>> expression)
         {
             return GetSetter(expression.ExtractMemberName());
         }
         #endregion
 
         #region Private Members
-        private static IReadOnlyList<ISetter> GetAllSetters(
-            Type t,
+        private static IReadOnlyList<ISetter<T>> GetAllSetters(
             IEnumerable<IPropertyModelInfo> properties,
             IEnumerable<IFieldModelInfo> fields)
         {
-            List<ISetter> setters = new List<ISetter>();
+            List<ISetter<T>> setters = new List<ISetter<T>>();
 
             setters.AddRange(properties
                 .Where(x => x.CanWrite && !x.IsStatic && !x.HasParameters)
-                .Select(x => GetSetDelegate(t, x)));
+                .Select(x => GetSetDelegate(x)));
 
             setters.AddRange(fields
                 .Where(x => x.CanWrite && !x.IsStatic && !x.IsBackingField)
-                .Select(x => GetSetDelegate(t, x)));
+                .Select(x => GetSetDelegate(x)));
 
             return setters;
         }
 
-        private static ISetter GetSetDelegate(Type t, IModelInfo info)
+        private static ISetter<T> GetSetDelegate(
+            IModelInfo info)
         {
-            return (ISetter)_setterGenericHelper
-                .MakeGenericMethod(t, info.Type)
+            return (ISetter<T>)typeof(ModelAccess<T>)
+                .GetRuntimeMethods()
+                .Where(x =>
+                    x.Name == "CreateSetterDelegateHelper" &&
+                    x.IsStatic &&
+                    x.IsPrivate)
+                .FirstOrDefault()
+                .MakeGenericMethod(info.Type)
                 .Invoke(null, new object[] { info });
         }
 
-        private static ISetter CreateSetterDelegateHelper<T, P>(IModelInfo info)
+        private static ISetter<T> CreateSetterDelegateHelper<P>(
+            IModelInfo info)
         {
             var instanceType = typeof(T);
             var propertyType = typeof(P);
@@ -144,7 +105,7 @@ namespace Deipax.Core.Common
 
             var memberExpression = Expression.MakeMemberAccess(
                 instance,
-                GetOptimalMemberInfo(info));
+                info.GetOptimalMemberInfo());
 
             var safeAssign = Expression.IfThenElse(
                 Expression.TypeEqual(input, propertyType),
@@ -153,35 +114,42 @@ namespace Deipax.Core.Common
 
             var lambda = Expression.Lambda<Action<object, object>>(safeAssign, instanceAsObject, input);
 
-            return Setter.Create<T>(info, lambda);
+            return Setter<T>.Create(info, lambda);
         }
 
-        private static IReadOnlyList<IGetter> GetAllGetters(
-            Type t,
+        private static IReadOnlyList<IGetter<T>> GetAllGetters(
             IEnumerable<IPropertyModelInfo> properties,
             IEnumerable<IFieldModelInfo> fields)
         {
-            List<IGetter> getters = new List<IGetter>();
+            List<IGetter<T>> getters = new List<IGetter<T>>();
 
             getters.AddRange(properties
                 .Where(x => x.CanRead && !x.IsStatic && !x.HasParameters)
-                .Select(x => GetGetDelegate(t, x)));
+                .Select(x => GetGetDelegate(x)));
 
             getters.AddRange(fields
                 .Where(x => x.CanRead && !x.IsStatic && !x.IsBackingField)
-                .Select(x => GetGetDelegate(t, x)));
+                .Select(x => GetGetDelegate(x)));
 
             return getters;
         }
 
-        private static IGetter GetGetDelegate(Type t, IModelInfo info)
+        private static IGetter<T> GetGetDelegate(
+            IModelInfo info)
         {
-            return (IGetter)_getterGenericHelper
-                .MakeGenericMethod(t, info.Type)
+            return (IGetter<T>)typeof(ModelAccess<T>)
+                .GetRuntimeMethods()
+                .Where(x =>
+                    x.Name == "CreateGetterDelegateHelper" &&
+                    x.IsStatic &&
+                    x.IsPrivate)
+                .FirstOrDefault()
+                .MakeGenericMethod(info.Type)
                 .Invoke(null, new object[] { info });
         }
 
-        private static IGetter CreateGetterDelegateHelper<T, P>(IModelInfo info)
+        private static IGetter<T> CreateGetterDelegateHelper<P>(
+            IModelInfo info)
         {
             var instanceType = typeof(T);
             var instanceAsObject = Expression.Parameter(typeof(object), "instanceAsObject");
@@ -192,48 +160,25 @@ namespace Deipax.Core.Common
 
             var memberExpression = Expression.MakeMemberAccess(
                 instance,
-                GetOptimalMemberInfo(info));
+                info.GetOptimalMemberInfo());
 
             var lambda = Expression.Lambda<Func<object, object>>(
                 Expression.Convert(memberExpression, typeof(object)),
                 instanceAsObject);
-            return Getter.Create<T>(info, lambda);
-        }
-
-        private static MemberInfo GetOptimalMemberInfo(IModelInfo modelInfo)
-        {
-            var propInfo = modelInfo as IPropertyModelInfo;
-
-            if (propInfo != null)
-            {
-                if (propInfo.HasBackingField)
-                {
-                    return propInfo.BackingField.FieldInfo;
-                }
-                else
-                {
-                    return propInfo.PropertyInfo;
-                }
-            }
-            else
-            {
-                var fieldInfo = modelInfo as IFieldModelInfo;
-                return fieldInfo.FieldInfo;
-            }
+            return Getter<T>.Create(info, lambda);
         }
         #endregion
 
         #region Helpers
-        [DebuggerDisplay("{Name} - {InstanceType.Name} - {ModelInfo.MemberInfo.DeclaringType.Name}")]
-        class Setter : ISetter
+        class Setter<X> : ISetter<X>
         {
-            public static ISetter Create<T>(
+            public static ISetter<X> Create(
                 IModelInfo info,
                 Expression<Action<object, object>> setExpression)
             {
-                return new Setter()
+                return new Setter<X>()
                 {
-                    InstanceType = typeof(T),
+                    InstanceType = typeof(X),
                     Name = info.Name,
                     ModelInfo = info,
                     Set = setExpression.Compile(),
@@ -242,20 +187,19 @@ namespace Deipax.Core.Common
 
             public Type InstanceType { get; private set; }
             public string Name { get; private set; }
-            public Action<object, object> Set { get; private set; }
             public IModelInfo ModelInfo { get; private set; }
+            public Action<object, object> Set { get; private set; }
         }
 
-        [DebuggerDisplay("{Name} - {InstanceType.Name} - {ModelInfo.MemberInfo.DeclaringType.Name}")]
-        class Getter : IGetter
+        class Getter<X> : IGetter<X>
         {
-            public static IGetter Create<T>(
+            public static IGetter<X> Create(
                 IModelInfo info,
                 Expression<Func<object, object>> getExpression)
             {
-                return new Getter()
+                return new Getter<X>()
                 {
-                    InstanceType = typeof(T),
+                    InstanceType = typeof(X),
                     Name = info.Name,
                     ModelInfo = info,
                     Get = getExpression.Compile(),
@@ -264,47 +208,8 @@ namespace Deipax.Core.Common
 
             public Type InstanceType { get; private set; }
             public string Name { get; private set; }
-            public Func<object, object> Get { get; private set; }
             public IModelInfo ModelInfo { get; private set; }
-        }
-        #endregion
-    }
-
-    public static class ModelAccess<T>
-    {
-        static ModelAccess()
-        {
-            var modelAccess = ModelAccess.Create(typeof(T));
-            Getters = modelAccess.Getters;
-            Setters = modelAccess.Setters;
-            AllGetters = modelAccess.AllGetters;
-            AllSetters = modelAccess.AllSetters;
-        }
-
-        #region Public Members
-        public static IReadOnlyDictionary<string, ISetter> Setters { get; private set; }
-        public static IReadOnlyDictionary<string, IGetter> Getters { get; private set; }
-        public static IReadOnlyList<ISetter> AllSetters { get; private set; }
-        public static IReadOnlyList<IGetter> AllGetters { get; private set; }
-
-        public static IGetter GetGetter(string name)
-        {
-            return Getters.TryGetValue(name);
-        }
-
-        public static IGetter GetGetter(Expression<Func<T, object>> expression)
-        {
-            return GetGetter(expression.ExtractMemberName());
-        }
-
-        public static ISetter GetSetter(string name)
-        {
-            return Setters.TryGetValue(name);
-        }
-
-        public static ISetter GetSetter(Expression<Func<T, object>> expression)
-        {
-            return GetSetter(expression.ExtractMemberName());
+            public Func<object, object> Get { get; private set; }
         }
         #endregion
     }

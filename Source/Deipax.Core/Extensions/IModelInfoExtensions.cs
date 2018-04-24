@@ -17,5 +17,28 @@ namespace Deipax.Core.Extensions
 
 			return new List<T>();
 		}
-	}
+
+	    public static MemberInfo GetOptimalMemberInfo(
+	        this IModelInfo source)
+	    {
+	        var propInfo = source as IPropertyModelInfo;
+
+	        if (propInfo != null)
+	        {
+	            if (propInfo.HasBackingField)
+	            {
+	                return propInfo.BackingField.FieldInfo;
+	            }
+	            else
+	            {
+	                return propInfo.PropertyInfo;
+	            }
+	        }
+	        else
+	        {
+	            var fieldInfo = source as IFieldModelInfo;
+	            return fieldInfo.FieldInfo;
+	        }
+	    }
+    }
 }

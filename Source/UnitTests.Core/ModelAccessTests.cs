@@ -160,16 +160,6 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void ModelAccessTests_CollectionEquivalence()
-        {
-            var m = ModelAccess.Create(typeof(GrandChildClass));
-            Assert.IsTrue(ModelAccess<GrandChildClass>.Getters == m.Getters);
-            Assert.IsTrue(ModelAccess<GrandChildClass>.Setters == m.Setters);
-            Assert.IsTrue(ModelAccess<GrandChildClass>.AllGetters == m.AllGetters);
-            Assert.IsTrue(ModelAccess<GrandChildClass>.AllSetters == m.AllSetters);
-        }
-
-        [TestMethod]
         public void ModelAccessTests_StructTest()
         {
             var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo);

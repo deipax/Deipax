@@ -2,7 +2,7 @@
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Running;
-using Benchmarks.Core.Deipax.Conversion;
+using Benchmarks.Core.Deipax;
 using System.Linq;
 
 namespace Benchmarks.Core
@@ -32,6 +32,37 @@ namespace Benchmarks.Core
 
             //BenchmarkRunner.Run<AdHoc>(config);
 
+            BenchmarkRunner.Run<Bool_ModelAccess>(config);
+            BenchmarkRunner.Run<BoolNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Char_ModelAccess>(config);
+            BenchmarkRunner.Run<CharNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Sbyte_ModelAccess>(config);
+            BenchmarkRunner.Run<SbyteNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Byte_ModelAccess>(config);
+            BenchmarkRunner.Run<ByteNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Short_ModelAccess>(config);
+            BenchmarkRunner.Run<ShortNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Int_ModelAccess>(config);
+            BenchmarkRunner.Run<IntNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<UInt_ModelAccess>(config);
+            BenchmarkRunner.Run<UIntNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Long_ModelAccess>(config);
+            BenchmarkRunner.Run<LongNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<ULong_ModelAccess>(config);
+            BenchmarkRunner.Run<ULongNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Float_ModelAccess>(config);
+            BenchmarkRunner.Run<FloatNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Double_ModelAccess>(config);
+            BenchmarkRunner.Run<DoubleNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<Decimal_ModelAccess>(config);
+            BenchmarkRunner.Run<DecimalNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<DateTime_ModelAccess>(config);
+            BenchmarkRunner.Run<DateTimeNullable_ModelAccess>(config);
+            BenchmarkRunner.Run<String_ModelAccess>(config);
+            BenchmarkRunner.Run<Object_ModelAccess>(config);
+            BenchmarkRunner.Run<Enum_ModelAccess>(config);
+
+            /*
             BenchmarkRunner.Run<ConvertTo2_Bool>(config);
             BenchmarkRunner.Run<ConvertTo2_BoolNullable>(config);
             BenchmarkRunner.Run<ConvertTo2_Char>(config);
@@ -64,6 +95,7 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<ConvertTo2_Object>(config);
             BenchmarkRunner.Run<ConvertTo2_Enum>(config);
             BenchmarkRunner.Run<ConvertTo2_IParent>(config);
+            */
 
             /*
             BenchmarkRunner.Run<ConvertTo_Bool>(config);
