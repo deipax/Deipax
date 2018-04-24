@@ -31,8 +31,8 @@ namespace Deipax.DataAccess.Common
 
             for (var i = 0; i < fieldCount; i++)
             {
-                ISetter<T> setter;
-                if (setters.TryGetValue(r.GetName(i), out setter) && setter != null)
+                if (setters.TryGetValue(r.GetName(i), out ISetter<T> setter) && 
+                    setter != null)
                 {
                     tmp.Add(SetHelper.Create(i, setter).Set);
                 }
@@ -62,7 +62,7 @@ namespace Deipax.DataAccess.Common
         #endregion
 
         #region Public Members
-        public static SetHelper Create(int index, ISetter setter)
+        public static SetHelper Create<T>(int index, ISetter<T> setter)
         {
             return new SetHelper()
             {

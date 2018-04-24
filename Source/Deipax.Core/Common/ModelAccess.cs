@@ -178,14 +178,12 @@ namespace Deipax.Core.Common
             {
                 return new Setter<X>()
                 {
-                    InstanceType = typeof(X),
                     Name = info.Name,
                     ModelInfo = info,
                     Set = setExpression.Compile(),
                 };
             }
 
-            public Type InstanceType { get; private set; }
             public string Name { get; private set; }
             public IModelInfo ModelInfo { get; private set; }
             public Action<object, object> Set { get; private set; }
@@ -199,14 +197,12 @@ namespace Deipax.Core.Common
             {
                 return new Getter<X>()
                 {
-                    InstanceType = typeof(X),
                     Name = info.Name,
                     ModelInfo = info,
                     Get = getExpression.Compile(),
                 };
             }
 
-            public Type InstanceType { get; private set; }
             public string Name { get; private set; }
             public IModelInfo ModelInfo { get; private set; }
             public Func<object, object> Get { get; private set; }

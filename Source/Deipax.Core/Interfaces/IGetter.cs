@@ -2,15 +2,10 @@
 
 namespace Deipax.Core.Interfaces
 {
-	public interface IGetter
+	public interface IGetter<T>
 	{
-		Type InstanceType { get; }
 		string Name { get; }
 		IModelInfo ModelInfo { get; }
 		Func<object, object> Get { get; }
 	}
-
-    public interface IGetter<T> : IGetter
-    {
-    }
 }

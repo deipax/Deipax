@@ -232,7 +232,7 @@ namespace UnitTests.Core
                 .AllSetters
                 .ToList();
 
-            var intersect = Intersect.CreateAll<T>();
+            var intersect = Intersect<T>.CreateAll();
 
             Assert.IsTrue(getters.Count == getterCount);
             Assert.IsTrue(setters.Count == setterCount);
@@ -254,7 +254,7 @@ namespace UnitTests.Core
                 .Values
                 .ToList();
 
-            var intersect = Intersect.Create<T>();
+            var intersect = Intersect<T>.Create();
 
             Assert.IsTrue(getters.Count == getterCount);
             Assert.IsTrue(setters.Count == setterCount);
@@ -263,7 +263,7 @@ namespace UnitTests.Core
 
         private static void AssertAccess<T>()
         {
-            var intersect = Intersect.Create<T>();
+            var intersect = Intersect<T>.Create();
 
             T source = ObjectActivator<T>.Create();
             T dest = ObjectActivator<T>.Create();
@@ -295,13 +295,13 @@ namespace UnitTests.Core
         #endregion
 
         #region Helpers
-        class Intersect
+        class Intersect<T>
         {
             private Intersect()
             {
             }
 
-            public static IReadOnlyList<Intersect> CreateAll<T>()
+            public static IReadOnlyList<Intersect<T>> CreateAll()
             {
                 return
                 (from g in ModelAccess<T>.AllGetters
@@ -310,7 +310,7 @@ namespace UnitTests.Core
                      g.Name == s.Name &&
                      g.ModelInfo.MemberInfo.DeclaringType == s.ModelInfo.MemberInfo.DeclaringType &&
                      g.ModelInfo.Depth == s.ModelInfo.Depth
-                 select new Intersect()
+                 select new Intersect<T>()
                  {
                      Getter = g,
                      Setter = s
@@ -318,7 +318,7 @@ namespace UnitTests.Core
                 .ToList();
             }
 
-            public static IReadOnlyList<Intersect> Create<T>()
+            public static IReadOnlyList<Intersect<T>> Create()
             {
                 return
                 (from g in ModelAccess<T>.Getters.Values
@@ -327,7 +327,7 @@ namespace UnitTests.Core
                      g.Name == s.Name &&
                      g.ModelInfo.MemberInfo.DeclaringType == s.ModelInfo.MemberInfo.DeclaringType &&
                      g.ModelInfo.Depth == s.ModelInfo.Depth
-                 select new Intersect()
+                 select new Intersect<T>()
                  {
                      Getter = g,
                      Setter = s
@@ -335,8 +335,8 @@ namespace UnitTests.Core
                 .ToList();
             }
 
-            public IGetter Getter { get; private set; }
-            public ISetter Setter { get; private set; }
+            public IGetter<T> Getter { get; private set; }
+            public ISetter<T> Setter { get; private set; }
         }
         #endregion
     }
