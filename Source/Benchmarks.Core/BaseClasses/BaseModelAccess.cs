@@ -10,18 +10,18 @@ namespace Benchmarks.Core.BaseClasses
         where U : struct
     {
         public BaseModelAccess(
-            P testValue,
-            X convertValue,
+            P testValueAsObject,
+            X convertValueAsObject,
             Expression<Func<T, P>> propExpresionClass,
             Expression<Func<T, P>> fieldExpresionClass,
             Expression<Func<U, P>> propExpresionStruct,
             Expression<Func<U, P>> fieldExpresionStruct)
         {
-            _instanceClass = new T();
-            _instanceStruct = new U();
+            _instanceClassAsObject = new T();
+            _instanceStructAsObject = new U();
 
-            _testValue = testValue;
-            _convertValue = convertValue;
+            _testValueAsObject = testValueAsObject;
+            _convertValueAsObject = convertValueAsObject;
 
             _propSetterClass = ModelAccess<T>.GetSetter(propExpresionClass).Set;
             _propGetterClass = ModelAccess<T>.GetGetter(propExpresionClass).Get;
@@ -35,11 +35,11 @@ namespace Benchmarks.Core.BaseClasses
         }
 
         #region Field Member
-        private T _instanceClass;
-        private U _instanceStruct;
+        private object _instanceClassAsObject;
+        private object _instanceStructAsObject;
 
-        private P _testValue;
-        private X _convertValue;
+        private object _testValueAsObject;
+        private object _convertValueAsObject;
         
         private Action<object, object> _propSetterClass;
         private Func<object, object> _propGetterClass;
@@ -56,73 +56,73 @@ namespace Benchmarks.Core.BaseClasses
         [Benchmark]
         public void Get_Prop_Class()
         {
-            P value = (P)_propGetterClass(_instanceClass);
+            var value = _propGetterClass(_instanceClassAsObject);
         }
 
         [Benchmark]
         public void Get_Prop_Struct()
         {
-            P value = (P)_propGetterStruct(_instanceStruct);
+            var value = _propGetterStruct(_instanceStructAsObject);
         }
 
         [Benchmark]
         public void Get_Field_Class()
         {
-            P value = (P)_fieldGetterClass(_instanceClass);
+            var value = _fieldGetterClass(_instanceClassAsObject);
         }
 
         [Benchmark]
         public void Get_Field_Struct()
         {
-            P value = (P)_fieldGetterStruct(_instanceStruct);
+            var value = _fieldGetterStruct(_instanceStructAsObject);
         }
 
         [Benchmark]
         public void Set_Prop_Class()
         {
-            _propSetterClass(_instanceClass, _testValue);
+            _propSetterClass(_instanceClassAsObject, _testValueAsObject);
         }
 
         [Benchmark]
         public void Set_Prop_Struct()
         {
-            _propSetterStruct(_instanceStruct, _testValue);
+            _propSetterStruct(_instanceStructAsObject, _testValueAsObject);
         }
 
         [Benchmark]
         public void Set_Field_Class()
         {
-            _fieldSetterClass(_instanceClass, _testValue);
+            _fieldSetterClass(_instanceClassAsObject, _testValueAsObject);
         }
 
         [Benchmark]
         public void Set_Field_Struct()
         {
-            _fieldSetterStruct(_instanceStruct, _testValue);
+            _fieldSetterStruct(_instanceStructAsObject, _testValueAsObject);
         }
 
         [Benchmark]
         public void Set_Prop_WithConvert_Class()
         {
-            _propSetterClass(_instanceClass, _convertValue);
+            _propSetterClass(_instanceClassAsObject, _convertValueAsObject);
         }
 
         [Benchmark]
         public void Set_Prop_WithConvert_Struct()
         {
-            _propSetterStruct(_instanceStruct, _convertValue);
+            _propSetterStruct(_instanceStructAsObject, _convertValueAsObject);
         }
 
         [Benchmark]
         public void Set_Field_WithConvert_Class()
         {
-            _fieldSetterClass(_instanceClass, _convertValue);
+            _fieldSetterClass(_instanceClassAsObject, _convertValueAsObject);
         }
 
         [Benchmark]
         public void Set_Field_WithConvert_Struct()
         {
-            _fieldSetterStruct(_instanceStruct, _convertValue);
+            _fieldSetterStruct(_instanceStructAsObject, _convertValueAsObject);
         }
         #endregion
     }
