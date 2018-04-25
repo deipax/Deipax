@@ -1,7 +1,7 @@
 
 BenchmarkDotNet=v0.10.14, OS=Windows 10.0.16299.371 (1709/FallCreatorsUpdate/Redstone3)
 Intel Core i7-3770K CPU 3.50GHz (Ivy Bridge), 1 CPU, 8 logical and 4 physical cores
-Frequency=3435886 Hz, Resolution=291.0457 ns, Timer=TSC
+Frequency=3435892 Hz, Resolution=291.0452 ns, Timer=TSC
 .NET Core SDK=2.1.103
   [Host]     : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
   DefaultJob : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
@@ -9,15 +9,15 @@ Frequency=3435886 Hz, Resolution=291.0457 ns, Timer=TSC
 
                        Method |      Mean |     Error |    StdDev |  Gen 0 | Allocated |
 ----------------------------- |----------:|----------:|----------:|-------:|----------:|
-               Get_Prop_Class |  36.37 ns | 0.0312 ns | 0.0277 ns |      - |       0 B |
-              Get_Prop_Struct |  85.45 ns | 0.2191 ns | 0.2049 ns | 0.1239 |     520 B |
-              Get_Field_Class |  36.48 ns | 0.0234 ns | 0.0196 ns |      - |       0 B |
-             Get_Field_Struct |  85.32 ns | 0.0692 ns | 0.0613 ns | 0.1239 |     520 B |
-               Set_Prop_Class |  83.26 ns | 0.0235 ns | 0.0208 ns | 0.0075 |      32 B |
-              Set_Prop_Struct | 134.82 ns | 0.3457 ns | 0.3234 ns | 0.1314 |     552 B |
-              Set_Field_Class |  83.27 ns | 0.1251 ns | 0.1170 ns | 0.0075 |      32 B |
-             Set_Field_Struct | 135.54 ns | 0.3203 ns | 0.2996 ns | 0.1314 |     552 B |
-   Set_Prop_WithConvert_Class | 674.55 ns | 0.9357 ns | 0.7814 ns |      - |       0 B |
-  Set_Prop_WithConvert_Struct | 726.83 ns | 0.7190 ns | 0.6004 ns | 0.1230 |     520 B |
-  Set_Field_WithConvert_Class | 673.70 ns | 0.1228 ns | 0.1025 ns |      - |       0 B |
- Set_Field_WithConvert_Struct | 727.49 ns | 0.7872 ns | 0.7364 ns | 0.1230 |     520 B |
+               Get_Prop_Class |  36.15 ns | 0.0786 ns | 0.0736 ns |      - |       0 B |
+              Get_Prop_Struct |  85.76 ns | 0.1483 ns | 0.1387 ns | 0.1239 |     520 B |
+              Get_Field_Class |  36.13 ns | 0.0598 ns | 0.0560 ns |      - |       0 B |
+             Get_Field_Struct |  85.34 ns | 0.1084 ns | 0.0905 ns | 0.1239 |     520 B |
+               Set_Prop_Class |  85.83 ns | 0.0405 ns | 0.0379 ns | 0.0075 |      32 B |
+              Set_Prop_Struct | 136.54 ns | 0.2058 ns | 0.1719 ns | 0.1314 |     552 B |
+              Set_Field_Class |  85.56 ns | 0.0303 ns | 0.0253 ns | 0.0075 |      32 B |
+             Set_Field_Struct | 134.53 ns | 0.2987 ns | 0.2494 ns | 0.1314 |     552 B |
+   Set_Prop_WithConvert_Class | 660.43 ns | 0.3691 ns | 0.3272 ns |      - |       0 B |
+  Set_Prop_WithConvert_Struct | 714.94 ns | 0.2620 ns | 0.2188 ns | 0.1230 |     520 B |
+  Set_Field_WithConvert_Class | 655.74 ns | 0.1679 ns | 0.1402 ns |      - |       0 B |
+ Set_Field_WithConvert_Struct | 715.71 ns | 0.9109 ns | 0.7606 ns | 0.1230 |     520 B |

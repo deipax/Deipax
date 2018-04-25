@@ -294,7 +294,7 @@ namespace Benchmarks.Core.Deipax
     {
         public Double_ModelAccess() : base(
             double.MaxValue,
-            double.MaxValue.ToString(),
+            int.MaxValue.ToString(),
             x => x.DoubleProp,
             x => x.DoubleField,
             x => x.DoubleProp,
@@ -307,7 +307,7 @@ namespace Benchmarks.Core.Deipax
     {
         public DoubleNullable_ModelAccess() : base(
             double.MaxValue,
-            double.MaxValue.ToString(),
+            int.MaxValue.ToString(),
             x => x.DoubleNullableProp,
             x => x.DoubleNullableField,
             x => x.DoubleNullableProp,

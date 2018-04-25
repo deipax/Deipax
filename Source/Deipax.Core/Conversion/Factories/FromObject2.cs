@@ -111,7 +111,7 @@ namespace Deipax.Core.Conversion.Factories
 
             private static Delegate GetHelper<TFrom>()
             {
-                return ConvertTo2<TTo, TFrom>.Result?.Func;
+                return ConvertTo<TTo, TFrom>.Result?.Func;
             }
             #endregion
         }

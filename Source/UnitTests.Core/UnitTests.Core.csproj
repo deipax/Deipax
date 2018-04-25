@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="AdHoc.cs" />
     <Compile Include="BaseClasses\Conversion\BaseConvertTo.cs" />
-    <Compile Include="ConvertMapTests.cs" />
     <Compile Include="Deipax\Conversion\ConvertTo2_Tests.cs" />
     <Compile Include="FieldPropCountTests.cs" />
     <Compile Include="ModelAccessTests.cs" />

@@ -9,7 +9,7 @@ namespace Benchmarks.Core
     {
         #region Field Members
         private MyEnum _myEnum = MyEnum.Hello;
-        private object _myEnumAsObject = (object)MyEnum.Hello;
+        private object _myEnumAsObject = MyEnum.Hello;
 
         enum MyEnum
         {
@@ -33,13 +33,13 @@ namespace Benchmarks.Core
         //[Benchmark]
         public void ConvertTO_Enum()
         {
-            string value = ConvertTo<string>.From(_myEnum);
+            string value = ConvertTo<string, MyEnum>.From(_myEnum);
         }
 
         //[Benchmark]
         public void ConvertTO_Enum_AsObject()
         {
-            string value = ConvertTo<string>.From(_myEnumAsObject);
+            string value = ConvertTo<string, object>.From(_myEnumAsObject);
         }
 
         [Benchmark]

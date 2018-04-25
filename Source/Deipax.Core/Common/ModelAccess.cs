@@ -110,7 +110,10 @@ namespace Deipax.Core.Common
             var safeAssign = Expression.IfThenElse(
                 Expression.TypeEqual(input, propertyType),
                 Expression.Assign(memberExpression, Expression.Convert(input, propertyType)),
-                Expression.Assign(memberExpression, Expression.Invoke(Expression.Constant(ConvertTo<P>.From), input)));
+                Expression.Assign(memberExpression, Expression.Invoke(
+                    Expression.Constant(ConvertTo<P, object>.From), 
+                    input, 
+                    Expression.Default(typeof(IFormatProvider)))));
 
             var lambda = Expression.Lambda<Action<object, object>>(safeAssign, instanceAsObject, input);
 

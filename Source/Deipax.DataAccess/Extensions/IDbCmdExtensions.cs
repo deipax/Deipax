@@ -169,7 +169,7 @@ namespace Deipax.DataAccess.Interfaces
 			this IDbCmd source)
 		{
 			var obj = source.ExecuteScalar();
-			return ConvertTo<T>.From(obj);
+			return ConvertTo<T, object>.From(obj);
 		}
 
 		public static void ExecuteConnection(

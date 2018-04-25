@@ -4,7 +4,7 @@ using System;
 using UnitTests.Core.BaseClasses.Conversion;
 using UnitTests.Core.TestClasses;
 
-namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
+namespace UnitTests.Core.Deipax.Conversion.ConvertTo
 {
     [TestClass]
     public class ConvertTo2_Base<TTo> : BaseConvertTo<TTo>
@@ -16,7 +16,7 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo2
 
         protected override TTo ConvertFrom<TFrom>(TFrom from)
         {
-            return ConvertTo2<TTo, TFrom>.From(from, ConvertConfig.DefaultProvider);
+            return ConvertTo<TTo, TFrom>.From(from, ConvertConfig.DefaultProvider);
         }
     }
 

@@ -32,6 +32,7 @@ namespace Benchmarks.Core
 
             //BenchmarkRunner.Run<AdHoc>(config);
 
+            /*
             BenchmarkRunner.Run<Bool_ModelAccess>(config);
             BenchmarkRunner.Run<BoolNullable_ModelAccess>(config);
             BenchmarkRunner.Run<Char_ModelAccess>(config);
@@ -52,8 +53,10 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<ULongNullable_ModelAccess>(config);
             BenchmarkRunner.Run<Float_ModelAccess>(config);
             BenchmarkRunner.Run<FloatNullable_ModelAccess>(config);
+            */
             BenchmarkRunner.Run<Double_ModelAccess>(config);
             BenchmarkRunner.Run<DoubleNullable_ModelAccess>(config);
+            /*
             BenchmarkRunner.Run<Decimal_ModelAccess>(config);
             BenchmarkRunner.Run<DecimalNullable_ModelAccess>(config);
             BenchmarkRunner.Run<DateTime_ModelAccess>(config);
@@ -61,6 +64,7 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<String_ModelAccess>(config);
             BenchmarkRunner.Run<Object_ModelAccess>(config);
             BenchmarkRunner.Run<Enum_ModelAccess>(config);
+            */
 
             /*
             BenchmarkRunner.Run<ConvertTo2_Bool>(config);

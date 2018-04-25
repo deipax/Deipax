@@ -14,7 +14,7 @@ namespace UnitTests.Core
         {
             _intValue = 1;
             _intValueAsObject = _intValue;
-            int to = ConvertTo2<int, object>.From(_intValueAsObject);
+            int to = ConvertTo<int, object>.From(_intValueAsObject);
         }
 
         //[TestMethod]
@@ -22,7 +22,7 @@ namespace UnitTests.Core
         {
             for (int i = 0; i < 100000000; i++)
             {
-                int to = ConvertTo2<int, object>.From(_intValueAsObject);
+                int to = ConvertTo<int, object>.From(_intValueAsObject);
             }
         }
     }

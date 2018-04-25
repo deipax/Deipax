@@ -87,7 +87,7 @@ namespace Deipax.Core.Conversion.Factories
                     return returnValue;
                 }
 
-                int intKey = ConvertTo2<int, TFrom>.From(from, provider);
+                int intKey = ConvertTo<int, TFrom>.From(from, provider);
                 _intValues.TryGetValue(intKey, out returnValue);
                 return returnValue;
             }
