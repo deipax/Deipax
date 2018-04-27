@@ -7,13 +7,8 @@ using UnitTests.Core.TestClasses;
 namespace UnitTests.Core.Deipax.Conversion.ConvertTo
 {
     [TestClass]
-    public class ConvertTo2_Base<TTo> : BaseConvertTo<TTo>
+    public class ConvertTo_Base<TTo> : BaseConvertTo<TTo>
     {
-        public ConvertTo2_Base()
-        {
-            ConvertConfig.SafeConvert = true;
-        }
-
         protected override TTo ConvertFrom<TFrom>(TFrom from)
         {
             return ConvertTo<TTo, TFrom>.From(from, ConvertConfig.DefaultProvider);
@@ -21,213 +16,213 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo
     }
 
     #region Bool/BoolNullable
-    public class ConvertTo2_BoolBase<TTo> : ConvertTo2_Base<TTo>
+    public class ConvertToBoolBase<TTo> : ConvertTo_Base<TTo>
     {
-        public ConvertTo2_BoolBase()
+        public ConvertToBoolBase()
         {
             _fromString_AsObject = _fromString = "true";
         }
     }
 
     [TestClass]
-    public class ConvertTo2_Bool : ConvertTo2_BoolBase<bool>
+    public class ConvertToBool : ConvertToBoolBase<bool>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_BoolNullable : ConvertTo2_BoolBase<bool?>
+    public class ConvertToBoolNullable : ConvertToBoolBase<bool?>
     {
     }
     #endregion
 
     #region Char/CharNullable
     [TestClass]
-    public class ConvertTo2_CharBase<TTo> : ConvertTo2_Base<TTo>
+    public class ConvertToCharBase<TTo> : ConvertTo_Base<TTo>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_Char : ConvertTo2_CharBase<char>
+    public class ConvertToChar : ConvertToCharBase<char>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_CharNullable : ConvertTo2_CharBase<char?>
+    public class ConvertToCharNullable : ConvertToCharBase<char?>
     {
     }
     #endregion
 
     #region SByte/SByteNullable
     [TestClass]
-    public class ConvertTo2_SByte : ConvertTo2_Base<sbyte>
+    public class ConvertToSByte : ConvertTo_Base<sbyte>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_SByteNullable : ConvertTo2_Base<sbyte?>
+    public class ConvertToSByteNullable : ConvertTo_Base<sbyte?>
     {
     }
     #endregion
 
     #region Byte/ByteNullable
     [TestClass]
-    public class ConvertTo2_Byte : ConvertTo2_Base<byte>
+    public class ConvertToByte : ConvertTo_Base<byte>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_ByteNullable : ConvertTo2_Base<byte?>
+    public class ConvertToByteNullable : ConvertTo_Base<byte?>
     {
     }
     #endregion
 
     #region Short/ShortNullable
     [TestClass]
-    public class ConvertTo2_Short : ConvertTo2_Base<short>
+    public class ConvertToShort : ConvertTo_Base<short>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_ShortNullable : ConvertTo2_Base<short?>
+    public class ConvertToShortNullable : ConvertTo_Base<short?>
     {
     }
     #endregion
 
     #region UShort/UShortNullable
     [TestClass]
-    public class ConvertTo2_UShort : ConvertTo2_Base<ushort>
+    public class ConvertToUShort : ConvertTo_Base<ushort>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_UShortNullable : ConvertTo2_Base<ushort?>
+    public class ConvertToUShortNullable : ConvertTo_Base<ushort?>
     {
     }
     #endregion
 
     #region Int/IntNullable
     [TestClass]
-    public class ConvertTo2_Int : ConvertTo2_Base<int>
+    public class ConvertToInt : ConvertTo_Base<int>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_IntNullable : ConvertTo2_Base<int?>
+    public class ConvertToIntNullable : ConvertTo_Base<int?>
     {
     }
     #endregion
 
     #region UInt/UIntNullable
     [TestClass]
-    public class ConvertTo2_UInt : ConvertTo2_Base<uint>
+    public class ConvertToUInt : ConvertTo_Base<uint>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_UIntNullable : ConvertTo2_Base<uint?>
+    public class ConvertToUIntNullable : ConvertTo_Base<uint?>
     {
     }
     #endregion
 
     #region Long/LongNullable
     [TestClass]
-    public class ConvertTo2_Long : ConvertTo2_Base<long>
+    public class ConvertToLong : ConvertTo_Base<long>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_LongNullable : ConvertTo2_Base<long?>
+    public class ConvertToLongNullable : ConvertTo_Base<long?>
     {
     }
     #endregion
 
     #region ULong/ULongNullable
     [TestClass]
-    public class ConvertTo2_ULong : ConvertTo2_Base<ulong>
+    public class ConvertToULong : ConvertTo_Base<ulong>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_ULongNullable : ConvertTo2_Base<ulong?>
+    public class ConvertToULongNullable : ConvertTo_Base<ulong?>
     {
     }
     #endregion
 
     #region Float/FloatNullable
     [TestClass]
-    public class ConvertTo2_FloatBase<TTo> : ConvertTo2_Base<TTo>
+    public class ConvertToFloatBase<TTo> : ConvertTo_Base<TTo>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_Float : ConvertTo2_FloatBase<float>
+    public class ConvertToFloat : ConvertToFloatBase<float>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_FloatNullable : ConvertTo2_FloatBase<float?>
+    public class ConvertToFloatNullable : ConvertToFloatBase<float?>
     {
     }
     #endregion
 
     #region Double/DoubleNullable
     [TestClass]
-    public class ConvertTo2_DoubleBase<TTo> : ConvertTo2_Base<TTo>
+    public class ConvertToDoubleBase<TTo> : ConvertTo_Base<TTo>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_Double : ConvertTo2_DoubleBase<double>
+    public class ConvertToDouble : ConvertToDoubleBase<double>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_DoubleNullable : ConvertTo2_DoubleBase<double?>
+    public class ConvertToDoubleNullable : ConvertToDoubleBase<double?>
     {
     }
     #endregion
 
     #region Decimal/DecimalNullable
     [TestClass]
-    public class ConvertTo2_DecimalBase<TTo> : ConvertTo2_Base<TTo>
+    public class ConvertToDecimalBase<TTo> : ConvertTo_Base<TTo>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_Decimal : ConvertTo2_DecimalBase<decimal>
+    public class ConvertToDecimal : ConvertToDecimalBase<decimal>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_DecimalNullable : ConvertTo2_DecimalBase<decimal?>
+    public class ConvertToDecimalNullable : ConvertToDecimalBase<decimal?>
     {
     }
     #endregion
 
     #region DateTime/DateTimeNullable
     [TestClass]
-    public class ConvertTo2_DateTimeBase<TTo> : ConvertTo2_Base<TTo>
+    public class ConvertToDateTimeBase<TTo> : ConvertTo_Base<TTo>
     {
-        public ConvertTo2_DateTimeBase()
+        public ConvertToDateTimeBase()
         {
             _fromString_AsObject = _fromString = DateTime.MinValue.ToString();
         }
     }
 
     [TestClass]
-    public class ConvertTo2_DateTime : ConvertTo2_DateTimeBase<DateTime>
+    public class ConvertToDateTime : ConvertToDateTimeBase<DateTime>
     {
     }
 
     [TestClass]
-    public class ConvertTo2_DateTimeNullable : ConvertTo2_DateTimeBase<DateTime?>
+    public class ConvertToDateTimeNullable : ConvertToDateTimeBase<DateTime?>
     {
     }
     #endregion
 
     #region String
     [TestClass]
-    public class ConvertTo2_String : ConvertTo2_Base<string>
+    public class ConvertToString : ConvertTo_Base<string>
     {
         [TestMethod]
         public override void From_NonConvertibleClass()
@@ -305,7 +300,7 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo
 
     #region Object
     [TestClass]
-    public class ConvertTo2_Object : ConvertTo2_Base<object>
+    public class ConvertToObject : ConvertTo_Base<object>
     {
         [TestMethod]
         public override void From_DBNull()
@@ -395,7 +390,7 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo
 
     #region Enum
     [TestClass]
-    public class ConvertTo2_Enum : ConvertTo2_Base<TestEnum>
+    public class ConvertToEnum : ConvertTo_Base<TestEnum>
     {
         protected override TestEnum GetExpected<TFrom>(TFrom @from)
         {
@@ -406,7 +401,7 @@ namespace UnitTests.Core.Deipax.Conversion.ConvertTo
 
     #region IParent
     [TestClass]
-    public class ConvertTo2_IParent : ConvertTo2_Base<IParent>
+    public class ConvertToIParent : ConvertTo_Base<IParent>
     {
         [TestMethod]
         public override void From_ParentClass()

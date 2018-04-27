@@ -1,7 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Deipax.Core.Common;
 using System;
+using System.Globalization;
 using System.Linq.Expressions;
+using Deipax.Core.Interfaces;
 
 namespace Benchmarks.Core.BaseClasses
 {
@@ -41,15 +43,17 @@ namespace Benchmarks.Core.BaseClasses
         private object _testValueAsObject;
         private object _convertValueAsObject;
         
-        private Action<object, object> _propSetterClass;
-        private Func<object, object> _propGetterClass;
-        private Action<object, object> _fieldSetterClass;
-        private Func<object, object> _fieldGetterClass;
+        private Set<object> _propSetterClass;
+        private Get<object> _propGetterClass;
+        private Set<object> _fieldSetterClass;
+        private Get<object> _fieldGetterClass;
 
-        private Action<object, object> _propSetterStruct;
-        private Func<object, object> _propGetterStruct;
-        private Action<object, object> _fieldSetterStruct;
-        private Func<object, object> _fieldGetterStruct;
+        private Set<object> _propSetterStruct;
+        private Get<object> _propGetterStruct;
+        private Set<object> _fieldSetterStruct;
+        private Get<object> _fieldGetterStruct;
+
+        private IFormatProvider _provider = CultureInfo.InvariantCulture;
         #endregion
 
         #region Public Members
@@ -80,49 +84,49 @@ namespace Benchmarks.Core.BaseClasses
         [Benchmark]
         public void Set_Prop_Class()
         {
-            _propSetterClass(_instanceClassAsObject, _testValueAsObject);
+            _propSetterClass(_instanceClassAsObject, _testValueAsObject, _provider);
         }
 
         [Benchmark]
         public void Set_Prop_Struct()
         {
-            _propSetterStruct(_instanceStructAsObject, _testValueAsObject);
+            _propSetterStruct(_instanceStructAsObject, _testValueAsObject, _provider);
         }
 
         [Benchmark]
         public void Set_Field_Class()
         {
-            _fieldSetterClass(_instanceClassAsObject, _testValueAsObject);
+            _fieldSetterClass(_instanceClassAsObject, _testValueAsObject, _provider);
         }
 
         [Benchmark]
         public void Set_Field_Struct()
         {
-            _fieldSetterStruct(_instanceStructAsObject, _testValueAsObject);
+            _fieldSetterStruct(_instanceStructAsObject, _testValueAsObject, _provider);
         }
 
         [Benchmark]
         public void Set_Prop_WithConvert_Class()
         {
-            _propSetterClass(_instanceClassAsObject, _convertValueAsObject);
+            _propSetterClass(_instanceClassAsObject, _convertValueAsObject, _provider);
         }
 
         [Benchmark]
         public void Set_Prop_WithConvert_Struct()
         {
-            _propSetterStruct(_instanceStructAsObject, _convertValueAsObject);
+            _propSetterStruct(_instanceStructAsObject, _convertValueAsObject, _provider);
         }
 
         [Benchmark]
         public void Set_Field_WithConvert_Class()
         {
-            _fieldSetterClass(_instanceClassAsObject, _convertValueAsObject);
+            _fieldSetterClass(_instanceClassAsObject, _convertValueAsObject, _provider);
         }
 
         [Benchmark]
         public void Set_Field_WithConvert_Struct()
         {
-            _fieldSetterStruct(_instanceStructAsObject, _convertValueAsObject);
+            _fieldSetterStruct(_instanceStructAsObject, _convertValueAsObject, _provider);
         }
         #endregion
     }

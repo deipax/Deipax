@@ -58,7 +58,7 @@ namespace Deipax.DataAccess.Common
 
         #region Field Members
         private int _index;
-        private Action<object, object> _set;
+        private Set<object> _set;
         #endregion
 
         #region Public Members

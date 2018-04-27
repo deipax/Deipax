@@ -1,11 +1,10 @@
-﻿using Deipax.Core.Conversion;
+﻿using Deipax.Core.Concretes;
 using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Deipax.Core.Common
 {
@@ -79,45 +78,10 @@ namespace Deipax.Core.Common
         private static ISetter<T> GetSetDelegate(
             IModelInfo info)
         {
-            return (ISetter<T>)typeof(ModelAccess<T>)
-                .GetRuntimeMethods()
-                .Where(x =>
-                    x.Name == "CreateSetterDelegateHelper" &&
-                    x.IsStatic &&
-                    x.IsPrivate)
-                .FirstOrDefault()
-                .MakeGenericMethod(info.Type)
-                .Invoke(null, new object[] { info });
-        }
+            var type = typeof(Setter<,>)
+                .MakeGenericType(typeof(T), info.Type);
 
-        private static ISetter<T> CreateSetterDelegateHelper<P>(
-            IModelInfo info)
-        {
-            var instanceType = typeof(T);
-            var propertyType = typeof(P);
-
-            var input = Expression.Parameter(typeof(object), "input");
-            var instanceAsObject = Expression.Parameter(typeof(object), "instanceAsObject");
-
-            var instance = instanceType.IsValueType() ?
-               Expression.Unbox(instanceAsObject, instanceType) :
-               Expression.Convert(instanceAsObject, instanceType);
-
-            var memberExpression = Expression.MakeMemberAccess(
-                instance,
-                info.GetOptimalMemberInfo());
-
-            var safeAssign = Expression.IfThenElse(
-                Expression.TypeEqual(input, propertyType),
-                Expression.Assign(memberExpression, Expression.Convert(input, propertyType)),
-                Expression.Assign(memberExpression, Expression.Invoke(
-                    Expression.Constant(ConvertTo<P, object>.From), 
-                    input, 
-                    Expression.Default(typeof(IFormatProvider)))));
-
-            var lambda = Expression.Lambda<Action<object, object>>(safeAssign, instanceAsObject, input);
-
-            return Setter<T>.Create(info, lambda);
+            return (ISetter<T>)Activator.CreateInstance(type, new[] { info });
         }
 
         private static IReadOnlyList<IGetter<T>> GetAllGetters(
@@ -140,75 +104,10 @@ namespace Deipax.Core.Common
         private static IGetter<T> GetGetDelegate(
             IModelInfo info)
         {
-            return (IGetter<T>)typeof(ModelAccess<T>)
-                .GetRuntimeMethods()
-                .Where(x =>
-                    x.Name == "CreateGetterDelegateHelper" &&
-                    x.IsStatic &&
-                    x.IsPrivate)
-                .FirstOrDefault()
-                .MakeGenericMethod(info.Type)
-                .Invoke(null, new object[] { info });
-        }
+            var type = typeof(Getter<,>)
+                .MakeGenericType(typeof(T), info.Type);
 
-        private static IGetter<T> CreateGetterDelegateHelper<P>(
-            IModelInfo info)
-        {
-            var instanceType = typeof(T);
-            var instanceAsObject = Expression.Parameter(typeof(object), "instanceAsObject");
-
-            var instance = instanceType.IsValueType() ?
-                Expression.Unbox(instanceAsObject, instanceType) :
-                Expression.Convert(instanceAsObject, instanceType);
-
-            var memberExpression = Expression.MakeMemberAccess(
-                instance,
-                info.GetOptimalMemberInfo());
-
-            var lambda = Expression.Lambda<Func<object, object>>(
-                Expression.Convert(memberExpression, typeof(object)),
-                instanceAsObject);
-            return Getter<T>.Create(info, lambda);
-        }
-        #endregion
-
-        #region Helpers
-        class Setter<X> : ISetter<X>
-        {
-            public static ISetter<X> Create(
-                IModelInfo info,
-                Expression<Action<object, object>> setExpression)
-            {
-                return new Setter<X>()
-                {
-                    Name = info.Name,
-                    ModelInfo = info,
-                    Set = setExpression.Compile(),
-                };
-            }
-
-            public string Name { get; private set; }
-            public IModelInfo ModelInfo { get; private set; }
-            public Action<object, object> Set { get; private set; }
-        }
-
-        class Getter<X> : IGetter<X>
-        {
-            public static IGetter<X> Create(
-                IModelInfo info,
-                Expression<Func<object, object>> getExpression)
-            {
-                return new Getter<X>()
-                {
-                    Name = info.Name,
-                    ModelInfo = info,
-                    Get = getExpression.Compile(),
-                };
-            }
-
-            public string Name { get; private set; }
-            public IModelInfo ModelInfo { get; private set; }
-            public Func<object, object> Get { get; private set; }
+            return (IGetter<T>)Activator.CreateInstance(type, new[] { info });
         }
         #endregion
     }

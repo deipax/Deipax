@@ -2,10 +2,15 @@
 
 namespace Deipax.Core.Interfaces
 {
+    public delegate void Set<T>(
+        object instance,
+        T value,
+        IFormatProvider provider = null);
+
     public interface ISetter<T>
     {
         string Name { get; }
         IModelInfo ModelInfo { get; }
-        Action<object, object> Set { get; }
+        Set<object> Set { get; }
     }
 }
