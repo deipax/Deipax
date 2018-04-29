@@ -13,7 +13,6 @@ namespace Deipax.Core.Conversion
         {
             DefaultProvider = CultureInfo.InvariantCulture;
             Default = new DefaultFactory();
-            SafeConvert = false;
 
             _defaults = new List<IConvertFactory>()
             {
@@ -47,7 +46,6 @@ namespace Deipax.Core.Conversion
         #endregion
 
         #region Public Members
-        public static bool SafeConvert { get; set; }
         public static IFormatProvider DefaultProvider { get; set; }
         public static IConvertFactory Default { get; set; }
 

@@ -162,14 +162,14 @@ namespace UnitTests.Core
         [TestMethod]
         public void ModelAccessTests_StructTest()
         {
-            var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo);
-            var setter = ModelAccess<MyStruct>.GetSetter(x => x.PropTwo);
+            var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo).GetDelegate<object>();
+            var setter = ModelAccess<MyStruct>.GetSetter(x => x.PropTwo).Set;
 
             object boxed = new MyStruct();
 
-            setter.Set(boxed, 3);
+            setter(boxed, 3);
 
-            var tmp = (int)getter.Get(boxed);
+            var tmp = (int)getter(boxed);
 
             Assert.IsTrue(tmp == 3);
         }
@@ -274,22 +274,24 @@ namespace UnitTests.Core
             {
                 var randValue = RandGen.GenerateString(10);
                 var setter = i.Setter;
-                var getter = i.Getter;
+                var getter = i.Getter.GetDelegate<object>();
                 setter.Set(source, randValue);
-                Assert.IsTrue(string.Equals(getter.Get(source), randValue));
+
+                var actual = getter(source);
+                Assert.AreEqual(randValue, actual);
             }
 
             foreach (var i in intersect)
             {
-                var getter = i.Getter;
+                var getter = i.Getter.GetDelegate<object>();
                 var setter = i.Setter;
-                setter.Set(dest, getter.Get(source));
+                setter.Set(dest, getter(source));
             }
 
             foreach (var i in intersect)
             {
-                var getter = i.Getter;
-                Assert.IsTrue(string.Equals(getter.Get(source), getter.Get(dest)));
+                var getter = i.Getter.GetDelegate<object>();
+                Assert.IsTrue(Equals(getter(source), getter(dest)));
             }
         }
         #endregion

@@ -43,9 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdHoc.cs" />
-    <Compile Include="BaseClasses\BaseTests.cs" />
-    <Compile Include="BaseClasses\Conversion\BaseConvertTo.cs" />
-    <Compile Include="Deipax\Conversion\ConvertTo_Tests.cs" />
+    <Compile Include="BaseClasses\BaseConvertTo.cs" />
+    <Compile Include="BaseClasses\GetterBase.cs" />
+    <Compile Include="Deipax\ConvertTo_Tests.cs" />
+    <Compile Include="Deipax\GetterTests.cs" />
     <Compile Include="FieldPropCountTests.cs" />
     <Compile Include="ModelAccessTests.cs" />
     <Compile Include="ObjectActivatorTests.cs" />

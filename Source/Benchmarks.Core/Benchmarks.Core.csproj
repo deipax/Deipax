@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BenchmarkDotNet.Artifacts\results\ModelAccess\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
   </ItemGroup>
 

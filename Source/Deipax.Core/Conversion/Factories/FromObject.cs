@@ -31,7 +31,7 @@ namespace Deipax.Core.Conversion.Factories
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
                     var assignConverter = Expression.Assign(
-                        converter, 
+                        converter,
                         Expression.TypeAs(args.Input, typeof(IConvertible)));
 
                     var ifConverterNullReturn = Expression.IfThen(
@@ -51,22 +51,7 @@ namespace Deipax.Core.Conversion.Factories
                     args.AddGuards();
                     args.Add(assignConverter);
                     args.Add(ifConverterNullReturn);
-
-                    if (ConvertConfig.SafeConvert)
-                    {
-                        ParameterExpression ex = Expression.Parameter(typeof(Exception), "ex");
-
-                        Expression tryCatchExpression = Expression.TryCatch(
-                            returnExpression,
-                            Expression.Catch(ex, Expression.Return(args.LabelTarget, args.Default)));
-
-                        args.Add(tryCatchExpression);
-                    }
-                    else
-                    {                  
-                        args.Add(returnExpression);         
-                    }
-
+                    args.Add(returnExpression);
                     args.Add(args.LabelExpression);
                     return args.GetConvertResult();
                 }
@@ -74,7 +59,7 @@ namespace Deipax.Core.Conversion.Factories
                 {
                     // To type is not ICovertible.  Try casting the from object to target type
                     var returnExpression = Expression.Return(
-                        args.LabelTarget, 
+                        args.LabelTarget,
                         Expression.TypeAs(args.Input, args.ToType));
 
                     ParameterExpression ex = Expression.Parameter(typeof(Exception), "ex");

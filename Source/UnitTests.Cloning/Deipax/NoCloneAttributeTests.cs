@@ -19,11 +19,11 @@ namespace UnitTests.Cloning.Deipax
 
             var dest = source.GetClone();
 
-            var getterPropThree = ModelAccess<TestClass1>.GetGetter("PropThree");
-            var getterPropFour = ModelAccess<TestClass1>.GetGetter("PropFour");
+            var getterPropThree = ModelAccess<TestClass1>.GetGetter("PropThree").GetDelegate<object>();
+            var getterPropFour = ModelAccess<TestClass1>.GetGetter("PropFour").GetDelegate<object>();
 
-            var destPropThree = getterPropThree.Get(dest);
-            var destPropFour = getterPropFour.Get(dest);
+            var destPropThree = getterPropThree(dest);
+            var destPropFour = getterPropFour(dest);
 
             Assert.AreEqual(dest.PropOne, 1);
             Assert.AreEqual(dest.PropTwo, 2);
@@ -42,11 +42,11 @@ namespace UnitTests.Cloning.Deipax
 
             var dest = source.GetClone();
 
-            var getterPropThree = ModelAccess<TestClass2>.GetGetter("PropThree");
-            var getterPropFour = ModelAccess<TestClass2>.GetGetter("PropFour");
+            var getterPropThree = ModelAccess<TestClass2>.GetGetter("PropThree").GetDelegate<object>();
+            var getterPropFour = ModelAccess<TestClass2>.GetGetter("PropFour").GetDelegate<object>();
 
-            var destPropThree = getterPropThree.Get(dest);
-            var destPropFour = getterPropFour.Get(dest);
+            var destPropThree = getterPropThree(dest);
+            var destPropFour = getterPropFour(dest);
 
             Assert.AreEqual(dest.PropOne, 1);
             Assert.AreEqual(dest.PropTwo, default(int));
@@ -65,11 +65,11 @@ namespace UnitTests.Cloning.Deipax
 
             var dest = source.GetClone();
 
-            var getterPropThree = ModelAccess<TestClass3>.GetGetter("PropThree");
-            var getterPropFour = ModelAccess<TestClass3>.GetGetter("PropFour");
+            var getterPropThree = ModelAccess<TestClass3>.GetGetter("PropThree").GetDelegate<object>();
+            var getterPropFour = ModelAccess<TestClass3>.GetGetter("PropFour").GetDelegate<object>();
 
-            var destPropThree = getterPropThree.Get(dest);
-            var destPropFour = getterPropFour.Get(dest);
+            var destPropThree = getterPropThree(dest);
+            var destPropFour = getterPropFour(dest);
 
             Assert.AreEqual(dest.PropOne, default(int));
             Assert.AreEqual(dest.PropTwo, 2);
@@ -88,11 +88,11 @@ namespace UnitTests.Cloning.Deipax
 
             var dest = source.GetClone();
 
-            var getterPropThree = ModelAccess<TestStruct1>.GetGetter("PropThree");
-            var getterPropFour = ModelAccess<TestStruct1>.GetGetter("PropFour");
+            var getterPropThree = ModelAccess<TestStruct1>.GetGetter("PropThree").GetDelegate<object>();
+            var getterPropFour = ModelAccess<TestStruct1>.GetGetter("PropFour").GetDelegate<object>();
 
-            var destPropThree = getterPropThree.Get(dest);
-            var destPropFour = getterPropFour.Get(dest);
+            var destPropThree = getterPropThree(dest);
+            var destPropFour = getterPropFour(dest);
 
             Assert.AreEqual(dest.PropOne, 1);
             Assert.AreEqual(dest.PropTwo, 2);
@@ -111,11 +111,11 @@ namespace UnitTests.Cloning.Deipax
 
             var dest = source.GetClone();
 
-            var getterPropThree = ModelAccess<TestStruct2>.GetGetter("PropThree");
-            var getterPropFour = ModelAccess<TestStruct2>.GetGetter("PropFour");
+            var getterPropThree = ModelAccess<TestStruct2>.GetGetter("PropThree").GetDelegate<object>();
+            var getterPropFour = ModelAccess<TestStruct2>.GetGetter("PropFour").GetDelegate<object>();
 
-            var destPropThree = getterPropThree.Get(dest);
-            var destPropFour = getterPropFour.Get(dest);
+            var destPropThree = getterPropThree(dest);
+            var destPropFour = getterPropFour(dest);
 
             Assert.AreEqual(dest.PropOne, 1);
             Assert.AreEqual(dest.PropTwo, default(int));
@@ -134,11 +134,11 @@ namespace UnitTests.Cloning.Deipax
 
             var dest = source.GetClone();
 
-            var getterPropThree = ModelAccess<TestStruct3>.GetGetter("PropThree");
-            var getterPropFour = ModelAccess<TestStruct3>.GetGetter("PropFour");
+            var getterPropThree = ModelAccess<TestStruct3>.GetGetter("PropThree").GetDelegate<object>();
+            var getterPropFour = ModelAccess<TestStruct3>.GetGetter("PropFour").GetDelegate<object>();
 
-            var destPropThree = getterPropThree.Get(dest);
-            var destPropFour = getterPropFour.Get(dest);
+            var destPropThree = getterPropThree(dest);
+            var destPropFour = getterPropFour(dest);
 
             Assert.AreEqual(dest.PropOne, default(int));
             Assert.AreEqual(dest.PropTwo, 2);
@@ -162,8 +162,8 @@ namespace UnitTests.Cloning.Deipax
             CloneConfig<TestClass4>.NoClone(x => x.PropTwo);
             CloneConfig<TestClass4>.NoClone("PropSix");
 
-            var propFive = ModelAccess<TestClass4>.GetGetter("PropFive");
-            var propSix = ModelAccess<TestClass4>.GetGetter("PropSix");
+            var propFive = ModelAccess<TestClass4>.GetGetter("PropFive").GetDelegate<object>();
+            var propSix = ModelAccess<TestClass4>.GetGetter("PropSix").GetDelegate<object>();
             var dest = source.GetClone();
 
             Assert.AreEqual(default(int), dest.PropOne);
@@ -171,26 +171,26 @@ namespace UnitTests.Cloning.Deipax
             Assert.AreEqual(source.PropThree, dest.PropThree);
             Assert.AreEqual(source.PropFour, dest.PropFour);
 
-            Assert.AreEqual(propFive.Get(source), propFive.Get(dest));
-            Assert.AreNotEqual(default(int), propFive.Get(dest));
+            Assert.AreEqual(propFive(source), propFive(dest));
+            Assert.AreNotEqual(default(int), propFive(dest));
 
-            Assert.AreNotEqual(default(int), propSix.Get(source));
-            Assert.AreEqual(default(int), propSix.Get(dest));
+            Assert.AreNotEqual(default(int), propSix(source));
+            Assert.AreEqual(default(int), propSix(dest));
         }
 
         [TestMethod]
         public void NoCloneAttributeTests_TestClass5()
         {
-            var propOneGet = ModelAccess<TestClass5>.GetGetter("PropOne");
+            var propOneGet = ModelAccess<TestClass5>.GetGetter("PropOne").GetDelegate<object>();
             var propOneSet = ModelAccess<TestClass5>.GetSetter("PropOne");
 
-            var propTwoGet = ModelAccess<TestClass5>.GetGetter("PropTwo");
+            var propTwoGet = ModelAccess<TestClass5>.GetGetter("PropTwo").GetDelegate<object>();
             var propTwoSet = ModelAccess<TestClass5>.GetSetter("PropTwo");
 
-            var propThreeGet = ModelAccess<TestClass5>.GetGetter("PropThree");
+            var propThreeGet = ModelAccess<TestClass5>.GetGetter("PropThree").GetDelegate<object>();
             var propThreeSet = ModelAccess<TestClass5>.GetSetter("PropThree");
 
-            var propFourGet = ModelAccess<TestClass5>.GetGetter("PropFour");
+            var propFourGet = ModelAccess<TestClass5>.GetGetter("PropFour").GetDelegate<object>();
             var propFourSet = ModelAccess<TestClass5>.GetSetter("PropFour");
 
             var source = new TestClass5();
@@ -202,15 +202,15 @@ namespace UnitTests.Cloning.Deipax
 
             var dest = source.GetClone();
 
-            Assert.AreNotEqual(default(int), propOneGet.Get(source));
-            Assert.AreNotEqual(default(int), propTwoGet.Get(source));
-            Assert.AreNotEqual(default(int), propThreeGet.Get(source));
-            Assert.AreNotEqual(default(int), propFourGet.Get(source));
+            Assert.AreNotEqual(default(int), propOneGet(source));
+            Assert.AreNotEqual(default(int), propTwoGet(source));
+            Assert.AreNotEqual(default(int), propThreeGet(source));
+            Assert.AreNotEqual(default(int), propFourGet(source));
 
-            Assert.AreEqual(propOneGet.Get(source), propOneGet.Get(dest));
-            Assert.AreEqual(propTwoGet.Get(source), propTwoGet.Get(dest));
-            Assert.AreEqual(default(int), propThreeGet.Get(dest));
-            Assert.AreEqual(default(int), propFourGet.Get(dest));
+            Assert.AreEqual(propOneGet(source), propOneGet(dest));
+            Assert.AreEqual(propTwoGet(source), propTwoGet(dest));
+            Assert.AreEqual(default(int), propThreeGet(dest));
+            Assert.AreEqual(default(int), propFourGet(dest));
         }
 
         #region Helper

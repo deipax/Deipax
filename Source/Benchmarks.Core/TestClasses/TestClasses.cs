@@ -329,6 +329,8 @@ namespace Benchmarks.Core.TestClasses
 
         public TestEnum EnumField;
         public TestEnum EnumProp { get; set; }
+        public TestEnum? EnumNullableField;
+        public TestEnum? EnumNullableProp { get; set; }
     }
 
     public struct ParentStruct : IParent
@@ -411,5 +413,7 @@ namespace Benchmarks.Core.TestClasses
 
         public TestEnum EnumField;
         public TestEnum EnumProp { get; set; }
+        public TestEnum? EnumNullableField;
+        public TestEnum? EnumNullableProp { get; set; }
     }
 }

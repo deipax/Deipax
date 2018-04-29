@@ -10,6 +10,7 @@ namespace Deipax.Core.Interfaces
     {
         string Name { get; }
         IModelInfo ModelInfo { get; }
-        Get<object> Get { get; }
+        Get<X> GetDelegate<X>();
+        Delegate GetDelegate(Type t);
     }
 }
