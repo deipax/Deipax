@@ -2,15 +2,15 @@
 
 namespace Deipax.Core.Interfaces
 {
-    public delegate T Get<T>(
-        object instance,
+    public delegate X Get<T, X>(
+        ref T instance,
         IFormatProvider provider = null);
 
     public interface IGetter<T>
     {
         string Name { get; }
         IModelInfo ModelInfo { get; }
-        Get<X> GetDelegate<X>();
+        Get<T, X> GetDelegate<X>();
         Delegate GetDelegate(Type t);
     }
 }

@@ -34,9 +34,9 @@ namespace Deipax.Core.Concretes
         public string Name { get; private set; }
         public IModelInfo ModelInfo { get; private set; }
 
-        public Get<X> GetDelegate<X>()
+        public Get<T, X> GetDelegate<X>()
         {
-            return (Get<X>)GetDelegate(typeof(X));
+            return (Get<T, X>)GetDelegate(typeof(X));
         }
 
         public Delegate GetDelegate(Type t)
@@ -55,7 +55,7 @@ namespace Deipax.Core.Concretes
                 .Invoke(null, new[] { info });
         }
 
-        private static Get<X> CreateHelper<X>(
+        private static Get<T, X> CreateHelper<X>(
             IModelInfo info)
         {
             var xType = typeof(X);
@@ -63,13 +63,8 @@ namespace Deipax.Core.Concretes
             var labelTarget = Expression.Label(xType);
             var labelExpression = Expression.Label(labelTarget, Expression.Default(xType));
 
-            var instanceType = typeof(T);
-            var instanceAsObject = Expression.Parameter(typeof(object), "instanceAsObject");
+            var instance = Expression.Parameter(typeof(T).MakeByRefType(), "instance");
             var provider = Expression.Parameter(typeof(IFormatProvider), "provider");
-
-            var instance = instanceType.IsValueType() ?
-                Expression.Unbox(instanceAsObject, instanceType) :
-                Expression.Convert(instanceAsObject, instanceType);
 
             var memberExpression = Expression.MakeMemberAccess(
                 instance,
@@ -87,7 +82,7 @@ namespace Deipax.Core.Concretes
                      !info.Type.IsNullable())
             {
                 expressions.Add(Expression.Return(
-                    labelTarget, 
+                    labelTarget,
                     Expression.Convert(memberExpression, xType)));
             }
             else if (xType == typeof(object) &&
@@ -102,12 +97,12 @@ namespace Deipax.Core.Concretes
                     Expression.Return(labelTarget, Expression.Default(xType)));
 
                 expressions.Add(ifThenElse);
-            }          
+            }
             else if (xType.IsNullable() &&
                      Nullable.GetUnderlyingType(xType) == info.Type)
             {
                 expressions.Add(Expression.Return(
-                    labelTarget, 
+                    labelTarget,
                     Expression.Convert(memberExpression, xType)));
             }
             else if (info.Type.IsNullable() &&
@@ -135,9 +130,9 @@ namespace Deipax.Core.Concretes
 
             expressions.Add(labelExpression);
 
-            var getter = Expression.Lambda<Get<X>>(
+            var getter = Expression.Lambda<Get<T, X>>(
                 Expression.Block(xType, expressions),
-                instanceAsObject,
+                instance,
                 provider);
 
             return getter.Compile();

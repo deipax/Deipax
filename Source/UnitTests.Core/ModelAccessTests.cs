@@ -162,14 +162,15 @@ namespace UnitTests.Core
         [TestMethod]
         public void ModelAccessTests_StructTest()
         {
-            var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo).GetDelegate<object>();
+            var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo).GetDelegate<int>();
             var setter = ModelAccess<MyStruct>.GetSetter(x => x.PropTwo).Set;
-
             object boxed = new MyStruct();
 
             setter(boxed, 3);
 
-            var tmp = (int)getter(boxed);
+            MyStruct unboxed = (MyStruct)boxed;
+
+            var tmp = getter(ref unboxed);
 
             Assert.IsTrue(tmp == 3);
         }
@@ -277,7 +278,7 @@ namespace UnitTests.Core
                 var getter = i.Getter.GetDelegate<object>();
                 setter.Set(source, randValue);
 
-                var actual = getter(source);
+                var actual = getter(ref source);
                 Assert.AreEqual(randValue, actual);
             }
 
@@ -285,13 +286,13 @@ namespace UnitTests.Core
             {
                 var getter = i.Getter.GetDelegate<object>();
                 var setter = i.Setter;
-                setter.Set(dest, getter(source));
+                setter.Set(dest, getter(ref source));
             }
 
             foreach (var i in intersect)
             {
                 var getter = i.Getter.GetDelegate<object>();
-                Assert.IsTrue(Equals(getter(source), getter(dest)));
+                Assert.IsTrue(Equals(getter(ref source), getter(ref dest)));
             }
         }
         #endregion

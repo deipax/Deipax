@@ -1,7 +1,7 @@
 
 BenchmarkDotNet=v0.10.14, OS=Windows 10.0.16299.371 (1709/FallCreatorsUpdate/Redstone3)
 Intel Core i7-3770K CPU 3.50GHz (Ivy Bridge), 1 CPU, 8 logical and 4 physical cores
-Frequency=3435884 Hz, Resolution=291.0459 ns, Timer=TSC
+Frequency=3435893 Hz, Resolution=291.0452 ns, Timer=TSC
 .NET Core SDK=2.1.103
   [Host]     : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
   DefaultJob : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
@@ -9,34 +9,34 @@ Frequency=3435884 Hz, Resolution=291.0459 ns, Timer=TSC
 
              Method |      Mean |     Error |    StdDev |  Gen 0 | Allocated |
 ------------------- |----------:|----------:|----------:|-------:|----------:|
-             ToBool |  5.883 ns | 0.0123 ns | 0.0115 ns |      - |       0 B |
-     ToBoolNullable |  7.062 ns | 0.0267 ns | 0.0249 ns |      - |       0 B |
-             ToChar |  6.933 ns | 0.0174 ns | 0.0136 ns |      - |       0 B |
-     ToCharNullable |  7.919 ns | 0.1109 ns | 0.1038 ns |      - |       0 B |
-            ToSByte | 12.679 ns | 0.0258 ns | 0.0228 ns |      - |       0 B |
-    ToSByteNullable |  7.833 ns | 0.0244 ns | 0.0229 ns |      - |       0 B |
-             ToByte |  6.943 ns | 0.0177 ns | 0.0165 ns |      - |       0 B |
-     ToByteNullable |  7.908 ns | 0.0354 ns | 0.0331 ns |      - |       0 B |
-            ToShort |  6.966 ns | 0.0282 ns | 0.0264 ns |      - |       0 B |
-    ToShortNullable |  7.906 ns | 0.1125 ns | 0.0998 ns |      - |       0 B |
-           ToUShort |  6.957 ns | 0.0169 ns | 0.0149 ns |      - |       0 B |
-   ToUShortNullable |  7.957 ns | 0.0288 ns | 0.0269 ns |      - |       0 B |
-              ToInt |  6.978 ns | 0.0364 ns | 0.0341 ns |      - |       0 B |
-      ToIntNullable |  7.825 ns | 0.0230 ns | 0.0204 ns |      - |       0 B |
-             ToUInt |  6.926 ns | 0.0164 ns | 0.0154 ns |      - |       0 B |
-     ToUIntNullable |  7.838 ns | 0.0316 ns | 0.0296 ns |      - |       0 B |
-             ToLong |  2.839 ns | 0.0131 ns | 0.0123 ns |      - |       0 B |
-     ToLongNullable |  3.591 ns | 0.0079 ns | 0.0070 ns |      - |       0 B |
-            ToULong |  5.480 ns | 0.0173 ns | 0.0162 ns |      - |       0 B |
-    ToULongNullable |  7.694 ns | 0.0198 ns | 0.0176 ns |      - |       0 B |
-            ToFloat |  5.554 ns | 0.0241 ns | 0.0226 ns |      - |       0 B |
-    ToFloatNullable |  7.299 ns | 0.0195 ns | 0.0182 ns |      - |       0 B |
-           ToDouble |  5.401 ns | 0.0185 ns | 0.0155 ns |      - |       0 B |
-   ToDoubleNullable |  7.504 ns | 0.0272 ns | 0.0242 ns |      - |       0 B |
-          ToDecimal |  8.473 ns | 0.0200 ns | 0.0187 ns |      - |       0 B |
-  ToDecimalNullable | 16.519 ns | 0.0199 ns | 0.0186 ns |      - |       0 B |
-         ToDateTime |  5.922 ns | 0.0305 ns | 0.0285 ns |      - |       0 B |
- ToDateTimeNullable |  6.951 ns | 0.0246 ns | 0.0230 ns |      - |       0 B |
-           ToObject |  5.375 ns | 0.0189 ns | 0.0177 ns | 0.0057 |      24 B |
-          To_String | 49.663 ns | 0.1984 ns | 0.1856 ns | 0.0076 |      32 B |
-             ToEnum | 30.133 ns | 0.1389 ns | 0.1300 ns | 0.0057 |      24 B |
+             ToBool |  5.014 ns | 0.0024 ns | 0.0022 ns |      - |       0 B |
+     ToBoolNullable |  7.035 ns | 0.0055 ns | 0.0052 ns |      - |       0 B |
+             ToChar |  5.896 ns | 0.0016 ns | 0.0015 ns |      - |       0 B |
+     ToCharNullable |  7.542 ns | 0.0050 ns | 0.0047 ns |      - |       0 B |
+            ToSByte |  5.909 ns | 0.0178 ns | 0.0158 ns |      - |       0 B |
+    ToSByteNullable |  7.539 ns | 0.0012 ns | 0.0009 ns |      - |       0 B |
+             ToByte |  6.601 ns | 0.0020 ns | 0.0017 ns |      - |       0 B |
+     ToByteNullable |  7.545 ns | 0.0104 ns | 0.0097 ns |      - |       0 B |
+            ToShort |  5.901 ns | 0.0097 ns | 0.0086 ns |      - |       0 B |
+    ToShortNullable |  7.781 ns | 0.0105 ns | 0.0098 ns |      - |       0 B |
+           ToUShort |  5.893 ns | 0.0015 ns | 0.0012 ns |      - |       0 B |
+   ToUShortNullable |  7.540 ns | 0.0015 ns | 0.0012 ns |      - |       0 B |
+              ToInt |  5.900 ns | 0.0112 ns | 0.0099 ns |      - |       0 B |
+      ToIntNullable |  7.607 ns | 0.0301 ns | 0.0281 ns |      - |       0 B |
+             ToUInt |  5.882 ns | 0.0073 ns | 0.0064 ns |      - |       0 B |
+     ToUIntNullable |  7.539 ns | 0.0015 ns | 0.0013 ns |      - |       0 B |
+             ToLong |  2.081 ns | 0.0027 ns | 0.0024 ns |      - |       0 B |
+     ToLongNullable |  2.812 ns | 0.0040 ns | 0.0037 ns |      - |       0 B |
+            ToULong |  4.696 ns | 0.0053 ns | 0.0047 ns |      - |       0 B |
+    ToULongNullable |  7.668 ns | 0.0035 ns | 0.0029 ns |      - |       0 B |
+            ToFloat |  4.896 ns | 0.0010 ns | 0.0009 ns |      - |       0 B |
+    ToFloatNullable |  7.041 ns | 0.0114 ns | 0.0107 ns |      - |       0 B |
+           ToDouble |  4.891 ns | 0.0057 ns | 0.0047 ns |      - |       0 B |
+   ToDoubleNullable |  6.936 ns | 0.0092 ns | 0.0086 ns |      - |       0 B |
+          ToDecimal |  7.667 ns | 0.0090 ns | 0.0079 ns |      - |       0 B |
+  ToDecimalNullable | 16.479 ns | 0.0096 ns | 0.0090 ns |      - |       0 B |
+         ToDateTime |  5.124 ns | 0.0125 ns | 0.0117 ns |      - |       0 B |
+ ToDateTimeNullable |  6.256 ns | 0.0132 ns | 0.0117 ns |      - |       0 B |
+           ToObject |  4.860 ns | 0.0058 ns | 0.0051 ns | 0.0057 |      24 B |
+          To_String | 47.648 ns | 0.0185 ns | 0.0173 ns | 0.0076 |      32 B |
+             ToEnum | 28.205 ns | 0.0141 ns | 0.0110 ns | 0.0057 |      24 B |

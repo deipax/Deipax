@@ -38,7 +38,6 @@ namespace Benchmarks.Core
         #region Private Members
         private static void RunGetterBenchmarks(IConfig config = null)
         {
-            /*
             BenchmarkRunner.Run<Get_Prop_Bool>(config);
             BenchmarkRunner.Run<Get_Prop_BoolNullable>(config);
             BenchmarkRunner.Run<Get_Prop_BoolNullable_NoValue>(config);
@@ -72,7 +71,6 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<Get_Prop_UIntNullable_NoValue>(config);
 
             BenchmarkRunner.Run<Get_Prop_Long>(config);
-            */
             BenchmarkRunner.Run<Get_Prop_LongNullable>(config);
             BenchmarkRunner.Run<Get_Prop_LongNullable_NoValue>(config);
 

@@ -16,7 +16,7 @@ namespace UnitTests.Core.BaseClasses
             Expression<Func<T, P>> memberExpression)
         {
             _testValue = testValue;
-            _instanceAsObject = new T();
+            _instanceAsObject = _instance = new T();
             _memberExpression = memberExpression;
 
             var setter = ModelAccess<T>.GetSetter(memberExpression);
@@ -27,6 +27,7 @@ namespace UnitTests.Core.BaseClasses
 
         #region Field Member
         private P _testValue;
+        private T _instance;
         private object _instanceAsObject;
         private Expression<Func<T, P>> _memberExpression;
         private IFormatProvider _provider;
@@ -230,7 +231,7 @@ namespace UnitTests.Core.BaseClasses
             try
             {
                 expected = ConvertTo<X, P>.From(_testValue, _provider);
-                actual = getter(_instanceAsObject, _provider);       
+                actual = getter(ref _instance, _provider);       
             }
             catch (OverflowException)
             {

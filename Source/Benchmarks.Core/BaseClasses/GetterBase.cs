@@ -15,10 +15,12 @@ namespace Benchmarks.Core.BaseClasses
             Expression<Func<T, P>> memberExpression)
         {
             _testValue = testValue;
-            _instanceAsObject = _instance = new T();
+            object instanceAsObject = new T();
 
             var setter = ModelAccess<T>.GetSetter(memberExpression);
-            setter.Set(_instanceAsObject, _testValue);
+            setter.Set(instanceAsObject, _testValue);
+
+            _instance = (T)instanceAsObject;
 
             var getter = ModelAccess<T>.GetGetter(memberExpression);
 
@@ -60,39 +62,38 @@ namespace Benchmarks.Core.BaseClasses
         #region Field Member
         private P _testValue;
         private T _instance;
-        private object _instanceAsObject;
 
-        private Get<bool> _getBool;
-        private Get<bool?> _getBoolNullable;
-        private Get<char> _getChar;
-        private Get<char?> _getCharNullable;
-        private Get<sbyte> _getSByte;
-        private Get<sbyte?> _getSByteNullable;
-        private Get<byte> _getByte;
-        private Get<byte?> _getByteNullable;
-        private Get<short> _getShort;
-        private Get<short?> _getShortNullable;
-        private Get<ushort> _getUShort;
-        private Get<ushort?> _getUShortNullable;
-        private Get<int> _getInt;
-        private Get<int?> _getIntNullable;
-        private Get<uint> _getUInt;
-        private Get<uint?> _getUIntNullable;
-        private Get<long> _getLong;
-        private Get<long?> _getLongNullable;
-        private Get<ulong> _getULong;
-        private Get<ulong?> _getULongNullable;
-        private Get<float> _getFloat;
-        private Get<float?> _getFloatNullable;
-        private Get<double> _getDouble;
-        private Get<double?> _getDoubleNullable;
-        private Get<decimal> _getDecimal;
-        private Get<decimal?> _getDecimalNullable;
-        private Get<DateTime> _getDateTime;
-        private Get<DateTime?> _getDateTimeNullable;
-        private Get<object> _getObject;
-        private Get<string> _getString;
-        private Get<TestEnum> _getEnum;
+        private Get<T, bool> _getBool;
+        private Get<T, bool?> _getBoolNullable;
+        private Get<T, char> _getChar;
+        private Get<T, char?> _getCharNullable;
+        private Get<T, sbyte> _getSByte;
+        private Get<T, sbyte?> _getSByteNullable;
+        private Get<T, byte> _getByte;
+        private Get<T, byte?> _getByteNullable;
+        private Get<T, short> _getShort;
+        private Get<T, short?> _getShortNullable;
+        private Get<T, ushort> _getUShort;
+        private Get<T, ushort?> _getUShortNullable;
+        private Get<T, int> _getInt;
+        private Get<T, int?> _getIntNullable;
+        private Get<T, uint> _getUInt;
+        private Get<T, uint?> _getUIntNullable;
+        private Get<T, long> _getLong;
+        private Get<T, long?> _getLongNullable;
+        private Get<T, ulong> _getULong;
+        private Get<T, ulong?> _getULongNullable;
+        private Get<T, float> _getFloat;
+        private Get<T, float?> _getFloatNullable;
+        private Get<T, double> _getDouble;
+        private Get<T, double?> _getDoubleNullable;
+        private Get<T, decimal> _getDecimal;
+        private Get<T, decimal?> _getDecimalNullable;
+        private Get<T, DateTime> _getDateTime;
+        private Get<T, DateTime?> _getDateTimeNullable;
+        private Get<T, object> _getObject;
+        private Get<T, string> _getString;
+        private Get<T, TestEnum> _getEnum;
 
         private IFormatProvider _provider;
         #endregion
@@ -101,187 +102,187 @@ namespace Benchmarks.Core.BaseClasses
         [Benchmark]
         public void ToBool()
         {
-            bool x = _getBool(_instanceAsObject, _provider);
+            bool x = _getBool(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToBoolNullable()
         {
-            bool? x = _getBoolNullable(_instanceAsObject, _provider);
+            bool? x = _getBoolNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToChar()
         {
-            char x = _getChar(_instanceAsObject, _provider);
+            char x = _getChar(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToCharNullable()
         {
-            char? x = _getCharNullable(_instanceAsObject, _provider);
+            char? x = _getCharNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToSByte()
         {
-            sbyte x = _getSByte(_instanceAsObject, _provider);
+            sbyte x = _getSByte(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToSByteNullable()
         {
-            sbyte? x = _getSByteNullable(_instanceAsObject, _provider);
+            sbyte? x = _getSByteNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToByte()
         {
-            byte x = _getByte(_instanceAsObject, _provider);
+            byte x = _getByte(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToByteNullable()
         {
-            byte? x = _getByteNullable(_instanceAsObject, _provider);
+            byte? x = _getByteNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToShort()
         {
-            short x = _getShort(_instanceAsObject, _provider);
+            short x = _getShort(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToShortNullable()
         {
-            short? x = _getShortNullable(_instanceAsObject, _provider);
+            short? x = _getShortNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToUShort()
         {
-            ushort x = _getUShort(_instanceAsObject, _provider);
+            ushort x = _getUShort(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToUShortNullable()
         {
-            ushort? x = _getUShortNullable(_instanceAsObject, _provider);
+            ushort? x = _getUShortNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToInt()
         {
-            int x = _getInt(_instanceAsObject, _provider);
+            int x = _getInt(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToIntNullable()
         {
-            int? x = _getIntNullable(_instanceAsObject, _provider);
+            int? x = _getIntNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToUInt()
         {
-            uint x = _getUInt(_instanceAsObject, _provider);
+            uint x = _getUInt(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToUIntNullable()
         {
-            uint? x = _getUIntNullable(_instanceAsObject, _provider);
+            uint? x = _getUIntNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToLong()
         {
-            long x = _getLong(_instanceAsObject, _provider);
+            long x = _getLong(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToLongNullable()
         {
-            long? x = _getLongNullable(_instanceAsObject, _provider);
+            long? x = _getLongNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToULong()
         {
-            ulong x = _getULong(_instanceAsObject, _provider);
+            ulong x = _getULong(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToULongNullable()
         {
-            ulong? x = _getULongNullable(_instanceAsObject, _provider);
+            ulong? x = _getULongNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToFloat()
         {
-            float x = _getFloat(_instanceAsObject, _provider);
+            float x = _getFloat(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToFloatNullable()
         {
-            float? x = _getFloatNullable(_instanceAsObject, _provider);
+            float? x = _getFloatNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToDouble()
         {
-            double x = _getDouble(_instanceAsObject, _provider);
+            double x = _getDouble(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToDoubleNullable()
         {
-            double? x = _getDoubleNullable(_instanceAsObject, _provider);
+            double? x = _getDoubleNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToDecimal()
         {
-            decimal x = _getDecimal(_instanceAsObject, _provider);
+            decimal x = _getDecimal(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToDecimalNullable()
         {
-            decimal? x = _getDecimalNullable(_instanceAsObject, _provider);
+            decimal? x = _getDecimalNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToDateTime()
         {
-            DateTime x = _getDateTime(_instanceAsObject, _provider);
+            DateTime x = _getDateTime(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToDateTimeNullable()
         {
-            DateTime? x = _getDateTimeNullable(_instanceAsObject, _provider);
+            DateTime? x = _getDateTimeNullable(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToObject()
         {
-            object x = _getObject(_instanceAsObject, _provider);
+            object x = _getObject(ref _instance, _provider);
         }
 
         [Benchmark]
         public void To_String()
         {
-            string x = _getString(_instanceAsObject, _provider);
+            string x = _getString(ref _instance, _provider);
         }
 
         [Benchmark]
         public void ToEnum()
         {
-            TestEnum x = _getEnum(_instanceAsObject, _provider);
+            TestEnum x = _getEnum(ref _instance, _provider);
         }
         #endregion
     }

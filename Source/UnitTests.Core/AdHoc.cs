@@ -18,10 +18,10 @@ namespace UnitTests.Core
             ParentClass instance = new ParentClass();
             var objectInstance = instance;
 
-            var tmp1 = getterBool(objectInstance);
-            var tmp2 = getterString(objectInstance);
-            var tmp3 = getterObject(objectInstance);
-            var tmp4 = getterBoolNullable(objectInstance);
+            var tmp1 = getterBool(ref instance);
+            var tmp2 = getterString(ref instance);
+            var tmp3 = getterObject(ref instance);
+            var tmp4 = getterBoolNullable(ref instance);
         }
     }
 }
