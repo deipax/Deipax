@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Benchmarks.Core.BaseClasses
 {
-    public abstract class GetterBase<T, P> where T : IParent, new()
+    public abstract class GetterBase<T, P> where T : new()
     {
         public GetterBase(
             P testValue,

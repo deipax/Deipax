@@ -9,9 +9,9 @@ using UnitTests.Core.TestClasses;
 namespace UnitTests.Core.BaseClasses
 {
     [TestClass]
-    public abstract class GetterBase<T, P> where T : new()
+    public abstract class GetterSetterBase<T, P> where T : new()
     {
-        public GetterBase(
+        public GetterSetterBase(
             P testValue,
             Expression<Func<T, P>> memberExpression)
         {
@@ -19,8 +19,7 @@ namespace UnitTests.Core.BaseClasses
             _instanceAsObject = _instance = new T();
             _memberExpression = memberExpression;
 
-            var setter = ModelAccess<T>.GetSetter(memberExpression);
-            setter.Set(_instanceAsObject, _testValue);
+           
 
             _provider = CultureInfo.InvariantCulture;
         }
@@ -225,11 +224,14 @@ namespace UnitTests.Core.BaseClasses
         private void RunTest<X>()
         {
             var getter = ModelAccess<T>.GetGetter(_memberExpression).GetDelegate<X>();
+            var setter = ModelAccess<T>.GetSetter(_memberExpression).Set;
+            
             X expected = default(X);
             X actual = default(X);
 
             try
             {
+                setter(_instanceAsObject, _testValue);
                 expected = ConvertTo<X, P>.From(_testValue, _provider);
                 actual = getter(ref _instance, _provider);       
             }
