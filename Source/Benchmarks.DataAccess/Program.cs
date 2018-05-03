@@ -27,9 +27,10 @@ namespace Benchmarks.DataAccess
                 .With(MemoryDiagnoser.Default);
 
             //BenchmarkRunner.Run<DynamicBench>(config);
-            //BenchmarkRunner.Run<ObjectActivatorBench>(config);
             BenchmarkRunner.Run<DeipaxSelect>(config);
             BenchmarkRunner.Run<DapperSelect>(config);
+
+            //BenchmarkRunner.Run<AdHoc>(config);
         }
     }
 }

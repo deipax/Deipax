@@ -123,7 +123,7 @@ namespace Deipax.DataAccess.Interfaces
 		}
 
 		public static IEnumerable<T> AsEnumerable<T>(
-			this IDbCmd source)
+			this IDbCmd source) where T : new()
 		{
 			using (var timer = RunTimer.Create(source))
 			using (var dbCmd = source.CreateCommand())
@@ -139,8 +139,8 @@ namespace Deipax.DataAccess.Interfaces
 		}
 
 		public static List<T> AsList<T>(
-			this IDbCmd source)
-		{
+			this IDbCmd source) where T : new()
+        {
 			return source.AsEnumerable<T>().ToList();
 		}
 

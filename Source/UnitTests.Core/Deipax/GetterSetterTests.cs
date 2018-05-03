@@ -399,7 +399,7 @@ namespace UnitTests.Core.Deipax.GetterSetter
     [TestClass]
     public class GetSet_Prop_Object : GetterSetterBase<ParentClass, object>
     {
-        public GetSet_Prop_Object() : base(new object(), x => x.ObjectProp)
+        public GetSet_Prop_Object() : base(1, x => x.ObjectProp)
         {
         }
     }

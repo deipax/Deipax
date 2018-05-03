@@ -30,6 +30,8 @@ namespace Benchmarks.Core
             manualConfig.Add(new CategoryFilter("Object"));
             */
 
+            //BenchmarkRunner.Run<AdHoc>(config);
+
             RunSetterBenchmarks(config);
         }
 

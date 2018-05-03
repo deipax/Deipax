@@ -16,18 +16,14 @@ namespace UnitTests.Core.BaseClasses
             Expression<Func<T, P>> memberExpression)
         {
             _testValue = testValue;
-            _instanceAsObject = _instance = new T();
+            _instance = new T();
             _memberExpression = memberExpression;
-
-           
-
             _provider = CultureInfo.InvariantCulture;
         }
 
         #region Field Member
         private P _testValue;
         private T _instance;
-        private object _instanceAsObject;
         private Expression<Func<T, P>> _memberExpression;
         private IFormatProvider _provider;
         #endregion
@@ -223,17 +219,23 @@ namespace UnitTests.Core.BaseClasses
         #region Private Member
         private void RunTest<X>()
         {
-            var getter = ModelAccess<T>.GetGetter(_memberExpression).GetDelegate<X>();
-            var setter = ModelAccess<T>.GetSetter(_memberExpression).Set;
-            
-            X expected = default(X);
-            X actual = default(X);
+            var getAsP = ModelAccess<T>.GetGetter(_memberExpression).GetDelegate<P>();
+            var setAsP = ModelAccess<T>.GetSetter(_memberExpression).GetDelegate<P>();
+
+            setAsP(ref _instance, _testValue);
+            Assert.AreEqual(_testValue, getAsP(ref _instance));
+
+            var getAsX = ModelAccess<T>.GetGetter(_memberExpression).GetDelegate<X>();
+            var setAsX = ModelAccess<T>.GetSetter(_memberExpression).GetDelegate<X>();
+
+            X expectedX = default(X);
+            X actualX = default(X);
 
             try
             {
-                setter(_instanceAsObject, _testValue);
-                expected = ConvertTo<X, P>.From(_testValue, _provider);
-                actual = getter(ref _instance, _provider);       
+                expectedX = ConvertTo<X, P>.From(_testValue, _provider);
+                setAsX(ref _instance, expectedX);
+                actualX = getAsX(ref _instance, _provider);
             }
             catch (OverflowException)
             {
@@ -241,8 +243,11 @@ namespace UnitTests.Core.BaseClasses
             catch (FormatException)
             {
             }
+            catch (InvalidCastException)
+            {
+            }
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expectedX, actualX);
         }
         #endregion
     }

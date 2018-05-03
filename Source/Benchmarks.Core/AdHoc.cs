@@ -1,7 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Benchmarks.Core.TestClasses;
+using Deipax.Core.Common;
+using Deipax.Core.Conversion;
 using System;
 using System.Globalization;
-using Deipax.Core.Conversion;
 
 namespace Benchmarks.Core
 {
@@ -42,10 +44,16 @@ namespace Benchmarks.Core
             string value = ConvertTo<string, object>.From(_myEnumAsObject);
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void IsObjectEnum()
         {
             var tmp = _myEnumAsObject.GetType().IsEnum;
+        }
+
+        //[Benchmark]
+        public void NewIt()
+        {
+            ParentClass x = new ParentClass();
         }
     }
 }

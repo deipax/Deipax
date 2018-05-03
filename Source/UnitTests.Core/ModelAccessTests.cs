@@ -163,14 +163,12 @@ namespace UnitTests.Core
         public void ModelAccessTests_StructTest()
         {
             var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo).GetDelegate<int>();
-            var setter = ModelAccess<MyStruct>.GetSetter(x => x.PropTwo).Set;
-            object boxed = new MyStruct();
+            var setter = ModelAccess<MyStruct>.GetSetter(x => x.PropTwo).GetDelegate<int>();
 
-            setter(boxed, 3);
+            MyStruct instance = new MyStruct();
 
-            MyStruct unboxed = (MyStruct)boxed;
-
-            var tmp = getter(ref unboxed);
+            setter(ref instance, 3);
+            var tmp = getter(ref instance);
 
             Assert.IsTrue(tmp == 3);
         }
@@ -262,21 +260,21 @@ namespace UnitTests.Core
             Assert.IsTrue(intersect.Count == intersectCount);
         }
 
-        private static void AssertAccess<T>()
+        private static void AssertAccess<T>() where T : new()
         {
             var intersect = Intersect<T>.Create();
 
-            T source = ObjectActivator<T>.Create();
-            T dest = ObjectActivator<T>.Create();
+            T source = new T();
+            T dest = new T();
 
             // Make sure all public and private field/props
             // are initialized.
             foreach (var i in intersect)
             {
                 var randValue = RandGen.GenerateString(10);
-                var setter = i.Setter;
+                var setter = i.Setter.GetDelegate<object>();
                 var getter = i.Getter.GetDelegate<object>();
-                setter.Set(source, randValue);
+                setter(ref source, randValue);
 
                 var actual = getter(ref source);
                 Assert.AreEqual(randValue, actual);
@@ -285,8 +283,8 @@ namespace UnitTests.Core
             foreach (var i in intersect)
             {
                 var getter = i.Getter.GetDelegate<object>();
-                var setter = i.Setter;
-                setter.Set(dest, getter(ref source));
+                var setter = i.Setter.GetDelegate<object>();
+                setter(ref dest, getter(ref source));
             }
 
             foreach (var i in intersect)

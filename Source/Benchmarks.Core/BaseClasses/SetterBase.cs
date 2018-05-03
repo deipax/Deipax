@@ -19,37 +19,38 @@ namespace Benchmarks.Core.BaseClasses
 
             var setter = ModelAccess<T>.GetSetter(memberExpression);
 
-            _setBool = setter.Set;
-            _setBoolNullable = setter.Set;
-            _setChar = setter.Set;
-            _setCharNullable = setter.Set;
-            _setSByte = setter.Set;
-            _setSByteNullable = setter.Set;
-            _setByte = setter.Set;
-            _setByteNullable = setter.Set;
-            _setShort = setter.Set;
-            _setShortNullable = setter.Set;
-            _setUShort = setter.Set;
-            _setUShortNullable = setter.Set;
-            _setInt = setter.Set;
-            _setIntNullable = setter.Set;
-            _setUInt = setter.Set;
-            _setUIntNullable = setter.Set;
-            _setLong = setter.Set;
-            _setLongNullable = setter.Set;
-            _setULong = setter.Set;
-            _setULongNullable = setter.Set;
-            _setFloat = setter.Set;
-            _setFloatNullable = setter.Set;
-            _setDouble = setter.Set;
-            _setDoubleNullable = setter.Set;
-            _setDecimal = setter.Set;
-            _setDecimalNullable = setter.Set;
-            _setDateTime = setter.Set;
-            _setDateTimeNullable = setter.Set;
-            _setObject = setter.Set;
-            _setString = setter.Set;
-            _setEnum = setter.Set;
+            _setBool = setter.GetDelegate<bool>();
+            _setBoolNullable = setter.GetDelegate<bool?>();
+            _setChar = setter.GetDelegate<char>();
+            _setCharNullable = setter.GetDelegate<char?>();
+            _setSByte = setter.GetDelegate<sbyte>();
+            _setSByteNullable = setter.GetDelegate<sbyte?>();
+            _setByte = setter.GetDelegate<byte>();
+            _setByteNullable = setter.GetDelegate<byte?>();
+            _setShort = setter.GetDelegate<short>();
+            _setShortNullable = setter.GetDelegate<short?>();
+            _setUShort = setter.GetDelegate<ushort>();
+            _setUShortNullable = setter.GetDelegate<ushort?>();
+            _setInt = setter.GetDelegate<int>();
+            _setIntNullable = setter.GetDelegate<int?>();
+            _setUInt = setter.GetDelegate<uint>();
+            _setUIntNullable = setter.GetDelegate<uint?>();
+            _setLong = setter.GetDelegate<long>();
+            _setLongNullable = setter.GetDelegate<long?>();
+            _setULong = setter.GetDelegate<ulong>();
+            _setULongNullable = setter.GetDelegate<ulong?>();
+            _setFloat = setter.GetDelegate<float>();
+            _setFloatNullable = setter.GetDelegate<float?>();
+            _setDouble = setter.GetDelegate<double>();
+            _setDoubleNullable = setter.GetDelegate<double?>();
+            _setDecimal = setter.GetDelegate<decimal>();
+            _setDecimalNullable = setter.GetDelegate<decimal?>();
+            _setDateTime = setter.GetDelegate<DateTime>();
+            _setDateTimeNullable = setter.GetDelegate<DateTime?>();
+            _setObject = setter.GetDelegate<object>();
+            _setString = setter.GetDelegate<string>();
+            _setEnum = setter.GetDelegate<TestEnum>();
+            _setEnumNullable = setter.GetDelegate<TestEnum?>();
 
             _testValueBool = ConvertSafe<bool, P>(testValue);
             _testValueBoolNullable = ConvertSafe<bool?, P>(testValue);
@@ -82,76 +83,79 @@ namespace Benchmarks.Core.BaseClasses
             _testValueObject = ConvertSafe<object, P>(testValue);
             _testValueString = ConvertSafe<string, P>(testValue);
             _testValueEnum = ConvertSafe<TestEnum, P>(testValue);
+            _testValueEnumNullable = ConvertSafe<TestEnum?, P>(testValue);
 
             _provider = CultureInfo.InvariantCulture;
         }
 
         #region Field Member
-        private object _instance;
+        private T _instance;
 
-        private Set<object> _setBool;
-        private Set<object> _setBoolNullable;
-        private Set<object> _setChar;
-        private Set<object> _setCharNullable;
-        private Set<object> _setSByte;
-        private Set<object> _setSByteNullable;
-        private Set<object> _setByte;
-        private Set<object> _setByteNullable;
-        private Set<object> _setShort;
-        private Set<object> _setShortNullable;
-        private Set<object> _setUShort;
-        private Set<object> _setUShortNullable;
-        private Set<object> _setInt;
-        private Set<object> _setIntNullable;
-        private Set<object> _setUInt;
-        private Set<object> _setUIntNullable;
-        private Set<object> _setLong;
-        private Set<object> _setLongNullable;
-        private Set<object> _setULong;
-        private Set<object> _setULongNullable;
-        private Set<object> _setFloat;
-        private Set<object> _setFloatNullable;
-        private Set<object> _setDouble;
-        private Set<object> _setDoubleNullable;
-        private Set<object> _setDecimal;
-        private Set<object> _setDecimalNullable;
-        private Set<object> _setDateTime;
-        private Set<object> _setDateTimeNullable;
-        private Set<object> _setObject;
-        private Set<object> _setString;
-        private Set<object> _setEnum;
+        private Set<T, bool> _setBool;
+        private Set<T, bool?> _setBoolNullable;
+        private Set<T, char> _setChar;
+        private Set<T, char?> _setCharNullable;
+        private Set<T, sbyte> _setSByte;
+        private Set<T, sbyte?> _setSByteNullable;
+        private Set<T, byte> _setByte;
+        private Set<T, byte?> _setByteNullable;
+        private Set<T, short> _setShort;
+        private Set<T, short?> _setShortNullable;
+        private Set<T, ushort> _setUShort;
+        private Set<T, ushort?> _setUShortNullable;
+        private Set<T, int> _setInt;
+        private Set<T, int?> _setIntNullable;
+        private Set<T, uint> _setUInt;
+        private Set<T, uint?> _setUIntNullable;
+        private Set<T, long> _setLong;
+        private Set<T, long?> _setLongNullable;
+        private Set<T, ulong> _setULong;
+        private Set<T, ulong?> _setULongNullable;
+        private Set<T, float> _setFloat;
+        private Set<T, float?> _setFloatNullable;
+        private Set<T, double> _setDouble;
+        private Set<T, double?> _setDoubleNullable;
+        private Set<T, decimal> _setDecimal;
+        private Set<T, decimal?> _setDecimalNullable;
+        private Set<T, DateTime> _setDateTime;
+        private Set<T, DateTime?> _setDateTimeNullable;
+        private Set<T, object> _setObject;
+        private Set<T, string> _setString;
+        private Set<T, TestEnum> _setEnum;
+        private Set<T, TestEnum?> _setEnumNullable;
 
-        private object _testValueBool;
-        private object _testValueBoolNullable;
-        private object _testValueChar;
-        private object _testValueCharNullable;
-        private object _testValueSByte;
-        private object _testValueSByteNullable;
-        private object _testValueByte;
-        private object _testValueByteNullable;
-        private object _testValueShort;
-        private object _testValueShortNullable;
-        private object _testValueUShort;
-        private object _testValueUShortNullable;
-        private object _testValueInt;
-        private object _testValueIntNullable;
-        private object _testValueUInt;
-        private object _testValueUIntNullable;
-        private object _testValueLong;
-        private object _testValueLongNullable;
-        private object _testValueULong;
-        private object _testValueULongNullable;
-        private object _testValueFloat;
-        private object _testValueFloatNullable;
-        private object _testValueDouble;
-        private object _testValueDoubleNullable;
-        private object _testValueDecimal;
-        private object _testValueDecimalNullable;
-        private object _testValueDateTime;
-        private object _testValueDateTimeNullable;
+        private bool _testValueBool;
+        private bool? _testValueBoolNullable;
+        private char _testValueChar;
+        private char? _testValueCharNullable;
+        private sbyte _testValueSByte;
+        private sbyte? _testValueSByteNullable;
+        private byte _testValueByte;
+        private byte? _testValueByteNullable;
+        private short _testValueShort;
+        private short? _testValueShortNullable;
+        private ushort _testValueUShort;
+        private ushort? _testValueUShortNullable;
+        private int _testValueInt;
+        private int? _testValueIntNullable;
+        private uint _testValueUInt;
+        private uint? _testValueUIntNullable;
+        private long _testValueLong;
+        private long? _testValueLongNullable;
+        private ulong _testValueULong;
+        private ulong? _testValueULongNullable;
+        private float _testValueFloat;
+        private float? _testValueFloatNullable;
+        private double _testValueDouble;
+        private double? _testValueDoubleNullable;
+        private decimal _testValueDecimal;
+        private decimal? _testValueDecimalNullable;
+        private DateTime _testValueDateTime;
+        private DateTime? _testValueDateTimeNullable;
         private object _testValueObject;
-        private object _testValueString;
-        private object _testValueEnum;
+        private string _testValueString;
+        private TestEnum _testValueEnum;
+        private TestEnum? _testValueEnumNullable;
 
         private IFormatProvider _provider;
         #endregion
@@ -160,187 +164,193 @@ namespace Benchmarks.Core.BaseClasses
         [Benchmark]
         public void FromBool()
         {
-            _setBool(_instance, _testValueBool, _provider);
+            _setBool(ref _instance, _testValueBool, _provider);
         }
 
         [Benchmark]
         public void FromBoolNullable()
         {
-            _setBoolNullable(_instance, _testValueBoolNullable, _provider);
+            _setBoolNullable(ref _instance, _testValueBoolNullable, _provider);
         }
 
         [Benchmark]
         public void FromChar()
         {
-            _setChar(_instance, _testValueChar, _provider);
+            _setChar(ref _instance, _testValueChar, _provider);
         }
 
         [Benchmark]
         public void FromCharNullable()
         {
-            _setCharNullable(_instance, _testValueCharNullable, _provider);
+            _setCharNullable(ref _instance, _testValueCharNullable, _provider);
         }
 
         [Benchmark]
         public void FromSByte()
         {
-            _setSByte(_instance, _testValueSByte, _provider);
+            _setSByte(ref _instance, _testValueSByte, _provider);
         }
 
         [Benchmark]
         public void FromSByteNullable()
         {
-            _setSByteNullable(_instance, _testValueSByteNullable, _provider);
+            _setSByteNullable(ref _instance, _testValueSByteNullable, _provider);
         }
 
         [Benchmark]
         public void FromByte()
         {
-            _setByte(_instance, _testValueByte, _provider);
+            _setByte(ref _instance, _testValueByte, _provider);
         }
 
         [Benchmark]
         public void FromByteNullable()
         {
-            _setByteNullable(_instance, _testValueByteNullable, _provider);
+            _setByteNullable(ref _instance, _testValueByteNullable, _provider);
         }
 
         [Benchmark]
         public void FromShort()
         {
-            _setShort(_instance, _testValueShort, _provider);
+            _setShort(ref _instance, _testValueShort, _provider);
         }
 
         [Benchmark]
         public void FromShortNullable()
         {
-            _setShortNullable(_instance, _testValueShortNullable, _provider);
+            _setShortNullable(ref _instance, _testValueShortNullable, _provider);
         }
 
         [Benchmark]
         public void FromUShort()
         {
-            _setUShort(_instance, _testValueUShort, _provider);
+            _setUShort(ref _instance, _testValueUShort, _provider);
         }
 
         [Benchmark]
         public void FromUShortNullable()
         {
-            _setUShortNullable(_instance, _testValueUShortNullable, _provider);
+            _setUShortNullable(ref _instance, _testValueUShortNullable, _provider);
         }
 
         [Benchmark]
         public void FromInt()
         {
-            _setInt(_instance, _testValueInt, _provider);
+            _setInt(ref _instance, _testValueInt, _provider);
         }
 
         [Benchmark]
         public void FromIntNullable()
         {
-            _setIntNullable(_instance, _testValueIntNullable, _provider);
+            _setIntNullable(ref _instance, _testValueIntNullable, _provider);
         }
 
         [Benchmark]
         public void FromUInt()
         {
-            _setUInt(_instance, _testValueUInt, _provider);
+            _setUInt(ref _instance, _testValueUInt, _provider);
         }
 
         [Benchmark]
         public void FromUIntNullable()
         {
-            _setUIntNullable(_instance, _testValueUIntNullable, _provider);
+            _setUIntNullable(ref _instance, _testValueUIntNullable, _provider);
         }
 
         [Benchmark]
         public void FromLong()
         {
-            _setLong(_instance, _testValueLong, _provider);
+            _setLong(ref _instance, _testValueLong, _provider);
         }
 
         [Benchmark]
         public void FromLongNullable()
         {
-            _setLongNullable(_instance, _testValueLongNullable, _provider);
+            _setLongNullable(ref _instance, _testValueLongNullable, _provider);
         }
 
         [Benchmark]
         public void FromULong()
         {
-            _setULong(_instance, _testValueULong, _provider);
+            _setULong(ref _instance, _testValueULong, _provider);
         }
 
         [Benchmark]
         public void FromULongNullable()
         {
-            _setULongNullable(_instance, _testValueULongNullable, _provider);
+            _setULongNullable(ref _instance, _testValueULongNullable, _provider);
         }
 
         [Benchmark]
         public void FromFloat()
         {
-            _setFloat(_instance, _testValueFloat, _provider);
+            _setFloat(ref _instance, _testValueFloat, _provider);
         }
 
         [Benchmark]
         public void FromFloatNullable()
         {
-            _setFloatNullable(_instance, _testValueFloatNullable, _provider);
+            _setFloatNullable(ref _instance, _testValueFloatNullable, _provider);
         }
 
         [Benchmark]
         public void FromDouble()
         {
-            _setDouble(_instance, _testValueDouble, _provider);
+            _setDouble(ref _instance, _testValueDouble, _provider);
         }
 
         [Benchmark]
         public void FromDoubleNullable()
         {
-            _setDoubleNullable(_instance, _testValueDoubleNullable, _provider);
+            _setDoubleNullable(ref _instance, _testValueDoubleNullable, _provider);
         }
 
         [Benchmark]
         public void FromDecimal()
         {
-            _setDecimal(_instance, _testValueDecimal, _provider);
+            _setDecimal(ref _instance, _testValueDecimal, _provider);
         }
 
         [Benchmark]
         public void FromDecimalNullable()
         {
-            _setDecimalNullable(_instance, _testValueDecimalNullable, _provider);
+            _setDecimalNullable(ref _instance, _testValueDecimalNullable, _provider);
         }
 
         [Benchmark]
         public void FromDateTime()
         {
-            _setDateTime(_instance, _testValueDateTime, _provider);
+            _setDateTime(ref _instance, _testValueDateTime, _provider);
         }
 
         [Benchmark]
         public void FromDateTimeNullable()
         {
-            _setDateTimeNullable(_instance, _testValueDateTimeNullable, _provider);
+            _setDateTimeNullable(ref _instance, _testValueDateTimeNullable, _provider);
         }
 
         [Benchmark]
         public void FromObject()
         {
-            _setObject(_instance, _testValueObject, _provider);
+            _setObject(ref _instance, _testValueObject, _provider);
         }
 
         [Benchmark]
         public void FromString()
         {
-            _setString(_instance, _testValueString, _provider);
+            _setString(ref _instance, _testValueString, _provider);
         }
 
         [Benchmark]
         public void FromEnum()
         {
-            _setEnum(_instance, _testValueEnum, _provider);
+            _setEnum(ref _instance, _testValueEnum, _provider);
+        }
+
+        [Benchmark]
+        public void FromEnumNullable()
+        {
+            _setEnumNullable(ref _instance, _testValueEnumNullable, _provider);
         }
         #endregion
 

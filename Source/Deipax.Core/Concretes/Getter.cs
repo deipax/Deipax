@@ -76,7 +76,7 @@ namespace Deipax.Core.Concretes
             {
                 expressions.Add(Expression.Return(
                     labelTarget,
-                    memberExpression, xType));
+                    memberExpression));
             }
             else if (xType == typeof(object) &&
                      !info.Type.IsNullable())
@@ -88,11 +88,10 @@ namespace Deipax.Core.Concretes
             else if (xType == typeof(object) &&
                      info.Type.IsNullable())
             {
-                var hasValue = Expression.Property(memberExpression, "HasValue");
                 var value = Expression.Property(memberExpression, "Value");
 
                 var ifThenElse = Expression.IfThenElse(
-                    hasValue,
+                    Expression.Property(memberExpression, "HasValue"),
                     Expression.Return(labelTarget, Expression.Convert(value, xType)),
                     Expression.Return(labelTarget, Expression.Default(xType)));
 
@@ -108,11 +107,10 @@ namespace Deipax.Core.Concretes
             else if (info.Type.IsNullable() &&
                      Nullable.GetUnderlyingType(info.Type) == xType)
             {
-                var hasValue = Expression.Property(memberExpression, "HasValue");
                 var value = Expression.Property(memberExpression, "Value");
 
                 var ifThenElse = Expression.IfThenElse(
-                    hasValue,
+                    Expression.Property(memberExpression, "HasValue"),
                     Expression.Return(labelTarget, Expression.Convert(value, xType)),
                     Expression.Return(labelTarget, Expression.Default(xType)));
 

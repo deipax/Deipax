@@ -15,12 +15,13 @@ namespace Benchmarks.Core.BaseClasses
             Expression<Func<T, P>> memberExpression)
         {
             _testValue = testValue;
-            object instanceAsObject = new T();
+            T _instance = new T();
 
-            var setter = ModelAccess<T>.GetSetter(memberExpression);
-            setter.Set(instanceAsObject, _testValue);
+            var setter = ModelAccess<T>
+                .GetSetter(memberExpression)
+                .GetDelegate<P>();
 
-            _instance = (T)instanceAsObject;
+            setter(ref _instance, _testValue);
 
             var getter = ModelAccess<T>.GetGetter(memberExpression);
 

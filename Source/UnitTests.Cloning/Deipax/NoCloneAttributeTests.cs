@@ -182,23 +182,23 @@ namespace UnitTests.Cloning.Deipax
         public void NoCloneAttributeTests_TestClass5()
         {
             var propOneGet = ModelAccess<TestClass5>.GetGetter("PropOne").GetDelegate<object>();
-            var propOneSet = ModelAccess<TestClass5>.GetSetter("PropOne");
+            var propOneSet = ModelAccess<TestClass5>.GetSetter("PropOne").GetDelegate<object>();
 
             var propTwoGet = ModelAccess<TestClass5>.GetGetter("PropTwo").GetDelegate<object>();
-            var propTwoSet = ModelAccess<TestClass5>.GetSetter("PropTwo");
+            var propTwoSet = ModelAccess<TestClass5>.GetSetter("PropTwo").GetDelegate<object>();
 
             var propThreeGet = ModelAccess<TestClass5>.GetGetter("PropThree").GetDelegate<object>();
-            var propThreeSet = ModelAccess<TestClass5>.GetSetter("PropThree");
+            var propThreeSet = ModelAccess<TestClass5>.GetSetter("PropThree").GetDelegate<object>();
 
             var propFourGet = ModelAccess<TestClass5>.GetGetter("PropFour").GetDelegate<object>();
-            var propFourSet = ModelAccess<TestClass5>.GetSetter("PropFour");
+            var propFourSet = ModelAccess<TestClass5>.GetSetter("PropFour").GetDelegate<object>();
 
             var source = new TestClass5();
 
-            propOneSet.Set(source, 1);
-            propTwoSet.Set(source, 2);
-            propThreeSet.Set(source, 3);
-            propFourSet.Set(source, 4);
+            propOneSet(ref source, 1);
+            propTwoSet(ref source, 2);
+            propThreeSet(ref source, 3);
+            propFourSet(ref source, 4);
 
             var dest = source.GetClone();
 
