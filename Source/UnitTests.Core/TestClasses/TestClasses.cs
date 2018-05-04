@@ -242,7 +242,8 @@ namespace UnitTests.Core.TestClasses
     {
         One = 1,
         Two = 2,
-        Three = 3
+        Three = 3,
+        NinetyNine = 99,
     }
 
     public interface IParent

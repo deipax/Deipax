@@ -19,12 +19,35 @@ namespace Deipax.Core.Conversion.Factories
                     ? Expression.Property(args.Input, "Value")
                     : (Expression)args.Input;
 
-                var callExpression = Expression.Call(
-                    typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
-                    "Convert",
-                    new[] { args.UnderlyingFromType },
-                    guardedInput,
-                    args.GetDefaultProvider());
+                MethodCallExpression callExpression = null;
+
+                if (args.FromType == typeof(string))
+                {
+                    callExpression = Expression.Call(
+                        typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
+                        "ConvertFromString",
+                        new[] { args.UnderlyingFromType },
+                        guardedInput,
+                        args.GetDefaultProvider());
+                }
+                else if (args.FromType == typeof(object))
+                {
+                    callExpression = Expression.Call(
+                        typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
+                        "ConvertFromObject",
+                        new[] { args.UnderlyingFromType },
+                        guardedInput,
+                        args.GetDefaultProvider());
+                }
+                else
+                {
+                    callExpression = Expression.Call(
+                        typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
+                        "Convert",
+                        new[] { args.UnderlyingFromType },
+                        guardedInput,
+                        args.GetDefaultProvider());
+                }
 
                 GotoExpression returnExpression = args.ToType.IsNullable()
                     ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
@@ -57,21 +80,33 @@ namespace Deipax.Core.Conversion.Factories
                 {
                     string valueAsString = value.ToString();
                     _enumValues.Add(valueAsString, (TTo)Enum.Parse(toType, valueAsString));
-
-                    _intValues.Add(value, (TTo)Enum.Parse(toType, valueAsString));
                 }
+
+                var p = Expression.Parameter(typeof(int));
+                var c = Expression.Convert(p, typeof(TTo));
+                _cast = Expression.Lambda<Func<int, TTo>>(c, p).Compile();
             }
 
             #region Field Members
             private static Dictionary<string, TTo> _enumValues = new Dictionary<string, TTo>();
-            private static Dictionary<int, TTo> _intValues = new Dictionary<int, TTo>();
-
             private static TTo _default = default(TTo);
+            private static Func<int, TTo> _cast;
             #endregion
 
             #region Public Members
             public static TTo Convert<TFrom>(
-                TFrom from, 
+                TFrom from,
+                IFormatProvider provider = null)
+            {
+                TTo returnValue = _default;
+                int intKey = ConvertTo<int, TFrom>.From(from, provider);
+                return _cast(intKey);
+                //_intValues.TryGetValue(intKey, out returnValue);
+                //return returnValue;
+            }
+
+            public static TTo ConvertFromObject<TFrom>(
+                TFrom from,
                 IFormatProvider provider = null)
             {
                 TTo returnValue = _default;
@@ -88,7 +123,23 @@ namespace Deipax.Core.Conversion.Factories
                 }
 
                 int intKey = ConvertTo<int, TFrom>.From(from, provider);
-                _intValues.TryGetValue(intKey, out returnValue);
+                return _cast(intKey);
+                //_intValues.TryGetValue(intKey, out returnValue);
+                //return returnValue;
+            }
+
+            public static TTo ConvertFromString<TFrom>(
+                TFrom from,
+                IFormatProvider provider = null)
+            {
+                TTo returnValue = _default;
+                string key = from as string;
+
+                if (!string.IsNullOrEmpty(key))
+                {
+                    _enumValues.TryGetValue(key, out returnValue);
+                }
+
                 return returnValue;
             }
             #endregion

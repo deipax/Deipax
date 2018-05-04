@@ -32,7 +32,9 @@ namespace Benchmarks.Core
 
             //BenchmarkRunner.Run<AdHoc>(config);
 
-            RunSetterBenchmarks(config);
+            //RunSetterBenchmarks(config);
+
+            BenchmarkRunner.Run<ConvertToEnum>(config);
         }
 
         #region Private Members

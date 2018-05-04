@@ -1,5 +1,9 @@
 ﻿using Deipax.Core.Common;
+using Deipax.Core.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Globalization;
+using Deipax.Core.Conversion;
 using UnitTests.Core.TestClasses;
 
 namespace UnitTests.Core
@@ -7,21 +11,35 @@ namespace UnitTests.Core
     [TestClass]
     public class AdHoc
     {
+        public AdHoc()
+        {
+            
+        }
+
+        [TestInitialize]
+        public void TestInit()
+        {
+            _instance = new ParentClass();
+            _testValue = TestEnum.One;
+            _testValueAsBool = ConvertTo<bool, TestEnum>.From(_testValue);
+            _provider = CultureInfo.InvariantCulture;
+            var setter = ModelAccess<ParentClass>.GetSetter(x => x.EnumProp);
+            _setBool = setter.GetDelegate<bool>();
+            _setBool(ref _instance, _testValueAsBool, _provider);
+        }
+
+        #region Field Members
+        private ParentClass _instance;
+        private Set<ParentClass, bool> _setBool;
+        private TestEnum _testValue;
+        private bool _testValueAsBool;
+        private IFormatProvider _provider;
+        #endregion
+
         //[TestMethod]
         public void Temp1()
         {
-            var getterObject = ModelAccess<ParentClass>.GetGetter(x => x.BoolNullableField).GetDelegate<object>();
-            var getterBool = ModelAccess<ParentClass>.GetGetter(x => x.BoolNullableField).GetDelegate<bool>();
-            var getterBoolNullable = ModelAccess<ParentClass>.GetGetter(x => x.BoolNullableField).GetDelegate<bool?>();
-            var getterString = ModelAccess<ParentClass>.GetGetter(x => x.BoolNullableField).GetDelegate<string>();
-
-            ParentClass instance = new ParentClass();
-            var objectInstance = instance;
-
-            var tmp1 = getterBool(ref instance);
-            var tmp2 = getterString(ref instance);
-            var tmp3 = getterObject(ref instance);
-            var tmp4 = getterBoolNullable(ref instance);
+            _setBool(ref _instance, _testValueAsBool, _provider);
         }
     }
 }
