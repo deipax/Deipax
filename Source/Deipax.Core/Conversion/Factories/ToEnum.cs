@@ -15,10 +15,6 @@ namespace Deipax.Core.Conversion.Factories
         {
             if (args.UnderlyingToType.IsEnum)
             {
-                Expression guardedInput = args.FromType.IsNullable()
-                    ? Expression.Property(args.Input, "Value")
-                    : (Expression)args.Input;
-
                 MethodCallExpression callExpression = null;
 
                 if (args.FromType == typeof(string))
@@ -26,8 +22,8 @@ namespace Deipax.Core.Conversion.Factories
                     callExpression = Expression.Call(
                         typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
                         "ConvertFromString",
-                        new[] { args.UnderlyingFromType },
-                        guardedInput,
+                        new[] { args.FromType },
+                        args.Input,
                         args.GetDefaultProvider());
                 }
                 else if (args.FromType == typeof(object))
@@ -35,12 +31,16 @@ namespace Deipax.Core.Conversion.Factories
                     callExpression = Expression.Call(
                         typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
                         "ConvertFromObject",
-                        new[] { args.UnderlyingFromType },
-                        guardedInput,
+                        new[] { args.FromType },
+                        args.Input,
                         args.GetDefaultProvider());
                 }
                 else
                 {
+                    Expression guardedInput = args.FromType.IsNullable()
+                        ? Expression.Property(args.Input, "Value")
+                        : (Expression)args.Input;
+
                     callExpression = Expression.Call(
                         typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
                         "Convert",
@@ -94,22 +94,17 @@ namespace Deipax.Core.Conversion.Factories
             #endregion
 
             #region Public Members
-            public static TTo Convert<TFrom>(
-                TFrom from,
-                IFormatProvider provider = null)
-            {
-                TTo returnValue = _default;
-                int intKey = ConvertTo<int, TFrom>.From(from, provider);
-                return _cast(intKey);
-                //_intValues.TryGetValue(intKey, out returnValue);
-                //return returnValue;
-            }
-
             public static TTo ConvertFromObject<TFrom>(
                 TFrom from,
                 IFormatProvider provider = null)
             {
                 TTo returnValue = _default;
+
+                if (from == null || DBNull.Value.Equals(from))
+                {
+                    return returnValue;
+                }
+
                 string key = from as string;
 
                 if (key != null)
@@ -124,8 +119,6 @@ namespace Deipax.Core.Conversion.Factories
 
                 int intKey = ConvertTo<int, TFrom>.From(from, provider);
                 return _cast(intKey);
-                //_intValues.TryGetValue(intKey, out returnValue);
-                //return returnValue;
             }
 
             public static TTo ConvertFromString<TFrom>(
@@ -141,6 +134,14 @@ namespace Deipax.Core.Conversion.Factories
                 }
 
                 return returnValue;
+            }
+
+            public static TTo Convert<TFrom>(
+                TFrom from,
+                IFormatProvider provider = null)
+            {
+                int intKey = ConvertTo<int, TFrom>.From(from, provider);
+                return _cast(intKey);
             }
             #endregion
         }

@@ -188,7 +188,7 @@ namespace Benchmarks.Core.Deipax
     #endregion
 
     #region IParent
-    public class ConvertToIParent : ConvertTo_Base<IParent>
+    public class ConvertTo_IParent : ConvertTo_Base<IParent>
     {
     }
     #endregion

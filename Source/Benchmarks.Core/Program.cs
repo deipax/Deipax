@@ -34,7 +34,9 @@ namespace Benchmarks.Core
 
             //RunSetterBenchmarks(config);
 
-            BenchmarkRunner.Run<ConvertToEnum>(config);
+            BenchmarkRunner.Run<Set_Prop_Enum>(config);
+            BenchmarkRunner.Run<Set_Prop_EnumNullable>(config);
+            BenchmarkRunner.Run<Set_Prop_EnumNullable_NoValue>(config);
         }
 
         #region Private Members
@@ -180,38 +182,38 @@ namespace Benchmarks.Core
 
         private static void RunConvertBenchmarks(IConfig config = null)
         {
-            BenchmarkRunner.Run<ConvertToBool>(config);
-            BenchmarkRunner.Run<ConvertToBoolNullable>(config);
-            BenchmarkRunner.Run<ConvertToChar>(config);
-            BenchmarkRunner.Run<ConvertToCharNullable>(config);
-            BenchmarkRunner.Run<ConvertToSByte>(config);
-            BenchmarkRunner.Run<ConvertToSByteNullable>(config);
-            BenchmarkRunner.Run<ConvertToByte>(config);
-            BenchmarkRunner.Run<ConvertToByteNullable>(config);
-            BenchmarkRunner.Run<ConvertToShort>(config);
-            BenchmarkRunner.Run<ConvertToShortNullable>(config);
-            BenchmarkRunner.Run<ConvertToUShort>(config);
-            BenchmarkRunner.Run<ConvertToUShortNullable>(config);
-            BenchmarkRunner.Run<ConvertToInt>(config);
-            BenchmarkRunner.Run<ConvertToIntNullable>(config);
-            BenchmarkRunner.Run<ConvertToUInt>(config);
-            BenchmarkRunner.Run<ConvertToUIntNullable>(config);
-            BenchmarkRunner.Run<ConvertToLong>(config);
-            BenchmarkRunner.Run<ConvertToLongNullable>(config);
-            BenchmarkRunner.Run<ConvertToULong>(config);
-            BenchmarkRunner.Run<ConvertToULongNullable>(config);
-            BenchmarkRunner.Run<ConvertToFloat>(config);
-            BenchmarkRunner.Run<ConvertToFloatNullable>(config);
-            BenchmarkRunner.Run<ConvertToDouble>(config);
-            BenchmarkRunner.Run<ConvertToDoubleNullable>(config);
-            BenchmarkRunner.Run<ConvertToDecimal>(config);
-            BenchmarkRunner.Run<ConvertToDecimalNullable>(config);
-            BenchmarkRunner.Run<ConvertToDateTime>(config);
-            BenchmarkRunner.Run<ConvertToDateTimeNullable>(config);
-            BenchmarkRunner.Run<ConvertToString>(config);
-            BenchmarkRunner.Run<ConvertToObject>(config);
-            BenchmarkRunner.Run<ConvertToEnum>(config);
-            BenchmarkRunner.Run<ConvertToIParent>(config);
+            BenchmarkRunner.Run<ConvertTo_Bool>(config);
+            BenchmarkRunner.Run<ConvertTo_BoolNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Char>(config);
+            BenchmarkRunner.Run<ConvertTo_CharNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_SByte>(config);
+            BenchmarkRunner.Run<ConvertTo_SByteNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Byte>(config);
+            BenchmarkRunner.Run<ConvertTo_ByteNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Short>(config);
+            BenchmarkRunner.Run<ConvertTo_ShortNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_UShort>(config);
+            BenchmarkRunner.Run<ConvertTo_UShortNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Int>(config);
+            BenchmarkRunner.Run<ConvertTo_IntNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_UInt>(config);
+            BenchmarkRunner.Run<ConvertTo_UIntNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Long>(config);
+            BenchmarkRunner.Run<ConvertTo_LongNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_ULong>(config);
+            BenchmarkRunner.Run<ConvertTo_ULongNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Float>(config);
+            BenchmarkRunner.Run<ConvertTo_FloatNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Double>(config);
+            BenchmarkRunner.Run<ConvertTo_DoubleNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_Decimal>(config);
+            BenchmarkRunner.Run<ConvertTo_DecimalNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_DateTime>(config);
+            BenchmarkRunner.Run<ConvertTo_DateTimeNullable>(config);
+            BenchmarkRunner.Run<ConvertTo_String>(config);
+            BenchmarkRunner.Run<ConvertTo_Object>(config);
+            BenchmarkRunner.Run<ConvertTo_Enum>(config);
+            BenchmarkRunner.Run<ConvertTo_IParent>(config);
         }
         #endregion
     }
