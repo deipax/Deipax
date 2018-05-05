@@ -33,10 +33,6 @@ namespace Benchmarks.Core
             //BenchmarkRunner.Run<AdHoc>(config);
 
             //RunSetterBenchmarks(config);
-
-            BenchmarkRunner.Run<Set_Prop_Enum>(config);
-            BenchmarkRunner.Run<Set_Prop_EnumNullable>(config);
-            BenchmarkRunner.Run<Set_Prop_EnumNullable_NoValue>(config);
         }
 
         #region Private Members

@@ -4,9 +4,7 @@ using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Deipax.Core.Concretes
 {
@@ -21,13 +19,6 @@ namespace Deipax.Core.Concretes
 
         #region Field Members
         private ConcurrentDictionary<Type, Delegate> _cache;
-
-        private static Func<Type, IModelInfo, Delegate> _createDelegate = CreateDelegate;
-
-        private static MethodInfo _createHelper = typeof(Getter<T, P>)
-            .GetRuntimeMethods()
-            .Where(x => x.Name == "CreateHelper")
-            .FirstOrDefault();
         #endregion
 
         #region IGetter<T> Members
@@ -36,25 +27,11 @@ namespace Deipax.Core.Concretes
 
         public Get<T, X> GetDelegate<X>()
         {
-            return (Get<T, X>)GetDelegate(typeof(X));
-        }
-
-        public Delegate GetDelegate(Type t)
-        {
-            return _cache.GetOrAdd(t, x => _createDelegate(x, ModelInfo));
+            return (Get<T, X>)_cache.GetOrAdd(typeof(X), x => CreateHelper<X>(ModelInfo));
         }
         #endregion
 
         #region Private Members
-        private static Delegate CreateDelegate(
-            Type t,
-            IModelInfo info)
-        {
-            return (Delegate)_createHelper
-                .MakeGenericMethod(new[] { t })
-                .Invoke(null, new[] { info });
-        }
-
         private static Get<T, X> CreateHelper<X>(
             IModelInfo info)
         {

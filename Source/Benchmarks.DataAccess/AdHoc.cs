@@ -1,7 +1,10 @@
-﻿using System.Data;
-using BenchmarkDotNet.Attributes;
-using Benchmarks.DataAccess.BaseClasses;
+﻿using BenchmarkDotNet.Attributes;
+using Deipax.Core.Common;
+using Deipax.Core.Interfaces;
 using Deipax.DataAccess.Interfaces;
+using System;
+using System.Data;
+using System.Globalization;
 using UnitTests.Common;
 
 namespace Benchmarks.DataAccess
@@ -18,32 +21,41 @@ namespace Benchmarks.DataAccess
             DbHelper.SetDbInitializer();
             DbHelper.SetDefaultConnectionFactory();
             _dbCon = DbHelper.GetNorthwind().CreateDbCon();
-            var cmd = _dbCon
+            var dbCmd = _dbCon
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql);
 
-            _reader = CreateCommand(cmd).ExecuteReader();
+            _reader = dbCmd.CreateCommand().ExecuteReader();
             _reader.Read();
-            _index = _reader.GetOrdinal("EmployeeId");
+            _record = _reader;
+            _index = _reader.GetOrdinal("CustomerPhone");
+            _instance = new MultipleFieldClass();
+            _provider = CultureInfo.InvariantCulture;
+            _setter = ModelAccess<MultipleFieldClass>.GetSetter(x => x.EmployeeId).SetFromRecord;
         }
 
         #region Field Member
         private IDataReader _reader;
+        private IDataRecord _record;
         private int _index;
+        private MultipleFieldClass _instance;
+        private IFormatProvider _provider;
+        private SetFromRecord<MultipleFieldClass> _setter;
         #endregion
 
         #region Public Members
         [Benchmark]
-        public void ReadAsInt()
+        public void IsDbNullAndGetString()
         {
-            int x = _reader.GetInt32(_index);
+            var y = _record.IsDBNull(_index);
+            var x = _record.GetString(_index);
         }
 
         [Benchmark]
-        public void ReadAsObject()
+        public void GetStringAsObject()
         {
-            object x = _reader.GetValue(_index);
+            var x = _record.GetValue(_index);
         }
 
         public override void AllFieldsAsClass()
@@ -64,38 +76,6 @@ namespace Benchmarks.DataAccess
         public override void SingleFieldAsStruct()
         {
             throw new System.NotImplementedException();
-        }
-        #endregion
-
-        #region Private Members
-        private static IDbCommand CreateCommand(
-           IDbCmd source)
-        {
-            var cmd = source.Connection.CreateCommand();
-
-            var prop = cmd.GetType().GetProperty("BindByName");
-
-            if (prop != null)
-            {
-                prop.SetValue(cmd, true);
-            }
-
-            if (source.Timeout > 0)
-            {
-                cmd.CommandTimeout = source.Timeout;
-            }
-
-            cmd.Transaction = source.Transaction;
-            cmd.CommandText = source.Sql;
-            cmd.CommandType = source.CommandType;
-            cmd.Parameters.Clear();
-
-            foreach (var p in source.Parameters)
-            {
-                cmd.Parameters.Add(p);
-            }
-
-            return cmd;
         }
         #endregion
     }

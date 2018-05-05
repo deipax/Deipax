@@ -1,31 +1,30 @@
-﻿using BenchmarkDotNet.Attributes;
-using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data;
 using UnitTests.Common;
 
-namespace Benchmarks.DataAccess.Deipax
+namespace UnitTests.DataAccess
 {
-    public class DeipaxSelect : BaseSelect
+    [TestClass]
+    public class MappingTests : BaseSelect
     {
         #region Field Members
         private IDbCon _dbCon;
         #endregion
 
-        [GlobalSetup]
-        public void GlobalSetup()
+        [TestInitialize]
+        public void Init()
         {
-            DbHelper.SetDbInitializer();
-            DbHelper.SetDefaultConnectionFactory();
             _dbCon = DbHelper.GetNorthwind().CreateDbCon();
         }
 
-        [GlobalCleanup]
-        public void GlobalCleanup()
+        [TestCleanup]
+        public void Cleanup()
         {
             _dbCon.Dispose();
         }
 
-        [Benchmark]
+        [TestMethod]
         public override void AllFieldsAsClass()
         {
             var tmp = _dbCon
@@ -35,7 +34,7 @@ namespace Benchmarks.DataAccess.Deipax
                 .AsList<MultipleFieldClass>();
         }
 
-        [Benchmark]
+        [TestMethod]
         public override void AllFieldsAsStruct()
         {
             var tmp = _dbCon
@@ -45,7 +44,7 @@ namespace Benchmarks.DataAccess.Deipax
                 .AsList<MultipleFieldStruct>();
         }
 
-        [Benchmark]
+        [TestMethod]
         public override void SingleFieldAsClass()
         {
             var tmp = _dbCon
@@ -55,7 +54,7 @@ namespace Benchmarks.DataAccess.Deipax
                 .AsList<SingleFieldClass>();
         }
 
-        [Benchmark]
+        [TestMethod]
         public override void SingleFieldAsStruct()
         {
             var tmp = _dbCon

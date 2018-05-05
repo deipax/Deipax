@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdHoc.cs" />
-    <Compile Include="BaseClasses\BaseSelect.cs" />
     <Compile Include="Dapper\DapperSelect.cs" />
     <Compile Include="Deipax\DeipaxSelect.cs" />
     <Compile Include="Deipax\DynamicBench.cs" />

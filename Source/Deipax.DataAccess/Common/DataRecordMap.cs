@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Deipax.Core.Common;
 using Deipax.Core.Interfaces;
 using System.Data;
@@ -34,7 +35,11 @@ namespace Deipax.DataAccess.Common
                 if (setters.TryGetValue(r.GetName(i), out ISetter<T> setter) &&
                     setter != null)
                 {
-                    tmp.Add(SetHelper<T>.Create(i, setter));
+                    tmp.Add(new SetHelper<T>()
+                    {
+                        Index = i,
+                        Set = setter.SetFromRecord
+                    });
                 }
             }
 
@@ -47,7 +52,8 @@ namespace Deipax.DataAccess.Common
 
             for (int i = 0; i < _count; i++)
             {
-                _setters[i].Set(ref retVal, r);
+                var setter = _setters[i];
+                setter.Set(ref retVal, r, setter.Index);
             }
 
             return retVal;
@@ -57,25 +63,7 @@ namespace Deipax.DataAccess.Common
 
     struct SetHelper<T>
     {
-        #region Field Members
-        private int _index;
-        private Set<T, object> _set;
-        #endregion
-
-        #region Public Members
-        public static SetHelper<T> Create(int index, ISetter<T> setter)
-        {
-            return new SetHelper<T>()
-            {
-                _index = index,
-                _set = setter.GetDelegate<object>()
-            };
-        }
-
-        public void Set(ref T item, IDataRecord r)
-        {
-            _set(ref item, r.GetValue(_index));
-        }
-        #endregion
+        public int Index;
+        public SetFromRecord<T> Set;
     }
 }

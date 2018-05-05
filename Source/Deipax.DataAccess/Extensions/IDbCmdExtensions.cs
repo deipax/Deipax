@@ -213,38 +213,36 @@ namespace Deipax.DataAccess.Interfaces
 	            return func(dbCmd);
 	        }
 	    }
+
+	    public static IDbCommand CreateCommand(
+	        this IDbCmd source)
+	    {
+	        var cmd = source.Connection.CreateCommand();
+
+	        var prop = cmd.GetType().GetProperty("BindByName");
+
+	        if (prop != null)
+	        {
+	            prop.SetValue(cmd, true);
+	        }
+
+	        if (source.Timeout > 0)
+	        {
+	            cmd.CommandTimeout = source.Timeout;
+	        }
+
+	        cmd.Transaction = source.Transaction;
+	        cmd.CommandText = source.Sql;
+	        cmd.CommandType = source.CommandType;
+	        cmd.Parameters.Clear();
+
+	        foreach (var p in source.Parameters)
+	        {
+	            cmd.Parameters.Add(p);
+	        }
+
+	        return cmd;
+	    }
         #endregion
-
-        #region Private Members
-        private static IDbCommand CreateCommand(
-			this IDbCmd source)
-		{
-			var cmd = source.Connection.CreateCommand();
-
-			var prop = cmd.GetType().GetProperty("BindByName");
-
-			if (prop != null)
-			{
-				prop.SetValue(cmd, true);
-			}
-
-			if (source.Timeout > 0)
-			{
-				cmd.CommandTimeout = source.Timeout;
-			}
-
-			cmd.Transaction = source.Transaction;
-			cmd.CommandText = source.Sql;
-			cmd.CommandType = source.CommandType;
-			cmd.Parameters.Clear();
-
-			foreach (var p in source.Parameters)
-			{
-				cmd.Parameters.Add(p);
-			}
-
-			return cmd;
-		}
-		#endregion
-	}
+    }
 }

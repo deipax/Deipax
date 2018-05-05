@@ -46,6 +46,7 @@
     <Compile Include="IDbConExtensionsTests.cs" />
     <Compile Include="IDbConnectionExtensionsTests.cs" />
     <Compile Include="IDbExtensionsTests.cs" />
+    <Compile Include="MappingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

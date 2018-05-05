@@ -4,9 +4,11 @@ using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
 
 namespace Deipax.Core.Concretes
 {
@@ -14,48 +16,44 @@ namespace Deipax.Core.Concretes
     {
         public Setter(IModelInfo info)
         {
-            _cache = new ConcurrentDictionary<Type, Delegate>();
             Name = info.Name;
             ModelInfo = info;
+
+            _cache = new ConcurrentDictionary<Type, Delegate>();
+            _lazy = new Lazy<SetFromRecord<T>>(
+                GetSetFromRecord,
+                LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
         #region Field Members
         private ConcurrentDictionary<Type, Delegate> _cache;
-
-        private static Func<Type, IModelInfo, Delegate> _createDelegate = CreateDelegate;
-
-        private static MethodInfo _createHelper = typeof(Setter<T, P>)
-            .GetRuntimeMethods()
-            .Where(x => x.Name == "CreateHelper")
-            .FirstOrDefault();
+        private Lazy<SetFromRecord<T>> _lazy;
         #endregion
 
         #region ISetter<T> Members
         public string Name { get; private set; }
         public IModelInfo ModelInfo { get; private set; }
 
-        public Set<T, X> GetDelegate<X>()
+        public SetFromRecord<T> SetFromRecord
         {
-            return (Set<T, X>)GetDelegate(typeof(X));
+            get { return _lazy.Value; }
         }
 
-        public Delegate GetDelegate(Type t)
+        public Set<T, X> GetDelegate<X>()
         {
-            return _cache.GetOrAdd(t, x => _createDelegate(x, ModelInfo));
+            return (Set<T, X>)_cache.GetOrAdd(typeof(X), x => Create<X>(ModelInfo));
         }
         #endregion
 
         #region Private Members
-        private static Delegate CreateDelegate(
-            Type t,
+        private static Set<T, X> Create<X>(
             IModelInfo info)
         {
-            return (Delegate)_createHelper
-                .MakeGenericMethod(new[] { t })
-                .Invoke(null, new[] { info });
+            var setter = CreateExpression<X>(info);
+            return setter.Compile();
         }
 
-        private static Set<T, X> CreateHelper<X>(
+        private static Expression<Set<T, X>> CreateExpression<X>(
             IModelInfo info)
         {
             var xType = typeof(X);
@@ -132,14 +130,49 @@ namespace Deipax.Core.Concretes
                 expressions.Add(Expression.Assign(memberExpression, invoke));
             }
 
-            var setter = Expression.Lambda<Set<T, X>>(
+            return Expression.Lambda<Set<T, X>>(
                 Expression.Block(expressions),
                 instance,
                 input,
                 provider);
-
-            return setter.Compile();
         }
-        #endregion
+
+        private SetFromRecord<T> GetSetFromRecord()
+        {
+            var instance = Expression.Parameter(typeof(T).MakeByRefType(), "instance");
+            var record = Expression.Parameter(typeof(IDataRecord), "record");
+            var index = Expression.Parameter(typeof(int), "index");
+            var provider = Expression.Parameter(typeof(IFormatProvider), "provider");
+
+            var method = typeof(IDataRecord)
+                .GetRuntimeMethods()
+                .Where(x =>
+                    x.ReturnType == typeof(object) &&
+                    x.Name == "GetValue" &&
+                    x.GetParameters().Count() == 1 &&
+                    x.GetParameters()[0].ParameterType == typeof(int))
+                .FirstOrDefault();
+
+            MethodCallExpression readCall = Expression.Call(
+                record,
+                method,
+                index);
+
+            InvocationExpression setCall = Expression.Invoke(
+                CreateExpression<object>(ModelInfo),
+                instance,
+                readCall,
+                provider);
+
+            var lambda = Expression.Lambda<SetFromRecord<T>>(
+                setCall,
+                instance,
+                record,
+                index,
+                provider);
+
+            return lambda.Compile();
+        }
     }
+    #endregion
 }

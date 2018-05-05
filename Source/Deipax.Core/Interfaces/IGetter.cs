@@ -11,6 +11,5 @@ namespace Deipax.Core.Interfaces
         string Name { get; }
         IModelInfo ModelInfo { get; }
         Get<T, X> GetDelegate<X>();
-        Delegate GetDelegate(Type t);
     }
 }
