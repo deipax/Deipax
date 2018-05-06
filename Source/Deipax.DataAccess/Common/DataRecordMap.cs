@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Deipax.Core.Common;
 using Deipax.Core.Interfaces;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Deipax.DataAccess.Common
@@ -11,7 +11,6 @@ namespace Deipax.DataAccess.Common
         private DataRecordMap(List<SetHelper<T>> setters)
         {
             _setters = setters;
-            _count = setters.Count;
         }
 
         private DataRecordMap()
@@ -20,7 +19,6 @@ namespace Deipax.DataAccess.Common
 
         #region Field Members
         private List<SetHelper<T>> _setters;
-        private int _count;
         #endregion
 
         #region Public Members
@@ -35,11 +33,7 @@ namespace Deipax.DataAccess.Common
                 if (setters.TryGetValue(r.GetName(i), out ISetter<T> setter) &&
                     setter != null)
                 {
-                    tmp.Add(new SetHelper<T>()
-                    {
-                        Index = i,
-                        Set = setter.SetFromRecord
-                    });
+                    tmp.Add(new SetHelper<T>(i, setter.GetDelegate<object>()));
                 }
             }
 
@@ -50,10 +44,9 @@ namespace Deipax.DataAccess.Common
         {
             T retVal = new T();
 
-            for (int i = 0; i < _count; i++)
+            for (int i = 0; i < _setters.Count; i++)
             {
-                var setter = _setters[i];
-                setter.Set(ref retVal, r, setter.Index);
+                _setters[i].Set(ref retVal, r);
             }
 
             return retVal;
@@ -61,9 +54,29 @@ namespace Deipax.DataAccess.Common
         #endregion
     }
 
-    struct SetHelper<T>
+    class SetHelper<T>
     {
-        public int Index;
-        public SetFromRecord<T> Set;
+        public SetHelper(int index, Set<T, object> set)
+        {
+            _index = index;
+            _set = set;
+        }
+
+        #region Fields
+        private int _index;
+        private Set<T, object> _set;
+        #endregion
+
+        #region Public Members
+        public void Set(ref T instance, IDataRecord r)
+        {
+            object x = r.GetValue(_index);
+
+            if (!DBNull.Value.Equals(x) && x != null)
+            {
+                _set(ref instance, x);
+            }
+        }
+        #endregion
     }
 }

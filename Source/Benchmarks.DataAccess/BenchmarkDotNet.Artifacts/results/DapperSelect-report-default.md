@@ -8,7 +8,7 @@ Frequency=3435896 Hz, Resolution=291.0449 ns, Timer=TSC
 
               Method |      Mean |     Error |    StdDev |     Gen 0 |     Gen 1 |    Gen 2 |  Allocated |
 -------------------- |----------:|----------:|----------:|----------:|----------:|---------:|-----------:|
-    AllFieldsAsClass | 46.663 ms | 0.9236 ms | 0.8639 ms | 1250.0000 |  875.0000 |  62.5000 | 6931.85 KB |
-   AllFieldsAsStruct | 51.410 ms | 0.5241 ms | 0.4903 ms | 1625.0000 | 1125.0000 | 437.5000 | 8598.74 KB |
-  SingleFieldAsClass |  7.521 ms | 0.1142 ms | 0.1069 ms |   39.0625 |         - |        - |  182.69 KB |
- SingleFieldAsStruct |  7.203 ms | 0.0293 ms | 0.0260 ms |   39.0625 |    7.8125 |        - |  182.66 KB |
+    AllFieldsAsClass | 38.873 ms | 0.2566 ms | 0.2400 ms | 1500.0000 | 1187.5000 | 250.0000 | 6931.72 KB |
+   AllFieldsAsStruct | 50.050 ms | 0.8953 ms | 0.6990 ms | 1562.5000 | 1062.5000 | 437.5000 | 8597.79 KB |
+  SingleFieldAsClass |  7.035 ms | 0.0395 ms | 0.0369 ms |   39.0625 |         - |        - |  182.69 KB |
+ SingleFieldAsStruct |  6.911 ms | 0.0284 ms | 0.0266 ms |   39.0625 |    7.8125 |        - |  182.63 KB |

@@ -32,7 +32,6 @@ namespace Benchmarks.DataAccess
             _index = _reader.GetOrdinal("CustomerPhone");
             _instance = new MultipleFieldClass();
             _provider = CultureInfo.InvariantCulture;
-            _setter = ModelAccess<MultipleFieldClass>.GetSetter(x => x.EmployeeId).SetFromRecord;
         }
 
         #region Field Member
@@ -41,7 +40,6 @@ namespace Benchmarks.DataAccess
         private int _index;
         private MultipleFieldClass _instance;
         private IFormatProvider _provider;
-        private SetFromRecord<MultipleFieldClass> _setter;
         #endregion
 
         #region Public Members
