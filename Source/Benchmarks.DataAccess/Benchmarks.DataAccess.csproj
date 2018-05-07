@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdHoc.cs" />
-    <Compile Include="Dapper\DapperSelect.cs" />
     <Compile Include="Deipax\DeipaxSelect.cs" />
     <Compile Include="Deipax\DynamicBench.cs" />
     <Compile Include="Program.cs" />
@@ -110,7 +109,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.DynamicBench-report-default.md" />
-    <None Include="BenchmarkDotNet.Artifacts\results\DapperSelect-report-default.md" />
     <None Include="BenchmarkDotNet.Artifacts\results\DeipaxSelect-report-default.md" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -2,7 +2,6 @@
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Running;
-using Benchmarks.DataAccess.Dapper;
 using Benchmarks.DataAccess.Deipax;
 using System.Linq;
 
@@ -28,7 +27,6 @@ namespace Benchmarks.DataAccess
 
             //BenchmarkRunner.Run<DynamicBench>(config);
             BenchmarkRunner.Run<DeipaxSelect>(config);
-            BenchmarkRunner.Run<DapperSelect>(config);
 
             //BenchmarkRunner.Run<AdHoc>(config);
         }

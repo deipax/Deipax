@@ -2,6 +2,7 @@
 using Deipax.DataAccess.Interfaces;
 using System.Data;
 using UnitTests.Common;
+using Dapper;
 
 namespace Benchmarks.DataAccess.Deipax
 {
@@ -9,6 +10,7 @@ namespace Benchmarks.DataAccess.Deipax
     {
         #region Field Members
         private IDbCon _dbCon;
+        private IDbConnection _dbConnection;
         #endregion
 
         [GlobalSetup]
@@ -17,6 +19,8 @@ namespace Benchmarks.DataAccess.Deipax
             DbHelper.SetDbInitializer();
             DbHelper.SetDefaultConnectionFactory();
             _dbCon = DbHelper.GetNorthwind().CreateDbCon();
+            _dbConnection = _dbCon.GetConnection();
+            _dbConnection.Open();
         }
 
         [GlobalCleanup]
@@ -63,6 +67,30 @@ namespace Benchmarks.DataAccess.Deipax
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
                 .AsList<SingleFieldStruct>();
+        }
+
+        [Benchmark]
+        public void AllFieldsAsClass_Dapper()
+        {
+            var tmp = _dbConnection.Query<MultipleFieldClass>(_sql);
+        }
+
+        [Benchmark]
+        public void AllFieldsAsStruct_Dapper()
+        {
+            var tmp = _dbConnection.Query<MultipleFieldStruct>(_sql);
+        }
+
+        [Benchmark]
+        public void SingleFieldAsClass_Dapper()
+        {
+            var tmp = _dbConnection.Query<SingleFieldClass>(_sql);
+        }
+
+        [Benchmark]
+        public void SingleFieldAsStruct_Dapper()
+        {
+            var tmp = _dbConnection.Query<SingleFieldStruct>(_sql);
         }
     }
 }

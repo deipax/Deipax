@@ -1,5 +1,4 @@
-﻿using System;
-using Deipax.Core.Common;
+﻿using Deipax.Core.Common;
 using Deipax.Core.Interfaces;
 using System.Collections.Generic;
 using System.Data;
@@ -13,10 +12,6 @@ namespace Deipax.DataAccess.Common
             _setters = setters;
         }
 
-        private DataRecordMap()
-        {
-        }
-
         #region Field Members
         private List<SetHelper<T>> _setters;
         #endregion
@@ -26,6 +21,7 @@ namespace Deipax.DataAccess.Common
         {
             var setters = ModelAccess<T>.Setters;
             int fieldCount = r.FieldCount;
+
             List<SetHelper<T>> tmp = new List<SetHelper<T>>(fieldCount);
 
             for (var i = 0; i < fieldCount; i++)
@@ -33,7 +29,8 @@ namespace Deipax.DataAccess.Common
                 if (setters.TryGetValue(r.GetName(i), out ISetter<T> setter) &&
                     setter != null)
                 {
-                    tmp.Add(new SetHelper<T>(i, setter.GetDelegate<object>()));
+                    var fieldType = r.GetFieldType(i);
+                    tmp.Add(new SetHelper<T>(i, setter.GetSetFromRecord(fieldType)));
                 }
             }
 
@@ -56,7 +53,7 @@ namespace Deipax.DataAccess.Common
 
     class SetHelper<T>
     {
-        public SetHelper(int index, Set<T, object> set)
+        public SetHelper(int index, SetFromRecord<T> set)
         {
             _index = index;
             _set = set;
@@ -64,18 +61,13 @@ namespace Deipax.DataAccess.Common
 
         #region Fields
         private int _index;
-        private Set<T, object> _set;
+        private SetFromRecord<T> _set;
         #endregion
 
         #region Public Members
         public void Set(ref T instance, IDataRecord r)
         {
-            object x = r.GetValue(_index);
-
-            if (!DBNull.Value.Equals(x) && x != null)
-            {
-                _set(ref instance, x);
-            }
+            _set(ref instance, r, _index);
         }
         #endregion
     }

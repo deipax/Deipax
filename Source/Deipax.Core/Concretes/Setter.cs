@@ -4,7 +4,10 @@ using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Deipax.Core.Concretes
 {
@@ -15,10 +18,12 @@ namespace Deipax.Core.Concretes
             Name = info.Name;
             ModelInfo = info;
             _cache = new ConcurrentDictionary<Type, Delegate>();
+            _setCache = new ConcurrentDictionary<Type, SetFromRecord<T>>();
         }
 
         #region Field Members
         private ConcurrentDictionary<Type, Delegate> _cache;
+        private ConcurrentDictionary<Type, SetFromRecord<T>> _setCache;
         #endregion
 
         #region ISetter<T> Members
@@ -29,14 +34,18 @@ namespace Deipax.Core.Concretes
         {
             return (Set<T, X>)_cache.GetOrAdd(typeof(X), x => Create<X>(ModelInfo));
         }
+
+        public SetFromRecord<T> GetSetFromRecord(Type t)
+        {
+            return _setCache.GetOrAdd(t, x => CreateSetFromHelper(x, ModelInfo));
+        }
         #endregion
 
         #region Private Members
         private static Set<T, X> Create<X>(
             IModelInfo info)
         {
-            var setter = CreateExpression<X>(info);
-            return setter.Compile();
+            return CreateExpression<X>(info).Compile();
         }
 
         private static Expression<Set<T, X>> CreateExpression<X>(
@@ -121,6 +130,70 @@ namespace Deipax.Core.Concretes
                 instance,
                 input,
                 provider);
+        }
+
+        private static SetFromRecord<T> CreateSetFromHelper(
+            Type t,
+            IModelInfo info)
+        {
+            return (SetFromRecord<T>)typeof(Setter<T, P>)
+                .GetRuntimeMethods()
+                .Where(x => x.Name == "CreateSetFrom")
+                .FirstOrDefault()
+                .MakeGenericMethod(new[] { t })
+                .Invoke(null, new[] { info });
+        }
+
+        private static SetFromRecord<T> CreateSetFrom<X>(
+            IModelInfo info)
+        {
+            var xType = typeof(X);
+
+            var getValueMethod = typeof(IDataRecord)
+                .GetRuntimeMethods()
+                .Where(x => x.Name == "GetValue")
+                .FirstOrDefault();
+
+            var instance = Expression.Parameter(typeof(T).MakeByRefType(), "instance");
+            var index = Expression.Parameter(typeof(int), "index");
+            var record = Expression.Parameter(typeof(IDataRecord), "record");
+            var provider = Expression.Parameter(typeof(IFormatProvider), "provider");
+            var value = Expression.Variable(typeof(object), "value");
+
+            var getValueCall = Expression.Call(
+                record,
+                getValueMethod,
+                index);
+
+            var assignValue = Expression.Assign(value, getValueCall);
+
+            var isNullOrDbNull = Expression.Or(
+                Expression.Equal(value, Expression.Constant(DBNull.Value, typeof(object))),
+                Expression.Equal(value, Expression.Constant(null, typeof(object))));
+
+            var setCall = Expression.Invoke(
+                CreateExpression<X>(info),
+                instance,
+                Expression.Convert(value, xType),
+                provider);
+
+            var ifThenElse = Expression.IfThen(
+                Expression.Not(isNullOrDbNull),
+                setCall);
+
+            BlockExpression block = Expression.Block(
+                new[] { value },
+                assignValue,
+                ifThenElse);
+
+            var lambda = Expression.Lambda<SetFromRecord<T>>(
+                block,
+                instance,
+                record,
+                index,
+                provider);
+
+            return lambda.Compile();
         }
     }
     #endregion
