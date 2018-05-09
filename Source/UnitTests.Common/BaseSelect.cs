@@ -57,11 +57,6 @@
              inner join main.[Customer] c on c.[Id] = o.[CustomerId]
              inner join main.[Employee] e on e.[Id] = o.[EmployeeId]";
         #endregion
-
-        public abstract void AllFieldsAsClass();
-        public abstract void AllFieldsAsStruct();
-        public abstract void SingleFieldAsClass();
-        public abstract void SingleFieldAsStruct();
     }
 
     public class MultipleFieldClass

@@ -30,7 +30,7 @@ namespace Benchmarks.DataAccess.Deipax
         }
 
         [Benchmark]
-        public override void AllFieldsAsClass()
+        public void AllFieldsAsClass_Deipax()
         {
             var tmp = _dbCon
                 .CreateDbCmd()
@@ -40,7 +40,7 @@ namespace Benchmarks.DataAccess.Deipax
         }
 
         [Benchmark]
-        public override void AllFieldsAsStruct()
+        public void AllFieldsAsStruct_Deipax()
         {
             var tmp = _dbCon
                 .CreateDbCmd()
@@ -49,8 +49,8 @@ namespace Benchmarks.DataAccess.Deipax
                 .AsList<MultipleFieldStruct>();
         }
 
-        [Benchmark]
-        public override void SingleFieldAsClass()
+        //[Benchmark]
+        public void SingleFieldAsClass_Deipax()
         {
             var tmp = _dbCon
                 .CreateDbCmd()
@@ -59,8 +59,8 @@ namespace Benchmarks.DataAccess.Deipax
                 .AsList<SingleFieldClass>();
         }
 
-        [Benchmark]
-        public override void SingleFieldAsStruct()
+        //[Benchmark]
+        public void SingleFieldAsStruct_Deipax()
         {
             var tmp = _dbCon
                 .CreateDbCmd()
@@ -81,13 +81,13 @@ namespace Benchmarks.DataAccess.Deipax
             var tmp = _dbConnection.Query<MultipleFieldStruct>(_sql);
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void SingleFieldAsClass_Dapper()
         {
             var tmp = _dbConnection.Query<SingleFieldClass>(_sql);
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void SingleFieldAsStruct_Dapper()
         {
             var tmp = _dbConnection.Query<SingleFieldStruct>(_sql);

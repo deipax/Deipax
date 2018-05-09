@@ -1,6 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Deipax.Core.Common;
-using Deipax.Core.Interfaces;
 using Deipax.DataAccess.Interfaces;
 using System;
 using System.Data;
@@ -54,26 +52,6 @@ namespace Benchmarks.DataAccess
         public void GetStringAsObject()
         {
             var x = _record.GetValue(_index);
-        }
-
-        public override void AllFieldsAsClass()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void AllFieldsAsStruct()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void SingleFieldAsClass()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void SingleFieldAsStruct()
-        {
-            throw new System.NotImplementedException();
         }
         #endregion
     }

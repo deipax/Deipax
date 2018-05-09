@@ -129,11 +129,11 @@ namespace Deipax.DataAccess.Interfaces
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
-				var map = DataRecordMap<T>.Create(r);
+			    Func<IDataRecord, T> map = DataRecordMap<T>.Create(r);
 
 				while (r.Read())
 				{
-					yield return map.From(r);
+					yield return map(r);
 				}
 			}
 		}
