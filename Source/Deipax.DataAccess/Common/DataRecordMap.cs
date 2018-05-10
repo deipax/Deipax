@@ -67,7 +67,7 @@ namespace Deipax.DataAccess.Common
             var labelExpression = Expression.Label(labelTarget, Expression.Default(typeof(T)));
 
             var isDbNull = Expression.Equal(
-                value, 
+                value,
                 Expression.Constant(DBNull.Value, typeof(object)));
 
             List<Expression> expressions = new List<Expression>();
@@ -94,7 +94,7 @@ namespace Deipax.DataAccess.Common
                     expressions.Add(Expression.Assign(value, getValueCall));
 
                     var setCall = (Expression)_createSetField
-                        .MakeGenericMethod(new[] { fieldType })
+                        .MakeGenericMethod(new[] { setter.ModelInfo.Type, fieldType })
                         .Invoke(null, new object[] { instance, value, provider, setter });
 
                     var ifThenElse = Expression.IfThen(
@@ -119,7 +119,7 @@ namespace Deipax.DataAccess.Common
             return lambda.Compile();
         }
 
-        private static InvocationExpression CreateSetField<X>(
+        private static InvocationExpression CreateSetField<P, X>(
             ParameterExpression instance,
             ParameterExpression value,
             ParameterExpression provider,

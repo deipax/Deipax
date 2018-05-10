@@ -2,7 +2,6 @@
 using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -153,7 +152,7 @@ namespace Deipax.Core.Conversion.Factories
         #endregion
 
         #region IConvertFactory Members
-        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.UnderlyingToType == typeof(T) &&
@@ -172,7 +171,7 @@ namespace Deipax.Core.Conversion.Factories
                 {
                     if (_invalidCastTypes.Exists(x => x == args.UnderlyingFromType))
                     {
-                        return ConvertConfig.Default?.Get<TFrom, TTo>(args);
+                        return ConvertConfig.Default?.Get(args);
                     }
                     else
                     {
@@ -192,7 +191,7 @@ namespace Deipax.Core.Conversion.Factories
                         args.Add(returnExpression);
                         args.Add(args.LabelExpression);
 
-                        return args.GetConvertResult();
+                        return args.Get();
                     }
                 }
             }

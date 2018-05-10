@@ -10,7 +10,7 @@ namespace Deipax.Core.Conversion.Factories
     public class FromEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.UnderlyingFromType.IsEnum &&
@@ -44,11 +44,11 @@ namespace Deipax.Core.Conversion.Factories
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
 
-                    return args.GetConvertResult();
+                    return args.Get();
                 }
                 else if (args.UnderlyingToType == typeof(DateTime))
                 {
-                    return ConvertConfig.Default?.Get<TFrom, TTo>(args);
+                    return ConvertConfig.Default?.Get(args);
                 }
             }
 

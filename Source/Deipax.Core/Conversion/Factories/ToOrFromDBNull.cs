@@ -7,7 +7,7 @@ namespace Deipax.Core.Conversion.Factories
     public class ToOrFromDBNull : IConvertFactory
     {
         #region IConvertFactory Members
-        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.ToType == typeof(DBNull))
@@ -29,7 +29,7 @@ namespace Deipax.Core.Conversion.Factories
                 args.Add(args.LabelExpression);
             }
 
-            return args.GetConvertResult();
+            return args.Get();
         }
         #endregion
     }

@@ -10,7 +10,7 @@ namespace Deipax.Core.Conversion.Factories
     public class ToString : IConvertFactory
     {
         #region IConvertFactory Members
-        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.ToType == typeof(string))
@@ -36,16 +36,16 @@ namespace Deipax.Core.Conversion.Factories
                         args.GetDefaultProvider());
 
                     GotoExpression returnExpression = Expression.Return(
-                        args.LabelTarget, 
+                        args.LabelTarget,
                         callExpression);
 
                     args.AddGuards();
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
-                    return args.GetConvertResult();
+                    return args.Get();
                 }
 
-                var result = new FromIConvertible().Get<TFrom, TTo>(args);
+                var result = new FromIConvertible().Get(args);
 
                 if (result != null)
                 {
@@ -64,13 +64,13 @@ namespace Deipax.Core.Conversion.Factories
                         method);
 
                     GotoExpression returnExpression = Expression.Return(
-                        args.LabelTarget, 
+                        args.LabelTarget,
                         callExpression);
 
                     args.AddGuards();
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
-                    return args.GetConvertResult();
+                    return args.Get();
                 }
             }
 

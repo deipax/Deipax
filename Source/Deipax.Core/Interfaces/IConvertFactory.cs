@@ -21,17 +21,18 @@ namespace Deipax.Core.Interfaces
 
         void Add(Expression expr);
         void AddVariable(ParameterExpression variable);
-        Convert<TFrom, TTo> GetConvertResult();
+        Expression<Convert<TFrom, TTo>> Get();
     }
 
     public interface IConvertFactory
     {
-        Convert<TFrom, TTo> Get<TFrom, TTo>(IExpArgs<TFrom, TTo> args);
+        Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(IExpArgs<TFrom, TTo> args);
     }
 
     public interface IConvertResult<TFrom, TTo>
     {
         IConvertFactory Factory { get; }
         Convert<TFrom, TTo> Func { get; }
+        Expression<Convert<TFrom, TTo>> Expression { get; }
     }
 }

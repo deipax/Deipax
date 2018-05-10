@@ -1,4 +1,5 @@
-﻿using Deipax.Core.Interfaces;
+﻿using System.Linq.Expressions;
+using Deipax.Core.Interfaces;
 
 namespace Deipax.Core.Conversion
 {
@@ -6,11 +7,14 @@ namespace Deipax.Core.Conversion
     {
         static ConvertTo()
         {
-            Result = ConvertConfig.Get<TFrom, TTo>();
-            From = Result?.Func;
+            var result = ConvertConfig.Get<TFrom, TTo>();
+            From = result?.Func;
+            Factory = result?.Factory;
+            Expression = result?.Expression;
         }
 
         public static readonly Convert<TFrom, TTo> From;
-        public static readonly IConvertResult<TFrom, TTo> Result;
+        public static readonly IConvertFactory Factory;
+        public static readonly Expression<Convert<TFrom, TTo>> Expression;
     }
 }

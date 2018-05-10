@@ -10,7 +10,7 @@ namespace Deipax.Core.Conversion.Factories
     public class FromIConvertible : IConvertFactory
     {
         #region IConvertFactory Members
-        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (typeof(IConvertible).IsAssignableFrom(args.UnderlyingFromType) &&
@@ -45,7 +45,7 @@ namespace Deipax.Core.Conversion.Factories
                         methodInfo,
                         args.GetDefaultProvider());
 
-                    GotoExpression returnExpression = args.ToType.IsNullable() 
+                    GotoExpression returnExpression = args.ToType.IsNullable()
                         ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
                         : Expression.Return(args.LabelTarget, callExpression);
 
@@ -56,7 +56,7 @@ namespace Deipax.Core.Conversion.Factories
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
 
-                    return args.GetConvertResult();
+                    return args.Get();
                 }
             }
 

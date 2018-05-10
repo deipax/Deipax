@@ -39,17 +39,14 @@ namespace UnitTests.DataAccess
         [TestMethod]
         public void AllFieldsAsClass()
         {
-            for (int i = 0; i < 500; i++)
-            {
-                var tmp = _dbCon
-                    .CreateDbCmd()
-                    .SetCommandType(CommandType.Text)
-                    .SetSql(_sql)
-                    .AsList<MultipleFieldClass>();
-            }
+            var tmp = _dbCon
+                .CreateDbCmd()
+                .SetCommandType(CommandType.Text)
+                .SetSql(_sql)
+                .AsList<MultipleFieldClass>();
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void AllFieldsAsStruct()
         {
             var tmp = _dbCon
@@ -59,7 +56,7 @@ namespace UnitTests.DataAccess
                 .AsList<MultipleFieldStruct>();
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void SingleFieldAsClass()
         {
             var tmp = _dbCon
@@ -69,7 +66,7 @@ namespace UnitTests.DataAccess
                 .AsList<SingleFieldClass>();
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void SingleFieldAsStruct()
         {
             var tmp = _dbCon
@@ -79,13 +76,10 @@ namespace UnitTests.DataAccess
                 .AsList<SingleFieldStruct>();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void AllFieldsAsClass_Dapper()
         {
-            for (int i = 0; i < 500; i++)
-            {
-                var tmp = _dbConnection.Query<MultipleFieldClass>(_sql);
-            }
+            var tmp = _dbConnection.Query<MultipleFieldClass>(_sql);
         }
 
         //[TestMethod]

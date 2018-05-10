@@ -53,7 +53,7 @@ namespace Deipax.Core.Conversion
         {
             IExpArgs<TFrom, TTo> args = new ExpArgs<TFrom, TTo>();
 
-            Convert<TFrom, TTo> result = null;
+            Expression<Convert<TFrom, TTo>> result = null;
 
             foreach (var factory in _defaults)
             {
@@ -64,7 +64,8 @@ namespace Deipax.Core.Conversion
                     return new Result<TFrom, TTo>()
                     {
                         Factory = factory,
-                        Func = result,
+                        Func = result.Compile(),
+                        Expression = result
                     };
                 }
             }
@@ -76,7 +77,8 @@ namespace Deipax.Core.Conversion
                 return new Result<TFrom, TTo>()
                 {
                     Factory = Default,
-                    Func = result,
+                    Func = result.Compile(),
+                    Expression = result
                 };
             }
 
@@ -89,6 +91,7 @@ namespace Deipax.Core.Conversion
         {
             public IConvertFactory Factory { get; set; }
             public Convert<TFrom, TTo> Func { get; set; }
+            public Expression<Convert<TFrom, TTo>> Expression { get; set; }
         }
 
         class ExpArgs<TFrom, TTo> : IExpArgs<TFrom, TTo>
@@ -139,7 +142,7 @@ namespace Deipax.Core.Conversion
                 }
             }
 
-            public Convert<TFrom, TTo> GetConvertResult()
+            public Expression<Convert<TFrom, TTo>> Get()
             {
                 if (_expressions.Count <= 0)
                 {
@@ -160,7 +163,7 @@ namespace Deipax.Core.Conversion
                     block = Expression.Block(ToType, _expressions);
                 }
 
-                return Expression.Lambda<Convert<TFrom, TTo>>(block, Input, Provider).Compile();
+                return Expression.Lambda<Convert<TFrom, TTo>>(block, Input, Provider);
             }
             #endregion
         }

@@ -10,7 +10,7 @@ namespace Deipax.Core.Conversion.Factories
     public class FromObject : IConvertFactory
     {
         #region IConvertFactory Members
-        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             // This will only return a func IF TFrom is an object
@@ -53,7 +53,7 @@ namespace Deipax.Core.Conversion.Factories
                     args.Add(ifConverterNullReturn);
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
-                    return args.GetConvertResult();
+                    return args.Get();
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Deipax.Core.Conversion.Factories
                     args.AddGuards();
                     args.Add(tryCatchExpression);
                     args.Add(args.LabelExpression);
-                    return args.GetConvertResult();
+                    return args.Get();
                 }
             }
 

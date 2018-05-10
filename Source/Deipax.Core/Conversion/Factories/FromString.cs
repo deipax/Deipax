@@ -10,7 +10,7 @@ namespace Deipax.Core.Conversion.Factories
     public class FromString : IConvertFactory
     {
         #region IConvertFactory Members
-        public Convert<TFrom, TTo> Get<TFrom, TTo>(
+        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.FromType == typeof(string) &&
@@ -40,7 +40,7 @@ namespace Deipax.Core.Conversion.Factories
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
 
-                    return args.GetConvertResult();
+                    return args.Get();
                 }
             }
 
