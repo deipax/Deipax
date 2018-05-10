@@ -39,7 +39,7 @@ namespace UnitTests.DataAccess
         [TestMethod]
         public void AllFieldsAsClass()
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 500; i++)
             {
                 var tmp = _dbCon
                     .CreateDbCmd()
@@ -82,7 +82,7 @@ namespace UnitTests.DataAccess
         [TestMethod]
         public void AllFieldsAsClass_Dapper()
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 500; i++)
             {
                 var tmp = _dbConnection.Query<MultipleFieldClass>(_sql);
             }
