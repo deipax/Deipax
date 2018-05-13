@@ -3,8 +3,6 @@ using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq.Expressions;
 
 namespace Deipax.Core.Concretes
@@ -37,6 +35,7 @@ namespace Deipax.Core.Concretes
         {
             var xType = typeof(X);
 
+            var tmp = Expression.Variable(typeof(P), "tmp");
             var input = Expression.Parameter(typeof(X), "input");
             var instance = Expression.Parameter(typeof(T).MakeByRefType(), "instance");
             var provider = Expression.Parameter(typeof(IFormatProvider), "provider");
@@ -45,16 +44,23 @@ namespace Deipax.Core.Concretes
                 instance,
                 ModelInfo.GetOptimalMemberInfo());
 
-            List<Expression> expressions = new List<Expression>();
+            var invoke = Expression.Invoke(
+                ConvertTo<P, X>.Expression,
+                input,
+                provider);
+
+            BlockExpression block = null;
 
             if (ModelInfo.Type == xType)
             {
-                expressions.Add(Expression.Assign(memberExpression, input));
+                block = Expression.Block(Expression.Assign(memberExpression, input));
             }
             else if (ModelInfo.Type == typeof(object) &&
                      !xType.IsNullable())
             {
-                expressions.Add(Expression.Assign(memberExpression, Expression.Convert(input, typeof(object))));
+                block = Expression.Block(Expression.Assign(
+                    memberExpression, 
+                    Expression.Convert(input, typeof(object))));
             }
             else if (ModelInfo.Type == typeof(object) &&
                      xType.IsNullable())
@@ -66,7 +72,7 @@ namespace Deipax.Core.Concretes
                     Expression.Assign(memberExpression, Expression.Convert(value, typeof(object))),
                     Expression.Assign(memberExpression, Expression.Default(ModelInfo.Type)));
 
-                expressions.Add(ifThenElse);
+                block = Expression.Block(ifThenElse);
             }
             else if (xType.IsNullable() &&
                      Nullable.GetUnderlyingType(xType) == ModelInfo.Type)
@@ -78,39 +84,37 @@ namespace Deipax.Core.Concretes
                     Expression.Assign(memberExpression, Expression.Convert(value, ModelInfo.Type)),
                     Expression.Assign(memberExpression, Expression.Default(ModelInfo.Type)));
 
-                expressions.Add(ifThenElse);
+                block = Expression.Block(ifThenElse);
             }
             else if (ModelInfo.Type.IsNullable() &&
                      Nullable.GetUnderlyingType(ModelInfo.Type) == xType)
             {
-                expressions.Add(Expression.Assign(memberExpression, Expression.Convert(input, ModelInfo.Type)));
+                block = Expression.Block(Expression.Assign(
+                    memberExpression, 
+                    Expression.Convert(input, ModelInfo.Type)));
             }
             else if (xType == typeof(object))
             {
-                var invoke = Expression.Invoke(
-                    Expression.Constant(ConvertTo<P, X>.From),
-                    input,
-                    provider);
-
                 var ifThenElse = Expression.IfThenElse(
                     Expression.TypeEqual(input, ModelInfo.Type),
                     Expression.Assign(memberExpression, Expression.Convert(input, ModelInfo.Type)),
-                    Expression.Assign(memberExpression, invoke));
+                    Expression.Block(
+                        new[] { tmp },
+                        Expression.Assign(tmp, invoke),
+                        Expression.Assign(memberExpression, tmp)));
 
-                expressions.Add(ifThenElse);
+                block = Expression.Block(ifThenElse);
             }
             else if (xType != ModelInfo.Type)
             {
-                var invoke = Expression.Invoke(
-                    Expression.Constant(ConvertTo<P, X>.From),
-                    input,
-                    provider);
-
-                expressions.Add(Expression.Assign(memberExpression, invoke));
+                block = Expression.Block(
+                    new[] { tmp },
+                    Expression.Assign(tmp, invoke),
+                    Expression.Assign(memberExpression, tmp));
             }
 
             return Expression.Lambda<Set<T, X>>(
-                Expression.Block(expressions),
+                block,
                 instance,
                 input,
                 provider);

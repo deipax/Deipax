@@ -20,7 +20,7 @@ namespace Deipax.Core.Conversion.Factories
                 if (args.FromType == typeof(string))
                 {
                     callExpression = Expression.Call(
-                        typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
+                        typeof(ToEnumHelper<>).MakeGenericType(args.ToType),
                         "ConvertFromString",
                         new[] { args.FromType },
                         args.Input,
@@ -29,7 +29,7 @@ namespace Deipax.Core.Conversion.Factories
                 else if (args.FromType == typeof(object))
                 {
                     callExpression = Expression.Call(
-                        typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
+                        typeof(ToEnumHelper<>).MakeGenericType(args.ToType),
                         "ConvertFromObject",
                         new[] { args.FromType },
                         args.Input,
@@ -42,7 +42,7 @@ namespace Deipax.Core.Conversion.Factories
                         : (Expression)args.Input;
 
                     callExpression = Expression.Call(
-                        typeof(ToEnumHelper<>).MakeGenericType(args.UnderlyingToType),
+                        typeof(ToEnumHelper<>).MakeGenericType(args.ToType),
                         "Convert",
                         new[] { args.UnderlyingFromType },
                         guardedInput,
@@ -70,16 +70,17 @@ namespace Deipax.Core.Conversion.Factories
             static ToEnumHelper()
             {
                 Type toType = typeof(TTo);
+                Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
-                foreach (var name in Enum.GetNames(toType))
+                foreach (var name in Enum.GetNames(underlyingToType))
                 {
-                    _enumValues.Add(name, (TTo)Enum.Parse(toType, name));
+                    _enumValues.Add(name, (TTo)Enum.Parse(underlyingToType, name));
                 }
 
-                foreach (var value in Enum.GetValues(toType).Cast<int>())
+                foreach (var value in Enum.GetValues(underlyingToType).Cast<int>())
                 {
                     string valueAsString = value.ToString();
-                    _enumValues.Add(valueAsString, (TTo)Enum.Parse(toType, valueAsString));
+                    _enumValues.Add(valueAsString, (TTo)Enum.Parse(underlyingToType, valueAsString));
                 }
 
                 var p = Expression.Parameter(typeof(int));
@@ -140,8 +141,11 @@ namespace Deipax.Core.Conversion.Factories
                 TFrom from,
                 IFormatProvider provider = null)
             {
-                int intKey = ConvertTo<int, TFrom>.From(from, provider);
-                return _cast(intKey);
+                int? intKey = ConvertTo<int?, TFrom>.From(from, provider);
+
+                return intKey.HasValue
+                    ? _cast(intKey.Value)
+                    : _default;
             }
             #endregion
         }

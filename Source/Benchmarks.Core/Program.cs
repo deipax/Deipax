@@ -32,7 +32,8 @@ namespace Benchmarks.Core
 
             //BenchmarkRunner.Run<AdHoc>(config);
 
-            //RunSetterBenchmarks(config);
+            RunSetterBenchmarks(config);
+            //RunGetterBenchmarks(config);
         }
 
         #region Private Members
@@ -65,7 +66,7 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<Set_Prop_Int>(config);
             BenchmarkRunner.Run<Set_Prop_IntNullable>(config);
             BenchmarkRunner.Run<Set_Prop_IntNullable_NoValue>(config);
-
+ 
             BenchmarkRunner.Run<Set_Prop_UInt>(config);
             BenchmarkRunner.Run<Set_Prop_UIntNullable>(config);
             BenchmarkRunner.Run<Set_Prop_UIntNullable_NoValue>(config);

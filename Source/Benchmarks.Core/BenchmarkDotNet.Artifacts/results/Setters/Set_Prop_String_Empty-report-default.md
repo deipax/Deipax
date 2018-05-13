@@ -1,43 +1,43 @@
 
-BenchmarkDotNet=v0.10.14, OS=Windows 10.0.16299.371 (1709/FallCreatorsUpdate/Redstone3)
+BenchmarkDotNet=v0.10.14, OS=Windows 10.0.16299.431 (1709/FallCreatorsUpdate/Redstone3)
 Intel Core i7-3770K CPU 3.50GHz (Ivy Bridge), 1 CPU, 8 logical and 4 physical cores
-Frequency=3435896 Hz, Resolution=291.0449 ns, Timer=TSC
-.NET Core SDK=2.1.103
-  [Host]     : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
-  DefaultJob : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
+Frequency=3435892 Hz, Resolution=291.0452 ns, Timer=TSC
+.NET Core SDK=2.1.200
+  [Host]     : .NET Core 2.0.7 (CoreCLR 4.6.26328.01, CoreFX 4.6.26403.03), 64bit RyuJIT
+  DefaultJob : .NET Core 2.0.7 (CoreCLR 4.6.26328.01, CoreFX 4.6.26403.03), 64bit RyuJIT
 
 
                Method |       Mean |     Error |    StdDev |  Gen 0 | Allocated |
 --------------------- |-----------:|----------:|----------:|-------:|----------:|
-             FromBool |   7.138 ns | 0.0027 ns | 0.0024 ns |      - |       0 B |
-     FromBoolNullable |   5.811 ns | 0.0015 ns | 0.0012 ns |      - |       0 B |
-             FromChar |   8.757 ns | 0.0117 ns | 0.0110 ns | 0.0076 |      32 B |
-     FromCharNullable |   5.096 ns | 0.0025 ns | 0.0022 ns |      - |       0 B |
-            FromSByte |  49.179 ns | 0.0559 ns | 0.0523 ns | 0.0076 |      32 B |
-    FromSByteNullable |   5.104 ns | 0.0045 ns | 0.0042 ns |      - |       0 B |
-             FromByte |  49.123 ns | 0.0766 ns | 0.0717 ns | 0.0076 |      32 B |
-     FromByteNullable |   5.132 ns | 0.0067 ns | 0.0062 ns |      - |       0 B |
-            FromShort |  51.017 ns | 0.0773 ns | 0.0723 ns | 0.0076 |      32 B |
-    FromShortNullable |   5.101 ns | 0.0064 ns | 0.0060 ns |      - |       0 B |
-           FromUShort |  41.610 ns | 0.0120 ns | 0.0106 ns | 0.0076 |      32 B |
-   FromUShortNullable |   5.095 ns | 0.0018 ns | 0.0015 ns |      - |       0 B |
-              FromInt |  46.822 ns | 0.0589 ns | 0.0551 ns | 0.0076 |      32 B |
-      FromIntNullable |   5.099 ns | 0.0040 ns | 0.0038 ns |      - |       0 B |
-             FromUInt |  41.944 ns | 0.0186 ns | 0.0145 ns | 0.0076 |      32 B |
-     FromUIntNullable |   5.102 ns | 0.0007 ns | 0.0006 ns |      - |       0 B |
-             FromLong |  48.379 ns | 0.0092 ns | 0.0086 ns | 0.0076 |      32 B |
-     FromLongNullable |   6.115 ns | 0.0012 ns | 0.0010 ns |      - |       0 B |
-            FromULong |  47.035 ns | 0.0634 ns | 0.0562 ns | 0.0076 |      32 B |
-    FromULongNullable |   5.861 ns | 0.0013 ns | 0.0010 ns |      - |       0 B |
-            FromFloat | 140.982 ns | 0.3058 ns | 0.2710 ns | 0.0074 |      32 B |
-    FromFloatNullable |   5.096 ns | 0.0048 ns | 0.0045 ns |      - |       0 B |
-           FromDouble | 158.118 ns | 0.2275 ns | 0.2128 ns | 0.0074 |      32 B |
-   FromDoubleNullable |   5.791 ns | 0.1282 ns | 0.1199 ns |      - |       0 B |
-          FromDecimal |  67.779 ns | 0.0287 ns | 0.0224 ns | 0.0075 |      32 B |
-  FromDecimalNullable |   5.888 ns | 0.0117 ns | 0.0104 ns |      - |       0 B |
-         FromDateTime | 418.467 ns | 0.1807 ns | 0.1602 ns | 0.0401 |     168 B |
- FromDateTimeNullable |   5.865 ns | 0.0096 ns | 0.0080 ns |      - |       0 B |
-           FromObject |   4.328 ns | 0.0005 ns | 0.0004 ns |      - |       0 B |
-           FromString |   2.793 ns | 0.0023 ns | 0.0020 ns |      - |       0 B |
-             FromEnum | 142.419 ns | 0.1180 ns | 0.0986 ns | 0.0191 |      80 B |
-     FromEnumNullable |   5.686 ns | 0.0008 ns | 0.0006 ns |      - |       0 B |
+             FromBool |   5.389 ns | 0.0085 ns | 0.0075 ns |      - |       0 B |
+     FromBoolNullable |   3.346 ns | 0.0114 ns | 0.0107 ns |      - |       0 B |
+             FromChar |   6.752 ns | 0.0388 ns | 0.0363 ns | 0.0076 |      32 B |
+     FromCharNullable |   3.344 ns | 0.0103 ns | 0.0097 ns |      - |       0 B |
+            FromSByte |  42.878 ns | 0.1748 ns | 0.1549 ns | 0.0076 |      32 B |
+    FromSByteNullable |   3.599 ns | 0.0102 ns | 0.0095 ns |      - |       0 B |
+             FromByte |  43.045 ns | 0.1897 ns | 0.1775 ns | 0.0076 |      32 B |
+     FromByteNullable |   3.342 ns | 0.0053 ns | 0.0050 ns |      - |       0 B |
+            FromShort |  43.433 ns | 0.1648 ns | 0.1461 ns | 0.0076 |      32 B |
+    FromShortNullable |   3.621 ns | 0.0046 ns | 0.0043 ns |      - |       0 B |
+           FromUShort |  38.746 ns | 0.0179 ns | 0.0139 ns | 0.0076 |      32 B |
+   FromUShortNullable |   3.347 ns | 0.0022 ns | 0.0020 ns |      - |       0 B |
+              FromInt |  42.835 ns | 0.0939 ns | 0.0879 ns | 0.0076 |      32 B |
+      FromIntNullable |   3.361 ns | 0.0035 ns | 0.0029 ns |      - |       0 B |
+             FromUInt |  38.570 ns | 0.0368 ns | 0.0307 ns | 0.0076 |      32 B |
+     FromUIntNullable |   3.597 ns | 0.0065 ns | 0.0055 ns |      - |       0 B |
+             FromLong |  45.184 ns | 0.1972 ns | 0.1646 ns | 0.0076 |      32 B |
+     FromLongNullable |   4.107 ns | 0.0061 ns | 0.0057 ns |      - |       0 B |
+            FromULong |  43.879 ns | 0.1736 ns | 0.1624 ns | 0.0076 |      32 B |
+    FromULongNullable |   4.159 ns | 0.0779 ns | 0.0729 ns |      - |       0 B |
+            FromFloat | 139.124 ns | 1.0582 ns | 0.9898 ns | 0.0074 |      32 B |
+    FromFloatNullable |   3.596 ns | 0.0049 ns | 0.0044 ns |      - |       0 B |
+           FromDouble | 155.965 ns | 0.5975 ns | 0.5296 ns | 0.0074 |      32 B |
+   FromDoubleNullable |   4.111 ns | 0.0068 ns | 0.0060 ns |      - |       0 B |
+          FromDecimal |  71.521 ns | 0.3259 ns | 0.2889 ns | 0.0075 |      32 B |
+  FromDecimalNullable |   9.120 ns | 0.0184 ns | 0.0172 ns |      - |       0 B |
+         FromDateTime | 414.840 ns | 0.3179 ns | 0.2654 ns | 0.0401 |     168 B |
+ FromDateTimeNullable |   5.437 ns | 0.0081 ns | 0.0076 ns |      - |       0 B |
+           FromObject |   3.862 ns | 0.0094 ns | 0.0083 ns |      - |       0 B |
+           FromString |   2.825 ns | 0.0036 ns | 0.0034 ns |      - |       0 B |
+             FromEnum | 140.346 ns | 0.1400 ns | 0.1241 ns | 0.0191 |      80 B |
+     FromEnumNullable |   3.594 ns | 0.0007 ns | 0.0007 ns |      - |       0 B |

@@ -214,6 +214,12 @@ namespace UnitTests.Core.BaseClasses
         {
             RunTest<TestEnum>();
         }
+
+        [TestMethod]
+        public void ToEnumNullable()
+        {
+            RunTest<TestEnum?>();
+        }
         #endregion
 
         #region Private Member

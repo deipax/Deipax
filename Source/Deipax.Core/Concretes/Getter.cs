@@ -3,7 +3,6 @@ using Deipax.Core.Extensions;
 using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Deipax.Core.Concretes
@@ -27,43 +26,40 @@ namespace Deipax.Core.Concretes
 
         public Get<T, X> GetDelegate<X>()
         {
-            return (Get<T, X>)_cache.GetOrAdd(typeof(X), x => CreateHelper<X>(ModelInfo));
+            return (Get<T, X>)_cache.GetOrAdd(typeof(X), x => GetExpression<X>().Compile());
         }
-        #endregion
 
-        #region Private Members
-        private static Get<T, X> CreateHelper<X>(
-            IModelInfo info)
+        public Expression<Get<T, X>> GetExpression<X>()
         {
             var xType = typeof(X);
-
             var labelTarget = Expression.Label(xType);
             var labelExpression = Expression.Label(labelTarget, Expression.Default(xType));
-
             var instance = Expression.Parameter(typeof(T).MakeByRefType(), "instance");
             var provider = Expression.Parameter(typeof(IFormatProvider), "provider");
 
             var memberExpression = Expression.MakeMemberAccess(
                 instance,
-                info.GetOptimalMemberInfo());
+                ModelInfo.GetOptimalMemberInfo());
 
-            List<Expression> expressions = new List<Expression>();
+            BlockExpression block = null;
 
-            if (xType == info.Type)
+            if (xType == ModelInfo.Type)
             {
-                expressions.Add(Expression.Return(
-                    labelTarget,
-                    memberExpression));
+                block = Expression.Block(
+                    xType,
+                    Expression.Return(labelTarget, memberExpression),
+                    labelExpression);
             }
             else if (xType == typeof(object) &&
-                     !info.Type.IsNullable())
+                     !ModelInfo.Type.IsNullable())
             {
-                expressions.Add(Expression.Return(
-                    labelTarget,
-                    Expression.Convert(memberExpression, xType)));
+                block = Expression.Block(
+                    xType,
+                    Expression.Return(labelTarget, Expression.Convert(memberExpression, xType)),
+                    labelExpression);
             }
             else if (xType == typeof(object) &&
-                     info.Type.IsNullable())
+                     ModelInfo.Type.IsNullable())
             {
                 var value = Expression.Property(memberExpression, "Value");
 
@@ -72,17 +68,21 @@ namespace Deipax.Core.Concretes
                     Expression.Return(labelTarget, Expression.Convert(value, xType)),
                     Expression.Return(labelTarget, Expression.Default(xType)));
 
-                expressions.Add(ifThenElse);
+                block = Expression.Block(
+                    xType, 
+                    ifThenElse,
+                    labelExpression);
             }
             else if (xType.IsNullable() &&
-                     Nullable.GetUnderlyingType(xType) == info.Type)
+                     Nullable.GetUnderlyingType(xType) == ModelInfo.Type)
             {
-                expressions.Add(Expression.Return(
-                    labelTarget,
-                    Expression.Convert(memberExpression, xType)));
+                block = Expression.Block(
+                    xType,
+                    Expression.Return(labelTarget, Expression.Convert(memberExpression, xType)),
+                    labelExpression);
             }
-            else if (info.Type.IsNullable() &&
-                     Nullable.GetUnderlyingType(info.Type) == xType)
+            else if (ModelInfo.Type.IsNullable() &&
+                     Nullable.GetUnderlyingType(ModelInfo.Type) == xType)
             {
                 var value = Expression.Property(memberExpression, "Value");
 
@@ -91,26 +91,28 @@ namespace Deipax.Core.Concretes
                     Expression.Return(labelTarget, Expression.Convert(value, xType)),
                     Expression.Return(labelTarget, Expression.Default(xType)));
 
-                expressions.Add(ifThenElse);
+                block = Expression.Block(
+                    xType, 
+                    ifThenElse,
+                    labelExpression);
             }
-            else if (xType != info.Type)
+            else if (xType != ModelInfo.Type)
             {
                 var invoke = Expression.Invoke(
-                    Expression.Constant(ConvertTo<X, P>.From),
+                    ConvertTo<X, P>.Expression,
                     memberExpression,
                     provider);
 
-                expressions.Add(Expression.Return(labelTarget, invoke));
+                block = Expression.Block(
+                    xType, 
+                    Expression.Return(labelTarget, invoke),
+                    labelExpression);
             }
 
-            expressions.Add(labelExpression);
-
-            var getter = Expression.Lambda<Get<T, X>>(
-                Expression.Block(xType, expressions),
+            return Expression.Lambda<Get<T, X>>(
+                block,
                 instance,
                 provider);
-
-            return getter.Compile();
         }
         #endregion
     }

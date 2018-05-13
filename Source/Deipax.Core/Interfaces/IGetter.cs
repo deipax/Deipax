@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace Deipax.Core.Interfaces
 {
@@ -11,5 +12,6 @@ namespace Deipax.Core.Interfaces
         string Name { get; }
         IModelInfo ModelInfo { get; }
         Get<T, X> GetDelegate<X>();
+        Expression<Get<T, X>> GetExpression<X>();
     }
 }

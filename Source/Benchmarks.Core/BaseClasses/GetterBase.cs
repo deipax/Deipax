@@ -15,7 +15,7 @@ namespace Benchmarks.Core.BaseClasses
             Expression<Func<T, P>> memberExpression)
         {
             _testValue = testValue;
-            T _instance = new T();
+            _instance = new T();
 
             var setter = ModelAccess<T>
                 .GetSetter(memberExpression)
@@ -56,6 +56,7 @@ namespace Benchmarks.Core.BaseClasses
             _getObject = getter.GetDelegate<object>();
             _getString = getter.GetDelegate<string>();
             _getEnum = getter.GetDelegate<TestEnum>();
+            _getEnumNullable = getter.GetDelegate<TestEnum?>();
 
             _provider = CultureInfo.InvariantCulture;
         }
@@ -95,6 +96,7 @@ namespace Benchmarks.Core.BaseClasses
         private Get<T, object> _getObject;
         private Get<T, string> _getString;
         private Get<T, TestEnum> _getEnum;
+        private Get<T, TestEnum?> _getEnumNullable;
 
         private IFormatProvider _provider;
         #endregion
@@ -284,6 +286,12 @@ namespace Benchmarks.Core.BaseClasses
         public void ToEnum()
         {
             TestEnum x = _getEnum(ref _instance, _provider);
+        }
+
+        [Benchmark]
+        public void ToEnumNullable()
+        {
+            TestEnum? x = _getEnumNullable(ref _instance, _provider);
         }
         #endregion
     }
