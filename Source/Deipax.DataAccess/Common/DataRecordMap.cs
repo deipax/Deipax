@@ -29,11 +29,6 @@ namespace Deipax.DataAccess.Common
             .GetRuntimeMethods()
             .Where(x => x.Name == "CreateSetNullableField")
             .FirstOrDefault();
-
-        private static MethodInfo _createSetField = typeof(DataRecordMap<T>)
-            .GetRuntimeMethods()
-            .Where(x => x.Name == "CreateSetField")
-            .FirstOrDefault();
         #endregion
 
         #region Public Members
@@ -111,20 +106,6 @@ namespace Deipax.DataAccess.Common
                     _createSetNullableField
                         .MakeGenericMethod(new[] { setter.ModelInfo.Type, column.Type })
                         .Invoke(null, new object[] { args, i, setter });
-
-                    /*
-                    if (column.AllowNull || !column.Type.IsValueType)
-                    {
-                        _createSetNullableField
-                            .MakeGenericMethod(new[] {setter.ModelInfo.Type, column.Type})
-                            .Invoke(null, new object[] {args, i, setter});
-                    }
-                    else
-                    {
-                        _createSetField
-                            .MakeGenericMethod(new[] { setter.ModelInfo.Type, column.Type })
-                            .Invoke(null, new object[] { args, i, setter });
-                    }*/
                 }
             }
 
@@ -173,39 +154,9 @@ namespace Deipax.DataAccess.Common
                 Expression.Not(isDbNull),
                 setCall));
         }
-
-        private static void CreateSetField<P, X>(
-            Args args,
-            int fieldIndex,
-            ISetter<T> setter)
-        {
-            var method = typeof(IDataRecord)
-                .GetRuntimeMethods()
-                .Where(x =>
-                    x.ReturnType == typeof(X) &&
-                    x.GetParameters().Length == 1 &&
-                    x.GetParameters()[0].ParameterType == typeof(int) &&
-                    x.Name != "get_Item" &&
-                    x.Name != "GetData" &&
-                    x.Name != "GetDataTypeName" &&
-                    x.Name != "GetFieldType" &&
-                    x.Name != "IsDBNull")
-                .First();
-
-            var getValueCall = Expression.Call(
-                args.Record,
-                method,
-                Expression.Constant(fieldIndex));
-
-            args.Expressions.Add(Expression.Invoke(
-                setter.GetExpression<X>(),
-                args.Instance,
-                getValueCall,
-                args.Provider));
-        }
         #endregion
 
-            #region Helper
+        #region Helper
         class Args
         {
             public ParameterExpression Instance { get; set; }
