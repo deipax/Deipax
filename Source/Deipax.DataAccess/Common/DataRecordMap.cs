@@ -25,9 +25,9 @@ namespace Deipax.DataAccess.Common
             .Where(x => x.Name == "GetValue")
             .FirstOrDefault();
 
-        private static MethodInfo _createSetField = typeof(DataRecordMap<T>)
+        private static MethodInfo _createSetNullableField = typeof(DataRecordMap<T>)
             .GetRuntimeMethods()
-            .Where(x => x.Name == "CreateSetField")
+            .Where(x => x.Name == "CreateSetNullableField")
             .FirstOrDefault();
         #endregion
 
@@ -59,40 +59,38 @@ namespace Deipax.DataAccess.Common
 
         private static Func<IDataRecord, T> CreateHelper(IDataReader r)
         {
-            Args args = new Args()
-            {
-                Expressions = new List<Expression>(),
-                Instance = Expression.Variable(typeof(T), "instance"),
-                Record = Expression.Parameter(typeof(IDataRecord), "record"),
-                Provider = Expression.Variable(typeof(IFormatProvider), "provider"),
-                Value = Expression.Variable(typeof(object), "value"),
-            };
-
-            args.Variables = new List<ParameterExpression>()
-            {
-                args.Instance,
-                args.Value,
-                args.Provider
-            };
-
-            args.Expressions.Add(Expression.Assign(
-                args.Instance,
-                Expression.New(typeof(T))));
-
-
-
             var setters = ModelAccess<T>.Setters;
             int fieldCount = r.FieldCount;
+
+            var instance = Expression.Variable(typeof(T), "instance");
+            var value = Expression.Variable(typeof(object), "value");
+            var provider = Expression.Variable(typeof(IFormatProvider), "provider");
+
+            Args args = new Args()
+            {
+                Instance = instance,
+                Record = Expression.Parameter(typeof(IDataRecord), "record"),
+                Provider = provider,
+                Value = value,
+                Expressions = new List<Expression>()
+                {
+                    Expression.Assign(instance, Expression.New(typeof(T)))
+                },
+                Variables = new List<ParameterExpression>()
+                {
+                    instance,
+                    value,
+                    provider
+                }
+            };
 
             for (var i = 0; i < fieldCount; i++)
             {
                 if (setters.TryGetValue(r.GetName(i), out ISetter<T> setter) &&
                     setter != null)
                 {
-                    var fieldType = r.GetFieldType(i);
-
-                    var setCall = (Expression)_createSetField
-                        .MakeGenericMethod(new[] { setter.ModelInfo.Type, fieldType })
+                    _createSetNullableField
+                        .MakeGenericMethod(new[] { setter.ModelInfo.Type, r.GetFieldType(i) })
                         .Invoke(null, new object[] { args, i, setter });
                 }
             }
@@ -114,23 +112,15 @@ namespace Deipax.DataAccess.Common
             return lambda.Compile();
         }
 
-        private static void CreateSetField<P, X>(
+        private static void CreateSetNullableField<P, X>(
             Args args,
             int fieldIndex,
             ISetter<T> setter)
         {
-            var isDbNull = Expression.Equal(
-                args.Value,
-                Expression.Constant(DBNull.Value, typeof(object)));
-
             var getValueCall = Expression.Call(
                 args.Record,
                 _getValueMethod,
                 Expression.Constant(fieldIndex));
-
-            args.Expressions.Add(Expression.Assign(
-                args.Value,
-                getValueCall));
 
             var setCall = Expression.Invoke(
                 setter.GetExpression<X>(),
@@ -138,11 +128,17 @@ namespace Deipax.DataAccess.Common
                 Expression.Convert(args.Value, typeof(X)),
                 args.Provider);
 
-            var ifThenElse = Expression.IfThen(
-                Expression.Not(isDbNull),
-                setCall);
+            var isDbNull = Expression.Equal(
+                args.Value,
+                Expression.Constant(DBNull.Value, typeof(object)));
 
-            args.Expressions.Add(ifThenElse);
+            args.Expressions.Add(Expression.Assign(
+                args.Value,
+                getValueCall));
+
+            args.Expressions.Add(Expression.IfThen(
+                Expression.Not(isDbNull),
+                setCall));
         }
         #endregion
 
