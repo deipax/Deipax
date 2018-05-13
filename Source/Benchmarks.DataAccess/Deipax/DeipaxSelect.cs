@@ -1,8 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Dapper;
 using Deipax.DataAccess.Interfaces;
 using System.Data;
 using UnitTests.Common;
-using Dapper;
 
 namespace Benchmarks.DataAccess.Deipax
 {
@@ -49,26 +49,6 @@ namespace Benchmarks.DataAccess.Deipax
                 .AsList<MultipleFieldStruct>();
         }
 
-        //[Benchmark]
-        public void SingleFieldAsClass_Deipax()
-        {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsList<SingleFieldClass>();
-        }
-
-        //[Benchmark]
-        public void SingleFieldAsStruct_Deipax()
-        {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsList<SingleFieldStruct>();
-        }
-
         [Benchmark]
         public void AllFieldsAsClass_Dapper()
         {
@@ -79,18 +59,6 @@ namespace Benchmarks.DataAccess.Deipax
         public void AllFieldsAsStruct_Dapper()
         {
             var tmp = _dbConnection.Query<MultipleFieldStruct>(_sql);
-        }
-
-        //[Benchmark]
-        public void SingleFieldAsClass_Dapper()
-        {
-            var tmp = _dbConnection.Query<SingleFieldClass>(_sql);
-        }
-
-        //[Benchmark]
-        public void SingleFieldAsStruct_Dapper()
-        {
-            var tmp = _dbConnection.Query<SingleFieldStruct>(_sql);
         }
     }
 }
