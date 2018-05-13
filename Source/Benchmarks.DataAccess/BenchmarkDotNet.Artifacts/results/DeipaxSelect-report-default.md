@@ -8,7 +8,7 @@ Frequency=3435892 Hz, Resolution=291.0452 ns, Timer=TSC
 
                    Method |     Mean |     Error |    StdDev |     Gen 0 |     Gen 1 |    Gen 2 | Allocated |
 ------------------------- |---------:|----------:|----------:|----------:|----------:|---------:|----------:|
-  AllFieldsAsClass_Deipax | 56.20 ms | 0.1302 ms | 0.1016 ms | 1875.0000 | 1312.5000 | 312.5000 |   9.45 MB |
- AllFieldsAsStruct_Deipax | 67.61 ms | 1.3424 ms | 1.4920 ms | 2125.0000 | 1500.0000 | 687.5000 |  11.38 MB |
-  AllFieldsAsClass_Dapper | 73.01 ms | 1.4518 ms | 2.3444 ms | 2187.5000 | 1500.0000 | 625.0000 |   9.61 MB |
- AllFieldsAsStruct_Dapper | 73.38 ms | 0.9666 ms | 0.8569 ms | 2062.5000 | 1437.5000 | 750.0000 |  12.27 MB |
+  AllFieldsAsClass_Deipax | 59.75 ms | 0.2144 ms | 0.2006 ms | 2062.5000 | 1375.0000 | 500.0000 |   9.45 MB |
+ AllFieldsAsStruct_Deipax | 68.99 ms | 0.9993 ms | 0.9347 ms | 2125.0000 | 1562.5000 | 687.5000 |  11.38 MB |
+  AllFieldsAsClass_Dapper | 66.01 ms | 0.4301 ms | 0.3110 ms | 2187.5000 | 1437.5000 | 500.0000 |   9.61 MB |
+ AllFieldsAsStruct_Dapper | 73.47 ms | 0.8065 ms | 0.7149 ms | 2500.0000 | 1562.5000 | 812.5000 |  12.27 MB |
