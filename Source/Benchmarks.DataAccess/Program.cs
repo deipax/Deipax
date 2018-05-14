@@ -2,7 +2,6 @@
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Running;
-using Benchmarks.DataAccess.Deipax;
 using System.Linq;
 
 namespace Benchmarks.DataAccess
@@ -26,9 +25,9 @@ namespace Benchmarks.DataAccess
                 .With(MemoryDiagnoser.Default);
 
             //BenchmarkRunner.Run<DynamicBench>(config);
-            BenchmarkRunner.Run<DeipaxSelect>(config);
+            //BenchmarkRunner.Run<DeipaxSelect>(config);
 
-            //BenchmarkRunner.Run<AdHoc>(config);
+            BenchmarkRunner.Run<AdHoc>(config);
         }
     }
 }

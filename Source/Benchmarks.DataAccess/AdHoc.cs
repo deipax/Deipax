@@ -19,12 +19,12 @@ namespace Benchmarks.DataAccess
             DbHelper.SetDbInitializer();
             DbHelper.SetDefaultConnectionFactory();
             _dbCon = DbHelper.GetNorthwind().CreateDbCon();
-            var dbCmd = _dbCon
+            _dbCmd = _dbCon
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql);
 
-            _reader = dbCmd.CreateCommand().ExecuteReader();
+            _reader = _dbCmd.CreateCommand().ExecuteReader();
             _reader.Read();
             _record = _reader;
             _index = _reader.GetOrdinal("CustomerPhone");
@@ -38,20 +38,53 @@ namespace Benchmarks.DataAccess
         private int _index;
         private MultipleFieldClass _instance;
         private IFormatProvider _provider;
+        private IDbCmd _dbCmd;
         #endregion
 
         #region Public Members
-        [Benchmark]
+        //[Benchmark]
         public void IsDbNullAndGetString()
         {
             var y = _record.IsDBNull(_index);
             var x = _record.GetString(_index);
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void GetStringAsObject()
         {
             var x = _record.GetValue(_index);
+        }
+
+        [Benchmark]
+        public void ReadFieldRead()
+        {
+            using (var reader = _dbCmd.CreateCommand().ExecuteReader())
+            {
+                var fieldCount = reader.FieldCount;
+
+                while (reader.Read())
+                {
+                    for (int i = 0; i < fieldCount; i++)
+                    {
+                        object value = reader.GetValue(i);
+                    }
+                }
+            }
+        }
+
+        [Benchmark]
+        public void ReadBulkRead()
+        {
+            using (var reader = _dbCmd.CreateCommand().ExecuteReader())
+            {
+                var fieldCount = reader.FieldCount;
+                object[] objects = new  Object[fieldCount];
+
+                while (reader.Read())
+                {
+                    reader.GetValues(objects);
+                }
+            }
         }
         #endregion
     }
