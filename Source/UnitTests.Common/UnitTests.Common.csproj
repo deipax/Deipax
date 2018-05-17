@@ -60,11 +60,12 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="BaseSelect.cs" />
+    <Compile Include="SqliteSql.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="GrandChildClass.cs" />
     <Compile Include="RandGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServer.cs" />
     <Compile Include="TestClasses.cs" />
     <Compile Include="TimingHelper.cs" />
   </ItemGroup>

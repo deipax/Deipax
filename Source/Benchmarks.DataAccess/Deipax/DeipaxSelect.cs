@@ -6,7 +6,7 @@ using UnitTests.Common;
 
 namespace Benchmarks.DataAccess.Deipax
 {
-    public class DeipaxSelect : BaseSelect
+    public class DeipaxSelect : SqliteSql
     {
         #region Field Members
         private IDbCon _dbCon;

@@ -7,7 +7,7 @@ using UnitTests.Common;
 
 namespace Benchmarks.DataAccess
 {
-    public class AdHoc : BaseSelect
+    public class AdHoc : SqliteSql
     {
         #region Field Members
         private IDbCon _dbCon;
@@ -56,7 +56,7 @@ namespace Benchmarks.DataAccess
         }
 
         [Benchmark]
-        public void ReadFieldRead()
+        public void ReadEntireFieldRead()
         {
             using (var reader = _dbCmd.CreateCommand().ExecuteReader())
             {
@@ -73,12 +73,26 @@ namespace Benchmarks.DataAccess
         }
 
         [Benchmark]
+        public void ReadSingleFieldRead()
+        {
+            using (var reader = _dbCmd.CreateCommand().ExecuteReader())
+            {
+                var fieldCount = reader.FieldCount;
+
+                while (reader.Read())
+                {
+                    object value = reader.GetValue(0);
+                }
+            }
+        }
+
+        [Benchmark]
         public void ReadBulkRead()
         {
             using (var reader = _dbCmd.CreateCommand().ExecuteReader())
             {
                 var fieldCount = reader.FieldCount;
-                object[] objects = new  Object[fieldCount];
+                object[] objects = new Object[fieldCount];
 
                 while (reader.Read())
                 {

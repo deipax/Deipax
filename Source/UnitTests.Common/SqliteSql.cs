@@ -2,7 +2,7 @@
 
 namespace UnitTests.Common
 {
-    public abstract class BaseSelect
+    public abstract class SqliteSql
     {
         #region Field Members
         protected static readonly string _sql = @"
