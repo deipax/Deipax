@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTests.Common
 {
@@ -186,7 +182,7 @@ namespace UnitTests.Common
         public string CusPasswordHash { get; set; }
         public string CusPasswordSalt { get; set; }
         public string CusPhone { get; set; }
-        public DateTime CusRowGuid { get; set; }
+        public Guid CusRowGuid { get; set; }
         public string CusSalesPerson { get; set; }
         public string CusSuffix { get; set; }
         public string CusTitle { get; set; }
@@ -213,7 +209,7 @@ namespace UnitTests.Common
         public DateTime PmModifiedDate { get; set; }
         public string PmName { get; set; }
         public int PmProductModelID { get; set; }
-        public DateTime PmRowGuid { get; set; }
+        public Guid PmRowGuid { get; set; }
 
         public DateTime PcModifiedDate { get; set; }
         public string PcName { get; set; }

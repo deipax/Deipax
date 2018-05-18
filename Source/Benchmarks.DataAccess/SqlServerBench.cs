@@ -1,16 +1,17 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Dapper;
 using Deipax.DataAccess.Interfaces;
-using System;
 using System.Data;
-using System.Globalization;
 using UnitTests.Common;
 
 namespace Benchmarks.DataAccess
 {
-    public class AdHoc : SqliteSql
+    public class SqlServerBench : SqlServer
     {
         #region Field Members
         private IDbCon _dbCon;
+        private IDbCmd _dbCmd;
+        private IDbConnection _dbConnection;
         #endregion
 
         [GlobalSetup]
@@ -18,44 +19,33 @@ namespace Benchmarks.DataAccess
         {
             DbHelper.SetDbInitializer();
             DbHelper.SetDefaultConnectionFactory();
-            _dbCon = DbHelper.GetNorthwind().CreateDbCon();
+            _dbCon = DbHelper.GetNorthwindAzure().CreateDbCon();
+
             _dbCmd = _dbCon
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql);
 
-            _reader = _dbCmd.CreateCommand().ExecuteReader();
-            _reader.Read();
-            _record = _reader;
-            _index = _reader.GetOrdinal("CustomerPhone");
-            _instance = new MultipleFieldClass();
-            _provider = CultureInfo.InvariantCulture;
-        }
-
-        #region Field Member
-        private IDataReader _reader;
-        private IDataRecord _record;
-        private int _index;
-        private MultipleFieldClass _instance;
-        private IFormatProvider _provider;
-        private IDbCmd _dbCmd;
-        #endregion
-
-        #region Public Members
-        //[Benchmark]
-        public void IsDbNullAndGetString()
-        {
-            var y = _record.IsDBNull(_index);
-            var x = _record.GetString(_index);
+            _dbConnection = _dbCon.GetConnection();
         }
 
         //[Benchmark]
-        public void GetStringAsObject()
+        public void DeipaxAsClass()
         {
-            var x = _record.GetValue(_index);
+            var tmp = _dbCon
+                .CreateDbCmd()
+                .SetCommandType(CommandType.Text)
+                .SetSql(_sql)
+                .AsList<SqlServerClass>();
         }
 
-        [Benchmark]
+        //[Benchmark]
+        public void DapperAsClass()
+        {
+            var tmp = _dbConnection.Query<SqlServerClass>(_sql);
+        }
+
+        //[Benchmark]
         public void ReadEntireFieldRead()
         {
             using (var reader = _dbCmd.CreateCommand().ExecuteReader())
@@ -72,7 +62,7 @@ namespace Benchmarks.DataAccess
             }
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void ReadSingleFieldRead()
         {
             using (var reader = _dbCmd.CreateCommand().ExecuteReader())
@@ -86,13 +76,13 @@ namespace Benchmarks.DataAccess
             }
         }
 
-        [Benchmark]
+        //[Benchmark]
         public void ReadBulkRead()
         {
             using (var reader = _dbCmd.CreateCommand().ExecuteReader())
             {
                 var fieldCount = reader.FieldCount;
-                object[] objects = new Object[fieldCount];
+                object[] objects = new object[fieldCount];
 
                 while (reader.Read())
                 {
@@ -100,6 +90,5 @@ namespace Benchmarks.DataAccess
                 }
             }
         }
-        #endregion
     }
 }

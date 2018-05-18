@@ -98,11 +98,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdHoc.cs" />
+    <Compile Include="SqliteSqlBench.cs" />
     <Compile Include="Deipax\DeipaxSelect.cs" />
     <Compile Include="Deipax\DynamicBench.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerBench.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

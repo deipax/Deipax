@@ -27,7 +27,8 @@ namespace Benchmarks.DataAccess
             //BenchmarkRunner.Run<DynamicBench>(config);
             //BenchmarkRunner.Run<DeipaxSelect>(config);
 
-            BenchmarkRunner.Run<AdHoc>(config);
+            //BenchmarkRunner.Run<SqliteSqlBench>(config);
+            BenchmarkRunner.Run<SqlServerBench>(config);
         }
     }
 }

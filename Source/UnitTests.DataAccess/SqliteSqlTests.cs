@@ -7,7 +7,7 @@ using UnitTests.Common;
 namespace UnitTests.DataAccess
 {
     [TestClass]
-    public class MappingTests : SqliteSql
+    public class SqliteSqlTests : SqliteSql
     {
         #region Field Members
         private IDbCon _dbCon;
