@@ -1,11 +1,12 @@
-﻿using BenchmarkDotNet.Attributes;
-using Deipax.DataAccess.Common;
+﻿using Deipax.DataAccess.Common;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using UnitTests.Common;
 
-namespace Benchmarks.DataAccess.Deipax
+namespace UnitTests.DataAccess
 {
-    public class DynamicBench
+    [TestClass]
+    public class DynamicDictionaryTests
     {
         #region Fields
         private static readonly List<string> _fieldNames = new List<string>
@@ -25,14 +26,17 @@ namespace Benchmarks.DataAccess.Deipax
         private static dynamic _dynamicDict;
         #endregion
 
-        [GlobalSetup]
+        [TestInitialize]
         public void GlobalSetup()
         {
             _dynamicDict = new DynamicDictionary();
-            _fieldNames.ForEach(x => _dynamicDict.Add(x, RandGen.GenerateInt()));
+
+            IDictionary<string, object> dict = _dynamicDict;
+
+            _fieldNames.ForEach(x => dict.Add(x, RandGen.GenerateInt()));
         }
 
-        [Benchmark]
+        [TestMethod]
         public void ReadAsDictionary_DynamicDict()
         {
             foreach (var field in _fieldNames)
@@ -41,7 +45,7 @@ namespace Benchmarks.DataAccess.Deipax
             }
         }
 
-        [Benchmark]
+        [TestMethod]
         public void WriteAsDictionary_DynamicDict()
         {
             foreach (var field in _fieldNames)
@@ -50,7 +54,7 @@ namespace Benchmarks.DataAccess.Deipax
             }
         }
 
-        [Benchmark]
+        [TestMethod]
         public void ReadAsDynamic_DynamicDict()
         {
             var tmp0 = _dynamicDict.Field0;
@@ -65,7 +69,7 @@ namespace Benchmarks.DataAccess.Deipax
             var tmp9 = _dynamicDict.Field9;
         }
 
-        [Benchmark]
+        [TestMethod]
         public void WriteAsDynamic_DynamicDict()
         {
             _dynamicDict.Field0 = 10;

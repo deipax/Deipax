@@ -109,8 +109,8 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="BenchmarkDotNet.Artifacts\results\Benchmarks.DataAccess.Deipax.DynamicBench-report-default.md" />
     <None Include="BenchmarkDotNet.Artifacts\results\DeipaxSelect-report-default.md" />
+    <None Include="BenchmarkDotNet.Artifacts\results\DynamicBench-report-default.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

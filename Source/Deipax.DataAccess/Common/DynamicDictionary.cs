@@ -7,213 +7,131 @@ using System.Reflection;
 
 namespace Deipax.DataAccess.Common
 {
-    public class DynamicDictionary<T> : DynamicObject, IDictionary<string, T>
+    public class DynamicDictionary : Dictionary<string, object>, IDynamicMetaObjectProvider
     {
         public DynamicDictionary()
+            : base()
         {
         }
 
-        #region Field Members
-        private IDictionary<string, T> _items = new Dictionary<string, T>(StringComparer.Ordinal);
-        #endregion
+        public DynamicDictionary(int capacity)
+            : base(capacity)
+        {
+        }
 
         #region Public Members
-        public override bool TryGetIndex(GetIndexBinder b, object[] i, out object r)
+        public object SetValue(string key, object value)
         {
-            r = _items[(string)i[0]];
-            return true;
+            if (ContainsKey(key))
+            {
+                return this[key] = value;
+            }
+            else
+            {
+                Add(key, value);
+                return value;
+            }
         }
 
-        public sealed override bool TryGetMember(GetMemberBinder b, out object r)
+        public object GetValue(string key)
         {
-            r = _items[b.Name];
-            return true;
-        }
-
-        public sealed override bool TrySetMember(SetMemberBinder b, object value)
-        {
-            _items[b.Name] = (T)value;
-            return true;
+            object val = default(object);
+            TryGetValue(key, out val);
+            return val;
         }
         #endregion
 
-        #region IDictionary<string, T> Members
-        public ICollection<string> Keys
+        #region IDynamicMetaObjectProvider Members
+        public DynamicMetaObject GetMetaObject(Expression parameter)
         {
-            get
-            {
-                return _items.Keys;
-            }
-        }
-
-        public ICollection<T> Values
-        {
-            get
-            {
-                return _items.Values;
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                return _items.Count;
-            }
-        }
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                return _items.IsReadOnly;
-            }
-        }
-
-        public T this[string key]
-        {
-            get
-            {
-                return _items[key];
-            }
-            set
-            {
-                _items[key] = value;
-            }
-        }
-
-        public bool TryGetValue(string key, out T value)
-        {
-            return _items.TryGetValue(key, out value);
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return _items.ContainsKey(key);
-        }
-
-        public void Add(string key, T value)
-        {
-            _items.Add(key, value);
-        }
-
-        public bool Remove(string key)
-        {
-            return _items.Remove(key);
-        }
-
-        public void Add(KeyValuePair<string, T> item)
-        {
-            _items.Add(item);
-        }
-
-        public void Clear()
-        {
-            _items.Clear();
-        }
-
-        public bool Contains(KeyValuePair<string, T> item)
-        {
-            return _items.Contains(item);
-        }
-
-        public void CopyTo(KeyValuePair<string, T>[] array, int arrayIndex)
-        {
-            _items.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(KeyValuePair<string, T> item)
-        {
-            return _items.Remove(item);
-        }
-
-        public IEnumerator<KeyValuePair<string, T>> GetEnumerator()
-        {
-            return _items.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _items.GetEnumerator();
-        }
-        #endregion
-    }
-
-    internal class DictionaryMetaObjectProvider<T> : DynamicMetaObject
-    {
-        public DictionaryMetaObjectProvider(
-            Expression expression,
-            BindingRestrictions restrictions)
-            : base(expression, restrictions)
-        {
-        }
-
-        public DictionaryMetaObjectProvider(
-            Expression expression,
-            BindingRestrictions restrictions,
-            object value)
-            : base(expression, restrictions, value)
-        {
-        }
-
-        #region Field Members
-        private static readonly MethodInfo _getValue = typeof(IDictionary<string, T>)
-            .GetProperty("Item")
-            .GetGetMethod();
-
-        private static readonly MethodInfo _setValue = typeof(DynamicDictionary<T>)
-            .GetMethod("SetValue", new Type[] { typeof(string), typeof(T) });
-        #endregion
-
-        #region Public Members
-        public override DynamicMetaObject BindGetMember(
-            GetMemberBinder binder)
-        {
-            return CallMethod(
-                _getValue,
-                Expression,
-                LimitType,
-                new[] { Expression.Constant(binder.Name) });
-        }
-
-        public override DynamicMetaObject BindSetMember(
-            SetMemberBinder binder, 
-            DynamicMetaObject value)
-        {
-            return CallMethod(
-                _setValue,
-                Expression,
-                LimitType,
-                new[] { Expression.Constant(binder.Name) });
-        }
-
-        public override DynamicMetaObject BindInvokeMember(
-            InvokeMemberBinder binder,
-            DynamicMetaObject[] args)
-        {
-            return CallMethod(
-                _getValue,
-                Expression,
-                LimitType,
-                new[] { Expression.Constant(binder.Name) });
+            return new DictionaryMetaObjectProvider(
+                parameter,
+                BindingRestrictions.Empty,
+                this);
         }
         #endregion
 
-        #region Private Members
-        private static DynamicMetaObject CallMethod(
-            MethodInfo method,
-            Expression expression,
-            Type limitType,
-            Expression[] parameters)
+        #region Helpers
+        class DictionaryMetaObjectProvider : DynamicMetaObject
         {
-            var callExpression = Expression.Call(
-                Expression.Convert(expression, limitType),
-                method,
-                parameters);
+            public DictionaryMetaObjectProvider(
+                Expression expression,
+                BindingRestrictions restrictions)
+                : base(expression, restrictions)
+            {
+            }
 
-            return new DynamicMetaObject(
-                callExpression,
-                BindingRestrictions.GetTypeRestriction(expression, limitType));
+            public DictionaryMetaObjectProvider(
+                Expression expression,
+                BindingRestrictions restrictions,
+                object value)
+                : base(expression, restrictions, value)
+            {
+            }
+
+            #region Field Members
+            private static readonly MethodInfo _getValue = typeof(DynamicDictionary)
+                .GetMethod("GetValue", new Type[] { typeof(string) });
+
+            private static readonly MethodInfo _setValue = typeof(DynamicDictionary)
+                .GetMethod("SetValue", new Type[] { typeof(string), typeof(object) });
+            #endregion
+
+            #region Public Members
+            public override DynamicMetaObject BindGetMember(
+                GetMemberBinder binder)
+            {
+                return CallMethod(
+                    _getValue,
+                    Expression,
+                    LimitType,
+                    new[] { Expression.Constant(binder.Name) });
+            }
+
+            public override DynamicMetaObject BindSetMember(
+                SetMemberBinder binder,
+                DynamicMetaObject value)
+            {
+                Expression convert = Expression.Convert(
+                    value.Expression,
+                    typeof(object));
+
+                return CallMethod(
+                    _setValue,
+                    Expression,
+                    LimitType,
+                    new[] { Expression.Constant(binder.Name), convert });
+            }
+
+            public override DynamicMetaObject BindInvokeMember(
+                InvokeMemberBinder binder,
+                DynamicMetaObject[] args)
+            {
+                return CallMethod(
+                    _getValue,
+                    Expression,
+                    LimitType,
+                    new[] { Expression.Constant(binder.Name) });
+            }
+            #endregion
+
+            #region Private Members
+            private static DynamicMetaObject CallMethod(
+                MethodInfo method,
+                Expression expression,
+                Type limitType,
+                Expression[] parameters)
+            {
+                var callExpression = Expression.Call(
+                    Expression.Convert(expression, limitType),
+                    method,
+                    parameters);
+
+                return new DynamicMetaObject(
+                    callExpression,
+                    BindingRestrictions.GetTypeRestriction(expression, limitType));
+            }
+            #endregion
         }
         #endregion
     }

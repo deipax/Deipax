@@ -25,8 +25,8 @@ namespace Benchmarks.DataAccess
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            BenchmarkRunner.Run<DynamicBench>(config);
-            //BenchmarkRunner.Run<DeipaxSelect>(config);
+            //BenchmarkRunner.Run<DynamicBench>(config);
+            BenchmarkRunner.Run<DeipaxSelect>(config);
 
             //BenchmarkRunner.Run<SqliteSqlBench>(config);
             //BenchmarkRunner.Run<SqlServerBench>(config);

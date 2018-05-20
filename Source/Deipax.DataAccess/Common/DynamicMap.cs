@@ -17,7 +17,7 @@ namespace Deipax.DataAccess.Common
 		{
 			DynamicMap map = new DynamicMap()
 			{
-				FieldMap = new Dictionary<int, string>()
+				FieldMap = new Dictionary<int, string>(r.FieldCount)
 			};
 
 			for (int i = 0; i < r.FieldCount; i++)
@@ -30,13 +30,13 @@ namespace Deipax.DataAccess.Common
 
 		public dynamic From(IDataRecord r)
 		{
-			DynamicDictionary<object> d = new DynamicDictionary<object>();
+			DynamicDictionary d = new DynamicDictionary(FieldMap.Keys.Count);
 
-			foreach (var key in this.FieldMap.Keys)
+			foreach (var key in FieldMap.Keys)
 			{
 				var value = r.GetValue(key);
 				value = DBNull.Value.Equals(value) ? null : value;
-				d.Add(this.FieldMap[key], value);
+				d.Add(FieldMap[key], value);
 			}
 
 			return d;
