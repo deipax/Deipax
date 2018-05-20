@@ -34,7 +34,7 @@ namespace UnitTests.DataAccess
             _dbCon.Dispose();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void DeipaxAsAClass()
         {
             var tmp = _dbCon

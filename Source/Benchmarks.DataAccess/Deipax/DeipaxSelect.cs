@@ -9,8 +9,10 @@ namespace Benchmarks.DataAccess.Deipax
     public class DeipaxSelect : SqliteSql
     {
         #region Field Members
+
         private IDbCon _dbCon;
         private IDbConnection _dbConnection;
+
         #endregion
 
         [GlobalSetup]
@@ -50,6 +52,16 @@ namespace Benchmarks.DataAccess.Deipax
         }
 
         [Benchmark]
+        public void DynamicList_Deipax()
+        {
+            var tmp = _dbCon
+                .CreateDbCmd()
+                .SetCommandType(CommandType.Text)
+                .SetSql(_sql)
+                .AsDynamicList();
+        }
+
+        [Benchmark]
         public void AllFieldsAsClass_Dapper()
         {
             var tmp = _dbConnection.Query<MultipleFieldClass>(_sql);
@@ -59,6 +71,12 @@ namespace Benchmarks.DataAccess.Deipax
         public void AllFieldsAsStruct_Dapper()
         {
             var tmp = _dbConnection.Query<MultipleFieldStruct>(_sql);
+        }
+
+        [Benchmark]
+        public void DynamicList_Dapper()
+        {
+            var tmp = _dbConnection.Query(_sql);
         }
     }
 }

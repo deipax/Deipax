@@ -1,5 +1,6 @@
 ﻿using Deipax.Core.Common;
 using Deipax.Core.Interfaces;
+using Deipax.DataAccess.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -34,29 +35,11 @@ namespace Deipax.DataAccess.Common
         #region Public Members
         public static Func<IDataRecord, T> Create(IDataReader r)
         {
-            return _cache.GetOrAdd(GetColumnHash(r), x => CreateHelper(r)); ;
+            return _cache.GetOrAdd(r.GetColumnHash(), x => CreateHelper(r)); ;
         }
         #endregion
 
         #region Private Members
-        private static int GetColumnHash(
-            IDataReader reader,
-            int startBound = 0,
-            int length = -1)
-        {
-            unchecked
-            {
-                int max = length < 0 ? reader.FieldCount : startBound + length;
-                int hash = (-37 * startBound) + max;
-                for (int i = startBound; i < max; i++)
-                {
-                    object tmp = reader.GetName(i);
-                    hash = (-79 * ((hash * 31) + (tmp?.GetHashCode() ?? 0))) + (reader.GetFieldType(i)?.GetHashCode() ?? 0);
-                }
-                return hash;
-            }
-        }
-
         private static Func<IDataRecord, T> CreateHelper(
             IDataReader reader)
         {

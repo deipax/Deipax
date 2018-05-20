@@ -3,6 +3,7 @@ using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Running;
 using System.Linq;
+using Benchmarks.DataAccess.Deipax;
 
 namespace Benchmarks.DataAccess
 {
@@ -24,11 +25,11 @@ namespace Benchmarks.DataAccess
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            //BenchmarkRunner.Run<DynamicBench>(config);
+            BenchmarkRunner.Run<DynamicBench>(config);
             //BenchmarkRunner.Run<DeipaxSelect>(config);
 
             //BenchmarkRunner.Run<SqliteSqlBench>(config);
-            BenchmarkRunner.Run<SqlServerBench>(config);
+            //BenchmarkRunner.Run<SqlServerBench>(config);
         }
     }
 }
