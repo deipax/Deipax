@@ -56,6 +56,16 @@ namespace UnitTests.DataAccess
                 .AsList<MultipleFieldStruct>();
         }
 
+        [TestMethod]
+        public void AllFieldsAsDynamic()
+        {
+            var tmp = _dbCon
+                .CreateDbCmd()
+                .SetCommandType(CommandType.Text)
+                .SetSql(_sql)
+                .AsDynamicList();
+        }
+
         //[TestMethod]
         public void AllFieldsAsClass_Dapper()
         {

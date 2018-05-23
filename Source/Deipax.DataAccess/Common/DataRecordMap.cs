@@ -35,7 +35,7 @@ namespace Deipax.DataAccess.Common
         #region Public Members
         public static Func<IDataRecord, T> Create(IDataReader r)
         {
-            return _cache.GetOrAdd(r.GetColumnHash(), x => CreateHelper(r)); ;
+            return _cache.GetOrAdd(r.GetColumnHash(), x => CreateHelper(r));
         }
         #endregion
 

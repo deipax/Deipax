@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,6 +48,7 @@
     <Compile Include="BaseClasses\GetterSetterBase.cs" />
     <Compile Include="Deipax\ConvertTo_Tests.cs" />
     <Compile Include="Deipax\GetterSetterTests.cs" />
+    <Compile Include="DynamicDictionaryTests.cs" />
     <Compile Include="FieldPropCountTests.cs" />
     <Compile Include="ModelAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

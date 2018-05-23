@@ -107,11 +107,11 @@ namespace Deipax.DataAccess.Interfaces
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
-				var map = DynamicMap.Create(r);
+			    Func<IDataRecord, dynamic> map = DynamicMap.Create(r);
 
 				while (r.Read())
 				{
-					yield return map.From(r);
+					yield return map(r);
 				}
 			}
 		}

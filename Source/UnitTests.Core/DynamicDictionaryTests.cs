@@ -1,9 +1,9 @@
-﻿using Deipax.DataAccess.Common;
+﻿using Deipax.Core.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using UnitTests.Common;
 
-namespace UnitTests.DataAccess
+namespace UnitTests.Core
 {
     [TestClass]
     public class DynamicDictionaryTests

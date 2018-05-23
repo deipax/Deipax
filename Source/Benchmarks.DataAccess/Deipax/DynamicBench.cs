@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Deipax.DataAccess.Common;
+using Deipax.Core.Common;
 using System.Collections.Generic;
 using UnitTests.Common;
 
