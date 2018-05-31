@@ -107,7 +107,7 @@ namespace Deipax.DataAccess.Interfaces
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
-			    Func<IDataRecord, dynamic> map = DynamicMap.Create(r);
+			    Func<IDataRecord, dynamic> map = DynamicMap2.Create(r);
 
 				while (r.Read())
 				{

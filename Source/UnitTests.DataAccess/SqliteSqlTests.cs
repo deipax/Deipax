@@ -28,6 +28,14 @@ namespace UnitTests.DataAccess
                 .AsList<MultipleFieldClass>();
 
             var tmp2 = _dbConnection.Query<MultipleFieldClass>(_sql);
+
+            var tmp3 = _dbCon
+                .CreateDbCmd()
+                .SetCommandType(CommandType.Text)
+                .SetSql(_sql)
+                .AsDynamicList();
+
+            var tmp4 = _dbConnection.Query(_sql);
         }
 
         [TestCleanup]
@@ -59,11 +67,14 @@ namespace UnitTests.DataAccess
         [TestMethod]
         public void AllFieldsAsDynamic()
         {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsDynamicList();
+            for (int i = 0; i < 100; i++)
+            {
+                var tmp = _dbCon
+                    .CreateDbCmd()
+                    .SetCommandType(CommandType.Text)
+                    .SetSql(_sql)
+                    .AsDynamicList();
+            }
         }
 
         //[TestMethod]
@@ -76,6 +87,15 @@ namespace UnitTests.DataAccess
         public void AllFieldsAsStruct_Dapper()
         {
             var tmp = _dbConnection.Query<MultipleFieldStruct>(_sql);
+        }
+
+        [TestMethod]
+        public void AllFieldsAsDynamic_Dapper()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                var tmp = _dbConnection.Query(_sql);
+            }
         }
     }
 }

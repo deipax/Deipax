@@ -49,6 +49,8 @@
     <Compile Include="Deipax\ConvertTo_Tests.cs" />
     <Compile Include="Deipax\GetterSetterTests.cs" />
     <Compile Include="DynamicDictionaryTests.cs" />
+    <Compile Include="DynamicRowTests.cs" />
+    <Compile Include="DynamicTableTests.cs" />
     <Compile Include="FieldPropCountTests.cs" />
     <Compile Include="ModelAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
