@@ -67,27 +67,16 @@ namespace Deipax.DataAccess.Common
                 }
             };
 
-            var columns = reader
-                .GetSchemaTable()
-                .Rows
-                .OfType<DataRow>()
-                .Select(x => new
-                {
-                    Name = (string)x[0],
-                    Type = (Type)x[12],
-                    AllowNull = (bool)x[13]
-                })
-                .ToList();
-
-            for (var i = 0; i < columns.Count; i++)
+            for (var i = 0; i < reader.FieldCount; i++)
             {
-                var column = columns[i];
+                var name = reader.GetName(i);
+                var type = reader.GetFieldType(i);
 
-                if (setters.TryGetValue(column.Name, out ISetter<T> setter) &&
+                if (setters.TryGetValue(name, out ISetter<T> setter) &&
                     setter != null)
                 {
                     _createSetNullableField
-                        .MakeGenericMethod(new[] { setter.ModelInfo.Type, column.Type })
+                        .MakeGenericMethod(new[] { setter.ModelInfo.Type, type })
                         .Invoke(null, new object[] { args, i, setter });
                 }
             }
