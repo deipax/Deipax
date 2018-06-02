@@ -4,6 +4,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Deipax.DataAccess.Common
 {
@@ -11,23 +14,38 @@ namespace Deipax.DataAccess.Common
     {
         static DynamicMap2()
         {
-            _cache = new ConcurrentDictionary<int, List<string>>();
+            _headers = new ConcurrentDictionary<int, IEnumerable<string>>();
+            _maps = new ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
         }
 
         #region Field Members
-        private static ConcurrentDictionary<int, List<string>> _cache;
+        private static ConcurrentDictionary<int, IEnumerable<string>> _headers;
+        private static ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps;
+
+        private static MethodInfo _getValueMethod = typeof(IDataRecord)
+            .GetRuntimeMethods()
+            .Where(x => x.Name == "GetValue")
+            .FirstOrDefault();
+
+        private static ConstructorInfo _constructor = typeof(DynamicRow)
+            .GetConstructors()
+            .First();
         #endregion
 
         #region Public Members
-        public static Func<IDataRecord, DynamicRow> Create(IDataReader r)
+        public static DynamicTable GetTable(IDataReader r)
         {
-            var header = _cache.GetOrAdd(r.GetColumnHash(), x => CreateHeaders(r));
-            return new Helper(new DynamicTable(header)).Create;
+            return new DynamicTable(_headers.GetOrAdd(r.GetColumnHash(), x => CreateHeaders(r)));
+        }
+
+        public static Func<IDataRecord, DynamicTable, DynamicRow> CreateMap(IDataReader r)
+        {
+            return _maps.GetOrAdd(r.GetColumnHash(), x => Create(r));
         }
         #endregion
 
         #region Private Members
-        private static List<string> CreateHeaders(IDataReader r)
+        private static IEnumerable<string> CreateHeaders(IDataReader r)
         {
             List<string> list = new List<string>();
 
@@ -38,26 +56,56 @@ namespace Deipax.DataAccess.Common
 
             return list;
         }
-        #endregion
 
-        #region Helpers
-        class Helper
+        private static Func<IDataRecord, DynamicTable, DynamicRow> Create(IDataReader r)
         {
-            public Helper(DynamicTable table)
+            var table = Expression.Parameter(typeof(DynamicTable), "table");
+            var record = Expression.Parameter(typeof(IDataRecord), "record");
+            var values = Expression.Variable(typeof(object[]), "values");
+            var returnItem = Expression.Variable(typeof(DynamicRow), "returnItem");
+
+            var labelTarget = Expression.Label(typeof(DynamicRow));
+
+            var labelExpression = Expression.Label(
+                labelTarget,
+                Expression.Default(typeof(DynamicRow)));
+
+            List<Expression> expressions = new List<Expression>();
+
+            expressions.Add(Expression.Assign(
+                values,
+                Expression.NewArrayBounds(typeof(object), Expression.Constant(r.FieldCount))));
+
+            for (int fieldIndex = 0; fieldIndex < r.FieldCount; fieldIndex++)
             {
-                _table = table;
-                _fieldCount = table.GetFieldCount();
+                var getValueCall = Expression.Call(
+                    record,
+                    _getValueMethod,
+                    Expression.Constant(fieldIndex));
+
+                expressions.Add(Expression.Assign(
+                    Expression.ArrayAccess(values, Expression.Constant(fieldIndex)),
+                    getValueCall));
             }
 
-            private DynamicTable _table;
-            private int _fieldCount;
+            expressions.Add(Expression.Assign(
+                returnItem,
+                Expression.New(_constructor, table, values)));
 
-            public DynamicRow Create(IDataRecord r)
-            {
-                object[] values = new object[_fieldCount];
-                r.GetValues(values);
-                return new DynamicRow(_table, values);
-            }
+            expressions.Add(Expression.Return(labelTarget, returnItem));
+            expressions.Add(labelExpression);
+
+            var block = Expression.Block(
+                typeof(DynamicRow),
+                new[] { values, returnItem },
+                expressions);
+
+            var lambda = Expression.Lambda<Func<IDataRecord, DynamicTable, DynamicRow>>(
+                block,
+                record,
+                table);
+
+            return lambda.Compile();
         }
         #endregion
     }

@@ -23,17 +23,16 @@ namespace UnitTests.Core
             "Field9"
         };
 
-        private static dynamic _dynamicDict;
+        private dynamic _dynamic;
+        private IDictionary<string, object> _dynamicDict;
         #endregion
 
         [TestInitialize]
         public void GlobalSetup()
         {
-            _dynamicDict = new DynamicDictionary();
-
-            IDictionary<string, object> dict = _dynamicDict;
-
-            _fieldNames.ForEach(x => dict.Add(x, RandGen.GenerateInt()));
+            _dynamic = new DynamicDictionary();
+            _dynamicDict = _dynamic;
+            _fieldNames.ForEach(x => _dynamicDict.Add(x, RandGen.GenerateInt()));
         }
 
         [TestMethod]
@@ -57,31 +56,31 @@ namespace UnitTests.Core
         [TestMethod]
         public void ReadAsDynamic_DynamicDict()
         {
-            var tmp0 = _dynamicDict.Field0;
-            var tmp1 = _dynamicDict.Field1;
-            var tmp2 = _dynamicDict.Field2;
-            var tmp3 = _dynamicDict.Field3;
-            var tmp4 = _dynamicDict.Field4;
-            var tmp5 = _dynamicDict.Field5;
-            var tmp6 = _dynamicDict.Field6;
-            var tmp7 = _dynamicDict.Field7;
-            var tmp8 = _dynamicDict.Field8;
-            var tmp9 = _dynamicDict.Field9;
+            var tmp0 = _dynamic.Field0;
+            var tmp1 = _dynamic.Field1;
+            var tmp2 = _dynamic.Field2;
+            var tmp3 = _dynamic.Field3;
+            var tmp4 = _dynamic.Field4;
+            var tmp5 = _dynamic.Field5;
+            var tmp6 = _dynamic.Field6;
+            var tmp7 = _dynamic.Field7;
+            var tmp8 = _dynamic.Field8;
+            var tmp9 = _dynamic.Field9;
         }
 
         [TestMethod]
         public void WriteAsDynamic_DynamicDict()
         {
-            _dynamicDict.Field0 = 10;
-            _dynamicDict.Field1 = 10;
-            _dynamicDict.Field2 = 10;
-            _dynamicDict.Field3 = 10;
-            _dynamicDict.Field4 = 10;
-            _dynamicDict.Field5 = 10;
-            _dynamicDict.Field6 = 10;
-            _dynamicDict.Field7 = 10;
-            _dynamicDict.Field8 = 10;
-            _dynamicDict.Field9 = 10;
+            _dynamic.Field0 = 10;
+            _dynamic.Field1 = 10;
+            _dynamic.Field2 = 10;
+            _dynamic.Field3 = 10;
+            _dynamic.Field4 = 10;
+            _dynamic.Field5 = 10;
+            _dynamic.Field6 = 10;
+            _dynamic.Field7 = 10;
+            _dynamic.Field8 = 10;
+            _dynamic.Field9 = 10;
         }
     }
 }

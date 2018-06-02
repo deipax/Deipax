@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Deipax.Core.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -107,11 +108,12 @@ namespace Deipax.DataAccess.Interfaces
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
-			    Func<IDataRecord, dynamic> map = DynamicMap2.Create(r);
+			    var table = DynamicMap2.GetTable(r);
+			    var map = DynamicMap2.CreateMap(r);
 
 				while (r.Read())
 				{
-					yield return map(r);
+					yield return map(r, table);
 				}
 			}
 		}
