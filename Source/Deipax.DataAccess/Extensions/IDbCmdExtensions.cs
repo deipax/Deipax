@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Deipax.Core.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
-	public static class IDbCmdExtensions
+    public static class IDbCmdExtensions
 	{
 		#region Public Members
 		public static IDbCmd SetTransaction(
@@ -108,6 +107,11 @@ namespace Deipax.DataAccess.Interfaces
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
+			    if (r.FieldCount == 0)
+			    {
+			        yield break;
+			    }
+
 			    var table = DynamicMap2.GetTable(r);
 			    var map = DynamicMap2.CreateMap(r);
 
@@ -131,7 +135,12 @@ namespace Deipax.DataAccess.Interfaces
 			using (var dbCmd = source.CreateCommand())
 			using (var r = dbCmd.ExecuteReader())
 			{
-			    Func<IDataRecord, T> map = DataRecordMap<T>.Create(r);
+			    if (r.FieldCount == 0)
+			    {
+			        yield break;
+			    }
+
+                Func<IDataRecord, T> map = DataRecordMap<T>.Create(r);
 
 				while (r.Read())
 				{
