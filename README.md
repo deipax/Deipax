@@ -110,13 +110,13 @@ Examples:
 
 
 ## Registering a initialization delegate
-Sometimes it is necessary to provide a way of initializing a class or struct before proceeding with the cloning procedure. Some classes do not have a default constructors or the user may need to do some custom work, for this purpose you can use `CloneConfig<T>.Initializer`.  If an initializer is registered, it will be called by the framework instead of the default constructor and then normal cloning work will commence.
+Sometimes it is necessary to provide a way of initializing a class or struct before proceeding with the cloning procedure. Some classes do not have a default constructors or the user may need to do some custom work, for this purpose you can use `CloneConfig<T>.Initializer`.  If an initializer is registered, it will be called by the framework instead of the default constructor and then normal cloning work will commence.  The parameter to the initializer is the source object.
 
 Example:
 
-        CloneConfig<Helper5>.Initializer = (x) =>
+        CloneConfig<Helper5>.Initializer = (source) =>
         {
-             return new Helper5(x.Prop);
+             return new Helper5(source.Prop);
         };
 
 
