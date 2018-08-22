@@ -12,8 +12,8 @@ Many good cloning libraries exist, I chose to write this one out of curiosity (a
 - It is able to register a clone delegate factory for a range of classes/structs so you can supply your own clone logic.
 - It is able to skip properties/fields using attributes.  Good for classes/structs authored by you.
 - It is able to skip properties/fields using name registration.  Good for classes/structs not authored by you.
-- It is able to return properties/fields from the source without cloning using attributes.  Good for classes/structs authored by you.
-- It is able to return properties/fields from the source without cloning using name registration.  Good for classes/structs not authored by you.
+- It is able to return properties/fields from the source without cloning using attributes.  Good for classes/structs authored by you (ShallowClone).
+- It is able to return properties/fields from the source without cloning using name registration.  Good for classes/structs not authored by you (ShallowClone).
 
 ## Sample Usage
 var source = new MyClass<int>() { Item = 10 };
