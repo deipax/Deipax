@@ -1,130 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props')" />
-  <Import Project="..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1F74ED99-3A78-4A63-82FB-0E96F75B89D6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTests.Cloning</RootNamespace>
-    <AssemblyName>UnitTests.Cloning</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="BaseTests_Old\AbstractBaseTests.cs" />
-    <Compile Include="BaseTests\ComplexClassBase.cs" />
-    <Compile Include="BaseTests_Old\ComplexRefTypeBase.cs" />
-    <Compile Include="BaseTests\ComplexStructBase.cs" />
-    <Compile Include="BaseTests_Old\ComplexValueTypeBase.cs" />
-    <Compile Include="BaseTests\DoubleSimpleClassBase.cs" />
-    <Compile Include="BaseTests\NullableComplexStructBase.cs" />
-    <Compile Include="BaseTests\NullableIntBase.cs" />
-    <Compile Include="BaseTests\NullableSimpleStructBase.cs" />
-    <Compile Include="BaseTests_Old\ShallowCloneBase.cs" />
-    <Compile Include="BaseTests_Old\ShallowCloneListBase.cs" />
-    <Compile Include="BaseTests\SimpleClassBase.cs" />
-    <Compile Include="BaseTests\SimpleStructBase.cs" />
-    <Compile Include="BaseTests\IntBase.cs" />
-    <Compile Include="BaseTests\Base.cs" />
-    <Compile Include="BaseTests\StringBase.cs" />
-    <Compile Include="BaseTests_Old\TupleBase.cs" />
-    <Compile Include="DeepCopyIssues.cs" />
-    <Compile Include="DeepCopy\AbstractTests.cs" />
-    <Compile Include="BaseTests_Old\ArrayBaseTests.cs" />
-    <Compile Include="DeepCopy\ArrayTests.cs" />
-    <Compile Include="DeepCopy\ComplexClassTests.cs" />
-    <Compile Include="DeepCopy\ComplexRefTypeTests.cs" />
-    <Compile Include="DeepCopy\ComplexStructTests.cs" />
-    <Compile Include="DeepCopy\ComplexValueTypeTests.cs" />
-    <Compile Include="DeepCopy\DeepCopyCloneHelper.cs" />
-    <Compile Include="DeepCopy\DoubleSimpleClassTests.cs" />
-    <Compile Include="DeepCopy\IntTests.cs" />
-    <Compile Include="DeepCopy\NullableComplexStructTests.cs" />
-    <Compile Include="DeepCopy\NullableIntTests.cs" />
-    <Compile Include="DeepCopy\NullableSimpleStructTests.cs" />
-    <Compile Include="DeepCopy\ShallowCloneListTests.cs" />
-    <Compile Include="DeepCopy\ShallowCloneTests.cs" />
-    <Compile Include="DeepCopy\SimpleClassTests.cs" />
-    <Compile Include="DeepCopy\SimpleStructTests.cs" />
-    <Compile Include="DeepCopy\StringTests.cs" />
-    <Compile Include="DeepCopy\TupleTests.cs" />
-    <Compile Include="Deipax\AbstractTests.cs" />
-    <Compile Include="Deipax\ArrayTests.cs" />
-    <Compile Include="Deipax\CanShallowCloneTests.cs" />
-    <Compile Include="Deipax\CloneConfigTests.cs" />
-    <Compile Include="Deipax\ComplexClassTests.cs" />
-    <Compile Include="Deipax\ComplexRefTypeTests.cs" />
-    <Compile Include="Deipax\ComplexStructTests.cs" />
-    <Compile Include="Deipax\ComplexValueTypeTests.cs" />
-    <Compile Include="Deipax\DeipaxCloneHelper.cs" />
-    <Compile Include="Deipax\DoubleSimpleClassTests.cs" />
-    <Compile Include="Deipax\IntTests.cs" />
-    <Compile Include="Deipax\NoCloneAttributeTests.cs" />
-    <Compile Include="Deipax\NullableComplexStructTests.cs" />
-    <Compile Include="Deipax\NullableIntTests.cs" />
-    <Compile Include="Deipax\NullableSimpleStructTests.cs" />
-    <Compile Include="Deipax\ShallowCloneListTests.cs" />
-    <Compile Include="Deipax\ShallowCloneTests.cs" />
-    <Compile Include="Deipax\SimpleClassTests.cs" />
-    <Compile Include="Deipax\SimpleStructTests.cs" />
-    <Compile Include="Deipax\StringTests.cs" />
-    <Compile Include="Deipax\TupleTests.cs" />
-    <Compile Include="AdHoc.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <PackageReference Include="DeepCopy" Version="1.0.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Deipax.Cloning\Deipax.Cloning.csproj">
-      <Project>{8830a56b-512b-4022-a39e-d84b1afbaac1}</Project>
-      <Name>Deipax.Cloning</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj">
-      <Project>{a3089ab5-9bdd-4429-96c4-e8df1c2ec207}</Project>
-      <Name>Deipax.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj">
-      <Project>{b9d6ff58-7ba4-4926-85bb-fe38f494186a}</Project>
-      <Name>UnitTests.Common</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="DeepCopy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DeepCopy.1.0.3\lib\netstandard2.0\DeepCopy.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-  </ItemGroup>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

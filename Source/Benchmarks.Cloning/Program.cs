@@ -21,7 +21,6 @@ namespace Benchmarks.Cloning
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .With(DefaultConfig.Instance.GetJobs().ToArray())
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
-                .With(DefaultConfig.Instance.GetOrderProvider())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
@@ -45,7 +44,6 @@ namespace Benchmarks.Cloning
             //BenchmarkRunner.Run<NullableDeipax>(config);
             //BenchmarkRunner.Run<PrimitiveDeipax>(config);
             BenchmarkRunner.Run<CanShallowCloneDeipax>(config);
-
 
             //BenchmarkRunner.Run<IntDeepCopy>(config);
             //BenchmarkRunner.Run<StringDeepCopy>(config);

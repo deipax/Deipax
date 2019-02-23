@@ -1,13 +1,12 @@
 
-BenchmarkDotNet=v0.10.11, OS=Windows 7 SP1 (6.1.7601.0)
-Processor=Intel Xeon CPU E5-1650 v3 3.50GHz, ProcessorCount=12
-Frequency=3410136 Hz, Resolution=293.2434 ns, Timer=TSC
-.NET Core SDK=2.0.2
-  [Host]     : .NET Core 2.0.0 (Framework 4.6.00001.0), 64bit RyuJIT
-  DefaultJob : .NET Core 2.0.0 (Framework 4.6.00001.0), 64bit RyuJIT
+BenchmarkDotNet=v0.11.4, OS=Windows 10.0.17763.316 (1809/October2018Update/Redstone5)
+Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=2.2.104
+  [Host]     : .NET Core 2.2.2 (CoreCLR 4.6.27317.07, CoreFX 4.6.27318.02), 64bit RyuJIT
+  DefaultJob : .NET Core 2.2.2 (CoreCLR 4.6.27317.07, CoreFX 4.6.27318.02), 64bit RyuJIT
 
 
-                        Method |        Mean |      Error |     StdDev |  Gen 0 | Allocated |
------------------------------- |------------:|-----------:|-----------:|-------:|----------:|
-       CanShallowClone_Decimal |    23.84 ns |  0.5068 ns |   1.205 ns |      - |       0 B |
- CanShallowClone_ComplexStruct | 1,482.15 ns | 42.2464 ns | 123.901 ns | 0.0725 |     464 B |
+                        Method |      Mean |      Error |     StdDev |    Median | Gen 0/1k Op | Gen 1/1k Op | Gen 2/1k Op | Allocated Memory/Op |
+------------------------------ |----------:|-----------:|-----------:|----------:|------------:|------------:|------------:|--------------------:|
+       CanShallowClone_Decimal |  16.80 ns |  0.0594 ns |  0.0526 ns |  16.79 ns |           - |           - |           - |                   - |
+ CanShallowClone_ComplexStruct | 962.63 ns | 20.7264 ns | 47.6224 ns | 939.13 ns |      0.0734 |           - |           - |               464 B |

@@ -20,7 +20,6 @@ namespace Benchmarks.Core
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .With(DefaultConfig.Instance.GetJobs().ToArray())
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
-                .With(DefaultConfig.Instance.GetOrderProvider())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
