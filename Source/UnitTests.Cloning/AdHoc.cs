@@ -1,5 +1,4 @@
-﻿using DeepCopy;
-using Deipax.Cloning.Extensions;
+﻿using Deipax.Cloning.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using UnitTests.Common;
@@ -20,8 +19,6 @@ namespace UnitTests.Cloning
 
             for (int i = 0; i < 10000000; i++)
             {
-                //var target1 = DeipaxClone(arraySameObjects);
-                //var target2 = DeepClone(arraySameObjects);
                 var tmp = type.CanShallowClone();
             }
         }
@@ -30,11 +27,6 @@ namespace UnitTests.Cloning
         private static T DeipaxClone<T>(T source)
         {
             return source.GetClone();
-        }
-
-        private static T DeepClone<T>(T source)
-        {
-            return DeepCopier.Copy(source);
         }
         #endregion
     }
