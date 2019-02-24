@@ -1,5 +1,4 @@
-﻿using Dapper;
-using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data;
 using UnitTests.Common;
@@ -27,15 +26,11 @@ namespace UnitTests.DataAccess
                 .SetSql(_sql)
                 .AsList<MultipleFieldClass>();
 
-            var tmp2 = _dbConnection.Query<MultipleFieldClass>(_sql);
-
             var tmp3 = _dbCon
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
                 .AsDynamicList();
-
-            var tmp4 = _dbConnection.Query(_sql);
         }
 
         [TestCleanup]
@@ -72,27 +67,6 @@ namespace UnitTests.DataAccess
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
                 .AsDynamicList();
-        }
-
-        //[TestMethod]
-        public void AllFieldsAsClass_Dapper()
-        {
-            var tmp = _dbConnection.Query<MultipleFieldClass>(_sql);
-        }
-
-        //[TestMethod]
-        public void AllFieldsAsStruct_Dapper()
-        {
-            var tmp = _dbConnection.Query<MultipleFieldStruct>(_sql);
-        }
-
-        //[TestMethod]
-        public void AllFieldsAsDynamic_Dapper()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                var tmp = _dbConnection.Query(_sql);
-            }
         }
     }
 }

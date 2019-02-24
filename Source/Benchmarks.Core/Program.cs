@@ -24,15 +24,9 @@ namespace Benchmarks.Core
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            /*
-            ManualConfig manualConfig = config as ManualConfig;
-            manualConfig.Add(new CategoryFilter("Object"));
-            */
-
-            //BenchmarkRunner.Run<AdHoc>(config);
-
-            RunSetterBenchmarks(config);
-            //RunGetterBenchmarks(config);
+            //RunSetterBenchmarks(config);
+            RunGetterBenchmarks(config);
+            RunConvertBenchmarks(config);
         }
 
         #region Private Members
