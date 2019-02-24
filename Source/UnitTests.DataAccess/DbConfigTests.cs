@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using UnitTests.Common;
 using UnitTests.DataAccess.BaseTests;
+using UnitTests.NetCore;
 
 namespace UnitTests.DataAccess
 {
@@ -244,7 +245,7 @@ namespace UnitTests.DataAccess
         {
             var db1 = DbConfig.Get("Northwind");
             // Verify that resetting the initializer, clears the IDbs.
-            DbHelper.SetDbInitializer();
+            DbConfig.SetDbInitializer(DbInit.Initialize);
             var db2 = DbConfig.Get("Northwind");
             Assert.IsNotNull(db1);
             Assert.IsNotNull(db2);

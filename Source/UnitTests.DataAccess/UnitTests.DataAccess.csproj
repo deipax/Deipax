@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Deipax.DataAccess\Deipax.DataAccess.csproj" />
     <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
+    <ProjectReference Include="..\UnitTests.NetCore\UnitTests.NetCore.csproj" />
   </ItemGroup>
 
 </Project>

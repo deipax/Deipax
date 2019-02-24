@@ -1,8 +1,10 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Dapper;
+using Deipax.DataAccess.Common;
 using Deipax.DataAccess.Interfaces;
 using System.Data;
 using UnitTests.Common;
+using UnitTests.NetCore;
 
 namespace Benchmarks.DataAccess.Deipax
 {
@@ -18,8 +20,8 @@ namespace Benchmarks.DataAccess.Deipax
         [GlobalSetup]
         public void GlobalSetup()
         {
-            DbHelper.SetDbInitializer();
-            DbHelper.SetDefaultConnectionFactory();
+            DbConfig.SetDbInitializer(DbInit.Initialize);
+            DbConfig.DbConnectionFactory = DbInit.CreateDbConnection;
             _dbCon = DbHelper.GetNorthwind().CreateDbCon();
             _dbConnection = _dbCon.GetConnection();
             _dbConnection.Open();
