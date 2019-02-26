@@ -24,7 +24,7 @@ namespace Benchmarks.Core
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            //RunSetterBenchmarks(config);
+            RunSetterBenchmarks(config);
             RunGetterBenchmarks(config);
             RunConvertBenchmarks(config);
         }
