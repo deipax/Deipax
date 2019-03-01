@@ -5,6 +5,8 @@ using BenchmarkDotNet.Running;
 using Benchmarks.Cloning.DeepCopy;
 using Benchmarks.Cloning.Deipax;
 using System.Linq;
+using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Toolchains.CsProj;
 
 namespace Benchmarks.Cloning
 {
@@ -19,13 +21,12 @@ namespace Benchmarks.Cloning
                 .With(DefaultConfig.Instance.GetDiagnosers().ToArray())
                 .With(DefaultConfig.Instance.GetFilters().ToArray())
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
-                .With(DefaultConfig.Instance.GetJobs().ToArray())
+                .With(DefaultConfig .Instance .GetJobs().ToArray())
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            /*
             BenchmarkRunner.Run<IntDeipax>(config);
             BenchmarkRunner.Run<StringDeipax>(config);
             BenchmarkRunner.Run<ComplexClassDeipax>(config);
@@ -46,7 +47,7 @@ namespace Benchmarks.Cloning
             BenchmarkRunner.Run<PrimitiveDeipax>(config);
             BenchmarkRunner.Run<TupleDeipax>(config);
             BenchmarkRunner.Run<CanShallowCloneDeipax>(config);
-            */
+
             /*
             BenchmarkRunner.Run<IntDeepCopy>(config);
             BenchmarkRunner.Run<StringDeepCopy>(config);
