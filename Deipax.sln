@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.DataAccess", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests.NetCore", "Source\UnitTests.NetCore\UnitTests.NetCore.csproj", "{96527A5A-5576-4236-A213-32F4B785A11E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Framework", "UnitTests.Framework\UnitTests.Framework.csproj", "{418197CC-227B-4493-83F6-C2D2A6213345}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Framework", "Source\UnitTests.Framework\UnitTests.Framework.csproj", "{418197CC-227B-4493-83F6-C2D2A6213345}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

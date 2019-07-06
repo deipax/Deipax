@@ -46,7 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\Deipax.DataAccess\Deipax.DataAccess.csproj">
+    <ProjectReference Include="..\Deipax.DataAccess\Deipax.DataAccess.csproj">
       <Project>{44d3de58-8220-49cc-be41-ea4277cbbc0b}</Project>
       <Name>Deipax.DataAccess</Name>
     </ProjectReference>
