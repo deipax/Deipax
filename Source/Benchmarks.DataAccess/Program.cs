@@ -1,9 +1,11 @@
 ﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
-using System.Linq;
+using BenchmarkDotNet.Toolchains.CsProj;
 using Benchmarks.DataAccess.Deipax;
+using System.Linq;
 
 namespace Benchmarks.DataAccess
 {
@@ -18,7 +20,11 @@ namespace Benchmarks.DataAccess
                 .With(DefaultConfig.Instance.GetDiagnosers().ToArray())
                 .With(DefaultConfig.Instance.GetFilters().ToArray())
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
-                .With(DefaultConfig.Instance.GetJobs().ToArray())
+                .With(new Job[]
+                {
+                    Job.Default.With(CsProjCoreToolchain.NetCoreApp22).AsBaseline(),
+                    Job.Default.With(CsProjClassicNetToolchain.Net461),
+                })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)

@@ -1,12 +1,12 @@
 ﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
+using BenchmarkDotNet.Toolchains.CsProj;
 using Benchmarks.Cloning.DeepCopy;
 using Benchmarks.Cloning.Deipax;
 using System.Linq;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Toolchains.CsProj;
 
 namespace Benchmarks.Cloning
 {
@@ -21,7 +21,11 @@ namespace Benchmarks.Cloning
                 .With(DefaultConfig.Instance.GetDiagnosers().ToArray())
                 .With(DefaultConfig.Instance.GetFilters().ToArray())
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
-                .With(DefaultConfig .Instance .GetJobs().ToArray())
+                .With(new Job[]
+                {
+                    Job.Default.With(CsProjCoreToolchain.NetCoreApp22).AsBaseline(),
+                    Job.Default.With(CsProjClassicNetToolchain.Net461),
+                })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
