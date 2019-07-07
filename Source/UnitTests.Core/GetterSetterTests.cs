@@ -3,7 +3,7 @@ using System;
 using UnitTests.Core.BaseClasses;
 using UnitTests.Core.TestClasses;
 
-namespace UnitTests.Core.Deipax.GetterSetter
+namespace UnitTests.Core.GetterSetter
 {
     #region Bool/BoolNullable
     [TestClass]

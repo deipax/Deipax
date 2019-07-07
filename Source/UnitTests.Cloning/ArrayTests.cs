@@ -2,10 +2,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Cloning.BaseTests;
 
-namespace UnitTests.Cloning.Deipax
+namespace UnitTests.Cloning
 {
     [TestClass]
-    public class ComplexValueTypeTests : ComplexValueTypeBase
+    public class ArrayTests : ArrayBaseTests
     {
         protected override T GetClone<T>(T source, int expectedCount)
         {

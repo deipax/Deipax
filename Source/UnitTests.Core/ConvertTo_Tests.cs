@@ -4,7 +4,7 @@ using System;
 using UnitTests.Core.BaseClasses;
 using UnitTests.Core.TestClasses;
 
-namespace UnitTests.Core.Deipax.Conversion
+namespace UnitTests.Core.Conversion
 {
     [TestClass]
     public class ConvertTo_Base<TTo> : BaseConvertTo<TTo>

@@ -2,10 +2,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Cloning.BaseTests;
 
-namespace UnitTests.Cloning.Deipax
+namespace UnitTests.Cloning
 {
     [TestClass]
-    public class ArrayTests : ArrayBaseTests
+    public class TupleTests : TupleBase
     {
         protected override T GetClone<T>(T source, int expectedCount)
         {

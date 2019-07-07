@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnitTests.Common;
 using UnitTests.Cloning.BaseTests;
 
-namespace UnitTests.Cloning.Deipax
+namespace UnitTests.Cloning
 {
     [TestClass]
     public class SimpleClassTests : SimpleClassBase

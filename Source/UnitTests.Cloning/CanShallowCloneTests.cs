@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnitTests.Common;
 
-namespace UnitTests.Cloning.Deipax
+namespace UnitTests.Cloning
 {
     [TestClass]
     public class CanShallowCloneTests

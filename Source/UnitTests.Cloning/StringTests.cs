@@ -3,17 +3,17 @@ using System;
 using System.Collections.Generic;
 using UnitTests.Cloning.BaseTests;
 
-namespace UnitTests.Cloning.Deipax
+namespace UnitTests.Cloning
 {
     [TestClass]
-    public class NullableIntTests : NullableIntBase
+    public class StringTests : StringBase
     {
-        public NullableIntTests() : base(DeipaxCloneHelper.Instance)
+        public StringTests() : base(DeipaxCloneHelper.Instance)
         {
         }
 
         protected override void AfterArrayOfDiffInstance(
-            CloneArguments<int?[]> args)
+            CloneArguments<string[]> args)
         {
             base.AfterArrayOfDiffInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
@@ -34,77 +34,77 @@ namespace UnitTests.Cloning.Deipax
         }
 
         protected override void AfterArrayOfSameInstance(
-            CloneArguments<int?[]> args)
+            CloneArguments<string[]> args)
         {
             base.AfterArrayOfSameInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterDefaultInstance(
-            CloneArguments<int?> args)
+            CloneArguments<string> args)
         {
             base.AfterDefaultInstance(args);
             Assert.AreEqual(0, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterSingleInstance(
-            CloneArguments<int?> args)
+            CloneArguments<string> args)
         {
             base.AfterSingleInstance(args);
             Assert.AreEqual(0, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterArray2dOfDiffInstance(
-            CloneArguments<int?[][]> args)
+            CloneArguments<string[][]> args)
         {
             base.AfterArray2dOfDiffInstance(args);
             Assert.AreEqual(args.Target.Length + 1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterArray2dOfSameInstance(
-            CloneArguments<int?[][]> args)
+            CloneArguments<string[][]> args)
         {
             base.AfterArray2dOfSameInstance(args);
             Assert.AreEqual(2, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void ArrayOfDefaultInstance(
-            CloneArguments<int?[]> args)
+            CloneArguments<string[]> args)
         {
             base.ArrayOfDefaultInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterArrayRank2OfDiffInstance(
-            CloneArguments<int?[,]> args)
+            CloneArguments<string[,]> args)
         {
             base.AfterArrayRank2OfDiffInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterArrayRank2OfSameInstance(
-            CloneArguments<int?[,]> args)
+            CloneArguments<string[,]> args)
         {
             base.AfterArrayRank2OfSameInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterArrayRank3OfDiffInstance(
-            CloneArguments<int?[,,]> args)
+            CloneArguments<string[,,]> args)
         {
             base.AfterArrayRank3OfDiffInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterArrayRank3OfSameInstance(
-            CloneArguments<int?[,,]> args)
+            CloneArguments<string[,,]> args)
         {
             base.AfterArrayRank3OfSameInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterListOfDiffInstance(
-            CloneArguments<List<int?>> args)
+            CloneArguments<List<string>> args)
         {
             base.AfterListOfDiffInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
@@ -125,49 +125,49 @@ namespace UnitTests.Cloning.Deipax
         }
 
         protected override void AfterListOfSameInstance(
-            CloneArguments<List<int?>> args)
+            CloneArguments<List<string>> args)
         {
             base.AfterListOfSameInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterKeyValuePairDiff(
-            CloneArguments<KeyValuePair<int?, int?>> args)
+            CloneArguments<KeyValuePair<string, string>> args)
         {
             base.AfterKeyValuePairDiff(args);
             Assert.AreEqual(0, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterKeyValuePairSame(
-            CloneArguments<KeyValuePair<int?, int?>> args)
+            CloneArguments<KeyValuePair<string, string>> args)
         {
             base.AfterKeyValuePairSame(args);
             Assert.AreEqual(0, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterTupleDiffInstance(
-            CloneArguments<Tuple<int?, int?>> args)
+            CloneArguments<Tuple<string, string>> args)
         {
             base.AfterTupleDiffInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterTupleSameInstance(
-            CloneArguments<Tuple<int?, int?>> args)
+            CloneArguments<Tuple<string, string>> args)
         {
             base.AfterTupleSameInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterDictionaryDiffInstance(
-            CloneArguments<Dictionary<int?, int?>> args)
+            CloneArguments<Dictionary<string, string>> args)
         {
             base.AfterDictionaryDiffInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");
         }
 
         protected override void AfterDictionarySameInstance(
-            CloneArguments<Dictionary<int?, int?>> args)
+            CloneArguments<Dictionary<string, string>> args)
         {
             base.AfterDictionarySameInstance(args);
             Assert.AreEqual(1, args.CacheCount, "Cache count incorrect.");

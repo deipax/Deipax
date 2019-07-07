@@ -3,7 +3,7 @@ using Deipax.Cloning.Extensions;
 using Deipax.Core.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests.Cloning.Deipax
+namespace UnitTests.Cloning
 {
     [TestClass]
     public class NoCloneAttributeTests

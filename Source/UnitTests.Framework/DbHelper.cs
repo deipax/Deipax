@@ -15,11 +15,6 @@ namespace UnitTests.Framework
             return DbConfig.Get("Northwind");
         }
 
-        public static IDb GetNorthwindAzure()
-        {
-            return DbConfig.Get("NorthwindAzure");
-        }
-
         public static void SetDefaultConnectionFactory()
         {
             DbConfig.DbConnectionFactory = CreateDbConnection;

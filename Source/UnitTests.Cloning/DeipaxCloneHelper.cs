@@ -1,7 +1,7 @@
 ﻿using Deipax.Cloning.Common;
 using UnitTests.Cloning.BaseTests;
 
-namespace UnitTests.Cloning.Deipax
+namespace UnitTests.Cloning
 {
     public class DeipaxCloneHelper : ICloneHelper
     {
