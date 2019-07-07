@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.2;net461</TargetFrameworks>
@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.11.4" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Include="DeepCopy" Version="1.0.3" />
   </ItemGroup>
 
