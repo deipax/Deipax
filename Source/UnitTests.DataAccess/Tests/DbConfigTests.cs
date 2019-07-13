@@ -7,7 +7,6 @@ using System.Data;
 using System.Linq;
 using UnitTests.Common;
 using UnitTests.DataAccess.BaseTests;
-using UnitTests.NetCore;
 
 namespace UnitTests.DataAccess
 {

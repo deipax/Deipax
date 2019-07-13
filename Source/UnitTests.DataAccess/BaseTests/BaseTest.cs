@@ -1,6 +1,5 @@
 ﻿using Deipax.DataAccess.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnitTests.NetCore;
 
 namespace UnitTests.DataAccess.BaseTests
 {
