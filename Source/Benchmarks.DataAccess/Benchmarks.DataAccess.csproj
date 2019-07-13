@@ -1,15 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
@@ -19,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
     <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
-    <ProjectReference Include="..\UnitTests.NetCore\UnitTests.NetCore.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using Deipax.DataAccess.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using UnitTests.Common;
 
 namespace UnitTests.DataAccess.BaseTests
 {
@@ -11,8 +12,8 @@ namespace UnitTests.DataAccess.BaseTests
         [AssemblyInitialize]
         public static void AssemblyInit(TestContext testContext)
         {
-            DbConfig.SetDbInitializer(DbInit.Initialize);
-            DbConfig.DbConnectionFactory = DbInit.CreateDbConnection;
+            DbConfig.SetDbInitializer(DbHelper.Initialize);
+            DbConfig.DbConnectionFactory = DbHelper.CreateDbConnection;
         }
     }
 }

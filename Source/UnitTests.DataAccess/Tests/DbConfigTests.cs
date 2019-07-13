@@ -244,8 +244,8 @@ namespace UnitTests.DataAccess
         {
             var db1 = DbConfig.Get("Northwind");
             // Verify that resetting the initializer, clears the IDbs.
-            DbConfig.SetDbInitializer(DbInit.Initialize);
-            var db2 = DbConfig.Get("Northwind");
+            DbConfig.SetDbInitializer(DbHelper.Initialize);
+            var db2 = DbHelper.GetNorthwind();
             Assert.IsNotNull(db1);
             Assert.IsNotNull(db2);
             Assert.AreNotSame(db1, db2);

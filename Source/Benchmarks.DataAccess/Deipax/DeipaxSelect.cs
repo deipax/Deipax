@@ -4,7 +4,6 @@ using Deipax.DataAccess.Common;
 using Deipax.DataAccess.Interfaces;
 using System.Data;
 using UnitTests.Common;
-using UnitTests.NetCore;
 
 namespace Benchmarks.DataAccess.Deipax
 {
@@ -20,8 +19,8 @@ namespace Benchmarks.DataAccess.Deipax
         [GlobalSetup]
         public void GlobalSetup()
         {
-            DbConfig.SetDbInitializer(DbInit.Initialize);
-            DbConfig.DbConnectionFactory = DbInit.CreateDbConnection;
+            DbConfig.SetDbInitializer(DbHelper.Initialize);
+            DbConfig.DbConnectionFactory = DbHelper.CreateDbConnection;
             _dbCon = DbHelper.GetNorthwind().CreateDbCon();
             _dbConnection = _dbCon.GetConnection();
             _dbConnection.Open();
