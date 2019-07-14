@@ -23,14 +23,24 @@ namespace Benchmarks.Cloning
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .With(new Job[]
                 {
-                    Job.Default.With(CsProjCoreToolchain.NetCoreApp22).AsBaseline(),
-                    Job.Default.With(CsProjClassicNetToolchain.Net461),
+                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp20)).AsBaseline(),
+                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
+                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net461)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
                 })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
+            RunDeipaxBenchmarks(config);
+            RunDeepCopyBenchmarks(config);
+        }
+
+        #region Private Members
+        private static void RunDeipaxBenchmarks(IConfig config = null)
+        {
             BenchmarkRunner.Run<IntDeipax>(config);
             BenchmarkRunner.Run<StringDeipax>(config);
             BenchmarkRunner.Run<ComplexClassDeipax>(config);
@@ -51,8 +61,10 @@ namespace Benchmarks.Cloning
             BenchmarkRunner.Run<PrimitiveDeipax>(config);
             BenchmarkRunner.Run<TupleDeipax>(config);
             BenchmarkRunner.Run<CanShallowCloneDeipax>(config);
+        }
 
-            /*
+        private static void RunDeepCopyBenchmarks(IConfig config = null)
+        {
             BenchmarkRunner.Run<IntDeepCopy>(config);
             BenchmarkRunner.Run<StringDeepCopy>(config);
             BenchmarkRunner.Run<ComplexClassDeepCopy>(config);
@@ -72,7 +84,14 @@ namespace Benchmarks.Cloning
             BenchmarkRunner.Run<NullableDeepCopy>(config);
             BenchmarkRunner.Run<PrimitiveDeepCopy>(config);
             BenchmarkRunner.Run<TupleDeepCopy>(config);
-            */
         }
+
+        private static Job ConfigureJob(Job source)
+        {
+            return source
+                .WithIterationCount(1)
+                .WithWarmupCount(1);
+        }
+        #endregion
     }
 }

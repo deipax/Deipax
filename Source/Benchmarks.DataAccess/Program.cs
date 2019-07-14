@@ -22,8 +22,11 @@ namespace Benchmarks.DataAccess
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .With(new Job[]
                 {
-                    Job.Default.With(CsProjCoreToolchain.NetCoreApp22).AsBaseline(),
-                    Job.Default.With(CsProjClassicNetToolchain.Net461),
+                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp20)).AsBaseline(),
+                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
+                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net461)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
                 })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
@@ -32,9 +35,15 @@ namespace Benchmarks.DataAccess
 
             BenchmarkRunner.Run<DynamicBench>(config);
             BenchmarkRunner.Run<DeipaxSelect>(config);
-
-            //BenchmarkRunner.Run<SqliteSqlBench>(config);
-            //BenchmarkRunner.Run<SqlServerBench>(config);
         }
+
+        #region Private Members
+        private static Job ConfigureJob(Job source)
+        {
+            return source
+                .WithIterationCount(1)
+                .WithWarmupCount(1);
+        }
+        #endregion
     }
 }
