@@ -41,12 +41,24 @@ namespace UnitTests.Core
 
             AssertAllGettersSetters<int>(1, 1, 1);
             AssertAllGettersSetters<List<int>>(11, 5, 5);
-            AssertAllGettersSetters<string>(3, 2, 2);
             AssertAllGettersSetters<string[]>(8, 0, 0);
             AssertAllGettersSetters<IDictionary<int, int>>(2, 0, 0);
             AssertAllGettersSetters<object>(0, 0, 0);
-            AssertAllGettersSetters<DateTime>(16, 0, 0);
             AssertAllGettersSetters<TimeSpan>(12, 1, 1);
+
+#if NET45
+            AssertAllGettersSetters<string>(4, 2, 2);
+            AssertAllGettersSetters<DateTime>(16, 1, 1);
+#elif NETCOREAPP2_0
+            AssertAllGettersSetters<string>(4, 2, 2);
+            AssertAllGettersSetters<DateTime>(16, 1, 1);
+#elif NETCOREAPP2_2
+            AssertAllGettersSetters<string>(3, 2, 2);
+            AssertAllGettersSetters<DateTime>(16, 0, 0);
+#else
+            AssertAllGettersSetters<string>(3, 2, 2);
+            AssertAllGettersSetters<DateTime>(16, 0, 0);
+#endif
         }
 
         [TestMethod]
@@ -61,12 +73,24 @@ namespace UnitTests.Core
 
             AssertGettersSetters<int>(1, 1, 1);
             AssertGettersSetters<List<int>>(11, 5, 5);
-            AssertGettersSetters<string>(3, 2, 2);
             AssertGettersSetters<string[]>(8, 0, 0);
             AssertGettersSetters<IDictionary<int, int>>(2, 0, 0);
             AssertGettersSetters<object>(0, 0, 0);
-            AssertGettersSetters<DateTime>(16, 0, 0);
             AssertGettersSetters<TimeSpan>(12, 1, 1);
+
+#if NET45
+            AssertGettersSetters<string>(4, 2, 2);
+            AssertGettersSetters<DateTime>(16, 1, 1);
+#elif NETCOREAPP2_0
+            AssertGettersSetters<string>(4, 2, 2);
+            AssertGettersSetters<DateTime>(16, 1, 1);
+#elif NETCOREAPP2_2
+            AssertGettersSetters<string>(3, 2, 2);
+            AssertGettersSetters<DateTime>(16, 0, 0);
+#else
+            AssertGettersSetters<string>(3, 2, 2);
+            AssertGettersSetters<DateTime>(16, 0, 0);
+#endif
         }
 
         [TestMethod]
@@ -233,9 +257,9 @@ namespace UnitTests.Core
 
             var intersect = Intersect<T>.CreateAll();
 
-            Assert.IsTrue(getters.Count == getterCount);
-            Assert.IsTrue(setters.Count == setterCount);
-            Assert.IsTrue(intersect.Count == intersectCount);
+            Assert.AreEqual(getterCount, getters.Count, $"For type: #{typeof(T).Name} - Getters");
+            Assert.AreEqual(setterCount, setters.Count, $"For type: #{typeof(T).Name} - Setters");
+            Assert.AreEqual(intersectCount, intersect.Count, $"For type: #{typeof(T).Name} - Intersect");
         }
 
         private static void AssertGettersSetters<T>(
@@ -255,9 +279,9 @@ namespace UnitTests.Core
 
             var intersect = Intersect<T>.Create();
 
-            Assert.IsTrue(getters.Count == getterCount);
-            Assert.IsTrue(setters.Count == setterCount);
-            Assert.IsTrue(intersect.Count == intersectCount);
+            Assert.AreEqual(getterCount, getters.Count, $"For type: #{typeof(T).Name} - Getters");
+            Assert.AreEqual(setterCount, setters.Count, $"For type: #{typeof(T).Name} - Setters");
+            Assert.AreEqual(intersectCount, intersect.Count, $"For type: #{typeof(T).Name} - Intersect");
         }
 
         private static void AssertAccess<T>() where T : new()
