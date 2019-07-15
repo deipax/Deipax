@@ -40,9 +40,11 @@ namespace Benchmarks.DataAccess
         #region Private Members
         private static Job ConfigureJob(Job source)
         {
+            return source;
+            /*
             return source
                 .WithIterationCount(1)
-                .WithWarmupCount(1);
+                .WithWarmupCount(1);*/
         }
         #endregion
     }

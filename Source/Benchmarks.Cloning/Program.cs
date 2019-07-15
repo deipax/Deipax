@@ -35,7 +35,7 @@ namespace Benchmarks.Cloning
                 .With(MemoryDiagnoser.Default);
 
             RunDeipaxBenchmarks(config);
-            RunDeepCopyBenchmarks(config);
+            //RunDeepCopyBenchmarks(config);
         }
 
         #region Private Members
@@ -88,9 +88,11 @@ namespace Benchmarks.Cloning
 
         private static Job ConfigureJob(Job source)
         {
+            return source;
+            /*
             return source
                 .WithIterationCount(1)
-                .WithWarmupCount(1);
+                .WithWarmupCount(1);*/
         }
         #endregion
     }

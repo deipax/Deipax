@@ -34,8 +34,8 @@ namespace Benchmarks.Core
                 .With(MemoryDiagnoser.Default);
 
             RunSetterBenchmarks(config);
-            RunGetterBenchmarks(config);
-            RunConvertBenchmarks(config);
+            //RunGetterBenchmarks(config);
+            //RunConvertBenchmarks(config);
         }
 
         #region Private Members
@@ -217,9 +217,11 @@ namespace Benchmarks.Core
 
         private static Job ConfigureJob(Job source)
         {
+            return source;
+            /*
             return source
                 .WithIterationCount(1)
-                .WithWarmupCount(1);
+                .WithWarmupCount(1);*/
         }
         #endregion
     }

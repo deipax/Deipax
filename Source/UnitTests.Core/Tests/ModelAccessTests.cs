@@ -39,25 +39,28 @@ namespace UnitTests.Core
             AssertAllGettersSetters<MyStruct>(1, 1, 1);
             AssertAllGettersSetters<MyStaticClass>(0, 0, 0);
 
-            AssertAllGettersSetters<int>(1, 1, 1);
-            AssertAllGettersSetters<List<int>>(11, 5, 5);
             AssertAllGettersSetters<string[]>(8, 0, 0);
             AssertAllGettersSetters<IDictionary<int, int>>(2, 0, 0);
             AssertAllGettersSetters<object>(0, 0, 0);
-            AssertAllGettersSetters<TimeSpan>(12, 1, 1);
 
-#if NET45
+#if NETFRAMEWORK || NETCOREAPP2_0
             AssertAllGettersSetters<string>(4, 2, 2);
             AssertAllGettersSetters<DateTime>(16, 1, 1);
-#elif NETCOREAPP2_0
-            AssertAllGettersSetters<string>(4, 2, 2);
-            AssertAllGettersSetters<DateTime>(16, 1, 1);
-#elif NETCOREAPP2_2
+            AssertAllGettersSetters<int>(1, 1, 1);
+            AssertAllGettersSetters<List<int>>(11, 5, 5);
+            AssertAllGettersSetters<TimeSpan>(12, 1, 1);
+#elif NETCOREAPP3_0
             AssertAllGettersSetters<string>(3, 2, 2);
             AssertAllGettersSetters<DateTime>(16, 0, 0);
+            AssertAllGettersSetters<int>(1, 0, 0);
+            AssertAllGettersSetters<List<int>>(10, 4, 4);
+            AssertAllGettersSetters<TimeSpan>(12, 0, 0);
 #else
             AssertAllGettersSetters<string>(3, 2, 2);
             AssertAllGettersSetters<DateTime>(16, 0, 0);
+            AssertAllGettersSetters<int>(1, 1, 1);
+            AssertAllGettersSetters<List<int>>(11, 5, 5);
+            AssertAllGettersSetters<TimeSpan>(12, 1, 1);
 #endif
         }
 
@@ -70,26 +73,29 @@ namespace UnitTests.Core
             AssertGettersSetters<MyInterface>(2, 1, 1);
             AssertGettersSetters<MyStruct>(1, 1, 1);
             AssertGettersSetters<MyStaticClass>(0, 0, 0);
-
-            AssertGettersSetters<int>(1, 1, 1);
-            AssertGettersSetters<List<int>>(11, 5, 5);
+      
             AssertGettersSetters<string[]>(8, 0, 0);
             AssertGettersSetters<IDictionary<int, int>>(2, 0, 0);
             AssertGettersSetters<object>(0, 0, 0);
-            AssertGettersSetters<TimeSpan>(12, 1, 1);
 
-#if NET45
+#if NETFRAMEWORK || NETCOREAPP2_0
             AssertGettersSetters<string>(4, 2, 2);
             AssertGettersSetters<DateTime>(16, 1, 1);
-#elif NETCOREAPP2_0
-            AssertGettersSetters<string>(4, 2, 2);
-            AssertGettersSetters<DateTime>(16, 1, 1);
-#elif NETCOREAPP2_2
+            AssertGettersSetters<int>(1, 1, 1);
+            AssertGettersSetters<List<int>>(11, 5, 5);
+            AssertGettersSetters<TimeSpan>(12, 1, 1);
+#elif NETCOREAPP3_0
             AssertGettersSetters<string>(3, 2, 2);
             AssertGettersSetters<DateTime>(16, 0, 0);
+            AssertGettersSetters<int>(1, 0, 0);
+            AssertGettersSetters<List<int>>(10, 4, 4);
+            AssertGettersSetters<TimeSpan>(12, 0, 0);
 #else
             AssertGettersSetters<string>(3, 2, 2);
             AssertGettersSetters<DateTime>(16, 0, 0);
+            AssertGettersSetters<int>(1, 1, 1);
+            AssertGettersSetters<List<int>>(11, 5, 5);
+            AssertGettersSetters<TimeSpan>(12, 1, 1);
 #endif
         }
 
