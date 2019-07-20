@@ -33,9 +33,9 @@ namespace Benchmarks.Core
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
-            RunSetterBenchmarks(config);
+            RunConvertBenchmarks(config);
+            //RunSetterBenchmarks(config);
             //RunGetterBenchmarks(config);
-            //RunConvertBenchmarks(config);
         }
 
         #region Private Members
