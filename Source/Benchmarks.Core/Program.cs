@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Filters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
@@ -19,6 +20,7 @@ namespace Benchmarks.Core
                 .With(DefaultConfig.Instance.GetColumnProviders().ToArray())
                 .With(DefaultConfig.Instance.GetDiagnosers().ToArray())
                 .With(DefaultConfig.Instance.GetFilters().ToArray())
+                //.With(new AllCategoriesFilter(new string[] { "Enum" }))
                 .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .With(new Job[]
                 {
@@ -33,9 +35,11 @@ namespace Benchmarks.Core
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
 
+            BenchmarkRunner.Run<ConvertTo_String>(config);
+
             //RunConvertBenchmarks(config);
             //RunSetterBenchmarks(config);
-            RunGetterBenchmarks(config);
+            //RunGetterBenchmarks(config);
         }
 
         #region Private Members
@@ -68,7 +72,7 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<Set_Prop_Int>(config);
             BenchmarkRunner.Run<Set_Prop_IntNullable>(config);
             BenchmarkRunner.Run<Set_Prop_IntNullable_NoValue>(config);
- 
+
             BenchmarkRunner.Run<Set_Prop_UInt>(config);
             BenchmarkRunner.Run<Set_Prop_UIntNullable>(config);
             BenchmarkRunner.Run<Set_Prop_UIntNullable_NoValue>(config);

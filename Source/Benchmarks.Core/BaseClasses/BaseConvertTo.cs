@@ -256,6 +256,7 @@ namespace Benchmarks.Core.BaseClasses
         protected abstract TTo ConvertFrom<X>(X from);
 
         private const string OBJECT = "Object";
+        private const string ENUM = "Enum";
         #endregion
 
         #region From Bool
@@ -1035,39 +1036,42 @@ namespace Benchmarks.Core.BaseClasses
 
         #region From Enums
         [Benchmark]
+        [BenchmarkCategory(ENUM)]
         public virtual void From_Enum()
         {
             TTo to = ConvertFrom(_fromEnum);
         }
 
         [Benchmark]
-        [BenchmarkCategory(OBJECT)]
+        [BenchmarkCategory(OBJECT, ENUM)]
         public virtual void From_Enum_AsObject()
         {
             TTo to = ConvertFrom(_fromEnum_AsObject);
         }
 
         [Benchmark]
+        [BenchmarkCategory(ENUM)]
         public virtual void From_Enum_Nullable_WithValue()
         {
             TTo to = ConvertFrom(_fromEnumNullableWithValue);
         }
 
         [Benchmark]
-        [BenchmarkCategory(OBJECT)]
+        [BenchmarkCategory(OBJECT, ENUM)]
         public virtual void From_Enum_Nullable_WithValue_AsObject()
         {
             TTo to = ConvertFrom(_fromEnumNullableWithValue_AsObject);
         }
 
         [Benchmark]
+        [BenchmarkCategory(ENUM)]
         public virtual void From_Enum_Nullable_NoValue()
         {
             TTo to = ConvertFrom(_fromEnumNullableNoValue);
         }
 
         [Benchmark]
-        [BenchmarkCategory(OBJECT)]
+        [BenchmarkCategory(OBJECT, ENUM)]
         public virtual void From_Enum_Nullable_NoValue_AsObject()
         {
             TTo to = ConvertFrom(_fromEnumNullableNoValue_AsObject);
