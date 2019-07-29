@@ -1,7 +1,6 @@
 ﻿using Deipax.Core.Conversion;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Deipax.Core.Common
@@ -13,20 +12,14 @@ namespace Deipax.Core.Common
             Type toType = typeof(TTo);
             Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
 
-            foreach (var name in Enum.GetNames(underlyingToType))
+            foreach (var value in Enum.GetValues(underlyingToType))
             {
-                _enumValues.Add(name, (TTo)Enum.Parse(underlyingToType, name));
-            }
+                TTo enumValue = (TTo)value;
+                int enumAsInt = (int)value;
 
-            foreach (var value in Enum.GetValues(underlyingToType).Cast<int>())
-            {
-                string valueAsString = value.ToString();
-                _enumValues.Add(valueAsString, (TTo)Enum.Parse(underlyingToType, valueAsString));
-            }
-
-            foreach (var value in Enum.GetValues(underlyingToType).Cast<TTo>())
-            {
-                _stringValues.Add(value, value.ToString());
+                _enumValues.Add(enumValue.ToString(), enumValue);
+                _enumValues.Add(enumAsInt.ToString(), enumValue);
+                _stringValues.Add(enumValue, enumValue.ToString());
             }
 
             var p = Expression.Parameter(typeof(int));

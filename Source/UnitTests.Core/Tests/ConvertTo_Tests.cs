@@ -392,9 +392,9 @@ namespace UnitTests.Core.Conversion
     [TestClass]
     public class ConvertToEnum : ConvertTo_Base<TestEnum>
     {
-        protected override TestEnum GetExpected<TFrom>(TFrom @from)
+        protected override TestEnum GetExpected<TFrom>(TFrom from)
         {
-            return base.GetExpected(@from);
+            return base.GetExpected(from);
         }
     }
     #endregion
