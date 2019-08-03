@@ -397,6 +397,15 @@ namespace UnitTests.Core.Conversion
             return base.GetExpected(from);
         }
     }
+
+    [TestClass]
+    public class ConvertToEnumNullable : ConvertTo_Base<TestEnum?>
+    {
+        protected override TestEnum? GetExpected<TFrom>(TFrom from)
+        {
+            return base.GetExpected(from);
+        }
+    }
     #endregion
 
     #region IParent

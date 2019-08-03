@@ -312,28 +312,25 @@ namespace UnitTests.Core.BaseClasses
 
                 if (from != null)
                 {
-                    if (toType.IsEnum)
+                    if (toType.IsEnum || underlyingToType.IsEnum)
                     {
                         if (fromType == typeof(string))
                         {
-                            return (TTo)Enum.Parse(toType, from as string, true);
+                            return (TTo)Enum.Parse(underlyingToType, from as string, true);
                         }
                         else
                         {
                             var intValue = Convert.ChangeType(from, typeof(int), CultureInfo.InvariantCulture);
-
-                            if (Enum.IsDefined(toType, intValue))
-                            {
-                                return (TTo)intValue;
-                            }
+                            return (TTo)Enum.Parse(underlyingToType, intValue.ToString(), true);
                         }
                     }
 
                     return (TTo)Convert.ChangeType(from, underlyingToType, CultureInfo.InvariantCulture);
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                string errorMsg = ex.Message;
             }
 
             return DefaultValue;

@@ -58,8 +58,11 @@ namespace Deipax.Core.Common
                 return returnValue;
             }
 
-            int intKey = ConvertTo<int, object>.From(from, provider);
-            return _cast(intKey);
+            int? intKey = ConvertTo<int?, object>.From(from, provider);
+            
+            return intKey.HasValue
+                ? _cast(intKey.Value)
+                : _default;
         }
 
         public static TTo ConvertFromString(
