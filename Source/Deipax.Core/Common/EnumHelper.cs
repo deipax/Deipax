@@ -17,9 +17,9 @@ namespace Deipax.Core.Common
                 TTo enumValue = (TTo)value;
                 int enumAsInt = (int)value;
 
-                _enumValues.Add(enumValue.ToString(), enumValue);
-                _enumValues.Add(enumAsInt.ToString(), enumValue);
-                _stringValues.Add(enumValue, enumValue.ToString());
+                _enumValues.Add(enumValue.ToString(), enumAsInt);
+                _enumValues.Add(enumAsInt.ToString(), enumAsInt);
+                _stringValues.Add(enumAsInt, enumValue.ToString());
             }
 
             var p = Expression.Parameter(typeof(int));
@@ -28,8 +28,8 @@ namespace Deipax.Core.Common
         }
 
         #region Field Members
-        private static Dictionary<string, TTo> _enumValues = new Dictionary<string, TTo>();
-        private static Dictionary<TTo, string> _stringValues = new Dictionary<TTo, string>();
+        private static Dictionary<string, int> _enumValues = new Dictionary<string, int>();
+        private static Dictionary<int, string> _stringValues = new Dictionary<int, string>();
         private static TTo _default = default;
         private static Func<int, TTo> _cast;
         #endregion
@@ -39,27 +39,26 @@ namespace Deipax.Core.Common
             object from,
             IFormatProvider provider = null)
         {
-            TTo returnValue = _default;
-
             if (from == null || DBNull.Value.Equals(from))
             {
-                return returnValue;
+                return _default;
             }
 
             string key = from as string;
 
             if (key != null)
             {
-                if (key != string.Empty)
+                if (key != string.Empty &&
+                    _enumValues.TryGetValue(key, out int returnValue))
                 {
-                    _enumValues.TryGetValue(key, out returnValue);
+                    return _cast(returnValue);
                 }
 
-                return returnValue;
+                return _default;
             }
 
             int? intKey = ConvertTo<int?, object>.From(from, provider);
-            
+
             return intKey.HasValue
                 ? _cast(intKey.Value)
                 : _default;
@@ -69,15 +68,13 @@ namespace Deipax.Core.Common
             string from,
             IFormatProvider provider = null)
         {
-            TTo returnValue = _default;
-            string key = from as string;
-
-            if (!string.IsNullOrEmpty(key))
+            if (!string.IsNullOrEmpty(from) &&
+                _enumValues.TryGetValue(from, out int returnValue))
             {
-                _enumValues.TryGetValue(key, out returnValue);
+                return _cast(returnValue);
             }
 
-            return returnValue;
+            return _default;
         }
 
         public static TTo Convert<TFrom>(
@@ -95,7 +92,14 @@ namespace Deipax.Core.Common
             TTo from,
             IFormatProvider provider = null)
         {
-            _stringValues.TryGetValue(from, out string returnValue);
+            string returnValue = default;
+            int? value = ConvertTo<int?, TTo>.From(from);
+
+           if (value.HasValue)
+            {
+                _stringValues.TryGetValue(value.Value, out returnValue);
+            }
+       
             return returnValue;
         }
         #endregion
