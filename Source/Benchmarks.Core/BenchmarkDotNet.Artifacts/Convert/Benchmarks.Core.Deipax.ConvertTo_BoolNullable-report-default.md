@@ -3,92 +3,92 @@ BenchmarkDotNet=v0.11.5, OS=Windows 10.0.17763.615 (1809/October2018Update/Redst
 Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
 .NET Core SDK=3.0.100-preview6-012264
   [Host]     : .NET Core 2.2.2 (CoreCLR 4.6.27317.07, CoreFX 4.6.27318.02), 64bit RyuJIT
-  Job-LRKCAO : .NET Core 2.0.9 (CoreCLR 4.6.26614.01, CoreFX 4.6.26614.01), 64bit RyuJIT
-  Job-VAJWLV : .NET Core 2.2.2 (CoreCLR 4.6.27317.07, CoreFX 4.6.27318.02), 64bit RyuJIT
-  Job-TJIRAH : .NET Core 3.0.0-preview6-27804-01 (CoreCLR 4.700.19.30373, CoreFX 4.700.19.30308), 64bit RyuJIT
-  Job-HBFVIR : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
-  Job-YRWWQX : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  Job-FWPOAF : .NET Core 2.0.9 (CoreCLR 4.6.26614.01, CoreFX 4.6.26614.01), 64bit RyuJIT
+  Job-ZZPTUV : .NET Core 2.2.2 (CoreCLR 4.6.27317.07, CoreFX 4.6.27318.02), 64bit RyuJIT
+  Job-EOJUSV : .NET Core 3.0.0-preview6-27804-01 (CoreCLR 4.700.19.30373, CoreFX 4.700.19.30308), 64bit RyuJIT
+  Job-KESODJ : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  Job-PJAXXB : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
 
 
                                                 Method |     Toolchain |      Mean |     Error |    StdDev |    Median | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
 ------------------------------------------------------ |-------------- |----------:|----------:|----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
-                                             From_Bool | .NET Core 2.0 | 11.901 ns | 0.0281 ns | 0.0263 ns | 11.896 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                             From_Bool | .NET Core 2.2 | 10.428 ns | 0.0210 ns | 0.0186 ns | 10.432 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                                             From_Bool | .NET Core 3.0 |  9.496 ns | 0.0191 ns | 0.0179 ns |  9.488 ns |  0.80 |    0.00 |      - |     - |     - |         - |
-                                             From_Bool |        net461 | 14.149 ns | 0.1397 ns | 0.1306 ns | 14.081 ns |  1.19 |    0.01 |      - |     - |     - |         - |
-                                             From_Bool |        net472 | 12.419 ns | 0.1220 ns | 0.1141 ns | 12.348 ns |  1.04 |    0.01 |      - |     - |     - |         - |
+                                             From_Bool | .NET Core 2.0 | 11.919 ns | 0.0644 ns | 0.0603 ns | 11.950 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                             From_Bool | .NET Core 2.2 | 10.376 ns | 0.0162 ns | 0.0144 ns | 10.382 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                                             From_Bool | .NET Core 3.0 |  9.758 ns | 0.0337 ns | 0.0263 ns |  9.760 ns |  0.82 |    0.01 |      - |     - |     - |         - |
+                                             From_Bool |        net461 | 12.913 ns | 0.0367 ns | 0.0325 ns | 12.906 ns |  1.08 |    0.01 |      - |     - |     - |         - |
+                                             From_Bool |        net472 | 12.240 ns | 0.0165 ns | 0.0154 ns | 12.239 ns |  1.03 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                    From_Bool_AsObject | .NET Core 2.0 | 25.056 ns | 0.0691 ns | 0.0646 ns | 25.033 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                    From_Bool_AsObject | .NET Core 2.2 | 25.851 ns | 0.2535 ns | 0.2371 ns | 25.956 ns |  1.03 |    0.01 |      - |     - |     - |         - |
-                                    From_Bool_AsObject | .NET Core 3.0 | 28.651 ns | 0.0466 ns | 0.0436 ns | 28.654 ns |  1.14 |    0.00 |      - |     - |     - |         - |
-                                    From_Bool_AsObject |        net461 | 34.865 ns | 0.0525 ns | 0.0466 ns | 34.869 ns |  1.39 |    0.00 |      - |     - |     - |         - |
-                                    From_Bool_AsObject |        net472 | 37.617 ns | 0.0583 ns | 0.0546 ns | 37.610 ns |  1.50 |    0.00 |      - |     - |     - |         - |
+                                    From_Bool_AsObject | .NET Core 2.0 | 24.046 ns | 0.0175 ns | 0.0146 ns | 24.046 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                    From_Bool_AsObject | .NET Core 2.2 | 25.750 ns | 0.0241 ns | 0.0226 ns | 25.749 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                                    From_Bool_AsObject | .NET Core 3.0 | 28.516 ns | 0.0615 ns | 0.0514 ns | 28.523 ns |  1.19 |    0.00 |      - |     - |     - |         - |
+                                    From_Bool_AsObject |        net461 | 35.103 ns | 0.3211 ns | 0.3003 ns | 35.292 ns |  1.46 |    0.01 |      - |     - |     - |         - |
+                                    From_Bool_AsObject |        net472 | 35.771 ns | 0.0740 ns | 0.0692 ns | 35.785 ns |  1.49 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_Bool_Nullable_WithValue | .NET Core 2.0 | 11.644 ns | 0.0841 ns | 0.0745 ns | 11.673 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_Bool_Nullable_WithValue | .NET Core 2.2 |  9.997 ns | 0.0080 ns | 0.0071 ns |  9.999 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                          From_Bool_Nullable_WithValue | .NET Core 3.0 |  7.081 ns | 0.0691 ns | 0.0647 ns |  7.122 ns |  0.61 |    0.01 |      - |     - |     - |         - |
-                          From_Bool_Nullable_WithValue |        net461 | 12.542 ns | 0.1024 ns | 0.0957 ns | 12.494 ns |  1.08 |    0.01 |      - |     - |     - |         - |
-                          From_Bool_Nullable_WithValue |        net472 | 12.765 ns | 0.1231 ns | 0.1151 ns | 12.684 ns |  1.10 |    0.01 |      - |     - |     - |         - |
+                          From_Bool_Nullable_WithValue | .NET Core 2.0 | 11.628 ns | 0.0083 ns | 0.0077 ns | 11.629 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_Bool_Nullable_WithValue | .NET Core 2.2 |  9.951 ns | 0.0147 ns | 0.0130 ns |  9.951 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+                          From_Bool_Nullable_WithValue | .NET Core 3.0 |  6.725 ns | 0.1586 ns | 0.1763 ns |  6.820 ns |  0.58 |    0.02 |      - |     - |     - |         - |
+                          From_Bool_Nullable_WithValue |        net461 | 11.797 ns | 0.0129 ns | 0.0108 ns | 11.798 ns |  1.01 |    0.00 |      - |     - |     - |         - |
+                          From_Bool_Nullable_WithValue |        net472 | 11.927 ns | 0.0454 ns | 0.0403 ns | 11.935 ns |  1.03 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                 From_Bool_Nullable_WithValue_AsObject | .NET Core 2.0 | 24.574 ns | 0.0373 ns | 0.0349 ns | 24.569 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                 From_Bool_Nullable_WithValue_AsObject | .NET Core 2.2 | 25.066 ns | 0.0711 ns | 0.0594 ns | 25.061 ns |  1.02 |    0.00 |      - |     - |     - |         - |
-                 From_Bool_Nullable_WithValue_AsObject | .NET Core 3.0 | 28.059 ns | 0.1783 ns | 0.1668 ns | 28.118 ns |  1.14 |    0.01 |      - |     - |     - |         - |
-                 From_Bool_Nullable_WithValue_AsObject |        net461 | 35.932 ns | 0.2245 ns | 0.1874 ns | 35.985 ns |  1.46 |    0.01 |      - |     - |     - |         - |
-                 From_Bool_Nullable_WithValue_AsObject |        net472 | 39.462 ns | 0.0893 ns | 0.0792 ns | 39.441 ns |  1.61 |    0.00 |      - |     - |     - |         - |
+                 From_Bool_Nullable_WithValue_AsObject | .NET Core 2.0 | 23.841 ns | 0.0781 ns | 0.0730 ns | 23.858 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                 From_Bool_Nullable_WithValue_AsObject | .NET Core 2.2 | 25.750 ns | 0.0267 ns | 0.0236 ns | 25.750 ns |  1.08 |    0.00 |      - |     - |     - |         - |
+                 From_Bool_Nullable_WithValue_AsObject | .NET Core 3.0 | 29.590 ns | 0.6103 ns | 0.8555 ns | 28.890 ns |  1.26 |    0.04 |      - |     - |     - |         - |
+                 From_Bool_Nullable_WithValue_AsObject |        net461 | 36.472 ns | 0.0778 ns | 0.0728 ns | 36.450 ns |  1.53 |    0.01 |      - |     - |     - |         - |
+                 From_Bool_Nullable_WithValue_AsObject |        net472 | 35.874 ns | 0.0923 ns | 0.0819 ns | 35.863 ns |  1.50 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                            From_Bool_Nullable_NoValue | .NET Core 2.0 | 11.554 ns | 0.0185 ns | 0.0155 ns | 11.551 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                            From_Bool_Nullable_NoValue | .NET Core 2.2 | 10.023 ns | 0.0256 ns | 0.0239 ns | 10.013 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                            From_Bool_Nullable_NoValue | .NET Core 3.0 |  7.036 ns | 0.0158 ns | 0.0140 ns |  7.033 ns |  0.61 |    0.00 |      - |     - |     - |         - |
-                            From_Bool_Nullable_NoValue |        net461 | 12.510 ns | 0.0410 ns | 0.0364 ns | 12.494 ns |  1.08 |    0.00 |      - |     - |     - |         - |
-                            From_Bool_Nullable_NoValue |        net472 | 12.778 ns | 0.0931 ns | 0.0871 ns | 12.733 ns |  1.10 |    0.01 |      - |     - |     - |         - |
+                            From_Bool_Nullable_NoValue | .NET Core 2.0 | 11.595 ns | 0.0120 ns | 0.0106 ns | 11.598 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                            From_Bool_Nullable_NoValue | .NET Core 2.2 | 10.634 ns | 0.0073 ns | 0.0068 ns | 10.633 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                            From_Bool_Nullable_NoValue | .NET Core 3.0 |  7.460 ns | 0.1728 ns | 0.2307 ns |  7.566 ns |  0.64 |    0.02 |      - |     - |     - |         - |
+                            From_Bool_Nullable_NoValue |        net461 | 11.921 ns | 0.0377 ns | 0.0353 ns | 11.928 ns |  1.03 |    0.00 |      - |     - |     - |         - |
+                            From_Bool_Nullable_NoValue |        net472 | 11.729 ns | 0.0146 ns | 0.0136 ns | 11.728 ns |  1.01 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                   From_Bool_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.926 ns | 0.0139 ns | 0.0130 ns | 14.924 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                   From_Bool_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.672 ns | 0.0536 ns | 0.0501 ns | 13.652 ns |  0.92 |    0.00 |      - |     - |     - |         - |
-                   From_Bool_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.994 ns | 0.1424 ns | 0.1332 ns | 15.055 ns |  1.00 |    0.01 |      - |     - |     - |         - |
-                   From_Bool_Nullable_NoValue_AsObject |        net461 | 22.350 ns | 0.0235 ns | 0.0208 ns | 22.350 ns |  1.50 |    0.00 |      - |     - |     - |         - |
-                   From_Bool_Nullable_NoValue_AsObject |        net472 | 27.720 ns | 0.0309 ns | 0.0289 ns | 27.719 ns |  1.86 |    0.00 |      - |     - |     - |         - |
+                   From_Bool_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.759 ns | 0.0197 ns | 0.0165 ns | 14.759 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                   From_Bool_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.437 ns | 0.0206 ns | 0.0183 ns | 13.435 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                   From_Bool_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.302 ns | 0.0846 ns | 0.0791 ns | 13.270 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+                   From_Bool_Nullable_NoValue_AsObject |        net461 | 25.102 ns | 0.0220 ns | 0.0205 ns | 25.102 ns |  1.70 |    0.00 |      - |     - |     - |         - |
+                   From_Bool_Nullable_NoValue_AsObject |        net472 | 22.919 ns | 0.1393 ns | 0.1303 ns | 22.986 ns |  1.55 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                             From_Byte | .NET Core 2.0 | 11.952 ns | 0.0209 ns | 0.0185 ns | 11.952 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                             From_Byte | .NET Core 2.2 | 10.966 ns | 0.1044 ns | 0.0976 ns | 10.911 ns |  0.92 |    0.01 |      - |     - |     - |         - |
-                                             From_Byte | .NET Core 3.0 | 10.224 ns | 0.2269 ns | 0.3599 ns | 10.401 ns |  0.83 |    0.04 |      - |     - |     - |         - |
-                                             From_Byte |        net461 | 13.951 ns | 0.1408 ns | 0.1317 ns | 13.870 ns |  1.17 |    0.01 |      - |     - |     - |         - |
-                                             From_Byte |        net472 | 12.382 ns | 0.1051 ns | 0.0983 ns | 12.322 ns |  1.04 |    0.01 |      - |     - |     - |         - |
+                                             From_Byte | .NET Core 2.0 | 11.827 ns | 0.0168 ns | 0.0157 ns | 11.830 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                             From_Byte | .NET Core 2.2 | 10.459 ns | 0.0148 ns | 0.0138 ns | 10.461 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                                             From_Byte | .NET Core 3.0 |  9.882 ns | 0.1176 ns | 0.1100 ns |  9.894 ns |  0.84 |    0.01 |      - |     - |     - |         - |
+                                             From_Byte |        net461 | 12.910 ns | 0.0165 ns | 0.0154 ns | 12.909 ns |  1.09 |    0.00 |      - |     - |     - |         - |
+                                             From_Byte |        net472 | 12.202 ns | 0.0158 ns | 0.0140 ns | 12.205 ns |  1.03 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                    From_Byte_AsObject | .NET Core 2.0 | 20.237 ns | 0.0365 ns | 0.0305 ns | 20.233 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                    From_Byte_AsObject | .NET Core 2.2 | 17.523 ns | 0.0378 ns | 0.0336 ns | 17.518 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                                    From_Byte_AsObject | .NET Core 3.0 | 17.766 ns | 0.1905 ns | 0.1782 ns | 17.859 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                                    From_Byte_AsObject |        net461 | 27.216 ns | 0.0405 ns | 0.0359 ns | 27.214 ns |  1.34 |    0.00 |      - |     - |     - |         - |
-                                    From_Byte_AsObject |        net472 | 30.417 ns | 0.0482 ns | 0.0451 ns | 30.415 ns |  1.50 |    0.00 |      - |     - |     - |         - |
+                                    From_Byte_AsObject | .NET Core 2.0 | 20.212 ns | 0.0281 ns | 0.0234 ns | 20.201 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                    From_Byte_AsObject | .NET Core 2.2 | 18.068 ns | 0.0154 ns | 0.0144 ns | 18.073 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                                    From_Byte_AsObject | .NET Core 3.0 | 17.603 ns | 0.1183 ns | 0.1107 ns | 17.614 ns |  0.87 |    0.01 |      - |     - |     - |         - |
+                                    From_Byte_AsObject |        net461 | 26.891 ns | 0.1466 ns | 0.1372 ns | 26.952 ns |  1.33 |    0.01 |      - |     - |     - |         - |
+                                    From_Byte_AsObject |        net472 | 28.694 ns | 0.0258 ns | 0.0241 ns | 28.695 ns |  1.42 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_Byte_Nullable_WithValue | .NET Core 2.0 | 12.186 ns | 0.0153 ns | 0.0144 ns | 12.180 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_Byte_Nullable_WithValue | .NET Core 2.2 | 11.142 ns | 0.0192 ns | 0.0180 ns | 11.143 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-                          From_Byte_Nullable_WithValue | .NET Core 3.0 |  9.968 ns | 0.0282 ns | 0.0250 ns |  9.968 ns |  0.82 |    0.00 |      - |     - |     - |         - |
-                          From_Byte_Nullable_WithValue |        net461 | 13.541 ns | 0.0286 ns | 0.0253 ns | 13.534 ns |  1.11 |    0.00 |      - |     - |     - |         - |
-                          From_Byte_Nullable_WithValue |        net472 | 13.510 ns | 0.0144 ns | 0.0135 ns | 13.508 ns |  1.11 |    0.00 |      - |     - |     - |         - |
+                          From_Byte_Nullable_WithValue | .NET Core 2.0 | 12.035 ns | 0.0172 ns | 0.0152 ns | 12.038 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_Byte_Nullable_WithValue | .NET Core 2.2 | 10.671 ns | 0.0090 ns | 0.0085 ns | 10.672 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                          From_Byte_Nullable_WithValue | .NET Core 3.0 | 10.191 ns | 0.0569 ns | 0.0532 ns | 10.174 ns |  0.85 |    0.00 |      - |     - |     - |         - |
+                          From_Byte_Nullable_WithValue |        net461 | 15.242 ns | 0.0144 ns | 0.0134 ns | 15.242 ns |  1.27 |    0.00 |      - |     - |     - |         - |
+                          From_Byte_Nullable_WithValue |        net472 | 14.237 ns | 0.0600 ns | 0.0562 ns | 14.253 ns |  1.18 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                 From_Byte_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.086 ns | 0.0326 ns | 0.0289 ns | 20.086 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                 From_Byte_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.719 ns | 0.0897 ns | 0.0749 ns | 17.736 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                 From_Byte_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.592 ns | 0.0186 ns | 0.0165 ns | 17.586 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                 From_Byte_Nullable_WithValue_AsObject |        net461 | 27.257 ns | 0.1826 ns | 0.1708 ns | 27.179 ns |  1.36 |    0.01 |      - |     - |     - |         - |
-                 From_Byte_Nullable_WithValue_AsObject |        net472 | 28.859 ns | 0.0509 ns | 0.0476 ns | 28.851 ns |  1.44 |    0.00 |      - |     - |     - |         - |
+                 From_Byte_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.207 ns | 0.0285 ns | 0.0267 ns | 20.195 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                 From_Byte_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.794 ns | 0.0204 ns | 0.0191 ns | 17.796 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                 From_Byte_Nullable_WithValue_AsObject | .NET Core 3.0 | 18.179 ns | 0.1738 ns | 0.1540 ns | 18.220 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+                 From_Byte_Nullable_WithValue_AsObject |        net461 | 26.888 ns | 0.1372 ns | 0.1284 ns | 26.950 ns |  1.33 |    0.01 |      - |     - |     - |         - |
+                 From_Byte_Nullable_WithValue_AsObject |        net472 | 26.351 ns | 0.0432 ns | 0.0361 ns | 26.370 ns |  1.30 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                            From_Byte_Nullable_NoValue | .NET Core 2.0 | 12.011 ns | 0.0250 ns | 0.0234 ns | 12.009 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                            From_Byte_Nullable_NoValue | .NET Core 2.2 | 10.770 ns | 0.0216 ns | 0.0168 ns | 10.769 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                            From_Byte_Nullable_NoValue | .NET Core 3.0 |  9.576 ns | 0.1087 ns | 0.1017 ns |  9.503 ns |  0.80 |    0.01 |      - |     - |     - |         - |
-                            From_Byte_Nullable_NoValue |        net461 | 14.422 ns | 0.1290 ns | 0.1207 ns | 14.470 ns |  1.20 |    0.01 |      - |     - |     - |         - |
-                            From_Byte_Nullable_NoValue |        net472 | 12.807 ns | 0.0209 ns | 0.0195 ns | 12.808 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                            From_Byte_Nullable_NoValue | .NET Core 2.0 | 11.922 ns | 0.0744 ns | 0.0621 ns | 11.937 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                            From_Byte_Nullable_NoValue | .NET Core 2.2 | 10.280 ns | 0.0074 ns | 0.0069 ns | 10.279 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+                            From_Byte_Nullable_NoValue | .NET Core 3.0 |  9.761 ns | 0.0659 ns | 0.0617 ns |  9.769 ns |  0.82 |    0.00 |      - |     - |     - |         - |
+                            From_Byte_Nullable_NoValue |        net461 | 12.719 ns | 0.0339 ns | 0.0317 ns | 12.703 ns |  1.07 |    0.01 |      - |     - |     - |         - |
+                            From_Byte_Nullable_NoValue |        net472 | 13.103 ns | 0.0182 ns | 0.0170 ns | 13.102 ns |  1.10 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                   From_Byte_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.923 ns | 0.0233 ns | 0.0207 ns | 14.926 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                   From_Byte_Nullable_NoValue_AsObject | .NET Core 2.2 | 14.227 ns | 0.0217 ns | 0.0181 ns | 14.223 ns |  0.95 |    0.00 |      - |     - |     - |         - |
-                   From_Byte_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.486 ns | 0.0527 ns | 0.0493 ns | 13.475 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                   From_Byte_Nullable_NoValue_AsObject |        net461 | 24.036 ns | 0.0990 ns | 0.0926 ns | 24.013 ns |  1.61 |    0.01 |      - |     - |     - |         - |
-                   From_Byte_Nullable_NoValue_AsObject |        net472 | 24.048 ns | 0.0748 ns | 0.0663 ns | 24.043 ns |  1.61 |    0.01 |      - |     - |     - |         - |
+                   From_Byte_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.481 ns | 0.0329 ns | 0.0308 ns | 15.477 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                   From_Byte_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.435 ns | 0.0181 ns | 0.0161 ns | 13.435 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                   From_Byte_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.752 ns | 0.3103 ns | 0.3694 ns | 14.892 ns |  0.96 |    0.02 |      - |     - |     - |         - |
+                   From_Byte_Nullable_NoValue_AsObject |        net461 | 22.114 ns | 0.0499 ns | 0.0467 ns | 22.114 ns |  1.43 |    0.00 |      - |     - |     - |         - |
+                   From_Byte_Nullable_NoValue_AsObject |        net472 | 23.982 ns | 0.1228 ns | 0.1149 ns | 23.948 ns |  1.55 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                             From_Char | .NET Core 2.0 | 11.973 ns | 0.0132 ns | 0.0117 ns | 11.976 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                             From_Char | .NET Core 2.2 | 11.465 ns | 0.0232 ns | 0.0217 ns | 11.465 ns |  0.96 |    0.00 |      - |     - |     - |         - |
-                                             From_Char | .NET Core 3.0 |  9.264 ns | 0.0249 ns | 0.0208 ns |  9.257 ns |  0.77 |    0.00 |      - |     - |     - |         - |
-                                             From_Char |        net461 | 13.926 ns | 0.0784 ns | 0.0695 ns | 13.938 ns |  1.16 |    0.01 |      - |     - |     - |         - |
-                                             From_Char |        net472 | 12.422 ns | 0.1240 ns | 0.1160 ns | 12.495 ns |  1.04 |    0.01 |      - |     - |     - |         - |
+                                             From_Char | .NET Core 2.0 | 11.875 ns | 0.0586 ns | 0.0549 ns | 11.886 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                             From_Char | .NET Core 2.2 | 10.904 ns | 0.0179 ns | 0.0168 ns | 10.905 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                                             From_Char | .NET Core 3.0 |  9.504 ns | 0.0694 ns | 0.0616 ns |  9.490 ns |  0.80 |    0.01 |      - |     - |     - |         - |
+                                             From_Char |        net461 | 12.365 ns | 0.0640 ns | 0.0598 ns | 12.389 ns |  1.04 |    0.01 |      - |     - |     - |         - |
+                                             From_Char |        net472 | 12.913 ns | 0.0156 ns | 0.0146 ns | 12.908 ns |  1.09 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
                                     From_Char_AsObject | .NET Core 2.0 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                     From_Char_AsObject | .NET Core 2.2 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
@@ -96,11 +96,11 @@ Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
                                     From_Char_AsObject |        net461 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                     From_Char_AsObject |        net472 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_Char_Nullable_WithValue | .NET Core 2.0 | 11.914 ns | 0.0212 ns | 0.0188 ns | 11.910 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_Char_Nullable_WithValue | .NET Core 2.2 | 10.740 ns | 0.0173 ns | 0.0153 ns | 10.741 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                          From_Char_Nullable_WithValue | .NET Core 3.0 |  9.471 ns | 0.0143 ns | 0.0127 ns |  9.468 ns |  0.79 |    0.00 |      - |     - |     - |         - |
-                          From_Char_Nullable_WithValue |        net461 | 13.787 ns | 0.1166 ns | 0.1091 ns | 13.719 ns |  1.16 |    0.01 |      - |     - |     - |         - |
-                          From_Char_Nullable_WithValue |        net472 | 13.244 ns | 0.1158 ns | 0.1083 ns | 13.184 ns |  1.11 |    0.01 |      - |     - |     - |         - |
+                          From_Char_Nullable_WithValue | .NET Core 2.0 | 13.156 ns | 0.0259 ns | 0.0216 ns | 13.159 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_Char_Nullable_WithValue | .NET Core 2.2 | 10.072 ns | 0.0172 ns | 0.0153 ns | 10.073 ns |  0.77 |    0.00 |      - |     - |     - |         - |
+                          From_Char_Nullable_WithValue | .NET Core 3.0 |  9.730 ns | 0.0680 ns | 0.0603 ns |  9.702 ns |  0.74 |    0.00 |      - |     - |     - |         - |
+                          From_Char_Nullable_WithValue |        net461 | 12.677 ns | 0.0217 ns | 0.0181 ns | 12.676 ns |  0.96 |    0.00 |      - |     - |     - |         - |
+                          From_Char_Nullable_WithValue |        net472 | 13.893 ns | 0.0255 ns | 0.0226 ns | 13.895 ns |  1.06 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
                  From_Char_Nullable_WithValue_AsObject | .NET Core 2.0 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                  From_Char_Nullable_WithValue_AsObject | .NET Core 2.2 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
@@ -108,23 +108,23 @@ Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
                  From_Char_Nullable_WithValue_AsObject |        net461 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                  From_Char_Nullable_WithValue_AsObject |        net472 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                            From_Char_Nullable_NoValue | .NET Core 2.0 | 11.959 ns | 0.0510 ns | 0.0426 ns | 11.943 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                            From_Char_Nullable_NoValue | .NET Core 2.2 | 10.618 ns | 0.0213 ns | 0.0199 ns | 10.611 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                            From_Char_Nullable_NoValue | .NET Core 3.0 |  9.468 ns | 0.0280 ns | 0.0262 ns |  9.466 ns |  0.79 |    0.00 |      - |     - |     - |         - |
-                            From_Char_Nullable_NoValue |        net461 | 13.722 ns | 0.0294 ns | 0.0246 ns | 13.716 ns |  1.15 |    0.00 |      - |     - |     - |         - |
-                            From_Char_Nullable_NoValue |        net472 | 12.342 ns | 0.0663 ns | 0.0620 ns | 12.308 ns |  1.03 |    0.01 |      - |     - |     - |         - |
+                            From_Char_Nullable_NoValue | .NET Core 2.0 | 12.360 ns | 0.1198 ns | 0.1121 ns | 12.370 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                            From_Char_Nullable_NoValue | .NET Core 2.2 | 10.074 ns | 0.0103 ns | 0.0096 ns | 10.075 ns |  0.82 |    0.01 |      - |     - |     - |         - |
+                            From_Char_Nullable_NoValue | .NET Core 3.0 |  9.758 ns | 0.0714 ns | 0.0668 ns |  9.778 ns |  0.79 |    0.01 |      - |     - |     - |         - |
+                            From_Char_Nullable_NoValue |        net461 | 13.246 ns | 0.0217 ns | 0.0192 ns | 13.252 ns |  1.07 |    0.01 |      - |     - |     - |         - |
+                            From_Char_Nullable_NoValue |        net472 | 13.072 ns | 0.0148 ns | 0.0131 ns | 13.071 ns |  1.06 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                   From_Char_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.974 ns | 0.0138 ns | 0.0123 ns | 14.975 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                   From_Char_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.025 ns | 0.0245 ns | 0.0217 ns | 13.031 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                   From_Char_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.405 ns | 0.0192 ns | 0.0170 ns | 13.403 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                   From_Char_Nullable_NoValue_AsObject |        net461 | 22.232 ns | 0.0601 ns | 0.0533 ns | 22.243 ns |  1.48 |    0.00 |      - |     - |     - |         - |
-                   From_Char_Nullable_NoValue_AsObject |        net472 | 25.310 ns | 0.0276 ns | 0.0244 ns | 25.313 ns |  1.69 |    0.00 |      - |     - |     - |         - |
+                   From_Char_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.943 ns | 0.0841 ns | 0.0787 ns | 14.978 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                   From_Char_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.801 ns | 0.0142 ns | 0.0132 ns | 13.803 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                   From_Char_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.315 ns | 0.1240 ns | 0.1160 ns | 13.340 ns |  0.89 |    0.01 |      - |     - |     - |         - |
+                   From_Char_Nullable_NoValue_AsObject |        net461 | 22.127 ns | 0.0331 ns | 0.0310 ns | 22.133 ns |  1.48 |    0.01 |      - |     - |     - |         - |
+                   From_Char_Nullable_NoValue_AsObject |        net472 | 25.191 ns | 0.0367 ns | 0.0344 ns | 25.188 ns |  1.69 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                         From_DateTime | .NET Core 2.0 | 12.262 ns | 0.0941 ns | 0.0880 ns | 12.211 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                         From_DateTime | .NET Core 2.2 | 11.659 ns | 0.0168 ns | 0.0157 ns | 11.656 ns |  0.95 |    0.01 |      - |     - |     - |         - |
-                                         From_DateTime | .NET Core 3.0 |  9.985 ns | 0.0150 ns | 0.0117 ns |  9.985 ns |  0.81 |    0.01 |      - |     - |     - |         - |
-                                         From_DateTime |        net461 | 14.379 ns | 0.0310 ns | 0.0259 ns | 14.381 ns |  1.17 |    0.01 |      - |     - |     - |         - |
-                                         From_DateTime |        net472 | 13.132 ns | 0.0180 ns | 0.0160 ns | 13.131 ns |  1.07 |    0.01 |      - |     - |     - |         - |
+                                         From_DateTime | .NET Core 2.0 | 12.043 ns | 0.0525 ns | 0.0439 ns | 12.030 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                         From_DateTime | .NET Core 2.2 | 11.194 ns | 0.0091 ns | 0.0071 ns | 11.195 ns |  0.93 |    0.00 |      - |     - |     - |         - |
+                                         From_DateTime | .NET Core 3.0 |  9.943 ns | 0.0956 ns | 0.0894 ns |  9.913 ns |  0.83 |    0.01 |      - |     - |     - |         - |
+                                         From_DateTime |        net461 | 13.063 ns | 0.0330 ns | 0.0276 ns | 13.064 ns |  1.08 |    0.00 |      - |     - |     - |         - |
+                                         From_DateTime |        net472 | 13.471 ns | 0.0130 ns | 0.0115 ns | 13.466 ns |  1.12 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
                                 From_DateTime_AsObject | .NET Core 2.0 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                 From_DateTime_AsObject | .NET Core 2.2 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
@@ -132,11 +132,11 @@ Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
                                 From_DateTime_AsObject |        net461 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                 From_DateTime_AsObject |        net472 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                      From_DateTime_Nullable_WithValue | .NET Core 2.0 | 12.718 ns | 0.0242 ns | 0.0226 ns | 12.713 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                      From_DateTime_Nullable_WithValue | .NET Core 2.2 | 11.842 ns | 0.0361 ns | 0.0301 ns | 11.843 ns |  0.93 |    0.00 |      - |     - |     - |         - |
-                      From_DateTime_Nullable_WithValue | .NET Core 3.0 |  9.967 ns | 0.0296 ns | 0.0247 ns |  9.958 ns |  0.78 |    0.00 |      - |     - |     - |         - |
-                      From_DateTime_Nullable_WithValue |        net461 | 18.322 ns | 0.0876 ns | 0.0776 ns | 18.340 ns |  1.44 |    0.01 |      - |     - |     - |         - |
-                      From_DateTime_Nullable_WithValue |        net472 | 13.368 ns | 0.0328 ns | 0.0307 ns | 13.358 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                      From_DateTime_Nullable_WithValue | .NET Core 2.0 | 13.188 ns | 0.0532 ns | 0.0471 ns | 13.191 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                      From_DateTime_Nullable_WithValue | .NET Core 2.2 | 11.951 ns | 0.0096 ns | 0.0086 ns | 11.954 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                      From_DateTime_Nullable_WithValue | .NET Core 3.0 | 10.036 ns | 0.0676 ns | 0.0599 ns | 10.029 ns |  0.76 |    0.01 |      - |     - |     - |         - |
+                      From_DateTime_Nullable_WithValue |        net461 | 13.698 ns | 0.0179 ns | 0.0149 ns | 13.698 ns |  1.04 |    0.00 |      - |     - |     - |         - |
+                      From_DateTime_Nullable_WithValue |        net472 | 14.418 ns | 0.0343 ns | 0.0321 ns | 14.412 ns |  1.09 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
              From_DateTime_Nullable_WithValue_AsObject | .NET Core 2.0 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
              From_DateTime_Nullable_WithValue_AsObject | .NET Core 2.2 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
@@ -144,299 +144,299 @@ Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
              From_DateTime_Nullable_WithValue_AsObject |        net461 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
              From_DateTime_Nullable_WithValue_AsObject |        net472 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                        From_DateTime_Nullable_NoValue | .NET Core 2.0 | 12.603 ns | 0.0127 ns | 0.0113 ns | 12.602 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                        From_DateTime_Nullable_NoValue | .NET Core 2.2 | 11.845 ns | 0.0853 ns | 0.0756 ns | 11.816 ns |  0.94 |    0.01 |      - |     - |     - |         - |
-                        From_DateTime_Nullable_NoValue | .NET Core 3.0 |  9.952 ns | 0.0160 ns | 0.0142 ns |  9.956 ns |  0.79 |    0.00 |      - |     - |     - |         - |
-                        From_DateTime_Nullable_NoValue |        net461 | 14.446 ns | 0.1327 ns | 0.1241 ns | 14.534 ns |  1.15 |    0.01 |      - |     - |     - |         - |
-                        From_DateTime_Nullable_NoValue |        net472 | 13.895 ns | 0.0166 ns | 0.0139 ns | 13.894 ns |  1.10 |    0.00 |      - |     - |     - |         - |
+                        From_DateTime_Nullable_NoValue | .NET Core 2.0 | 13.027 ns | 0.0115 ns | 0.0107 ns | 13.028 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                        From_DateTime_Nullable_NoValue | .NET Core 2.2 | 11.217 ns | 0.0207 ns | 0.0193 ns | 11.222 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+                        From_DateTime_Nullable_NoValue | .NET Core 3.0 | 10.030 ns | 0.0602 ns | 0.0534 ns | 10.038 ns |  0.77 |    0.00 |      - |     - |     - |         - |
+                        From_DateTime_Nullable_NoValue |        net461 | 13.145 ns | 0.0088 ns | 0.0073 ns | 13.142 ns |  1.01 |    0.00 |      - |     - |     - |         - |
+                        From_DateTime_Nullable_NoValue |        net472 | 14.176 ns | 0.0245 ns | 0.0229 ns | 14.174 ns |  1.09 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-               From_DateTime_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.581 ns | 0.0390 ns | 0.0364 ns | 15.582 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-               From_DateTime_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.008 ns | 0.0310 ns | 0.0290 ns | 13.004 ns |  0.83 |    0.00 |      - |     - |     - |         - |
-               From_DateTime_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.422 ns | 0.0113 ns | 0.0106 ns | 13.424 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-               From_DateTime_Nullable_NoValue_AsObject |        net461 | 22.817 ns | 0.0855 ns | 0.0800 ns | 22.824 ns |  1.46 |    0.01 |      - |     - |     - |         - |
-               From_DateTime_Nullable_NoValue_AsObject |        net472 | 23.944 ns | 0.0619 ns | 0.0517 ns | 23.941 ns |  1.54 |    0.00 |      - |     - |     - |         - |
+               From_DateTime_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.592 ns | 0.0894 ns | 0.0792 ns | 15.608 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+               From_DateTime_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.492 ns | 0.0119 ns | 0.0111 ns | 13.490 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+               From_DateTime_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.097 ns | 0.3077 ns | 0.4511 ns | 13.914 ns |  0.92 |    0.03 |      - |     - |     - |         - |
+               From_DateTime_Nullable_NoValue_AsObject |        net461 | 23.789 ns | 0.0350 ns | 0.0327 ns | 23.791 ns |  1.53 |    0.01 |      - |     - |     - |         - |
+               From_DateTime_Nullable_NoValue_AsObject |        net472 | 22.352 ns | 0.0265 ns | 0.0248 ns | 22.346 ns |  1.43 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                          From_Decimal | .NET Core 2.0 | 24.383 ns | 0.0753 ns | 0.0704 ns | 24.369 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                          From_Decimal | .NET Core 2.2 | 21.273 ns | 0.0353 ns | 0.0313 ns | 21.270 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                                          From_Decimal | .NET Core 3.0 | 13.968 ns | 0.0417 ns | 0.0348 ns | 13.973 ns |  0.57 |    0.00 |      - |     - |     - |         - |
-                                          From_Decimal |        net461 | 25.452 ns | 0.0260 ns | 0.0231 ns | 25.449 ns |  1.04 |    0.00 |      - |     - |     - |         - |
-                                          From_Decimal |        net472 | 23.399 ns | 0.0273 ns | 0.0242 ns | 23.393 ns |  0.96 |    0.00 |      - |     - |     - |         - |
+                                          From_Decimal | .NET Core 2.0 | 23.110 ns | 0.0553 ns | 0.0490 ns | 23.105 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                          From_Decimal | .NET Core 2.2 | 19.060 ns | 0.0228 ns | 0.0214 ns | 19.059 ns |  0.82 |    0.00 |      - |     - |     - |         - |
+                                          From_Decimal | .NET Core 3.0 | 12.937 ns | 0.0748 ns | 0.0699 ns | 12.908 ns |  0.56 |    0.00 |      - |     - |     - |         - |
+                                          From_Decimal |        net461 | 23.534 ns | 0.1029 ns | 0.0962 ns | 23.574 ns |  1.02 |    0.00 |      - |     - |     - |         - |
+                                          From_Decimal |        net472 | 23.414 ns | 0.0725 ns | 0.0643 ns | 23.386 ns |  1.01 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                 From_Decimal_AsObject | .NET Core 2.0 | 25.884 ns | 0.0332 ns | 0.0294 ns | 25.883 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                 From_Decimal_AsObject | .NET Core 2.2 | 24.737 ns | 0.0800 ns | 0.0748 ns | 24.751 ns |  0.96 |    0.00 |      - |     - |     - |         - |
-                                 From_Decimal_AsObject | .NET Core 3.0 | 20.792 ns | 0.1181 ns | 0.1105 ns | 20.848 ns |  0.80 |    0.00 |      - |     - |     - |         - |
-                                 From_Decimal_AsObject |        net461 | 32.581 ns | 0.0474 ns | 0.0420 ns | 32.590 ns |  1.26 |    0.00 |      - |     - |     - |         - |
-                                 From_Decimal_AsObject |        net472 | 36.687 ns | 0.0527 ns | 0.0440 ns | 36.669 ns |  1.42 |    0.00 |      - |     - |     - |         - |
+                                 From_Decimal_AsObject | .NET Core 2.0 | 25.963 ns | 0.0310 ns | 0.0275 ns | 25.960 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                 From_Decimal_AsObject | .NET Core 2.2 | 23.399 ns | 0.0201 ns | 0.0188 ns | 23.398 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+                                 From_Decimal_AsObject | .NET Core 3.0 | 20.810 ns | 0.0809 ns | 0.0756 ns | 20.781 ns |  0.80 |    0.00 |      - |     - |     - |         - |
+                                 From_Decimal_AsObject |        net461 | 39.144 ns | 0.0439 ns | 0.0390 ns | 39.136 ns |  1.51 |    0.00 |      - |     - |     - |         - |
+                                 From_Decimal_AsObject |        net472 | 36.009 ns | 0.0285 ns | 0.0253 ns | 36.014 ns |  1.39 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                       From_Decimal_Nullable_WithValue | .NET Core 2.0 | 23.174 ns | 0.0346 ns | 0.0270 ns | 23.173 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                       From_Decimal_Nullable_WithValue | .NET Core 2.2 | 20.561 ns | 0.0312 ns | 0.0276 ns | 20.568 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                       From_Decimal_Nullable_WithValue | .NET Core 3.0 | 17.455 ns | 0.1759 ns | 0.1645 ns | 17.447 ns |  0.75 |    0.01 |      - |     - |     - |         - |
-                       From_Decimal_Nullable_WithValue |        net461 | 24.914 ns | 0.0469 ns | 0.0439 ns | 24.921 ns |  1.08 |    0.00 |      - |     - |     - |         - |
-                       From_Decimal_Nullable_WithValue |        net472 | 25.557 ns | 0.0281 ns | 0.0263 ns | 25.559 ns |  1.10 |    0.00 |      - |     - |     - |         - |
+                       From_Decimal_Nullable_WithValue | .NET Core 2.0 | 23.032 ns | 0.0303 ns | 0.0283 ns | 23.025 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                       From_Decimal_Nullable_WithValue | .NET Core 2.2 | 19.626 ns | 0.0202 ns | 0.0189 ns | 19.630 ns |  0.85 |    0.00 |      - |     - |     - |         - |
+                       From_Decimal_Nullable_WithValue | .NET Core 3.0 | 17.505 ns | 0.1630 ns | 0.1525 ns | 17.466 ns |  0.76 |    0.01 |      - |     - |     - |         - |
+                       From_Decimal_Nullable_WithValue |        net461 | 23.993 ns | 0.0335 ns | 0.0297 ns | 23.989 ns |  1.04 |    0.00 |      - |     - |     - |         - |
+                       From_Decimal_Nullable_WithValue |        net472 | 23.909 ns | 0.0437 ns | 0.0409 ns | 23.919 ns |  1.04 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-              From_Decimal_Nullable_WithValue_AsObject | .NET Core 2.0 | 26.721 ns | 0.0520 ns | 0.0461 ns | 26.722 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-              From_Decimal_Nullable_WithValue_AsObject | .NET Core 2.2 | 23.239 ns | 0.0254 ns | 0.0212 ns | 23.236 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-              From_Decimal_Nullable_WithValue_AsObject | .NET Core 3.0 | 20.931 ns | 0.1037 ns | 0.0970 ns | 20.945 ns |  0.78 |    0.00 |      - |     - |     - |         - |
-              From_Decimal_Nullable_WithValue_AsObject |        net461 | 32.438 ns | 0.0643 ns | 0.0502 ns | 32.435 ns |  1.21 |    0.00 |      - |     - |     - |         - |
-              From_Decimal_Nullable_WithValue_AsObject |        net472 | 35.766 ns | 0.0417 ns | 0.0370 ns | 35.766 ns |  1.34 |    0.00 |      - |     - |     - |         - |
+              From_Decimal_Nullable_WithValue_AsObject | .NET Core 2.0 | 26.096 ns | 0.0263 ns | 0.0246 ns | 26.091 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+              From_Decimal_Nullable_WithValue_AsObject | .NET Core 2.2 | 23.566 ns | 0.0503 ns | 0.0471 ns | 23.570 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+              From_Decimal_Nullable_WithValue_AsObject | .NET Core 3.0 | 22.174 ns | 0.1175 ns | 0.1099 ns | 22.182 ns |  0.85 |    0.00 |      - |     - |     - |         - |
+              From_Decimal_Nullable_WithValue_AsObject |        net461 | 33.961 ns | 0.0394 ns | 0.0369 ns | 33.959 ns |  1.30 |    0.00 |      - |     - |     - |         - |
+              From_Decimal_Nullable_WithValue_AsObject |        net472 | 33.337 ns | 0.0870 ns | 0.0814 ns | 33.335 ns |  1.28 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                         From_Decimal_Nullable_NoValue | .NET Core 2.0 | 12.762 ns | 0.0134 ns | 0.0119 ns | 12.765 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                         From_Decimal_Nullable_NoValue | .NET Core 2.2 | 12.066 ns | 0.0422 ns | 0.0395 ns | 12.055 ns |  0.94 |    0.00 |      - |     - |     - |         - |
-                         From_Decimal_Nullable_NoValue | .NET Core 3.0 | 10.001 ns | 0.0101 ns | 0.0095 ns |  9.999 ns |  0.78 |    0.00 |      - |     - |     - |         - |
-                         From_Decimal_Nullable_NoValue |        net461 | 14.436 ns | 0.0249 ns | 0.0220 ns | 14.439 ns |  1.13 |    0.00 |      - |     - |     - |         - |
-                         From_Decimal_Nullable_NoValue |        net472 | 13.484 ns | 0.0134 ns | 0.0112 ns | 13.485 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                         From_Decimal_Nullable_NoValue | .NET Core 2.0 | 13.105 ns | 0.0363 ns | 0.0339 ns | 13.103 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                         From_Decimal_Nullable_NoValue | .NET Core 2.2 | 12.084 ns | 0.0190 ns | 0.0169 ns | 12.088 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                         From_Decimal_Nullable_NoValue | .NET Core 3.0 | 10.239 ns | 0.0701 ns | 0.0622 ns | 10.212 ns |  0.78 |    0.00 |      - |     - |     - |         - |
+                         From_Decimal_Nullable_NoValue |        net461 | 13.378 ns | 0.0132 ns | 0.0123 ns | 13.379 ns |  1.02 |    0.00 |      - |     - |     - |         - |
+                         From_Decimal_Nullable_NoValue |        net472 | 13.550 ns | 0.0181 ns | 0.0169 ns | 13.545 ns |  1.03 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                From_Decimal_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.177 ns | 0.0947 ns | 0.0886 ns | 15.224 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                From_Decimal_Nullable_NoValue_AsObject | .NET Core 2.2 | 12.983 ns | 0.0151 ns | 0.0134 ns | 12.986 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-                From_Decimal_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.614 ns | 0.1123 ns | 0.0995 ns | 13.653 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                From_Decimal_Nullable_NoValue_AsObject |        net461 | 22.583 ns | 0.2362 ns | 0.2094 ns | 22.476 ns |  1.49 |    0.02 |      - |     - |     - |         - |
-                From_Decimal_Nullable_NoValue_AsObject |        net472 | 24.306 ns | 0.0300 ns | 0.0266 ns | 24.312 ns |  1.60 |    0.01 |      - |     - |     - |         - |
+                From_Decimal_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.776 ns | 0.0147 ns | 0.0131 ns | 14.774 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                From_Decimal_Nullable_NoValue_AsObject | .NET Core 2.2 | 14.261 ns | 0.0182 ns | 0.0152 ns | 14.261 ns |  0.97 |    0.00 |      - |     - |     - |         - |
+                From_Decimal_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.450 ns | 0.1654 ns | 0.1547 ns | 13.457 ns |  0.91 |    0.01 |      - |     - |     - |         - |
+                From_Decimal_Nullable_NoValue_AsObject |        net461 | 22.303 ns | 0.0311 ns | 0.0260 ns | 22.301 ns |  1.51 |    0.00 |      - |     - |     - |         - |
+                From_Decimal_Nullable_NoValue_AsObject |        net472 | 22.443 ns | 0.0261 ns | 0.0231 ns | 22.442 ns |  1.52 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                           From_Double | .NET Core 2.0 | 12.771 ns | 0.0157 ns | 0.0147 ns | 12.769 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                           From_Double | .NET Core 2.2 | 11.373 ns | 0.0181 ns | 0.0169 ns | 11.370 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                                           From_Double | .NET Core 3.0 | 10.773 ns | 0.1493 ns | 0.1397 ns | 10.698 ns |  0.84 |    0.01 |      - |     - |     - |         - |
-                                           From_Double |        net461 | 14.213 ns | 0.0299 ns | 0.0265 ns | 14.219 ns |  1.11 |    0.00 |      - |     - |     - |         - |
-                                           From_Double |        net472 | 13.470 ns | 0.0361 ns | 0.0338 ns | 13.460 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                                           From_Double | .NET Core 2.0 | 12.469 ns | 0.0096 ns | 0.0085 ns | 12.468 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                           From_Double | .NET Core 2.2 | 10.862 ns | 0.0125 ns | 0.0117 ns | 10.866 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                                           From_Double | .NET Core 3.0 | 10.277 ns | 0.0953 ns | 0.0844 ns | 10.272 ns |  0.82 |    0.01 |      - |     - |     - |         - |
+                                           From_Double |        net461 | 14.067 ns | 0.0151 ns | 0.0134 ns | 14.069 ns |  1.13 |    0.00 |      - |     - |     - |         - |
+                                           From_Double |        net472 | 13.418 ns | 0.0223 ns | 0.0208 ns | 13.415 ns |  1.08 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                  From_Double_AsObject | .NET Core 2.0 | 20.028 ns | 0.2415 ns | 0.2259 ns | 19.951 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                  From_Double_AsObject | .NET Core 2.2 | 17.474 ns | 0.0653 ns | 0.0545 ns | 17.456 ns |  0.87 |    0.01 |      - |     - |     - |         - |
-                                  From_Double_AsObject | .NET Core 3.0 | 19.591 ns | 0.0473 ns | 0.0419 ns | 19.583 ns |  0.98 |    0.01 |      - |     - |     - |         - |
-                                  From_Double_AsObject |        net461 | 26.898 ns | 0.0421 ns | 0.0373 ns | 26.897 ns |  1.34 |    0.01 |      - |     - |     - |         - |
-                                  From_Double_AsObject |        net472 | 31.321 ns | 0.0410 ns | 0.0384 ns | 31.326 ns |  1.56 |    0.02 |      - |     - |     - |         - |
+                                  From_Double_AsObject | .NET Core 2.0 | 19.918 ns | 0.0241 ns | 0.0213 ns | 19.918 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                  From_Double_AsObject | .NET Core 2.2 | 19.060 ns | 0.0517 ns | 0.0484 ns | 19.067 ns |  0.96 |    0.00 |      - |     - |     - |         - |
+                                  From_Double_AsObject | .NET Core 3.0 | 18.559 ns | 0.3947 ns | 0.3876 ns | 18.534 ns |  0.93 |    0.02 |      - |     - |     - |         - |
+                                  From_Double_AsObject |        net461 | 28.784 ns | 0.0628 ns | 0.0588 ns | 28.764 ns |  1.44 |    0.00 |      - |     - |     - |         - |
+                                  From_Double_AsObject |        net472 | 29.332 ns | 0.0431 ns | 0.0403 ns | 29.336 ns |  1.47 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                        From_Double_Nullable_WithValue | .NET Core 2.0 | 13.098 ns | 0.0450 ns | 0.0421 ns | 13.080 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                        From_Double_Nullable_WithValue | .NET Core 2.2 | 12.451 ns | 0.0237 ns | 0.0222 ns | 12.448 ns |  0.95 |    0.00 |      - |     - |     - |         - |
-                        From_Double_Nullable_WithValue | .NET Core 3.0 | 11.252 ns | 0.0937 ns | 0.0876 ns | 11.291 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                        From_Double_Nullable_WithValue |        net461 | 14.675 ns | 0.0402 ns | 0.0376 ns | 14.666 ns |  1.12 |    0.00 |      - |     - |     - |         - |
-                        From_Double_Nullable_WithValue |        net472 | 14.191 ns | 0.0185 ns | 0.0145 ns | 14.197 ns |  1.08 |    0.00 |      - |     - |     - |         - |
+                        From_Double_Nullable_WithValue | .NET Core 2.0 | 12.985 ns | 0.0109 ns | 0.0102 ns | 12.985 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                        From_Double_Nullable_WithValue | .NET Core 2.2 | 12.553 ns | 0.0128 ns | 0.0114 ns | 12.550 ns |  0.97 |    0.00 |      - |     - |     - |         - |
+                        From_Double_Nullable_WithValue | .NET Core 3.0 | 11.040 ns | 0.1067 ns | 0.0998 ns | 11.077 ns |  0.85 |    0.01 |      - |     - |     - |         - |
+                        From_Double_Nullable_WithValue |        net461 | 13.823 ns | 0.0182 ns | 0.0170 ns | 13.823 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                        From_Double_Nullable_WithValue |        net472 | 13.874 ns | 0.0133 ns | 0.0124 ns | 13.874 ns |  1.07 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-               From_Double_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.986 ns | 0.0967 ns | 0.0904 ns | 21.039 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-               From_Double_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.547 ns | 0.1390 ns | 0.1300 ns | 17.468 ns |  0.84 |    0.01 |      - |     - |     - |         - |
-               From_Double_Nullable_WithValue_AsObject | .NET Core 3.0 | 18.133 ns | 0.0524 ns | 0.0438 ns | 18.141 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-               From_Double_Nullable_WithValue_AsObject |        net461 | 27.060 ns | 0.0295 ns | 0.0261 ns | 27.053 ns |  1.29 |    0.00 |      - |     - |     - |         - |
-               From_Double_Nullable_WithValue_AsObject |        net472 | 30.429 ns | 0.1171 ns | 0.1095 ns | 30.389 ns |  1.45 |    0.01 |      - |     - |     - |         - |
+               From_Double_Nullable_WithValue_AsObject | .NET Core 2.0 | 21.034 ns | 0.0250 ns | 0.0222 ns | 21.038 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+               From_Double_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.711 ns | 0.0204 ns | 0.0191 ns | 17.714 ns |  0.84 |    0.00 |      - |     - |     - |         - |
+               From_Double_Nullable_WithValue_AsObject | .NET Core 3.0 | 18.092 ns | 0.0797 ns | 0.0746 ns | 18.076 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+               From_Double_Nullable_WithValue_AsObject |        net461 | 28.578 ns | 0.0353 ns | 0.0330 ns | 28.570 ns |  1.36 |    0.00 |      - |     - |     - |         - |
+               From_Double_Nullable_WithValue_AsObject |        net472 | 27.290 ns | 0.0344 ns | 0.0322 ns | 27.290 ns |  1.30 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_Double_Nullable_NoValue | .NET Core 2.0 | 13.205 ns | 0.0444 ns | 0.0394 ns | 13.207 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_Double_Nullable_NoValue | .NET Core 2.2 | 12.051 ns | 0.0242 ns | 0.0226 ns | 12.050 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-                          From_Double_Nullable_NoValue | .NET Core 3.0 |  9.959 ns | 0.0126 ns | 0.0112 ns |  9.964 ns |  0.75 |    0.00 |      - |     - |     - |         - |
-                          From_Double_Nullable_NoValue |        net461 | 14.434 ns | 0.0413 ns | 0.0345 ns | 14.426 ns |  1.09 |    0.00 |      - |     - |     - |         - |
-                          From_Double_Nullable_NoValue |        net472 | 13.885 ns | 0.0716 ns | 0.0598 ns | 13.893 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                          From_Double_Nullable_NoValue | .NET Core 2.0 | 13.632 ns | 0.0146 ns | 0.0122 ns | 13.632 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_Double_Nullable_NoValue | .NET Core 2.2 | 11.461 ns | 0.0349 ns | 0.0327 ns | 11.466 ns |  0.84 |    0.00 |      - |     - |     - |         - |
+                          From_Double_Nullable_NoValue | .NET Core 3.0 | 10.449 ns | 0.2290 ns | 0.2545 ns | 10.370 ns |  0.77 |    0.02 |      - |     - |     - |         - |
+                          From_Double_Nullable_NoValue |        net461 | 13.495 ns | 0.0770 ns | 0.0720 ns | 13.527 ns |  0.99 |    0.01 |      - |     - |     - |         - |
+                          From_Double_Nullable_NoValue |        net472 | 13.545 ns | 0.0176 ns | 0.0147 ns | 13.541 ns |  0.99 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                 From_Double_Nullable_NoValue_AsObject | .NET Core 2.0 | 16.674 ns | 0.0264 ns | 0.0247 ns | 16.678 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                 From_Double_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.206 ns | 0.0692 ns | 0.0648 ns | 13.232 ns |  0.79 |    0.00 |      - |     - |     - |         - |
-                 From_Double_Nullable_NoValue_AsObject | .NET Core 3.0 | 15.062 ns | 0.0845 ns | 0.0790 ns | 15.087 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                 From_Double_Nullable_NoValue_AsObject |        net461 | 22.561 ns | 0.0251 ns | 0.0196 ns | 22.562 ns |  1.35 |    0.00 |      - |     - |     - |         - |
-                 From_Double_Nullable_NoValue_AsObject |        net472 | 23.734 ns | 0.0860 ns | 0.0805 ns | 23.697 ns |  1.42 |    0.00 |      - |     - |     - |         - |
+                 From_Double_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.410 ns | 0.0225 ns | 0.0199 ns | 15.407 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                 From_Double_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.397 ns | 0.0094 ns | 0.0079 ns | 13.398 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                 From_Double_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.947 ns | 0.1229 ns | 0.1150 ns | 13.914 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+                 From_Double_Nullable_NoValue_AsObject |        net461 | 23.845 ns | 0.0336 ns | 0.0281 ns | 23.853 ns |  1.55 |    0.00 |      - |     - |     - |         - |
+                 From_Double_Nullable_NoValue_AsObject |        net472 | 22.354 ns | 0.0704 ns | 0.0659 ns | 22.358 ns |  1.45 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                            From_Short | .NET Core 2.0 | 13.525 ns | 0.0445 ns | 0.0416 ns | 13.523 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                            From_Short | .NET Core 2.2 | 11.328 ns | 0.0197 ns | 0.0184 ns | 11.324 ns |  0.84 |    0.00 |      - |     - |     - |         - |
-                                            From_Short | .NET Core 3.0 | 10.281 ns | 0.0632 ns | 0.0591 ns | 10.282 ns |  0.76 |    0.00 |      - |     - |     - |         - |
-                                            From_Short |        net461 | 13.953 ns | 0.0315 ns | 0.0263 ns | 13.955 ns |  1.03 |    0.00 |      - |     - |     - |         - |
-                                            From_Short |        net472 | 12.536 ns | 0.0127 ns | 0.0112 ns | 12.537 ns |  0.93 |    0.00 |      - |     - |     - |         - |
+                                            From_Short | .NET Core 2.0 | 12.473 ns | 0.0204 ns | 0.0190 ns | 12.477 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                            From_Short | .NET Core 2.2 | 10.372 ns | 0.0092 ns | 0.0086 ns | 10.375 ns |  0.83 |    0.00 |      - |     - |     - |         - |
+                                            From_Short | .NET Core 3.0 |  9.779 ns | 0.0613 ns | 0.0573 ns |  9.794 ns |  0.78 |    0.00 |      - |     - |     - |         - |
+                                            From_Short |        net461 | 12.450 ns | 0.0202 ns | 0.0179 ns | 12.448 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                            From_Short |        net472 | 12.439 ns | 0.0220 ns | 0.0184 ns | 12.439 ns |  1.00 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                   From_Short_AsObject | .NET Core 2.0 | 20.162 ns | 0.1567 ns | 0.1466 ns | 20.259 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                   From_Short_AsObject | .NET Core 2.2 | 17.479 ns | 0.0268 ns | 0.0250 ns | 17.474 ns |  0.87 |    0.01 |      - |     - |     - |         - |
-                                   From_Short_AsObject | .NET Core 3.0 | 17.561 ns | 0.0277 ns | 0.0259 ns | 17.551 ns |  0.87 |    0.01 |      - |     - |     - |         - |
-                                   From_Short_AsObject |        net461 | 27.570 ns | 0.1659 ns | 0.1471 ns | 27.631 ns |  1.37 |    0.01 |      - |     - |     - |         - |
-                                   From_Short_AsObject |        net472 | 28.827 ns | 0.0424 ns | 0.0376 ns | 28.829 ns |  1.43 |    0.01 |      - |     - |     - |         - |
+                                   From_Short_AsObject | .NET Core 2.0 | 20.123 ns | 0.0256 ns | 0.0227 ns | 20.121 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                   From_Short_AsObject | .NET Core 2.2 | 17.914 ns | 0.1005 ns | 0.0839 ns | 17.941 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                                   From_Short_AsObject | .NET Core 3.0 | 17.538 ns | 0.1183 ns | 0.1106 ns | 17.510 ns |  0.87 |    0.01 |      - |     - |     - |         - |
+                                   From_Short_AsObject |        net461 | 26.605 ns | 0.0264 ns | 0.0234 ns | 26.605 ns |  1.32 |    0.00 |      - |     - |     - |         - |
+                                   From_Short_AsObject |        net472 | 27.661 ns | 0.0420 ns | 0.0393 ns | 27.666 ns |  1.37 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                         From_Short_Nullable_WithValue | .NET Core 2.0 | 12.183 ns | 0.0196 ns | 0.0164 ns | 12.184 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                         From_Short_Nullable_WithValue | .NET Core 2.2 | 11.345 ns | 0.0137 ns | 0.0121 ns | 11.342 ns |  0.93 |    0.00 |      - |     - |     - |         - |
-                         From_Short_Nullable_WithValue | .NET Core 3.0 | 10.127 ns | 0.0857 ns | 0.0802 ns | 10.161 ns |  0.83 |    0.01 |      - |     - |     - |         - |
-                         From_Short_Nullable_WithValue |        net461 | 14.225 ns | 0.0246 ns | 0.0230 ns | 14.224 ns |  1.17 |    0.00 |      - |     - |     - |         - |
-                         From_Short_Nullable_WithValue |        net472 | 12.808 ns | 0.0234 ns | 0.0218 ns | 12.805 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                         From_Short_Nullable_WithValue | .NET Core 2.0 | 12.526 ns | 0.0136 ns | 0.0121 ns | 12.523 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                         From_Short_Nullable_WithValue | .NET Core 2.2 | 10.858 ns | 0.0330 ns | 0.0309 ns | 10.862 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                         From_Short_Nullable_WithValue | .NET Core 3.0 | 10.293 ns | 0.1097 ns | 0.1026 ns | 10.278 ns |  0.82 |    0.01 |      - |     - |     - |         - |
+                         From_Short_Nullable_WithValue |        net461 | 12.713 ns | 0.0121 ns | 0.0107 ns | 12.715 ns |  1.01 |    0.00 |      - |     - |     - |         - |
+                         From_Short_Nullable_WithValue |        net472 | 13.063 ns | 0.0077 ns | 0.0064 ns | 13.063 ns |  1.04 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                From_Short_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.815 ns | 0.0250 ns | 0.0222 ns | 19.814 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                From_Short_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.495 ns | 0.0352 ns | 0.0330 ns | 17.491 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                From_Short_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.920 ns | 0.3336 ns | 0.3121 ns | 17.840 ns |  0.90 |    0.02 |      - |     - |     - |         - |
-                From_Short_Nullable_WithValue_AsObject |        net461 | 26.994 ns | 0.0367 ns | 0.0343 ns | 26.992 ns |  1.36 |    0.00 |      - |     - |     - |         - |
-                From_Short_Nullable_WithValue_AsObject |        net472 | 29.934 ns | 0.0471 ns | 0.0393 ns | 29.920 ns |  1.51 |    0.00 |      - |     - |     - |         - |
+                From_Short_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.596 ns | 0.0931 ns | 0.0871 ns | 20.622 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                From_Short_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.739 ns | 0.0166 ns | 0.0147 ns | 17.739 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+                From_Short_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.672 ns | 0.1460 ns | 0.1366 ns | 17.704 ns |  0.86 |    0.01 |      - |     - |     - |         - |
+                From_Short_Nullable_WithValue_AsObject |        net461 | 26.784 ns | 0.0333 ns | 0.0311 ns | 26.778 ns |  1.30 |    0.01 |      - |     - |     - |         - |
+                From_Short_Nullable_WithValue_AsObject |        net472 | 26.990 ns | 0.0310 ns | 0.0290 ns | 26.989 ns |  1.31 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                           From_Short_Nullable_NoValue | .NET Core 2.0 | 12.077 ns | 0.0679 ns | 0.0635 ns | 12.106 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                           From_Short_Nullable_NoValue | .NET Core 2.2 | 10.941 ns | 0.0119 ns | 0.0112 ns | 10.943 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-                           From_Short_Nullable_NoValue | .NET Core 3.0 |  9.744 ns | 0.0303 ns | 0.0283 ns |  9.735 ns |  0.81 |    0.00 |      - |     - |     - |         - |
-                           From_Short_Nullable_NoValue |        net461 | 14.192 ns | 0.0229 ns | 0.0191 ns | 14.192 ns |  1.18 |    0.01 |      - |     - |     - |         - |
-                           From_Short_Nullable_NoValue |        net472 | 12.867 ns | 0.0187 ns | 0.0165 ns | 12.875 ns |  1.07 |    0.01 |      - |     - |     - |         - |
+                           From_Short_Nullable_NoValue | .NET Core 2.0 | 11.834 ns | 0.0208 ns | 0.0185 ns | 11.827 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                           From_Short_Nullable_NoValue | .NET Core 2.2 | 10.463 ns | 0.0116 ns | 0.0103 ns | 10.461 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                           From_Short_Nullable_NoValue | .NET Core 3.0 |  9.825 ns | 0.0965 ns | 0.0903 ns |  9.831 ns |  0.83 |    0.01 |      - |     - |     - |         - |
+                           From_Short_Nullable_NoValue |        net461 | 12.719 ns | 0.0093 ns | 0.0087 ns | 12.719 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                           From_Short_Nullable_NoValue |        net472 | 12.747 ns | 0.0167 ns | 0.0156 ns | 12.745 ns |  1.08 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                  From_Short_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.916 ns | 0.0293 ns | 0.0274 ns | 14.916 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                  From_Short_Nullable_NoValue_AsObject | .NET Core 2.2 | 14.123 ns | 0.0742 ns | 0.0694 ns | 14.147 ns |  0.95 |    0.01 |      - |     - |     - |         - |
-                  From_Short_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.019 ns | 0.2959 ns | 0.3522 ns | 14.248 ns |  0.93 |    0.03 |      - |     - |     - |         - |
-                  From_Short_Nullable_NoValue_AsObject |        net461 | 24.616 ns | 0.0874 ns | 0.0817 ns | 24.570 ns |  1.65 |    0.01 |      - |     - |     - |         - |
-                  From_Short_Nullable_NoValue_AsObject |        net472 | 24.296 ns | 0.0217 ns | 0.0203 ns | 24.304 ns |  1.63 |    0.00 |      - |     - |     - |         - |
+                  From_Short_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.765 ns | 0.0138 ns | 0.0123 ns | 14.765 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                  From_Short_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.544 ns | 0.0102 ns | 0.0085 ns | 13.543 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                  From_Short_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.633 ns | 0.3081 ns | 0.3784 ns | 14.827 ns |  0.98 |    0.02 |      - |     - |     - |         - |
+                  From_Short_Nullable_NoValue_AsObject |        net461 | 22.006 ns | 0.0219 ns | 0.0205 ns | 22.005 ns |  1.49 |    0.00 |      - |     - |     - |         - |
+                  From_Short_Nullable_NoValue_AsObject |        net472 | 21.919 ns | 0.1126 ns | 0.1053 ns | 21.958 ns |  1.48 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                              From_Int | .NET Core 2.0 | 12.572 ns | 0.0221 ns | 0.0184 ns | 12.570 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                              From_Int | .NET Core 2.2 | 11.118 ns | 0.0167 ns | 0.0156 ns | 11.116 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                                              From_Int | .NET Core 3.0 |  9.486 ns | 0.0269 ns | 0.0251 ns |  9.490 ns |  0.75 |    0.00 |      - |     - |     - |         - |
-                                              From_Int |        net461 | 13.019 ns | 0.0341 ns | 0.0302 ns | 13.011 ns |  1.04 |    0.00 |      - |     - |     - |         - |
-                                              From_Int |        net472 | 12.301 ns | 0.0337 ns | 0.0315 ns | 12.286 ns |  0.98 |    0.00 |      - |     - |     - |         - |
+                                              From_Int | .NET Core 2.0 | 12.965 ns | 0.0482 ns | 0.0451 ns | 12.975 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                              From_Int | .NET Core 2.2 | 10.367 ns | 0.0086 ns | 0.0076 ns | 10.364 ns |  0.80 |    0.00 |      - |     - |     - |         - |
+                                              From_Int | .NET Core 3.0 |  9.633 ns | 0.0974 ns | 0.0814 ns |  9.670 ns |  0.74 |    0.01 |      - |     - |     - |         - |
+                                              From_Int |        net461 | 12.375 ns | 0.0110 ns | 0.0103 ns | 12.377 ns |  0.95 |    0.00 |      - |     - |     - |         - |
+                                              From_Int |        net472 | 12.209 ns | 0.0171 ns | 0.0160 ns | 12.208 ns |  0.94 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                     From_Int_AsObject | .NET Core 2.0 | 20.214 ns | 0.1437 ns | 0.1344 ns | 20.195 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                     From_Int_AsObject | .NET Core 2.2 | 17.444 ns | 0.0273 ns | 0.0255 ns | 17.440 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                                     From_Int_AsObject | .NET Core 3.0 | 17.458 ns | 0.0339 ns | 0.0283 ns | 17.461 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                                     From_Int_AsObject |        net461 | 27.155 ns | 0.0181 ns | 0.0160 ns | 27.159 ns |  1.34 |    0.01 |      - |     - |     - |         - |
-                                     From_Int_AsObject |        net472 | 30.769 ns | 0.0701 ns | 0.0586 ns | 30.759 ns |  1.52 |    0.01 |      - |     - |     - |         - |
+                                     From_Int_AsObject | .NET Core 2.0 | 20.182 ns | 0.0178 ns | 0.0158 ns | 20.183 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                     From_Int_AsObject | .NET Core 2.2 | 17.738 ns | 0.0243 ns | 0.0227 ns | 17.738 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                                     From_Int_AsObject | .NET Core 3.0 | 18.077 ns | 0.1415 ns | 0.1324 ns | 18.067 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+                                     From_Int_AsObject |        net461 | 26.700 ns | 0.0542 ns | 0.0507 ns | 26.702 ns |  1.32 |    0.00 |      - |     - |     - |         - |
+                                     From_Int_AsObject |        net472 | 26.766 ns | 0.0317 ns | 0.0297 ns | 26.772 ns |  1.33 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                           From_Int_Nullable_WithValue | .NET Core 2.0 | 12.192 ns | 0.0220 ns | 0.0195 ns | 12.189 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                           From_Int_Nullable_WithValue | .NET Core 2.2 | 11.431 ns | 0.0646 ns | 0.0540 ns | 11.451 ns |  0.94 |    0.00 |      - |     - |     - |         - |
-                           From_Int_Nullable_WithValue | .NET Core 3.0 |  9.963 ns | 0.0252 ns | 0.0236 ns |  9.963 ns |  0.82 |    0.00 |      - |     - |     - |         - |
-                           From_Int_Nullable_WithValue |        net461 | 14.294 ns | 0.0347 ns | 0.0308 ns | 14.298 ns |  1.17 |    0.00 |      - |     - |     - |         - |
-                           From_Int_Nullable_WithValue |        net472 | 13.185 ns | 0.0315 ns | 0.0263 ns | 13.178 ns |  1.08 |    0.00 |      - |     - |     - |         - |
+                           From_Int_Nullable_WithValue | .NET Core 2.0 | 12.045 ns | 0.0144 ns | 0.0127 ns | 12.046 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                           From_Int_Nullable_WithValue | .NET Core 2.2 | 10.725 ns | 0.0163 ns | 0.0152 ns | 10.726 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                           From_Int_Nullable_WithValue | .NET Core 3.0 | 10.256 ns | 0.1206 ns | 0.1128 ns | 10.231 ns |  0.85 |    0.01 |      - |     - |     - |         - |
+                           From_Int_Nullable_WithValue |        net461 | 12.706 ns | 0.0148 ns | 0.0138 ns | 12.710 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                           From_Int_Nullable_WithValue |        net472 | 12.805 ns | 0.0093 ns | 0.0087 ns | 12.803 ns |  1.06 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                  From_Int_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.104 ns | 0.1183 ns | 0.1107 ns | 20.055 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                  From_Int_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.504 ns | 0.0338 ns | 0.0316 ns | 17.515 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                  From_Int_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.683 ns | 0.2723 ns | 0.2547 ns | 17.561 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                  From_Int_Nullable_WithValue_AsObject |        net461 | 27.460 ns | 0.1286 ns | 0.1140 ns | 27.492 ns |  1.37 |    0.01 |      - |     - |     - |         - |
-                  From_Int_Nullable_WithValue_AsObject |        net472 | 30.586 ns | 0.0376 ns | 0.0352 ns | 30.594 ns |  1.52 |    0.01 |      - |     - |     - |         - |
+                  From_Int_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.667 ns | 0.0484 ns | 0.0429 ns | 20.664 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                  From_Int_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.735 ns | 0.0320 ns | 0.0299 ns | 17.737 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+                  From_Int_Nullable_WithValue_AsObject | .NET Core 3.0 | 18.290 ns | 0.3568 ns | 0.3337 ns | 18.250 ns |  0.89 |    0.02 |      - |     - |     - |         - |
+                  From_Int_Nullable_WithValue_AsObject |        net461 | 27.289 ns | 0.0602 ns | 0.0563 ns | 27.292 ns |  1.32 |    0.00 |      - |     - |     - |         - |
+                  From_Int_Nullable_WithValue_AsObject |        net472 | 26.935 ns | 0.0298 ns | 0.0264 ns | 26.927 ns |  1.30 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                             From_Int_Nullable_NoValue | .NET Core 2.0 | 12.100 ns | 0.1010 ns | 0.0945 ns | 12.125 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                             From_Int_Nullable_NoValue | .NET Core 2.2 | 10.822 ns | 0.0095 ns | 0.0089 ns | 10.823 ns |  0.89 |    0.01 |      - |     - |     - |         - |
-                             From_Int_Nullable_NoValue | .NET Core 3.0 |  9.575 ns | 0.0583 ns | 0.0486 ns |  9.583 ns |  0.79 |    0.01 |      - |     - |     - |         - |
-                             From_Int_Nullable_NoValue |        net461 | 13.505 ns | 0.0340 ns | 0.0302 ns | 13.498 ns |  1.12 |    0.01 |      - |     - |     - |         - |
-                             From_Int_Nullable_NoValue |        net472 | 12.901 ns | 0.0180 ns | 0.0160 ns | 12.898 ns |  1.07 |    0.01 |      - |     - |     - |         - |
+                             From_Int_Nullable_NoValue | .NET Core 2.0 | 12.323 ns | 0.0088 ns | 0.0082 ns | 12.323 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                             From_Int_Nullable_NoValue | .NET Core 2.2 | 10.264 ns | 0.0065 ns | 0.0058 ns | 10.265 ns |  0.83 |    0.00 |      - |     - |     - |         - |
+                             From_Int_Nullable_NoValue | .NET Core 3.0 |  9.559 ns | 0.0743 ns | 0.0695 ns |  9.585 ns |  0.78 |    0.01 |      - |     - |     - |         - |
+                             From_Int_Nullable_NoValue |        net461 | 12.747 ns | 0.0210 ns | 0.0196 ns | 12.745 ns |  1.03 |    0.00 |      - |     - |     - |         - |
+                             From_Int_Nullable_NoValue |        net472 | 12.734 ns | 0.0198 ns | 0.0185 ns | 12.730 ns |  1.03 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                    From_Int_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.536 ns | 0.0312 ns | 0.0260 ns | 15.540 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                    From_Int_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.132 ns | 0.0252 ns | 0.0236 ns | 13.130 ns |  0.84 |    0.00 |      - |     - |     - |         - |
-                    From_Int_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.414 ns | 0.0226 ns | 0.0211 ns | 13.416 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-                    From_Int_Nullable_NoValue_AsObject |        net461 | 21.978 ns | 0.0531 ns | 0.0444 ns | 21.991 ns |  1.41 |    0.00 |      - |     - |     - |         - |
-                    From_Int_Nullable_NoValue_AsObject |        net472 | 26.563 ns | 0.1222 ns | 0.1143 ns | 26.561 ns |  1.71 |    0.01 |      - |     - |     - |         - |
+                    From_Int_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.415 ns | 0.0146 ns | 0.0129 ns | 15.417 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                    From_Int_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.520 ns | 0.0555 ns | 0.0492 ns | 13.539 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                    From_Int_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.937 ns | 0.2076 ns | 0.1840 ns | 13.926 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+                    From_Int_Nullable_NoValue_AsObject |        net461 | 22.048 ns | 0.0551 ns | 0.0515 ns | 22.048 ns |  1.43 |    0.00 |      - |     - |     - |         - |
+                    From_Int_Nullable_NoValue_AsObject |        net472 | 22.636 ns | 0.0573 ns | 0.0508 ns | 22.630 ns |  1.47 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                             From_Long | .NET Core 2.0 | 11.982 ns | 0.1031 ns | 0.0965 ns | 11.930 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                             From_Long | .NET Core 2.2 | 10.975 ns | 0.0400 ns | 0.0374 ns | 10.962 ns |  0.92 |    0.01 |      - |     - |     - |         - |
-                                             From_Long | .NET Core 3.0 |  9.967 ns | 0.0122 ns | 0.0109 ns |  9.969 ns |  0.83 |    0.01 |      - |     - |     - |         - |
-                                             From_Long |        net461 | 13.218 ns | 0.0282 ns | 0.0264 ns | 13.211 ns |  1.10 |    0.01 |      - |     - |     - |         - |
-                                             From_Long |        net472 | 13.559 ns | 0.0307 ns | 0.0272 ns | 13.548 ns |  1.13 |    0.01 |      - |     - |     - |         - |
+                                             From_Long | .NET Core 2.0 | 11.849 ns | 0.0139 ns | 0.0123 ns | 11.848 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                             From_Long | .NET Core 2.2 | 10.637 ns | 0.0125 ns | 0.0111 ns | 10.635 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+                                             From_Long | .NET Core 3.0 |  9.843 ns | 0.0897 ns | 0.0839 ns |  9.879 ns |  0.83 |    0.01 |      - |     - |     - |         - |
+                                             From_Long |        net461 | 12.934 ns | 0.0097 ns | 0.0086 ns | 12.936 ns |  1.09 |    0.00 |      - |     - |     - |         - |
+                                             From_Long |        net472 | 12.206 ns | 0.0172 ns | 0.0161 ns | 12.205 ns |  1.03 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                    From_Long_AsObject | .NET Core 2.0 | 19.811 ns | 0.0261 ns | 0.0218 ns | 19.815 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                    From_Long_AsObject | .NET Core 2.2 | 17.661 ns | 0.0977 ns | 0.0866 ns | 17.690 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                                    From_Long_AsObject | .NET Core 3.0 | 17.633 ns | 0.0680 ns | 0.0603 ns | 17.627 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                                    From_Long_AsObject |        net461 | 26.848 ns | 0.0494 ns | 0.0413 ns | 26.838 ns |  1.36 |    0.00 |      - |     - |     - |         - |
-                                    From_Long_AsObject |        net472 | 30.323 ns | 0.0680 ns | 0.0636 ns | 30.310 ns |  1.53 |    0.00 |      - |     - |     - |         - |
+                                    From_Long_AsObject | .NET Core 2.0 | 19.929 ns | 0.0252 ns | 0.0224 ns | 19.935 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                    From_Long_AsObject | .NET Core 2.2 | 17.859 ns | 0.0214 ns | 0.0200 ns | 17.859 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+                                    From_Long_AsObject | .NET Core 3.0 | 19.335 ns | 0.2122 ns | 0.1985 ns | 19.289 ns |  0.97 |    0.01 |      - |     - |     - |         - |
+                                    From_Long_AsObject |        net461 | 26.642 ns | 0.0593 ns | 0.0526 ns | 26.618 ns |  1.34 |    0.00 |      - |     - |     - |         - |
+                                    From_Long_AsObject |        net472 | 29.119 ns | 0.0282 ns | 0.0250 ns | 29.119 ns |  1.46 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_Long_Nullable_WithValue | .NET Core 2.0 | 13.234 ns | 0.0245 ns | 0.0217 ns | 13.229 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_Long_Nullable_WithValue | .NET Core 2.2 | 12.330 ns | 0.0243 ns | 0.0227 ns | 12.333 ns |  0.93 |    0.00 |      - |     - |     - |         - |
-                          From_Long_Nullable_WithValue | .NET Core 3.0 | 10.197 ns | 0.0347 ns | 0.0307 ns | 10.196 ns |  0.77 |    0.00 |      - |     - |     - |         - |
-                          From_Long_Nullable_WithValue |        net461 | 15.212 ns | 0.0196 ns | 0.0174 ns | 15.211 ns |  1.15 |    0.00 |      - |     - |     - |         - |
-                          From_Long_Nullable_WithValue |        net472 | 14.418 ns | 0.0169 ns | 0.0158 ns | 14.417 ns |  1.09 |    0.00 |      - |     - |     - |         - |
+                          From_Long_Nullable_WithValue | .NET Core 2.0 | 12.727 ns | 0.0184 ns | 0.0172 ns | 12.727 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_Long_Nullable_WithValue | .NET Core 2.2 | 12.286 ns | 0.0145 ns | 0.0136 ns | 12.285 ns |  0.97 |    0.00 |      - |     - |     - |         - |
+                          From_Long_Nullable_WithValue | .NET Core 3.0 | 10.566 ns | 0.1369 ns | 0.1280 ns | 10.587 ns |  0.83 |    0.01 |      - |     - |     - |         - |
+                          From_Long_Nullable_WithValue |        net461 | 15.159 ns | 0.0705 ns | 0.0625 ns | 15.187 ns |  1.19 |    0.00 |      - |     - |     - |         - |
+                          From_Long_Nullable_WithValue |        net472 | 15.042 ns | 0.0327 ns | 0.0306 ns | 15.044 ns |  1.18 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                 From_Long_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.081 ns | 0.0533 ns | 0.0499 ns | 20.101 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                 From_Long_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.473 ns | 0.0183 ns | 0.0153 ns | 17.472 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                 From_Long_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.602 ns | 0.0239 ns | 0.0212 ns | 17.604 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                 From_Long_Nullable_WithValue_AsObject |        net461 | 26.984 ns | 0.0371 ns | 0.0347 ns | 26.988 ns |  1.34 |    0.00 |      - |     - |     - |         - |
-                 From_Long_Nullable_WithValue_AsObject |        net472 | 29.764 ns | 0.0234 ns | 0.0196 ns | 29.759 ns |  1.48 |    0.00 |      - |     - |     - |         - |
+                 From_Long_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.777 ns | 0.0532 ns | 0.0472 ns | 20.789 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                 From_Long_Nullable_WithValue_AsObject | .NET Core 2.2 | 18.066 ns | 0.0311 ns | 0.0260 ns | 18.053 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                 From_Long_Nullable_WithValue_AsObject | .NET Core 3.0 | 18.435 ns | 0.1360 ns | 0.1062 ns | 18.477 ns |  0.89 |    0.01 |      - |     - |     - |         - |
+                 From_Long_Nullable_WithValue_AsObject |        net461 | 26.556 ns | 0.0305 ns | 0.0270 ns | 26.561 ns |  1.28 |    0.00 |      - |     - |     - |         - |
+                 From_Long_Nullable_WithValue_AsObject |        net472 | 27.243 ns | 0.0337 ns | 0.0299 ns | 27.236 ns |  1.31 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                            From_Long_Nullable_NoValue | .NET Core 2.0 | 12.432 ns | 0.0148 ns | 0.0138 ns | 12.429 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                            From_Long_Nullable_NoValue | .NET Core 2.2 | 11.955 ns | 0.0173 ns | 0.0161 ns | 11.956 ns |  0.96 |    0.00 |      - |     - |     - |         - |
-                            From_Long_Nullable_NoValue | .NET Core 3.0 | 10.218 ns | 0.0581 ns | 0.0515 ns | 10.196 ns |  0.82 |    0.00 |      - |     - |     - |         - |
-                            From_Long_Nullable_NoValue |        net461 | 14.960 ns | 0.0276 ns | 0.0258 ns | 14.968 ns |  1.20 |    0.00 |      - |     - |     - |         - |
-                            From_Long_Nullable_NoValue |        net472 | 13.636 ns | 0.0659 ns | 0.0616 ns | 13.642 ns |  1.10 |    0.00 |      - |     - |     - |         - |
+                            From_Long_Nullable_NoValue | .NET Core 2.0 | 12.569 ns | 0.0123 ns | 0.0115 ns | 12.571 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                            From_Long_Nullable_NoValue | .NET Core 2.2 | 11.411 ns | 0.0089 ns | 0.0074 ns | 11.412 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                            From_Long_Nullable_NoValue | .NET Core 3.0 | 10.008 ns | 0.0470 ns | 0.0440 ns | 10.001 ns |  0.80 |    0.00 |      - |     - |     - |         - |
+                            From_Long_Nullable_NoValue |        net461 | 13.307 ns | 0.0285 ns | 0.0267 ns | 13.311 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                            From_Long_Nullable_NoValue |        net472 | 15.023 ns | 0.0448 ns | 0.0419 ns | 15.029 ns |  1.20 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                   From_Long_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.903 ns | 0.0393 ns | 0.0367 ns | 14.894 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                   From_Long_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.040 ns | 0.0148 ns | 0.0124 ns | 13.038 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                   From_Long_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.788 ns | 0.0140 ns | 0.0124 ns | 14.789 ns |  0.99 |    0.00 |      - |     - |     - |         - |
-                   From_Long_Nullable_NoValue_AsObject |        net461 | 25.298 ns | 0.0473 ns | 0.0419 ns | 25.291 ns |  1.70 |    0.01 |      - |     - |     - |         - |
-                   From_Long_Nullable_NoValue_AsObject |        net472 | 25.274 ns | 0.0872 ns | 0.0815 ns | 25.254 ns |  1.70 |    0.01 |      - |     - |     - |         - |
+                   From_Long_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.405 ns | 0.0142 ns | 0.0132 ns | 15.405 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                   From_Long_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.390 ns | 0.0168 ns | 0.0140 ns | 13.393 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                   From_Long_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.402 ns | 0.1556 ns | 0.1455 ns | 13.354 ns |  0.87 |    0.01 |      - |     - |     - |         - |
+                   From_Long_Nullable_NoValue_AsObject |        net461 | 22.060 ns | 0.0256 ns | 0.0227 ns | 22.059 ns |  1.43 |    0.00 |      - |     - |     - |         - |
+                   From_Long_Nullable_NoValue_AsObject |        net472 | 24.148 ns | 0.0381 ns | 0.0356 ns | 24.145 ns |  1.57 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                            From_SByte | .NET Core 2.0 | 12.531 ns | 0.0203 ns | 0.0190 ns | 12.522 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                            From_SByte | .NET Core 2.2 | 11.052 ns | 0.0634 ns | 0.0530 ns | 11.075 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                                            From_SByte | .NET Core 3.0 |  9.977 ns | 0.0146 ns | 0.0130 ns |  9.975 ns |  0.80 |    0.00 |      - |     - |     - |         - |
-                                            From_SByte |        net461 | 13.263 ns | 0.0118 ns | 0.0110 ns | 13.260 ns |  1.06 |    0.00 |      - |     - |     - |         - |
-                                            From_SByte |        net472 | 12.516 ns | 0.0184 ns | 0.0163 ns | 12.512 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                            From_SByte | .NET Core 2.0 | 11.910 ns | 0.0424 ns | 0.0396 ns | 11.920 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                            From_SByte | .NET Core 2.2 | 10.379 ns | 0.0076 ns | 0.0067 ns | 10.378 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                                            From_SByte | .NET Core 3.0 |  9.903 ns | 0.1194 ns | 0.1117 ns |  9.917 ns |  0.83 |    0.01 |      - |     - |     - |         - |
+                                            From_SByte |        net461 | 12.476 ns | 0.0141 ns | 0.0118 ns | 12.476 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                                            From_SByte |        net472 | 12.427 ns | 0.0175 ns | 0.0146 ns | 12.421 ns |  1.04 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                   From_SByte_AsObject | .NET Core 2.0 | 20.662 ns | 0.2601 ns | 0.2433 ns | 20.802 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                   From_SByte_AsObject | .NET Core 2.2 | 20.856 ns | 0.0460 ns | 0.0430 ns | 20.853 ns |  1.01 |    0.01 |      - |     - |     - |         - |
-                                   From_SByte_AsObject | .NET Core 3.0 | 17.512 ns | 0.0622 ns | 0.0519 ns | 17.500 ns |  0.85 |    0.01 |      - |     - |     - |         - |
-                                   From_SByte_AsObject |        net461 | 26.934 ns | 0.0455 ns | 0.0355 ns | 26.932 ns |  1.30 |    0.02 |      - |     - |     - |         - |
-                                   From_SByte_AsObject |        net472 | 31.438 ns | 0.0447 ns | 0.0396 ns | 31.442 ns |  1.52 |    0.02 |      - |     - |     - |         - |
+                                   From_SByte_AsObject | .NET Core 2.0 | 19.909 ns | 0.0218 ns | 0.0204 ns | 19.910 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                   From_SByte_AsObject | .NET Core 2.2 | 17.884 ns | 0.0268 ns | 0.0250 ns | 17.883 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+                                   From_SByte_AsObject | .NET Core 3.0 | 17.400 ns | 0.0595 ns | 0.0464 ns | 17.398 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                                   From_SByte_AsObject |        net461 | 28.565 ns | 0.0412 ns | 0.0386 ns | 28.555 ns |  1.43 |    0.00 |      - |     - |     - |         - |
+                                   From_SByte_AsObject |        net472 | 27.191 ns | 0.0321 ns | 0.0300 ns | 27.183 ns |  1.37 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                         From_SByte_Nullable_WithValue | .NET Core 2.0 | 12.139 ns | 0.0185 ns | 0.0173 ns | 12.143 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                         From_SByte_Nullable_WithValue | .NET Core 2.2 | 11.194 ns | 0.0307 ns | 0.0287 ns | 11.198 ns |  0.92 |    0.00 |      - |     - |     - |         - |
-                         From_SByte_Nullable_WithValue | .NET Core 3.0 | 11.088 ns | 0.1123 ns | 0.1051 ns | 11.097 ns |  0.91 |    0.01 |      - |     - |     - |         - |
-                         From_SByte_Nullable_WithValue |        net461 | 14.225 ns | 0.0190 ns | 0.0178 ns | 14.223 ns |  1.17 |    0.00 |      - |     - |     - |         - |
-                         From_SByte_Nullable_WithValue |        net472 | 12.817 ns | 0.0262 ns | 0.0245 ns | 12.814 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                         From_SByte_Nullable_WithValue | .NET Core 2.0 | 12.031 ns | 0.0153 ns | 0.0136 ns | 12.032 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                         From_SByte_Nullable_WithValue | .NET Core 2.2 | 10.639 ns | 0.0157 ns | 0.0147 ns | 10.638 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                         From_SByte_Nullable_WithValue | .NET Core 3.0 | 10.077 ns | 0.0961 ns | 0.0899 ns | 10.041 ns |  0.84 |    0.01 |      - |     - |     - |         - |
+                         From_SByte_Nullable_WithValue |        net461 | 12.744 ns | 0.0184 ns | 0.0172 ns | 12.746 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                         From_SByte_Nullable_WithValue |        net472 | 12.720 ns | 0.0142 ns | 0.0133 ns | 12.722 ns |  1.06 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                From_SByte_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.788 ns | 0.0539 ns | 0.0421 ns | 19.781 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                From_SByte_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.485 ns | 0.0237 ns | 0.0222 ns | 17.487 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                From_SByte_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.576 ns | 0.0756 ns | 0.0708 ns | 17.566 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                From_SByte_Nullable_WithValue_AsObject |        net461 | 29.762 ns | 0.0556 ns | 0.0493 ns | 29.753 ns |  1.50 |    0.00 |      - |     - |     - |         - |
-                From_SByte_Nullable_WithValue_AsObject |        net472 | 31.012 ns | 0.1015 ns | 0.0949 ns | 31.033 ns |  1.57 |    0.01 |      - |     - |     - |         - |
+                From_SByte_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.627 ns | 0.0557 ns | 0.0521 ns | 20.638 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                From_SByte_Nullable_WithValue_AsObject | .NET Core 2.2 | 19.382 ns | 0.0139 ns | 0.0123 ns | 19.379 ns |  0.94 |    0.00 |      - |     - |     - |         - |
+                From_SByte_Nullable_WithValue_AsObject | .NET Core 3.0 | 18.732 ns | 0.1701 ns | 0.1591 ns | 18.712 ns |  0.91 |    0.01 |      - |     - |     - |         - |
+                From_SByte_Nullable_WithValue_AsObject |        net461 | 26.738 ns | 0.0875 ns | 0.0775 ns | 26.766 ns |  1.30 |    0.01 |      - |     - |     - |         - |
+                From_SByte_Nullable_WithValue_AsObject |        net472 | 28.894 ns | 0.0402 ns | 0.0356 ns | 28.897 ns |  1.40 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                           From_SByte_Nullable_NoValue | .NET Core 2.0 | 11.949 ns | 0.0223 ns | 0.0209 ns | 11.954 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                           From_SByte_Nullable_NoValue | .NET Core 2.2 | 10.825 ns | 0.0152 ns | 0.0135 ns | 10.824 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-                           From_SByte_Nullable_NoValue | .NET Core 3.0 |  9.488 ns | 0.0210 ns | 0.0196 ns |  9.486 ns |  0.79 |    0.00 |      - |     - |     - |         - |
-                           From_SByte_Nullable_NoValue |        net461 | 13.512 ns | 0.0111 ns | 0.0104 ns | 13.509 ns |  1.13 |    0.00 |      - |     - |     - |         - |
-                           From_SByte_Nullable_NoValue |        net472 | 13.821 ns | 0.0359 ns | 0.0300 ns | 13.812 ns |  1.16 |    0.00 |      - |     - |     - |         - |
+                           From_SByte_Nullable_NoValue | .NET Core 2.0 | 11.813 ns | 0.0091 ns | 0.0085 ns | 11.810 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                           From_SByte_Nullable_NoValue | .NET Core 2.2 | 10.839 ns | 0.0420 ns | 0.0372 ns | 10.847 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                           From_SByte_Nullable_NoValue | .NET Core 3.0 |  9.941 ns | 0.0851 ns | 0.0796 ns |  9.918 ns |  0.84 |    0.01 |      - |     - |     - |         - |
+                           From_SByte_Nullable_NoValue |        net461 | 12.742 ns | 0.0102 ns | 0.0095 ns | 12.742 ns |  1.08 |    0.00 |      - |     - |     - |         - |
+                           From_SByte_Nullable_NoValue |        net472 | 12.731 ns | 0.0169 ns | 0.0158 ns | 12.731 ns |  1.08 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                  From_SByte_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.877 ns | 0.0453 ns | 0.0423 ns | 14.869 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                  From_SByte_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.575 ns | 0.0908 ns | 0.0849 ns | 13.601 ns |  0.91 |    0.01 |      - |     - |     - |         - |
-                  From_SByte_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.434 ns | 0.0417 ns | 0.0390 ns | 13.426 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                  From_SByte_Nullable_NoValue_AsObject |        net461 | 22.259 ns | 0.0166 ns | 0.0138 ns | 22.258 ns |  1.50 |    0.00 |      - |     - |     - |         - |
-                  From_SByte_Nullable_NoValue_AsObject |        net472 | 24.130 ns | 0.0262 ns | 0.0232 ns | 24.124 ns |  1.62 |    0.01 |      - |     - |     - |         - |
+                  From_SByte_Nullable_NoValue_AsObject | .NET Core 2.0 | 16.343 ns | 0.0579 ns | 0.0542 ns | 16.328 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                  From_SByte_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.399 ns | 0.0145 ns | 0.0129 ns | 13.402 ns |  0.82 |    0.00 |      - |     - |     - |         - |
+                  From_SByte_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.433 ns | 0.1820 ns | 0.1703 ns | 14.427 ns |  0.88 |    0.01 |      - |     - |     - |         - |
+                  From_SByte_Nullable_NoValue_AsObject |        net461 | 23.899 ns | 0.0349 ns | 0.0292 ns | 23.901 ns |  1.46 |    0.00 |      - |     - |     - |         - |
+                  From_SByte_Nullable_NoValue_AsObject |        net472 | 22.338 ns | 0.0376 ns | 0.0352 ns | 22.338 ns |  1.37 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                            From_Float | .NET Core 2.0 | 12.916 ns | 0.0487 ns | 0.0456 ns | 12.924 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                            From_Float | .NET Core 2.2 | 11.777 ns | 0.0231 ns | 0.0204 ns | 11.778 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-                                            From_Float | .NET Core 3.0 | 10.442 ns | 0.0383 ns | 0.0358 ns | 10.440 ns |  0.81 |    0.00 |      - |     - |     - |         - |
-                                            From_Float |        net461 | 14.813 ns | 0.0213 ns | 0.0178 ns | 14.806 ns |  1.15 |    0.00 |      - |     - |     - |         - |
-                                            From_Float |        net472 | 13.656 ns | 0.0734 ns | 0.0651 ns | 13.676 ns |  1.06 |    0.01 |      - |     - |     - |         - |
+                                            From_Float | .NET Core 2.0 | 12.499 ns | 0.0523 ns | 0.0489 ns | 12.477 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                            From_Float | .NET Core 2.2 | 10.868 ns | 0.0225 ns | 0.0199 ns | 10.876 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                                            From_Float | .NET Core 3.0 | 10.044 ns | 0.0575 ns | 0.0538 ns | 10.055 ns |  0.80 |    0.01 |      - |     - |     - |         - |
+                                            From_Float |        net461 | 14.208 ns | 0.0291 ns | 0.0272 ns | 14.201 ns |  1.14 |    0.00 |      - |     - |     - |         - |
+                                            From_Float |        net472 | 13.379 ns | 0.0301 ns | 0.0267 ns | 13.372 ns |  1.07 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                   From_Float_AsObject | .NET Core 2.0 | 20.018 ns | 0.1105 ns | 0.1033 ns | 19.985 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                   From_Float_AsObject | .NET Core 2.2 | 17.506 ns | 0.0303 ns | 0.0284 ns | 17.506 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                                   From_Float_AsObject | .NET Core 3.0 | 21.797 ns | 0.4557 ns | 1.0470 ns | 22.159 ns |  1.03 |    0.09 |      - |     - |     - |         - |
-                                   From_Float_AsObject |        net461 | 26.805 ns | 0.0458 ns | 0.0428 ns | 26.793 ns |  1.34 |    0.01 |      - |     - |     - |         - |
-                                   From_Float_AsObject |        net472 | 30.702 ns | 0.0936 ns | 0.0876 ns | 30.674 ns |  1.53 |    0.01 |      - |     - |     - |         - |
+                                   From_Float_AsObject | .NET Core 2.0 | 20.590 ns | 0.0219 ns | 0.0205 ns | 20.584 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                   From_Float_AsObject | .NET Core 2.2 | 18.092 ns | 0.0797 ns | 0.0746 ns | 18.127 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                                   From_Float_AsObject | .NET Core 3.0 | 17.812 ns | 0.1356 ns | 0.1268 ns | 17.811 ns |  0.87 |    0.01 |      - |     - |     - |         - |
+                                   From_Float_AsObject |        net461 | 28.747 ns | 0.0440 ns | 0.0412 ns | 28.743 ns |  1.40 |    0.00 |      - |     - |     - |         - |
+                                   From_Float_AsObject |        net472 | 27.113 ns | 0.0621 ns | 0.0581 ns | 27.126 ns |  1.32 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                         From_Float_Nullable_WithValue | .NET Core 2.0 | 12.765 ns | 0.1114 ns | 0.1042 ns | 12.802 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                         From_Float_Nullable_WithValue | .NET Core 2.2 | 11.395 ns | 0.0176 ns | 0.0156 ns | 11.396 ns |  0.89 |    0.01 |      - |     - |     - |         - |
-                         From_Float_Nullable_WithValue | .NET Core 3.0 | 10.362 ns | 0.0541 ns | 0.0479 ns | 10.370 ns |  0.81 |    0.01 |      - |     - |     - |         - |
-                         From_Float_Nullable_WithValue |        net461 | 15.890 ns | 0.1058 ns | 0.0938 ns | 15.926 ns |  1.24 |    0.01 |      - |     - |     - |         - |
-                         From_Float_Nullable_WithValue |        net472 | 13.501 ns | 0.0424 ns | 0.0331 ns | 13.485 ns |  1.06 |    0.01 |      - |     - |     - |         - |
+                         From_Float_Nullable_WithValue | .NET Core 2.0 | 12.549 ns | 0.0558 ns | 0.0522 ns | 12.523 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                         From_Float_Nullable_WithValue | .NET Core 2.2 | 11.758 ns | 0.0113 ns | 0.0105 ns | 11.760 ns |  0.94 |    0.00 |      - |     - |     - |         - |
+                         From_Float_Nullable_WithValue | .NET Core 3.0 | 10.350 ns | 0.1561 ns | 0.1460 ns | 10.349 ns |  0.82 |    0.01 |      - |     - |     - |         - |
+                         From_Float_Nullable_WithValue |        net461 | 13.421 ns | 0.0127 ns | 0.0119 ns | 13.423 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                         From_Float_Nullable_WithValue |        net472 | 13.633 ns | 0.1279 ns | 0.1197 ns | 13.622 ns |  1.09 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                From_Float_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.832 ns | 0.1209 ns | 0.1072 ns | 19.783 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                From_Float_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.517 ns | 0.0197 ns | 0.0164 ns | 17.519 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                From_Float_Nullable_WithValue_AsObject | .NET Core 3.0 | 21.218 ns | 0.4497 ns | 1.1447 ns | 21.607 ns |  0.98 |    0.10 |      - |     - |     - |         - |
-                From_Float_Nullable_WithValue_AsObject |        net461 | 30.658 ns | 0.0713 ns | 0.0632 ns | 30.634 ns |  1.55 |    0.01 |      - |     - |     - |         - |
-                From_Float_Nullable_WithValue_AsObject |        net472 | 30.907 ns | 0.1910 ns | 0.1693 ns | 30.950 ns |  1.56 |    0.01 |      - |     - |     - |         - |
+                From_Float_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.952 ns | 0.0208 ns | 0.0194 ns | 19.954 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                From_Float_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.934 ns | 0.0902 ns | 0.0844 ns | 17.965 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+                From_Float_Nullable_WithValue_AsObject | .NET Core 3.0 | 18.141 ns | 0.1170 ns | 0.1094 ns | 18.117 ns |  0.91 |    0.01 |      - |     - |     - |         - |
+                From_Float_Nullable_WithValue_AsObject |        net461 | 27.357 ns | 0.0247 ns | 0.0219 ns | 27.350 ns |  1.37 |    0.00 |      - |     - |     - |         - |
+                From_Float_Nullable_WithValue_AsObject |        net472 | 26.957 ns | 0.0396 ns | 0.0309 ns | 26.964 ns |  1.35 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                           From_Float_Nullable_NoValue | .NET Core 2.0 | 12.137 ns | 0.0172 ns | 0.0153 ns | 12.132 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                           From_Float_Nullable_NoValue | .NET Core 2.2 | 10.971 ns | 0.0362 ns | 0.0321 ns | 10.962 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                           From_Float_Nullable_NoValue | .NET Core 3.0 |  9.731 ns | 0.0136 ns | 0.0127 ns |  9.731 ns |  0.80 |    0.00 |      - |     - |     - |         - |
-                           From_Float_Nullable_NoValue |        net461 | 13.954 ns | 0.1028 ns | 0.0911 ns | 13.986 ns |  1.15 |    0.01 |      - |     - |     - |         - |
-                           From_Float_Nullable_NoValue |        net472 | 13.038 ns | 0.0147 ns | 0.0130 ns | 13.041 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                           From_Float_Nullable_NoValue | .NET Core 2.0 | 12.038 ns | 0.0092 ns | 0.0082 ns | 12.036 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                           From_Float_Nullable_NoValue | .NET Core 2.2 | 10.449 ns | 0.0120 ns | 0.0101 ns | 10.446 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                           From_Float_Nullable_NoValue | .NET Core 3.0 | 10.065 ns | 0.1089 ns | 0.1018 ns | 10.051 ns |  0.84 |    0.01 |      - |     - |     - |         - |
+                           From_Float_Nullable_NoValue |        net461 | 13.538 ns | 0.0122 ns | 0.0108 ns | 13.540 ns |  1.12 |    0.00 |      - |     - |     - |         - |
+                           From_Float_Nullable_NoValue |        net472 | 13.095 ns | 0.0128 ns | 0.0113 ns | 13.093 ns |  1.09 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                  From_Float_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.155 ns | 0.1436 ns | 0.1343 ns | 15.230 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                  From_Float_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.045 ns | 0.0198 ns | 0.0186 ns | 13.044 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                  From_Float_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.773 ns | 0.2896 ns | 0.2709 ns | 13.795 ns |  0.91 |    0.02 |      - |     - |     - |         - |
-                  From_Float_Nullable_NoValue_AsObject |        net461 | 22.270 ns | 0.0246 ns | 0.0206 ns | 22.266 ns |  1.47 |    0.01 |      - |     - |     - |         - |
-                  From_Float_Nullable_NoValue_AsObject |        net472 | 26.614 ns | 0.1186 ns | 0.1109 ns | 26.621 ns |  1.76 |    0.02 |      - |     - |     - |         - |
+                  From_Float_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.321 ns | 0.0439 ns | 0.0390 ns | 15.331 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                  From_Float_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.974 ns | 0.0092 ns | 0.0076 ns | 13.972 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                  From_Float_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.464 ns | 0.1799 ns | 0.1682 ns | 13.442 ns |  0.88 |    0.01 |      - |     - |     - |         - |
+                  From_Float_Nullable_NoValue_AsObject |        net461 | 22.198 ns | 0.0289 ns | 0.0271 ns | 22.198 ns |  1.45 |    0.00 |      - |     - |     - |         - |
+                  From_Float_Nullable_NoValue_AsObject |        net472 | 22.524 ns | 0.1239 ns | 0.1159 ns | 22.573 ns |  1.47 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                           From_String | .NET Core 2.0 | 28.312 ns | 0.0613 ns | 0.0573 ns | 28.299 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                           From_String | .NET Core 2.2 | 32.925 ns | 0.0397 ns | 0.0352 ns | 32.922 ns |  1.16 |    0.00 |      - |     - |     - |         - |
-                                           From_String | .NET Core 3.0 | 26.175 ns | 0.1375 ns | 0.1287 ns | 26.224 ns |  0.92 |    0.01 |      - |     - |     - |         - |
-                                           From_String |        net461 | 28.525 ns | 0.0747 ns | 0.0662 ns | 28.495 ns |  1.01 |    0.00 |      - |     - |     - |         - |
-                                           From_String |        net472 | 29.648 ns | 0.1085 ns | 0.1015 ns | 29.608 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                                           From_String | .NET Core 2.0 | 28.203 ns | 0.0262 ns | 0.0232 ns | 28.200 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                           From_String | .NET Core 2.2 | 32.766 ns | 0.1376 ns | 0.1287 ns | 32.675 ns |  1.16 |    0.00 |      - |     - |     - |         - |
+                                           From_String | .NET Core 3.0 | 26.359 ns | 0.1228 ns | 0.1089 ns | 26.356 ns |  0.93 |    0.00 |      - |     - |     - |         - |
+                                           From_String |        net461 | 28.563 ns | 0.1289 ns | 0.1206 ns | 28.584 ns |  1.01 |    0.00 |      - |     - |     - |         - |
+                                           From_String |        net472 | 28.357 ns | 0.0255 ns | 0.0213 ns | 28.351 ns |  1.01 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                  From_String_AsObject | .NET Core 2.0 | 32.673 ns | 0.0702 ns | 0.0586 ns | 32.668 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                  From_String_AsObject | .NET Core 2.2 | 40.811 ns | 0.0554 ns | 0.0519 ns | 40.832 ns |  1.25 |    0.00 |      - |     - |     - |         - |
-                                  From_String_AsObject | .NET Core 3.0 | 29.664 ns | 0.0690 ns | 0.0645 ns | 29.674 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-                                  From_String_AsObject |        net461 | 38.623 ns | 0.1743 ns | 0.1630 ns | 38.660 ns |  1.18 |    0.01 |      - |     - |     - |         - |
-                                  From_String_AsObject |        net472 | 42.048 ns | 0.0292 ns | 0.0259 ns | 42.056 ns |  1.29 |    0.00 |      - |     - |     - |         - |
+                                  From_String_AsObject | .NET Core 2.0 | 32.512 ns | 0.0390 ns | 0.0365 ns | 32.512 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                  From_String_AsObject | .NET Core 2.2 | 40.364 ns | 0.1208 ns | 0.1071 ns | 40.343 ns |  1.24 |    0.00 |      - |     - |     - |         - |
+                                  From_String_AsObject | .NET Core 3.0 | 29.481 ns | 0.3221 ns | 0.2855 ns | 29.477 ns |  0.91 |    0.01 |      - |     - |     - |         - |
+                                  From_String_AsObject |        net461 | 37.861 ns | 0.0395 ns | 0.0330 ns | 37.855 ns |  1.16 |    0.00 |      - |     - |     - |         - |
+                                  From_String_AsObject |        net472 | 38.726 ns | 0.0540 ns | 0.0505 ns | 38.750 ns |  1.19 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                      From_String_Null | .NET Core 2.0 | 14.336 ns | 0.0608 ns | 0.0569 ns | 14.346 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                      From_String_Null | .NET Core 2.2 | 12.807 ns | 0.0292 ns | 0.0259 ns | 12.810 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                                      From_String_Null | .NET Core 3.0 | 12.526 ns | 0.0419 ns | 0.0371 ns | 12.529 ns |  0.87 |    0.01 |      - |     - |     - |         - |
-                                      From_String_Null |        net461 | 15.105 ns | 0.0124 ns | 0.0104 ns | 15.101 ns |  1.05 |    0.00 |      - |     - |     - |         - |
-                                      From_String_Null |        net472 | 15.323 ns | 0.0242 ns | 0.0214 ns | 15.317 ns |  1.07 |    0.01 |      - |     - |     - |         - |
+                                      From_String_Null | .NET Core 2.0 | 14.082 ns | 0.0172 ns | 0.0153 ns | 14.078 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                      From_String_Null | .NET Core 2.2 | 13.285 ns | 0.0124 ns | 0.0116 ns | 13.287 ns |  0.94 |    0.00 |      - |     - |     - |         - |
+                                      From_String_Null | .NET Core 3.0 | 12.935 ns | 0.0660 ns | 0.0515 ns | 12.955 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                                      From_String_Null |        net461 | 14.557 ns | 0.0141 ns | 0.0132 ns | 14.556 ns |  1.03 |    0.00 |      - |     - |     - |         - |
+                                      From_String_Null |        net472 | 15.317 ns | 0.1342 ns | 0.1256 ns | 15.255 ns |  1.09 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                             From_String_Null_AsObject | .NET Core 2.0 | 14.857 ns | 0.0246 ns | 0.0230 ns | 14.855 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                             From_String_Null_AsObject | .NET Core 2.2 | 13.039 ns | 0.0145 ns | 0.0128 ns | 13.039 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                             From_String_Null_AsObject | .NET Core 3.0 | 13.621 ns | 0.0674 ns | 0.0630 ns | 13.626 ns |  0.92 |    0.00 |      - |     - |     - |         - |
-                             From_String_Null_AsObject |        net461 | 24.231 ns | 0.1674 ns | 0.1565 ns | 24.152 ns |  1.63 |    0.01 |      - |     - |     - |         - |
-                             From_String_Null_AsObject |        net472 | 24.308 ns | 0.0293 ns | 0.0274 ns | 24.311 ns |  1.64 |    0.00 |      - |     - |     - |         - |
+                             From_String_Null_AsObject | .NET Core 2.0 | 15.193 ns | 0.0153 ns | 0.0136 ns | 15.195 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                             From_String_Null_AsObject | .NET Core 2.2 | 13.544 ns | 0.0758 ns | 0.0709 ns | 13.575 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                             From_String_Null_AsObject | .NET Core 3.0 | 13.392 ns | 0.1503 ns | 0.1406 ns | 13.354 ns |  0.88 |    0.01 |      - |     - |     - |         - |
+                             From_String_Null_AsObject |        net461 | 22.131 ns | 0.0227 ns | 0.0190 ns | 22.135 ns |  1.46 |    0.00 |      - |     - |     - |         - |
+                             From_String_Null_AsObject |        net472 | 24.298 ns | 0.1502 ns | 0.1405 ns | 24.300 ns |  1.60 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                     From_String_Empty | .NET Core 2.0 | 14.413 ns | 0.0435 ns | 0.0407 ns | 14.392 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                     From_String_Empty | .NET Core 2.2 | 12.960 ns | 0.0152 ns | 0.0142 ns | 12.957 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                                     From_String_Empty | .NET Core 3.0 | 12.535 ns | 0.0247 ns | 0.0219 ns | 12.530 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                                     From_String_Empty |        net461 | 14.869 ns | 0.0692 ns | 0.0647 ns | 14.877 ns |  1.03 |    0.01 |      - |     - |     - |         - |
-                                     From_String_Empty |        net472 | 16.181 ns | 0.1456 ns | 0.1362 ns | 16.272 ns |  1.12 |    0.01 |      - |     - |     - |         - |
+                                     From_String_Empty | .NET Core 2.0 | 14.329 ns | 0.0119 ns | 0.0111 ns | 14.327 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                     From_String_Empty | .NET Core 2.2 | 12.723 ns | 0.0502 ns | 0.0470 ns | 12.700 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                                     From_String_Empty | .NET Core 3.0 | 12.935 ns | 0.1199 ns | 0.1121 ns | 12.939 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+                                     From_String_Empty |        net461 | 14.569 ns | 0.0237 ns | 0.0221 ns | 14.564 ns |  1.02 |    0.00 |      - |     - |     - |         - |
+                                     From_String_Empty |        net472 | 15.096 ns | 0.0244 ns | 0.0228 ns | 15.092 ns |  1.05 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
                             From_String_Empty_AsObject | .NET Core 2.0 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                             From_String_Empty_AsObject | .NET Core 2.2 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
@@ -444,371 +444,371 @@ Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
                             From_String_Empty_AsObject |        net461 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                             From_String_Empty_AsObject |        net472 |        NA |        NA |        NA |        NA |     ? |       ? |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                           From_UShort | .NET Core 2.0 | 11.889 ns | 0.0234 ns | 0.0207 ns | 11.887 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                           From_UShort | .NET Core 2.2 | 10.952 ns | 0.0142 ns | 0.0133 ns | 10.955 ns |  0.92 |    0.00 |      - |     - |     - |         - |
-                                           From_UShort | .NET Core 3.0 | 10.217 ns | 0.0188 ns | 0.0157 ns | 10.217 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-                                           From_UShort |        net461 | 13.933 ns | 0.0287 ns | 0.0240 ns | 13.934 ns |  1.17 |    0.00 |      - |     - |     - |         - |
-                                           From_UShort |        net472 | 12.529 ns | 0.0229 ns | 0.0178 ns | 12.535 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                                           From_UShort | .NET Core 2.0 | 11.841 ns | 0.0091 ns | 0.0085 ns | 11.843 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                           From_UShort | .NET Core 2.2 | 10.461 ns | 0.0500 ns | 0.0468 ns | 10.466 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                                           From_UShort | .NET Core 3.0 |  9.804 ns | 0.0901 ns | 0.0843 ns |  9.797 ns |  0.83 |    0.01 |      - |     - |     - |         - |
+                                           From_UShort |        net461 | 14.632 ns | 0.0463 ns | 0.0433 ns | 14.643 ns |  1.24 |    0.00 |      - |     - |     - |         - |
+                                           From_UShort |        net472 | 12.427 ns | 0.0273 ns | 0.0228 ns | 12.432 ns |  1.05 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                  From_UShort_AsObject | .NET Core 2.0 | 20.514 ns | 0.1708 ns | 0.1598 ns | 20.431 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                  From_UShort_AsObject | .NET Core 2.2 | 17.476 ns | 0.0318 ns | 0.0298 ns | 17.478 ns |  0.85 |    0.01 |      - |     - |     - |         - |
-                                  From_UShort_AsObject | .NET Core 3.0 | 17.652 ns | 0.0524 ns | 0.0465 ns | 17.645 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                                  From_UShort_AsObject |        net461 | 26.833 ns | 0.0233 ns | 0.0207 ns | 26.832 ns |  1.31 |    0.01 |      - |     - |     - |         - |
-                                  From_UShort_AsObject |        net472 | 30.048 ns | 0.0263 ns | 0.0234 ns | 30.049 ns |  1.47 |    0.01 |      - |     - |     - |         - |
+                                  From_UShort_AsObject | .NET Core 2.0 | 20.479 ns | 0.0145 ns | 0.0113 ns | 20.480 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                  From_UShort_AsObject | .NET Core 2.2 | 18.032 ns | 0.0278 ns | 0.0246 ns | 18.034 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                                  From_UShort_AsObject | .NET Core 3.0 | 18.645 ns | 0.2726 ns | 0.2550 ns | 18.629 ns |  0.91 |    0.01 |      - |     - |     - |         - |
+                                  From_UShort_AsObject |        net461 | 26.734 ns | 0.0302 ns | 0.0282 ns | 26.732 ns |  1.31 |    0.00 |      - |     - |     - |         - |
+                                  From_UShort_AsObject |        net472 | 28.816 ns | 0.0367 ns | 0.0307 ns | 28.819 ns |  1.41 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                        From_UShort_Nullable_WithValue | .NET Core 2.0 | 12.134 ns | 0.0412 ns | 0.0385 ns | 12.121 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                        From_UShort_Nullable_WithValue | .NET Core 2.2 | 13.949 ns | 0.0142 ns | 0.0126 ns | 13.950 ns |  1.15 |    0.00 |      - |     - |     - |         - |
-                        From_UShort_Nullable_WithValue | .NET Core 3.0 | 10.015 ns | 0.0372 ns | 0.0311 ns | 10.016 ns |  0.83 |    0.00 |      - |     - |     - |         - |
-                        From_UShort_Nullable_WithValue |        net461 | 13.509 ns | 0.0170 ns | 0.0159 ns | 13.508 ns |  1.11 |    0.00 |      - |     - |     - |         - |
-                        From_UShort_Nullable_WithValue |        net472 | 12.795 ns | 0.0224 ns | 0.0199 ns | 12.791 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                        From_UShort_Nullable_WithValue | .NET Core 2.0 | 12.057 ns | 0.0126 ns | 0.0111 ns | 12.058 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                        From_UShort_Nullable_WithValue | .NET Core 2.2 | 11.283 ns | 0.0128 ns | 0.0114 ns | 11.286 ns |  0.94 |    0.00 |      - |     - |     - |         - |
+                        From_UShort_Nullable_WithValue | .NET Core 3.0 | 10.445 ns | 0.1485 ns | 0.1390 ns | 10.415 ns |  0.87 |    0.01 |      - |     - |     - |         - |
+                        From_UShort_Nullable_WithValue |        net461 | 12.836 ns | 0.0453 ns | 0.0423 ns | 12.852 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                        From_UShort_Nullable_WithValue |        net472 | 12.727 ns | 0.0189 ns | 0.0177 ns | 12.722 ns |  1.06 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-               From_UShort_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.541 ns | 0.0743 ns | 0.0620 ns | 20.548 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-               From_UShort_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.457 ns | 0.0333 ns | 0.0295 ns | 17.457 ns |  0.85 |    0.00 |      - |     - |     - |         - |
-               From_UShort_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.629 ns | 0.0343 ns | 0.0321 ns | 17.639 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-               From_UShort_Nullable_WithValue_AsObject |        net461 | 27.206 ns | 0.0278 ns | 0.0232 ns | 27.213 ns |  1.32 |    0.00 |      - |     - |     - |         - |
-               From_UShort_Nullable_WithValue_AsObject |        net472 | 30.550 ns | 0.0369 ns | 0.0327 ns | 30.550 ns |  1.49 |    0.00 |      - |     - |     - |         - |
+               From_UShort_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.806 ns | 0.0798 ns | 0.0746 ns | 20.826 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+               From_UShort_Nullable_WithValue_AsObject | .NET Core 2.2 | 18.270 ns | 0.0231 ns | 0.0205 ns | 18.270 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+               From_UShort_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.521 ns | 0.2028 ns | 0.1897 ns | 17.526 ns |  0.84 |    0.01 |      - |     - |     - |         - |
+               From_UShort_Nullable_WithValue_AsObject |        net461 | 28.726 ns | 0.0388 ns | 0.0324 ns | 28.719 ns |  1.38 |    0.00 |      - |     - |     - |         - |
+               From_UShort_Nullable_WithValue_AsObject |        net472 | 28.822 ns | 0.0407 ns | 0.0380 ns | 28.816 ns |  1.39 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_UShort_Nullable_NoValue | .NET Core 2.0 | 12.048 ns | 0.1136 ns | 0.1063 ns | 12.105 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_UShort_Nullable_NoValue | .NET Core 2.2 | 10.949 ns | 0.0311 ns | 0.0260 ns | 10.942 ns |  0.91 |    0.01 |      - |     - |     - |         - |
-                          From_UShort_Nullable_NoValue | .NET Core 3.0 |  9.534 ns | 0.0223 ns | 0.0209 ns |  9.531 ns |  0.79 |    0.01 |      - |     - |     - |         - |
-                          From_UShort_Nullable_NoValue |        net461 | 13.498 ns | 0.0279 ns | 0.0261 ns | 13.492 ns |  1.12 |    0.01 |      - |     - |     - |         - |
-                          From_UShort_Nullable_NoValue |        net472 | 13.514 ns | 0.0138 ns | 0.0115 ns | 13.513 ns |  1.12 |    0.01 |      - |     - |     - |         - |
+                          From_UShort_Nullable_NoValue | .NET Core 2.0 | 11.911 ns | 0.0100 ns | 0.0083 ns | 11.908 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_UShort_Nullable_NoValue | .NET Core 2.2 | 10.283 ns | 0.0091 ns | 0.0085 ns | 10.280 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+                          From_UShort_Nullable_NoValue | .NET Core 3.0 |  9.882 ns | 0.0943 ns | 0.0882 ns |  9.893 ns |  0.83 |    0.01 |      - |     - |     - |         - |
+                          From_UShort_Nullable_NoValue |        net461 | 12.961 ns | 0.0142 ns | 0.0126 ns | 12.959 ns |  1.09 |    0.00 |      - |     - |     - |         - |
+                          From_UShort_Nullable_NoValue |        net472 | 12.755 ns | 0.0177 ns | 0.0157 ns | 12.755 ns |  1.07 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                 From_UShort_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.755 ns | 0.0350 ns | 0.0327 ns | 15.754 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                 From_UShort_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.331 ns | 0.0205 ns | 0.0182 ns | 13.333 ns |  0.85 |    0.00 |      - |     - |     - |         - |
-                 From_UShort_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.528 ns | 0.1020 ns | 0.0954 ns | 13.555 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                 From_UShort_Nullable_NoValue_AsObject |        net461 | 22.324 ns | 0.0603 ns | 0.0535 ns | 22.313 ns |  1.42 |    0.00 |      - |     - |     - |         - |
-                 From_UShort_Nullable_NoValue_AsObject |        net472 | 25.793 ns | 0.1308 ns | 0.1160 ns | 25.828 ns |  1.64 |    0.01 |      - |     - |     - |         - |
+                 From_UShort_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.508 ns | 0.0998 ns | 0.0934 ns | 15.448 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                 From_UShort_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.425 ns | 0.0187 ns | 0.0175 ns | 13.423 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                 From_UShort_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.608 ns | 0.5080 ns | 0.5217 ns | 13.357 ns |  0.88 |    0.04 |      - |     - |     - |         - |
+                 From_UShort_Nullable_NoValue_AsObject |        net461 | 22.055 ns | 0.0939 ns | 0.0878 ns | 22.023 ns |  1.42 |    0.01 |      - |     - |     - |         - |
+                 From_UShort_Nullable_NoValue_AsObject |        net472 | 24.079 ns | 0.0285 ns | 0.0252 ns | 24.083 ns |  1.55 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                             From_UInt | .NET Core 2.0 | 12.434 ns | 0.0307 ns | 0.0256 ns | 12.430 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                             From_UInt | .NET Core 2.2 | 10.968 ns | 0.0178 ns | 0.0158 ns | 10.968 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                                             From_UInt | .NET Core 3.0 |  9.485 ns | 0.0154 ns | 0.0144 ns |  9.480 ns |  0.76 |    0.00 |      - |     - |     - |         - |
-                                             From_UInt |        net461 | 13.753 ns | 0.0355 ns | 0.0277 ns | 13.748 ns |  1.11 |    0.00 |      - |     - |     - |         - |
-                                             From_UInt |        net472 | 12.647 ns | 0.0655 ns | 0.0613 ns | 12.643 ns |  1.02 |    0.01 |      - |     - |     - |         - |
+                                             From_UInt | .NET Core 2.0 | 11.957 ns | 0.0559 ns | 0.0523 ns | 11.962 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                             From_UInt | .NET Core 2.2 | 10.388 ns | 0.0092 ns | 0.0077 ns | 10.388 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                                             From_UInt | .NET Core 3.0 |  9.855 ns | 0.1217 ns | 0.1138 ns |  9.849 ns |  0.82 |    0.01 |      - |     - |     - |         - |
+                                             From_UInt |        net461 | 12.249 ns | 0.0358 ns | 0.0318 ns | 12.236 ns |  1.02 |    0.01 |      - |     - |     - |         - |
+                                             From_UInt |        net472 | 15.763 ns | 0.0189 ns | 0.0176 ns | 15.766 ns |  1.32 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                    From_UInt_AsObject | .NET Core 2.0 | 20.032 ns | 0.1577 ns | 0.1475 ns | 20.096 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                    From_UInt_AsObject | .NET Core 2.2 | 17.571 ns | 0.0247 ns | 0.0219 ns | 17.567 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                                    From_UInt_AsObject | .NET Core 3.0 | 21.303 ns | 0.0703 ns | 0.0623 ns | 21.287 ns |  1.06 |    0.01 |      - |     - |     - |         - |
-                                    From_UInt_AsObject |        net461 | 27.288 ns | 0.0340 ns | 0.0284 ns | 27.294 ns |  1.36 |    0.01 |      - |     - |     - |         - |
-                                    From_UInt_AsObject |        net472 | 29.891 ns | 0.0596 ns | 0.0528 ns | 29.892 ns |  1.49 |    0.01 |      - |     - |     - |         - |
+                                    From_UInt_AsObject | .NET Core 2.0 | 20.507 ns | 0.0199 ns | 0.0166 ns | 20.509 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                    From_UInt_AsObject | .NET Core 2.2 | 17.756 ns | 0.0196 ns | 0.0173 ns | 17.756 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                                    From_UInt_AsObject | .NET Core 3.0 | 17.851 ns | 0.1578 ns | 0.1476 ns | 17.875 ns |  0.87 |    0.01 |      - |     - |     - |         - |
+                                    From_UInt_AsObject |        net461 | 26.828 ns | 0.0243 ns | 0.0227 ns | 26.826 ns |  1.31 |    0.00 |      - |     - |     - |         - |
+                                    From_UInt_AsObject |        net472 | 28.948 ns | 0.0269 ns | 0.0252 ns | 28.950 ns |  1.41 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_UInt_Nullable_WithValue | .NET Core 2.0 | 12.125 ns | 0.0222 ns | 0.0207 ns | 12.128 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_UInt_Nullable_WithValue | .NET Core 2.2 | 11.589 ns | 0.0763 ns | 0.0714 ns | 11.597 ns |  0.96 |    0.01 |      - |     - |     - |         - |
-                          From_UInt_Nullable_WithValue | .NET Core 3.0 | 10.406 ns | 0.0210 ns | 0.0197 ns | 10.404 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-                          From_UInt_Nullable_WithValue |        net461 | 13.505 ns | 0.0208 ns | 0.0185 ns | 13.502 ns |  1.11 |    0.00 |      - |     - |     - |         - |
-                          From_UInt_Nullable_WithValue |        net472 | 12.999 ns | 0.0540 ns | 0.0479 ns | 13.010 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                          From_UInt_Nullable_WithValue | .NET Core 2.0 | 12.092 ns | 0.0509 ns | 0.0425 ns | 12.073 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_UInt_Nullable_WithValue | .NET Core 2.2 | 10.665 ns | 0.0098 ns | 0.0087 ns | 10.665 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                          From_UInt_Nullable_WithValue | .NET Core 3.0 | 10.219 ns | 0.0543 ns | 0.0508 ns | 10.228 ns |  0.85 |    0.00 |      - |     - |     - |         - |
+                          From_UInt_Nullable_WithValue |        net461 | 13.487 ns | 0.0588 ns | 0.0550 ns | 13.465 ns |  1.12 |    0.01 |      - |     - |     - |         - |
+                          From_UInt_Nullable_WithValue |        net472 | 12.699 ns | 0.0186 ns | 0.0174 ns | 12.701 ns |  1.05 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                 From_UInt_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.751 ns | 0.0242 ns | 0.0226 ns | 19.752 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                 From_UInt_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.464 ns | 0.0219 ns | 0.0204 ns | 17.459 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                 From_UInt_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.653 ns | 0.0478 ns | 0.0373 ns | 17.650 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                 From_UInt_Nullable_WithValue_AsObject |        net461 | 27.634 ns | 0.1687 ns | 0.1578 ns | 27.676 ns |  1.40 |    0.01 |      - |     - |     - |         - |
-                 From_UInt_Nullable_WithValue_AsObject |        net472 | 28.846 ns | 0.0791 ns | 0.0702 ns | 28.847 ns |  1.46 |    0.00 |      - |     - |     - |         - |
+                 From_UInt_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.965 ns | 0.0210 ns | 0.0196 ns | 19.959 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                 From_UInt_Nullable_WithValue_AsObject | .NET Core 2.2 | 18.243 ns | 0.0165 ns | 0.0147 ns | 18.245 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                 From_UInt_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.664 ns | 0.2248 ns | 0.2102 ns | 17.614 ns |  0.88 |    0.01 |      - |     - |     - |         - |
+                 From_UInt_Nullable_WithValue_AsObject |        net461 | 26.705 ns | 0.0461 ns | 0.0408 ns | 26.700 ns |  1.34 |    0.00 |      - |     - |     - |         - |
+                 From_UInt_Nullable_WithValue_AsObject |        net472 | 26.911 ns | 0.0456 ns | 0.0426 ns | 26.906 ns |  1.35 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                            From_UInt_Nullable_NoValue | .NET Core 2.0 | 12.074 ns | 0.0844 ns | 0.0789 ns | 12.113 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                            From_UInt_Nullable_NoValue | .NET Core 2.2 | 10.821 ns | 0.0169 ns | 0.0141 ns | 10.820 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                            From_UInt_Nullable_NoValue | .NET Core 3.0 |  9.494 ns | 0.0300 ns | 0.0281 ns |  9.497 ns |  0.79 |    0.01 |      - |     - |     - |         - |
-                            From_UInt_Nullable_NoValue |        net461 | 14.159 ns | 0.0321 ns | 0.0268 ns | 14.157 ns |  1.17 |    0.01 |      - |     - |     - |         - |
-                            From_UInt_Nullable_NoValue |        net472 | 13.782 ns | 0.0266 ns | 0.0236 ns | 13.784 ns |  1.14 |    0.01 |      - |     - |     - |         - |
+                            From_UInt_Nullable_NoValue | .NET Core 2.0 | 11.839 ns | 0.0149 ns | 0.0125 ns | 11.839 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                            From_UInt_Nullable_NoValue | .NET Core 2.2 | 10.285 ns | 0.0157 ns | 0.0147 ns | 10.283 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                            From_UInt_Nullable_NoValue | .NET Core 3.0 | 11.279 ns | 0.0667 ns | 0.0624 ns | 11.261 ns |  0.95 |    0.01 |      - |     - |     - |         - |
+                            From_UInt_Nullable_NoValue |        net461 | 12.727 ns | 0.0125 ns | 0.0111 ns | 12.729 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                            From_UInt_Nullable_NoValue |        net472 | 12.748 ns | 0.0130 ns | 0.0121 ns | 12.754 ns |  1.08 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                   From_UInt_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.511 ns | 0.0478 ns | 0.0447 ns | 15.490 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                   From_UInt_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.038 ns | 0.0282 ns | 0.0264 ns | 13.044 ns |  0.84 |    0.00 |      - |     - |     - |         - |
-                   From_UInt_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.400 ns | 0.0173 ns | 0.0154 ns | 13.402 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-                   From_UInt_Nullable_NoValue_AsObject |        net461 | 22.240 ns | 0.0251 ns | 0.0235 ns | 22.236 ns |  1.43 |    0.00 |      - |     - |     - |         - |
-                   From_UInt_Nullable_NoValue_AsObject |        net472 | 26.015 ns | 0.0346 ns | 0.0289 ns | 26.011 ns |  1.68 |    0.00 |      - |     - |     - |         - |
+                   From_UInt_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.787 ns | 0.0484 ns | 0.0452 ns | 14.770 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                   From_UInt_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.429 ns | 0.0126 ns | 0.0111 ns | 13.429 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                   From_UInt_Nullable_NoValue_AsObject | .NET Core 3.0 | 14.299 ns | 0.0907 ns | 0.0757 ns | 14.288 ns |  0.97 |    0.01 |      - |     - |     - |         - |
+                   From_UInt_Nullable_NoValue_AsObject |        net461 | 21.815 ns | 0.0548 ns | 0.0512 ns | 21.819 ns |  1.48 |    0.01 |      - |     - |     - |         - |
+                   From_UInt_Nullable_NoValue_AsObject |        net472 | 24.179 ns | 0.0346 ns | 0.0307 ns | 24.175 ns |  1.63 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                            From_ULong | .NET Core 2.0 | 11.888 ns | 0.0213 ns | 0.0199 ns | 11.889 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                            From_ULong | .NET Core 2.2 | 11.790 ns | 0.0208 ns | 0.0184 ns | 11.785 ns |  0.99 |    0.00 |      - |     - |     - |         - |
-                                            From_ULong | .NET Core 3.0 |  9.715 ns | 0.1135 ns | 0.1062 ns |  9.776 ns |  0.82 |    0.01 |      - |     - |     - |         - |
-                                            From_ULong |        net461 | 13.920 ns | 0.0694 ns | 0.0649 ns | 13.931 ns |  1.17 |    0.01 |      - |     - |     - |         - |
-                                            From_ULong |        net472 | 12.992 ns | 0.0264 ns | 0.0220 ns | 12.989 ns |  1.09 |    0.00 |      - |     - |     - |         - |
+                                            From_ULong | .NET Core 2.0 | 12.679 ns | 0.0134 ns | 0.0125 ns | 12.679 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                            From_ULong | .NET Core 2.2 | 10.381 ns | 0.0145 ns | 0.0129 ns | 10.379 ns |  0.82 |    0.00 |      - |     - |     - |         - |
+                                            From_ULong | .NET Core 3.0 |  9.796 ns | 0.0621 ns | 0.0581 ns |  9.792 ns |  0.77 |    0.00 |      - |     - |     - |         - |
+                                            From_ULong |        net461 | 13.312 ns | 0.0389 ns | 0.0364 ns | 13.316 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                                            From_ULong |        net472 | 12.348 ns | 0.0549 ns | 0.0487 ns | 12.357 ns |  0.97 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                   From_ULong_AsObject | .NET Core 2.0 | 20.008 ns | 0.0323 ns | 0.0302 ns | 20.006 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                   From_ULong_AsObject | .NET Core 2.2 | 17.464 ns | 0.0514 ns | 0.0430 ns | 17.450 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                                   From_ULong_AsObject | .NET Core 3.0 | 17.903 ns | 0.0355 ns | 0.0296 ns | 17.886 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-                                   From_ULong_AsObject |        net461 | 26.598 ns | 0.0345 ns | 0.0306 ns | 26.597 ns |  1.33 |    0.00 |      - |     - |     - |         - |
-                                   From_ULong_AsObject |        net472 | 31.424 ns | 0.0464 ns | 0.0411 ns | 31.428 ns |  1.57 |    0.00 |      - |     - |     - |         - |
+                                   From_ULong_AsObject | .NET Core 2.0 | 20.228 ns | 0.0813 ns | 0.0761 ns | 20.199 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                   From_ULong_AsObject | .NET Core 2.2 | 18.359 ns | 0.1071 ns | 0.1002 ns | 18.415 ns |  0.91 |    0.01 |      - |     - |     - |         - |
+                                   From_ULong_AsObject | .NET Core 3.0 | 18.349 ns | 0.2164 ns | 0.2024 ns | 18.288 ns |  0.91 |    0.01 |      - |     - |     - |         - |
+                                   From_ULong_AsObject |        net461 | 26.463 ns | 0.0241 ns | 0.0226 ns | 26.461 ns |  1.31 |    0.01 |      - |     - |     - |         - |
+                                   From_ULong_AsObject |        net472 | 26.919 ns | 0.0241 ns | 0.0213 ns | 26.913 ns |  1.33 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                         From_ULong_Nullable_WithValue | .NET Core 2.0 | 13.026 ns | 0.0453 ns | 0.0424 ns | 13.019 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                         From_ULong_Nullable_WithValue | .NET Core 2.2 | 13.078 ns | 0.0210 ns | 0.0186 ns | 13.073 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                         From_ULong_Nullable_WithValue | .NET Core 3.0 | 10.663 ns | 0.0290 ns | 0.0272 ns | 10.660 ns |  0.82 |    0.00 |      - |     - |     - |         - |
-                         From_ULong_Nullable_WithValue |        net461 | 14.410 ns | 0.0283 ns | 0.0251 ns | 14.414 ns |  1.11 |    0.00 |      - |     - |     - |         - |
-                         From_ULong_Nullable_WithValue |        net472 | 13.721 ns | 0.0377 ns | 0.0315 ns | 13.710 ns |  1.05 |    0.00 |      - |     - |     - |         - |
+                         From_ULong_Nullable_WithValue | .NET Core 2.0 | 13.377 ns | 0.0854 ns | 0.0799 ns | 13.339 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                         From_ULong_Nullable_WithValue | .NET Core 2.2 | 11.509 ns | 0.0602 ns | 0.0563 ns | 11.475 ns |  0.86 |    0.01 |      - |     - |     - |         - |
+                         From_ULong_Nullable_WithValue | .NET Core 3.0 | 10.497 ns | 0.0842 ns | 0.0788 ns | 10.492 ns |  0.78 |    0.01 |      - |     - |     - |         - |
+                         From_ULong_Nullable_WithValue |        net461 | 13.653 ns | 0.0261 ns | 0.0244 ns | 13.653 ns |  1.02 |    0.01 |      - |     - |     - |         - |
+                         From_ULong_Nullable_WithValue |        net472 | 13.885 ns | 0.0215 ns | 0.0201 ns | 13.888 ns |  1.04 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                From_ULong_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.791 ns | 0.0336 ns | 0.0315 ns | 19.786 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                From_ULong_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.834 ns | 0.1084 ns | 0.1014 ns | 17.787 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                From_ULong_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.948 ns | 0.2884 ns | 0.2697 ns | 18.110 ns |  0.91 |    0.01 |      - |     - |     - |         - |
-                From_ULong_Nullable_WithValue_AsObject |        net461 | 26.600 ns | 0.0606 ns | 0.0538 ns | 26.596 ns |  1.34 |    0.00 |      - |     - |     - |         - |
-                From_ULong_Nullable_WithValue_AsObject |        net472 | 31.932 ns | 0.2624 ns | 0.2326 ns | 31.833 ns |  1.61 |    0.01 |      - |     - |     - |         - |
+                From_ULong_Nullable_WithValue_AsObject | .NET Core 2.0 | 20.424 ns | 0.0261 ns | 0.0204 ns | 20.430 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                From_ULong_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.783 ns | 0.0177 ns | 0.0166 ns | 17.781 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                From_ULong_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.631 ns | 0.1400 ns | 0.1169 ns | 17.644 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+                From_ULong_Nullable_WithValue_AsObject |        net461 | 28.862 ns | 0.0531 ns | 0.0497 ns | 28.850 ns |  1.41 |    0.00 |      - |     - |     - |         - |
+                From_ULong_Nullable_WithValue_AsObject |        net472 | 27.398 ns | 0.0662 ns | 0.0620 ns | 27.414 ns |  1.34 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                           From_ULong_Nullable_NoValue | .NET Core 2.0 | 12.459 ns | 0.0212 ns | 0.0198 ns | 12.453 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                           From_ULong_Nullable_NoValue | .NET Core 2.2 | 12.286 ns | 0.0252 ns | 0.0235 ns | 12.285 ns |  0.99 |    0.00 |      - |     - |     - |         - |
-                           From_ULong_Nullable_NoValue | .NET Core 3.0 | 10.179 ns | 0.0296 ns | 0.0262 ns | 10.181 ns |  0.82 |    0.00 |      - |     - |     - |         - |
-                           From_ULong_Nullable_NoValue |        net461 | 14.284 ns | 0.1008 ns | 0.0943 ns | 14.321 ns |  1.15 |    0.01 |      - |     - |     - |         - |
-                           From_ULong_Nullable_NoValue |        net472 | 13.557 ns | 0.0689 ns | 0.0611 ns | 13.572 ns |  1.09 |    0.01 |      - |     - |     - |         - |
+                           From_ULong_Nullable_NoValue | .NET Core 2.0 | 12.608 ns | 0.0211 ns | 0.0197 ns | 12.607 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                           From_ULong_Nullable_NoValue | .NET Core 2.2 | 11.911 ns | 0.0098 ns | 0.0091 ns | 11.911 ns |  0.94 |    0.00 |      - |     - |     - |         - |
+                           From_ULong_Nullable_NoValue | .NET Core 3.0 |  9.847 ns | 0.0728 ns | 0.0645 ns |  9.830 ns |  0.78 |    0.01 |      - |     - |     - |         - |
+                           From_ULong_Nullable_NoValue |        net461 | 14.009 ns | 0.0217 ns | 0.0203 ns | 14.004 ns |  1.11 |    0.00 |      - |     - |     - |         - |
+                           From_ULong_Nullable_NoValue |        net472 | 13.308 ns | 0.0242 ns | 0.0214 ns | 13.307 ns |  1.06 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                  From_ULong_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.917 ns | 0.0768 ns | 0.0719 ns | 14.883 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                  From_ULong_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.038 ns | 0.0184 ns | 0.0172 ns | 13.036 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                  From_ULong_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.413 ns | 0.0293 ns | 0.0229 ns | 13.423 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                  From_ULong_Nullable_NoValue_AsObject |        net461 | 22.092 ns | 0.0293 ns | 0.0259 ns | 22.091 ns |  1.48 |    0.01 |      - |     - |     - |         - |
-                  From_ULong_Nullable_NoValue_AsObject |        net472 | 26.081 ns | 0.0396 ns | 0.0309 ns | 26.086 ns |  1.75 |    0.01 |      - |     - |     - |         - |
+                  From_ULong_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.800 ns | 0.0457 ns | 0.0405 ns | 14.795 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                  From_ULong_Nullable_NoValue_AsObject | .NET Core 2.2 | 14.053 ns | 0.0098 ns | 0.0082 ns | 14.052 ns |  0.95 |    0.00 |      - |     - |     - |         - |
+                  From_ULong_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.300 ns | 0.0702 ns | 0.0622 ns | 13.307 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+                  From_ULong_Nullable_NoValue_AsObject |        net461 | 22.016 ns | 0.0252 ns | 0.0236 ns | 22.019 ns |  1.49 |    0.01 |      - |     - |     - |         - |
+                  From_ULong_Nullable_NoValue_AsObject |        net472 | 21.818 ns | 0.0338 ns | 0.0264 ns | 21.816 ns |  1.47 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                       From_NullObject | .NET Core 2.0 | 17.284 ns | 0.0434 ns | 0.0406 ns | 17.288 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                       From_NullObject | .NET Core 2.2 | 12.981 ns | 0.0114 ns | 0.0095 ns | 12.982 ns |  0.75 |    0.00 |      - |     - |     - |         - |
-                                       From_NullObject | .NET Core 3.0 | 13.752 ns | 0.3011 ns | 0.5114 ns | 13.435 ns |  0.82 |    0.03 |      - |     - |     - |         - |
-                                       From_NullObject |        net461 | 23.990 ns | 0.0318 ns | 0.0282 ns | 23.985 ns |  1.39 |    0.00 |      - |     - |     - |         - |
-                                       From_NullObject |        net472 | 26.721 ns | 0.0307 ns | 0.0288 ns | 26.723 ns |  1.55 |    0.00 |      - |     - |     - |         - |
+                                       From_NullObject | .NET Core 2.0 | 15.397 ns | 0.0281 ns | 0.0263 ns | 15.387 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                       From_NullObject | .NET Core 2.2 | 15.489 ns | 0.0100 ns | 0.0088 ns | 15.491 ns |  1.01 |    0.00 |      - |     - |     - |         - |
+                                       From_NullObject | .NET Core 3.0 | 14.779 ns | 0.1722 ns | 0.1611 ns | 14.784 ns |  0.96 |    0.01 |      - |     - |     - |         - |
+                                       From_NullObject |        net461 | 22.120 ns | 0.1397 ns | 0.1307 ns | 22.139 ns |  1.44 |    0.01 |      - |     - |     - |         - |
+                                       From_NullObject |        net472 | 22.215 ns | 0.0252 ns | 0.0236 ns | 22.219 ns |  1.44 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                           From_DBNull | .NET Core 2.0 | 13.306 ns | 0.0181 ns | 0.0151 ns | 13.306 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                           From_DBNull | .NET Core 2.2 | 11.126 ns | 0.0230 ns | 0.0215 ns | 11.124 ns |  0.84 |    0.00 |      - |     - |     - |         - |
-                                           From_DBNull | .NET Core 3.0 | 12.544 ns | 0.0122 ns | 0.0102 ns | 12.547 ns |  0.94 |    0.00 |      - |     - |     - |         - |
-                                           From_DBNull |        net461 | 13.247 ns | 0.0108 ns | 0.0096 ns | 13.246 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                           From_DBNull |        net472 | 16.209 ns | 0.0301 ns | 0.0267 ns | 16.205 ns |  1.22 |    0.00 |      - |     - |     - |         - |
+                                           From_DBNull | .NET Core 2.0 | 12.486 ns | 0.0176 ns | 0.0156 ns | 12.489 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                           From_DBNull | .NET Core 2.2 | 11.668 ns | 0.0832 ns | 0.0778 ns | 11.658 ns |  0.93 |    0.01 |      - |     - |     - |         - |
+                                           From_DBNull | .NET Core 3.0 | 12.782 ns | 0.1332 ns | 0.1246 ns | 12.752 ns |  1.02 |    0.01 |      - |     - |     - |         - |
+                                           From_DBNull |        net461 | 13.000 ns | 0.0145 ns | 0.0136 ns | 12.996 ns |  1.04 |    0.00 |      - |     - |     - |         - |
+                                           From_DBNull |        net472 | 12.934 ns | 0.0139 ns | 0.0130 ns | 12.932 ns |  1.04 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                  From_DBNull_AsObject | .NET Core 2.0 | 15.517 ns | 0.0365 ns | 0.0341 ns | 15.508 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                  From_DBNull_AsObject | .NET Core 2.2 | 12.986 ns | 0.0199 ns | 0.0177 ns | 12.985 ns |  0.84 |    0.00 |      - |     - |     - |         - |
-                                  From_DBNull_AsObject | .NET Core 3.0 | 13.484 ns | 0.0852 ns | 0.0755 ns | 13.447 ns |  0.87 |    0.01 |      - |     - |     - |         - |
-                                  From_DBNull_AsObject |        net461 | 22.102 ns | 0.0379 ns | 0.0354 ns | 22.105 ns |  1.42 |    0.00 |      - |     - |     - |         - |
-                                  From_DBNull_AsObject |        net472 | 24.216 ns | 0.0622 ns | 0.0520 ns | 24.221 ns |  1.56 |    0.00 |      - |     - |     - |         - |
+                                  From_DBNull_AsObject | .NET Core 2.0 | 14.901 ns | 0.0371 ns | 0.0347 ns | 14.883 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                  From_DBNull_AsObject | .NET Core 2.2 | 13.427 ns | 0.0096 ns | 0.0090 ns | 13.426 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+                                  From_DBNull_AsObject | .NET Core 3.0 | 14.458 ns | 0.3135 ns | 0.5324 ns | 14.663 ns |  0.95 |    0.05 |      - |     - |     - |         - |
+                                  From_DBNull_AsObject |        net461 | 22.016 ns | 0.0205 ns | 0.0192 ns | 22.017 ns |  1.48 |    0.00 |      - |     - |     - |         - |
+                                  From_DBNull_AsObject |        net472 | 22.420 ns | 0.0198 ns | 0.0176 ns | 22.421 ns |  1.51 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                 From_ConvertibleClass | .NET Core 2.0 | 17.380 ns | 0.0212 ns | 0.0198 ns | 17.391 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                 From_ConvertibleClass | .NET Core 2.2 | 15.082 ns | 0.0193 ns | 0.0161 ns | 15.086 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                                 From_ConvertibleClass | .NET Core 3.0 | 15.068 ns | 0.0425 ns | 0.0398 ns | 15.066 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                                 From_ConvertibleClass |        net461 | 25.000 ns | 0.0859 ns | 0.0761 ns | 25.010 ns |  1.44 |    0.00 |      - |     - |     - |         - |
-                                 From_ConvertibleClass |        net472 | 28.677 ns | 0.0511 ns | 0.0427 ns | 28.667 ns |  1.65 |    0.00 |      - |     - |     - |         - |
+                                 From_ConvertibleClass | .NET Core 2.0 | 18.738 ns | 0.1032 ns | 0.0965 ns | 18.705 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                 From_ConvertibleClass | .NET Core 2.2 | 14.740 ns | 0.0534 ns | 0.0500 ns | 14.749 ns |  0.79 |    0.01 |      - |     - |     - |         - |
+                                 From_ConvertibleClass | .NET Core 3.0 | 15.281 ns | 0.1673 ns | 0.1565 ns | 15.292 ns |  0.82 |    0.01 |      - |     - |     - |         - |
+                                 From_ConvertibleClass |        net461 | 26.629 ns | 0.1032 ns | 0.0914 ns | 26.650 ns |  1.42 |    0.01 |      - |     - |     - |         - |
+                                 From_ConvertibleClass |        net472 | 25.124 ns | 0.0300 ns | 0.0281 ns | 25.126 ns |  1.34 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                        From_ConvertibleClass_AsObject | .NET Core 2.0 | 19.163 ns | 0.1453 ns | 0.1359 ns | 19.082 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                        From_ConvertibleClass_AsObject | .NET Core 2.2 | 16.906 ns | 0.0383 ns | 0.0339 ns | 16.914 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                        From_ConvertibleClass_AsObject | .NET Core 3.0 | 16.996 ns | 0.1071 ns | 0.1002 ns | 16.954 ns |  0.89 |    0.01 |      - |     - |     - |         - |
-                        From_ConvertibleClass_AsObject |        net461 | 27.790 ns | 0.0791 ns | 0.0740 ns | 27.763 ns |  1.45 |    0.01 |      - |     - |     - |         - |
-                        From_ConvertibleClass_AsObject |        net472 | 28.000 ns | 0.0511 ns | 0.0426 ns | 28.006 ns |  1.46 |    0.01 |      - |     - |     - |         - |
+                        From_ConvertibleClass_AsObject | .NET Core 2.0 | 18.714 ns | 0.0307 ns | 0.0256 ns | 18.713 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                        From_ConvertibleClass_AsObject | .NET Core 2.2 | 17.314 ns | 0.0223 ns | 0.0198 ns | 17.310 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                        From_ConvertibleClass_AsObject | .NET Core 3.0 | 17.221 ns | 0.2757 ns | 0.2579 ns | 17.237 ns |  0.92 |    0.01 |      - |     - |     - |         - |
+                        From_ConvertibleClass_AsObject |        net461 | 27.287 ns | 0.0449 ns | 0.0398 ns | 27.284 ns |  1.46 |    0.00 |      - |     - |     - |         - |
+                        From_ConvertibleClass_AsObject |        net472 | 28.674 ns | 0.0572 ns | 0.0535 ns | 28.656 ns |  1.53 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                         From_ConvertibleClass_NoValue | .NET Core 2.0 | 16.066 ns | 0.0321 ns | 0.0285 ns | 16.068 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                         From_ConvertibleClass_NoValue | .NET Core 2.2 | 13.419 ns | 0.0200 ns | 0.0187 ns | 13.416 ns |  0.84 |    0.00 |      - |     - |     - |         - |
-                         From_ConvertibleClass_NoValue | .NET Core 3.0 | 13.189 ns | 0.1519 ns | 0.1421 ns | 13.242 ns |  0.82 |    0.01 |      - |     - |     - |         - |
-                         From_ConvertibleClass_NoValue |        net461 | 23.875 ns | 0.0493 ns | 0.0385 ns | 23.871 ns |  1.49 |    0.00 |      - |     - |     - |         - |
-                         From_ConvertibleClass_NoValue |        net472 | 22.236 ns | 0.0278 ns | 0.0260 ns | 22.231 ns |  1.38 |    0.00 |      - |     - |     - |         - |
+                         From_ConvertibleClass_NoValue | .NET Core 2.0 | 15.453 ns | 0.0182 ns | 0.0162 ns | 15.451 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                         From_ConvertibleClass_NoValue | .NET Core 2.2 | 12.922 ns | 0.0142 ns | 0.0133 ns | 12.921 ns |  0.84 |    0.00 |      - |     - |     - |         - |
+                         From_ConvertibleClass_NoValue | .NET Core 3.0 | 13.312 ns | 0.1196 ns | 0.1119 ns | 13.318 ns |  0.86 |    0.01 |      - |     - |     - |         - |
+                         From_ConvertibleClass_NoValue |        net461 | 23.875 ns | 0.0383 ns | 0.0358 ns | 23.871 ns |  1.55 |    0.00 |      - |     - |     - |         - |
+                         From_ConvertibleClass_NoValue |        net472 | 23.158 ns | 0.0342 ns | 0.0320 ns | 23.148 ns |  1.50 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                From_ConvertibleClass_NoValue_AsObject | .NET Core 2.0 | 14.845 ns | 0.0328 ns | 0.0256 ns | 14.847 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                From_ConvertibleClass_NoValue_AsObject | .NET Core 2.2 | 13.182 ns | 0.1118 ns | 0.0991 ns | 13.229 ns |  0.89 |    0.01 |      - |     - |     - |         - |
-                From_ConvertibleClass_NoValue_AsObject | .NET Core 3.0 | 13.664 ns | 0.0717 ns | 0.0670 ns | 13.678 ns |  0.92 |    0.01 |      - |     - |     - |         - |
-                From_ConvertibleClass_NoValue_AsObject |        net461 | 24.152 ns | 0.1373 ns | 0.1284 ns | 24.211 ns |  1.63 |    0.01 |      - |     - |     - |         - |
-                From_ConvertibleClass_NoValue_AsObject |        net472 | 26.125 ns | 0.0765 ns | 0.0715 ns | 26.134 ns |  1.76 |    0.00 |      - |     - |     - |         - |
+                From_ConvertibleClass_NoValue_AsObject | .NET Core 2.0 | 14.747 ns | 0.0173 ns | 0.0145 ns | 14.746 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                From_ConvertibleClass_NoValue_AsObject | .NET Core 2.2 | 13.551 ns | 0.0634 ns | 0.0593 ns | 13.573 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                From_ConvertibleClass_NoValue_AsObject | .NET Core 3.0 | 13.833 ns | 0.1111 ns | 0.0985 ns | 13.810 ns |  0.94 |    0.01 |      - |     - |     - |         - |
+                From_ConvertibleClass_NoValue_AsObject |        net461 | 22.632 ns | 0.0273 ns | 0.0256 ns | 22.631 ns |  1.53 |    0.00 |      - |     - |     - |         - |
+                From_ConvertibleClass_NoValue_AsObject |        net472 | 22.393 ns | 0.0348 ns | 0.0326 ns | 22.396 ns |  1.52 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                              From_NonConvertibleClass | .NET Core 2.0 | 14.327 ns | 0.1204 ns | 0.1127 ns | 14.381 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                              From_NonConvertibleClass | .NET Core 2.2 | 12.768 ns | 0.0237 ns | 0.0221 ns | 12.768 ns |  0.89 |    0.01 |      - |     - |     - |         - |
-                              From_NonConvertibleClass | .NET Core 3.0 | 12.554 ns | 0.0187 ns | 0.0166 ns | 12.553 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                              From_NonConvertibleClass |        net461 | 14.383 ns | 0.0303 ns | 0.0253 ns | 14.386 ns |  1.00 |    0.01 |      - |     - |     - |         - |
-                              From_NonConvertibleClass |        net472 | 15.918 ns | 0.1349 ns | 0.1262 ns | 15.859 ns |  1.11 |    0.02 |      - |     - |     - |         - |
+                              From_NonConvertibleClass | .NET Core 2.0 | 13.800 ns | 0.0143 ns | 0.0119 ns | 13.805 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                              From_NonConvertibleClass | .NET Core 2.2 | 12.233 ns | 0.0096 ns | 0.0090 ns | 12.233 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                              From_NonConvertibleClass | .NET Core 3.0 | 12.749 ns | 0.1101 ns | 0.1030 ns | 12.744 ns |  0.92 |    0.01 |      - |     - |     - |         - |
+                              From_NonConvertibleClass |        net461 | 14.972 ns | 0.0178 ns | 0.0166 ns | 14.972 ns |  1.08 |    0.00 |      - |     - |     - |         - |
+                              From_NonConvertibleClass |        net472 | 14.997 ns | 0.0190 ns | 0.0178 ns | 14.997 ns |  1.09 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                     From_NonConvertibleClass_AsObject | .NET Core 2.0 | 16.632 ns | 0.0290 ns | 0.0257 ns | 16.633 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                     From_NonConvertibleClass_AsObject | .NET Core 2.2 | 15.479 ns | 0.0135 ns | 0.0119 ns | 15.476 ns |  0.93 |    0.00 |      - |     - |     - |         - |
-                     From_NonConvertibleClass_AsObject | .NET Core 3.0 | 15.326 ns | 0.0459 ns | 0.0383 ns | 15.311 ns |  0.92 |    0.00 |      - |     - |     - |         - |
-                     From_NonConvertibleClass_AsObject |        net461 | 25.347 ns | 0.0554 ns | 0.0433 ns | 25.349 ns |  1.52 |    0.00 |      - |     - |     - |         - |
-                     From_NonConvertibleClass_AsObject |        net472 | 25.662 ns | 0.0275 ns | 0.0257 ns | 25.669 ns |  1.54 |    0.00 |      - |     - |     - |         - |
+                     From_NonConvertibleClass_AsObject | .NET Core 2.0 | 16.556 ns | 0.0162 ns | 0.0144 ns | 16.556 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                     From_NonConvertibleClass_AsObject | .NET Core 2.2 | 15.272 ns | 0.0209 ns | 0.0195 ns | 15.270 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                     From_NonConvertibleClass_AsObject | .NET Core 3.0 | 15.564 ns | 0.0913 ns | 0.0854 ns | 15.588 ns |  0.94 |    0.01 |      - |     - |     - |         - |
+                     From_NonConvertibleClass_AsObject |        net461 | 25.205 ns | 0.0512 ns | 0.0479 ns | 25.215 ns |  1.52 |    0.00 |      - |     - |     - |         - |
+                     From_NonConvertibleClass_AsObject |        net472 | 23.910 ns | 0.1122 ns | 0.1050 ns | 23.962 ns |  1.44 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                      From_NonConvertibleClass_NoValue | .NET Core 2.0 | 13.922 ns | 0.0178 ns | 0.0148 ns | 13.927 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                      From_NonConvertibleClass_NoValue | .NET Core 2.2 | 12.929 ns | 0.1158 ns | 0.1026 ns | 12.966 ns |  0.93 |    0.01 |      - |     - |     - |         - |
-                      From_NonConvertibleClass_NoValue | .NET Core 3.0 | 12.707 ns | 0.0926 ns | 0.0866 ns | 12.734 ns |  0.91 |    0.01 |      - |     - |     - |         - |
-                      From_NonConvertibleClass_NoValue |        net461 | 14.382 ns | 0.0196 ns | 0.0173 ns | 14.373 ns |  1.03 |    0.00 |      - |     - |     - |         - |
-                      From_NonConvertibleClass_NoValue |        net472 | 16.737 ns | 0.1816 ns | 0.1698 ns | 16.655 ns |  1.20 |    0.01 |      - |     - |     - |         - |
+                      From_NonConvertibleClass_NoValue | .NET Core 2.0 | 14.050 ns | 0.0133 ns | 0.0118 ns | 14.050 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                      From_NonConvertibleClass_NoValue | .NET Core 2.2 | 12.229 ns | 0.0146 ns | 0.0136 ns | 12.229 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                      From_NonConvertibleClass_NoValue | .NET Core 3.0 | 12.685 ns | 0.1485 ns | 0.1389 ns | 12.715 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+                      From_NonConvertibleClass_NoValue |        net461 | 14.966 ns | 0.0146 ns | 0.0129 ns | 14.965 ns |  1.07 |    0.00 |      - |     - |     - |         - |
+                      From_NonConvertibleClass_NoValue |        net472 | 14.341 ns | 0.0679 ns | 0.0635 ns | 14.306 ns |  1.02 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-             From_NonConvertibleClass_NoValue_AsObject | .NET Core 2.0 | 14.886 ns | 0.0237 ns | 0.0221 ns | 14.882 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-             From_NonConvertibleClass_NoValue_AsObject | .NET Core 2.2 | 12.997 ns | 0.0220 ns | 0.0195 ns | 12.994 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-             From_NonConvertibleClass_NoValue_AsObject | .NET Core 3.0 | 13.658 ns | 0.2533 ns | 0.2369 ns | 13.504 ns |  0.92 |    0.02 |      - |     - |     - |         - |
-             From_NonConvertibleClass_NoValue_AsObject |        net461 | 22.145 ns | 0.0284 ns | 0.0266 ns | 22.155 ns |  1.49 |    0.00 |      - |     - |     - |         - |
-             From_NonConvertibleClass_NoValue_AsObject |        net472 | 24.221 ns | 0.0289 ns | 0.0270 ns | 24.213 ns |  1.63 |    0.00 |      - |     - |     - |         - |
+             From_NonConvertibleClass_NoValue_AsObject | .NET Core 2.0 | 15.399 ns | 0.0183 ns | 0.0152 ns | 15.402 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+             From_NonConvertibleClass_NoValue_AsObject | .NET Core 2.2 | 13.548 ns | 0.0815 ns | 0.0762 ns | 13.537 ns |  0.88 |    0.01 |      - |     - |     - |         - |
+             From_NonConvertibleClass_NoValue_AsObject | .NET Core 3.0 | 14.236 ns | 0.1836 ns | 0.1717 ns | 14.261 ns |  0.93 |    0.01 |      - |     - |     - |         - |
+             From_NonConvertibleClass_NoValue_AsObject |        net461 | 21.101 ns | 0.0393 ns | 0.0368 ns | 21.096 ns |  1.37 |    0.00 |      - |     - |     - |         - |
+             From_NonConvertibleClass_NoValue_AsObject |        net472 | 22.363 ns | 0.0405 ns | 0.0379 ns | 22.366 ns |  1.45 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                From_ConvertibleStruct | .NET Core 2.0 | 20.394 ns | 0.0279 ns | 0.0247 ns | 20.394 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
-                                From_ConvertibleStruct | .NET Core 2.2 | 16.446 ns | 0.1021 ns | 0.0955 ns | 16.403 ns |  0.81 |    0.00 | 0.0038 |     - |     - |      24 B |
-                                From_ConvertibleStruct | .NET Core 3.0 | 13.993 ns | 0.1093 ns | 0.1022 ns | 13.980 ns |  0.69 |    0.01 | 0.0038 |     - |     - |      24 B |
-                                From_ConvertibleStruct |        net461 | 20.046 ns | 0.0388 ns | 0.0344 ns | 20.035 ns |  0.98 |    0.00 | 0.0038 |     - |     - |      24 B |
-                                From_ConvertibleStruct |        net472 | 18.736 ns | 0.0303 ns | 0.0283 ns | 18.739 ns |  0.92 |    0.00 | 0.0038 |     - |     - |      24 B |
+                                From_ConvertibleStruct | .NET Core 2.0 | 20.023 ns | 0.0745 ns | 0.0697 ns | 20.005 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
+                                From_ConvertibleStruct | .NET Core 2.2 | 15.966 ns | 0.0395 ns | 0.0350 ns | 15.969 ns |  0.80 |    0.00 | 0.0038 |     - |     - |      24 B |
+                                From_ConvertibleStruct | .NET Core 3.0 | 13.777 ns | 0.1376 ns | 0.1287 ns | 13.730 ns |  0.69 |    0.01 | 0.0038 |     - |     - |      24 B |
+                                From_ConvertibleStruct |        net461 | 18.512 ns | 0.0769 ns | 0.0719 ns | 18.503 ns |  0.92 |    0.00 | 0.0038 |     - |     - |      24 B |
+                                From_ConvertibleStruct |        net472 | 19.122 ns | 0.1485 ns | 0.1389 ns | 19.067 ns |  0.96 |    0.01 | 0.0038 |     - |     - |      24 B |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                       From_ConvertibleStruct_AsObject | .NET Core 2.0 | 21.559 ns | 0.1361 ns | 0.1273 ns | 21.502 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                       From_ConvertibleStruct_AsObject | .NET Core 2.2 | 17.554 ns | 0.0181 ns | 0.0169 ns | 17.551 ns |  0.81 |    0.01 |      - |     - |     - |         - |
-                       From_ConvertibleStruct_AsObject | .NET Core 3.0 | 19.452 ns | 0.1564 ns | 0.1463 ns | 19.500 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                       From_ConvertibleStruct_AsObject |        net461 | 28.293 ns | 0.0345 ns | 0.0305 ns | 28.290 ns |  1.31 |    0.01 |      - |     - |     - |         - |
-                       From_ConvertibleStruct_AsObject |        net472 | 28.810 ns | 0.0509 ns | 0.0452 ns | 28.811 ns |  1.34 |    0.01 |      - |     - |     - |         - |
+                       From_ConvertibleStruct_AsObject | .NET Core 2.0 | 19.361 ns | 0.0324 ns | 0.0271 ns | 19.363 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                       From_ConvertibleStruct_AsObject | .NET Core 2.2 | 17.530 ns | 0.0295 ns | 0.0276 ns | 17.537 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                       From_ConvertibleStruct_AsObject | .NET Core 3.0 | 18.043 ns | 0.1863 ns | 0.1742 ns | 18.078 ns |  0.93 |    0.01 |      - |     - |     - |         - |
+                       From_ConvertibleStruct_AsObject |        net461 | 28.131 ns | 0.1723 ns | 0.1611 ns | 28.027 ns |  1.45 |    0.01 |      - |     - |     - |         - |
+                       From_ConvertibleStruct_AsObject |        net472 | 26.712 ns | 0.0317 ns | 0.0296 ns | 26.710 ns |  1.38 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-             From_ConvertibleStruct_Nullable_WithValue | .NET Core 2.0 | 20.412 ns | 0.0628 ns | 0.0587 ns | 20.408 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
-             From_ConvertibleStruct_Nullable_WithValue | .NET Core 2.2 | 16.557 ns | 0.0479 ns | 0.0400 ns | 16.567 ns |  0.81 |    0.00 | 0.0038 |     - |     - |      24 B |
-             From_ConvertibleStruct_Nullable_WithValue | .NET Core 3.0 | 14.561 ns | 0.1004 ns | 0.0890 ns | 14.542 ns |  0.71 |    0.00 | 0.0038 |     - |     - |      24 B |
-             From_ConvertibleStruct_Nullable_WithValue |        net461 | 27.608 ns | 0.0457 ns | 0.0382 ns | 27.613 ns |  1.35 |    0.00 | 0.0038 |     - |     - |      24 B |
-             From_ConvertibleStruct_Nullable_WithValue |        net472 | 27.131 ns | 0.2777 ns | 0.2598 ns | 26.947 ns |  1.33 |    0.02 | 0.0038 |     - |     - |      24 B |
+             From_ConvertibleStruct_Nullable_WithValue | .NET Core 2.0 | 19.805 ns | 0.0627 ns | 0.0555 ns | 19.788 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
+             From_ConvertibleStruct_Nullable_WithValue | .NET Core 2.2 | 16.177 ns | 0.0331 ns | 0.0294 ns | 16.181 ns |  0.82 |    0.00 | 0.0038 |     - |     - |      24 B |
+             From_ConvertibleStruct_Nullable_WithValue | .NET Core 3.0 | 14.474 ns | 0.1161 ns | 0.1086 ns | 14.514 ns |  0.73 |    0.01 | 0.0038 |     - |     - |      24 B |
+             From_ConvertibleStruct_Nullable_WithValue |        net461 | 23.907 ns | 0.0493 ns | 0.0412 ns | 23.919 ns |  1.21 |    0.00 | 0.0038 |     - |     - |      24 B |
+             From_ConvertibleStruct_Nullable_WithValue |        net472 | 24.314 ns | 0.0274 ns | 0.0256 ns | 24.318 ns |  1.23 |    0.00 | 0.0038 |     - |     - |      24 B |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-    From_ConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.566 ns | 0.0432 ns | 0.0360 ns | 19.562 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-    From_ConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.213 ns | 0.0170 ns | 0.0159 ns | 17.212 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-    From_ConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.446 ns | 0.0467 ns | 0.0365 ns | 17.441 ns |  0.89 |    0.00 |      - |     - |     - |         - |
-    From_ConvertibleStruct_Nullable_WithValue_AsObject |        net461 | 26.989 ns | 0.1556 ns | 0.1455 ns | 26.983 ns |  1.38 |    0.00 |      - |     - |     - |         - |
-    From_ConvertibleStruct_Nullable_WithValue_AsObject |        net472 | 28.650 ns | 0.0448 ns | 0.0397 ns | 28.652 ns |  1.46 |    0.00 |      - |     - |     - |         - |
+    From_ConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.0 | 19.626 ns | 0.0467 ns | 0.0390 ns | 19.634 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+    From_ConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.2 | 17.491 ns | 0.0255 ns | 0.0239 ns | 17.487 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+    From_ConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 3.0 | 17.666 ns | 0.1602 ns | 0.1498 ns | 17.592 ns |  0.90 |    0.01 |      - |     - |     - |         - |
+    From_ConvertibleStruct_Nullable_WithValue_AsObject |        net461 | 26.033 ns | 0.0479 ns | 0.0448 ns | 26.035 ns |  1.33 |    0.00 |      - |     - |     - |         - |
+    From_ConvertibleStruct_Nullable_WithValue_AsObject |        net472 | 26.837 ns | 0.0748 ns | 0.0663 ns | 26.860 ns |  1.37 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-               From_ConvertibleStruct_Nullable_NoValue | .NET Core 2.0 | 13.925 ns | 0.0143 ns | 0.0127 ns | 13.924 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-               From_ConvertibleStruct_Nullable_NoValue | .NET Core 2.2 | 12.241 ns | 0.0884 ns | 0.0738 ns | 12.268 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-               From_ConvertibleStruct_Nullable_NoValue | .NET Core 3.0 | 10.338 ns | 0.0636 ns | 0.0595 ns | 10.359 ns |  0.74 |    0.00 |      - |     - |     - |         - |
-               From_ConvertibleStruct_Nullable_NoValue |        net461 | 23.490 ns | 0.0324 ns | 0.0270 ns | 23.493 ns |  1.69 |    0.00 |      - |     - |     - |         - |
-               From_ConvertibleStruct_Nullable_NoValue |        net472 | 19.195 ns | 0.0277 ns | 0.0216 ns | 19.199 ns |  1.38 |    0.00 |      - |     - |     - |         - |
+               From_ConvertibleStruct_Nullable_NoValue | .NET Core 2.0 | 13.816 ns | 0.0150 ns | 0.0133 ns | 13.816 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+               From_ConvertibleStruct_Nullable_NoValue | .NET Core 2.2 | 12.071 ns | 0.0527 ns | 0.0493 ns | 12.085 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+               From_ConvertibleStruct_Nullable_NoValue | .NET Core 3.0 | 10.157 ns | 0.0152 ns | 0.0143 ns | 10.157 ns |  0.74 |    0.00 |      - |     - |     - |         - |
+               From_ConvertibleStruct_Nullable_NoValue |        net461 | 19.292 ns | 0.0684 ns | 0.0640 ns | 19.308 ns |  1.40 |    0.00 |      - |     - |     - |         - |
+               From_ConvertibleStruct_Nullable_NoValue |        net472 | 19.053 ns | 0.0287 ns | 0.0254 ns | 19.045 ns |  1.38 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-      From_ConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.0 | 16.139 ns | 0.0394 ns | 0.0350 ns | 16.135 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-      From_ConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.2 | 12.990 ns | 0.0186 ns | 0.0174 ns | 12.990 ns |  0.80 |    0.00 |      - |     - |     - |         - |
-      From_ConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.462 ns | 0.0508 ns | 0.0475 ns | 13.445 ns |  0.83 |    0.00 |      - |     - |     - |         - |
-      From_ConvertibleStruct_Nullable_NoValue_AsObject |        net461 | 21.950 ns | 0.0948 ns | 0.0886 ns | 21.909 ns |  1.36 |    0.01 |      - |     - |     - |         - |
-      From_ConvertibleStruct_Nullable_NoValue_AsObject |        net472 | 26.096 ns | 0.0350 ns | 0.0273 ns | 26.094 ns |  1.62 |    0.00 |      - |     - |     - |         - |
+      From_ConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.406 ns | 0.0261 ns | 0.0244 ns | 15.410 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+      From_ConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.416 ns | 0.0123 ns | 0.0109 ns | 13.412 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+      From_ConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.282 ns | 0.0361 ns | 0.0338 ns | 13.288 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+      From_ConvertibleStruct_Nullable_NoValue_AsObject |        net461 | 22.161 ns | 0.0354 ns | 0.0296 ns | 22.158 ns |  1.44 |    0.00 |      - |     - |     - |         - |
+      From_ConvertibleStruct_Nullable_NoValue_AsObject |        net472 | 25.161 ns | 0.0201 ns | 0.0188 ns | 25.161 ns |  1.63 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                             From_NonConvertibleStruct | .NET Core 2.0 | 13.202 ns | 0.0214 ns | 0.0178 ns | 13.205 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                             From_NonConvertibleStruct | .NET Core 2.2 | 11.465 ns | 0.0169 ns | 0.0150 ns | 11.462 ns |  0.87 |    0.00 |      - |     - |     - |         - |
-                             From_NonConvertibleStruct | .NET Core 3.0 | 10.760 ns | 0.2418 ns | 0.5100 ns | 10.955 ns |  0.76 |    0.05 |      - |     - |     - |         - |
-                             From_NonConvertibleStruct |        net461 | 13.764 ns | 0.0964 ns | 0.0854 ns | 13.733 ns |  1.04 |    0.01 |      - |     - |     - |         - |
-                             From_NonConvertibleStruct |        net472 | 13.478 ns | 0.0144 ns | 0.0135 ns | 13.476 ns |  1.02 |    0.00 |      - |     - |     - |         - |
+                             From_NonConvertibleStruct | .NET Core 2.0 | 13.249 ns | 0.0550 ns | 0.0488 ns | 13.262 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                             From_NonConvertibleStruct | .NET Core 2.2 | 10.778 ns | 0.0100 ns | 0.0089 ns | 10.777 ns |  0.81 |    0.00 |      - |     - |     - |         - |
+                             From_NonConvertibleStruct | .NET Core 3.0 |  9.201 ns | 0.0156 ns | 0.0138 ns |  9.201 ns |  0.69 |    0.00 |      - |     - |     - |         - |
+                             From_NonConvertibleStruct |        net461 | 12.241 ns | 0.0167 ns | 0.0148 ns | 12.240 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                             From_NonConvertibleStruct |        net472 | 13.041 ns | 0.0796 ns | 0.0745 ns | 13.068 ns |  0.98 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                    From_NonConvertibleStruct_AsObject | .NET Core 2.0 | 22.597 ns | 0.4518 ns | 1.0998 ns | 22.576 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                    From_NonConvertibleStruct_AsObject | .NET Core 2.2 | 14.837 ns | 0.0405 ns | 0.0379 ns | 14.838 ns |  0.67 |    0.03 |      - |     - |     - |         - |
-                    From_NonConvertibleStruct_AsObject | .NET Core 3.0 | 15.980 ns | 0.2449 ns | 0.2291 ns | 15.977 ns |  0.72 |    0.04 |      - |     - |     - |         - |
-                    From_NonConvertibleStruct_AsObject |        net461 | 24.311 ns | 0.1257 ns | 0.1176 ns | 24.344 ns |  1.09 |    0.05 |      - |     - |     - |         - |
-                    From_NonConvertibleStruct_AsObject |        net472 | 26.941 ns | 0.0512 ns | 0.0454 ns | 26.927 ns |  1.21 |    0.06 |      - |     - |     - |         - |
+                    From_NonConvertibleStruct_AsObject | .NET Core 2.0 | 17.291 ns | 0.0234 ns | 0.0219 ns | 17.296 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                    From_NonConvertibleStruct_AsObject | .NET Core 2.2 | 16.015 ns | 0.0865 ns | 0.0809 ns | 16.047 ns |  0.93 |    0.01 |      - |     - |     - |         - |
+                    From_NonConvertibleStruct_AsObject | .NET Core 3.0 | 15.867 ns | 0.3428 ns | 0.5728 ns | 15.489 ns |  0.95 |    0.03 |      - |     - |     - |         - |
+                    From_NonConvertibleStruct_AsObject |        net461 | 25.199 ns | 0.1203 ns | 0.1126 ns | 25.235 ns |  1.46 |    0.01 |      - |     - |     - |         - |
+                    From_NonConvertibleStruct_AsObject |        net472 | 23.749 ns | 0.0252 ns | 0.0236 ns | 23.748 ns |  1.37 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-          From_NonConvertibleStruct_Nullable_WithValue | .NET Core 2.0 | 13.542 ns | 0.0254 ns | 0.0212 ns | 13.542 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-          From_NonConvertibleStruct_Nullable_WithValue | .NET Core 2.2 | 11.529 ns | 0.0305 ns | 0.0285 ns | 11.526 ns |  0.85 |    0.00 |      - |     - |     - |         - |
-          From_NonConvertibleStruct_Nullable_WithValue | .NET Core 3.0 |  9.761 ns | 0.0156 ns | 0.0139 ns |  9.759 ns |  0.72 |    0.00 |      - |     - |     - |         - |
-          From_NonConvertibleStruct_Nullable_WithValue |        net461 | 13.735 ns | 0.0798 ns | 0.0708 ns | 13.710 ns |  1.01 |    0.01 |      - |     - |     - |         - |
-          From_NonConvertibleStruct_Nullable_WithValue |        net472 | 12.287 ns | 0.0191 ns | 0.0179 ns | 12.291 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+          From_NonConvertibleStruct_Nullable_WithValue | .NET Core 2.0 | 14.875 ns | 0.0194 ns | 0.0172 ns | 14.877 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+          From_NonConvertibleStruct_Nullable_WithValue | .NET Core 2.2 | 10.055 ns | 0.0105 ns | 0.0093 ns | 10.055 ns |  0.68 |    0.00 |      - |     - |     - |         - |
+          From_NonConvertibleStruct_Nullable_WithValue | .NET Core 3.0 |  9.267 ns | 0.0336 ns | 0.0281 ns |  9.273 ns |  0.62 |    0.00 |      - |     - |     - |         - |
+          From_NonConvertibleStruct_Nullable_WithValue |        net461 | 12.257 ns | 0.0310 ns | 0.0290 ns | 12.251 ns |  0.82 |    0.00 |      - |     - |     - |         - |
+          From_NonConvertibleStruct_Nullable_WithValue |        net472 | 12.919 ns | 0.0117 ns | 0.0091 ns | 12.919 ns |  0.87 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
- From_NonConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.0 | 16.628 ns | 0.0230 ns | 0.0204 ns | 16.620 ns |  1.00 |    0.00 |      - |     - |     - |         - |
- From_NonConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.2 | 15.234 ns | 0.0993 ns | 0.0929 ns | 15.230 ns |  0.92 |    0.01 |      - |     - |     - |         - |
- From_NonConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 3.0 | 15.310 ns | 0.0214 ns | 0.0167 ns | 15.310 ns |  0.92 |    0.00 |      - |     - |     - |         - |
- From_NonConvertibleStruct_Nullable_WithValue_AsObject |        net461 | 23.730 ns | 0.0440 ns | 0.0344 ns | 23.733 ns |  1.43 |    0.00 |      - |     - |     - |         - |
- From_NonConvertibleStruct_Nullable_WithValue_AsObject |        net472 | 25.692 ns | 0.0688 ns | 0.0610 ns | 25.684 ns |  1.55 |    0.00 |      - |     - |     - |         - |
+ From_NonConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.0 | 17.440 ns | 0.0630 ns | 0.0558 ns | 17.447 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+ From_NonConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 2.2 | 15.262 ns | 0.0190 ns | 0.0178 ns | 15.259 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+ From_NonConvertibleStruct_Nullable_WithValue_AsObject | .NET Core 3.0 | 14.989 ns | 0.0340 ns | 0.0318 ns | 14.985 ns |  0.86 |    0.00 |      - |     - |     - |         - |
+ From_NonConvertibleStruct_Nullable_WithValue_AsObject |        net461 | 23.521 ns | 0.0449 ns | 0.0420 ns | 23.520 ns |  1.35 |    0.01 |      - |     - |     - |         - |
+ From_NonConvertibleStruct_Nullable_WithValue_AsObject |        net472 | 23.922 ns | 0.0692 ns | 0.0647 ns | 23.927 ns |  1.37 |    0.01 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-            From_NonConvertibleStruct_Nullable_NoValue | .NET Core 2.0 | 13.279 ns | 0.0993 ns | 0.0929 ns | 13.232 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-            From_NonConvertibleStruct_Nullable_NoValue | .NET Core 2.2 | 11.407 ns | 0.0255 ns | 0.0213 ns | 11.408 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-            From_NonConvertibleStruct_Nullable_NoValue | .NET Core 3.0 |  9.609 ns | 0.0847 ns | 0.0792 ns |  9.651 ns |  0.72 |    0.01 |      - |     - |     - |         - |
-            From_NonConvertibleStruct_Nullable_NoValue |        net461 | 13.214 ns | 0.1047 ns | 0.0928 ns | 13.230 ns |  1.00 |    0.01 |      - |     - |     - |         - |
-            From_NonConvertibleStruct_Nullable_NoValue |        net472 | 12.284 ns | 0.0155 ns | 0.0145 ns | 12.285 ns |  0.93 |    0.01 |      - |     - |     - |         - |
+            From_NonConvertibleStruct_Nullable_NoValue | .NET Core 2.0 | 11.806 ns | 0.0100 ns | 0.0088 ns | 11.808 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+            From_NonConvertibleStruct_Nullable_NoValue | .NET Core 2.2 | 10.069 ns | 0.0117 ns | 0.0104 ns | 10.067 ns |  0.85 |    0.00 |      - |     - |     - |         - |
+            From_NonConvertibleStruct_Nullable_NoValue | .NET Core 3.0 |  9.210 ns | 0.0105 ns | 0.0088 ns |  9.211 ns |  0.78 |    0.00 |      - |     - |     - |         - |
+            From_NonConvertibleStruct_Nullable_NoValue |        net461 | 12.341 ns | 0.0689 ns | 0.0644 ns | 12.367 ns |  1.05 |    0.01 |      - |     - |     - |         - |
+            From_NonConvertibleStruct_Nullable_NoValue |        net472 | 13.032 ns | 0.0103 ns | 0.0086 ns | 13.034 ns |  1.10 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-   From_NonConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.875 ns | 0.0309 ns | 0.0289 ns | 14.882 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-   From_NonConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.2 | 14.463 ns | 0.0139 ns | 0.0130 ns | 14.462 ns |  0.97 |    0.00 |      - |     - |     - |         - |
-   From_NonConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.432 ns | 0.0171 ns | 0.0152 ns | 13.430 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-   From_NonConvertibleStruct_Nullable_NoValue_AsObject |        net461 | 23.986 ns | 0.0298 ns | 0.0264 ns | 23.985 ns |  1.61 |    0.00 |      - |     - |     - |         - |
-   From_NonConvertibleStruct_Nullable_NoValue_AsObject |        net472 | 26.214 ns | 0.0591 ns | 0.0524 ns | 26.206 ns |  1.76 |    0.01 |      - |     - |     - |         - |
+   From_NonConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.846 ns | 0.0204 ns | 0.0191 ns | 14.845 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+   From_NonConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.412 ns | 0.0095 ns | 0.0079 ns | 13.410 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+   From_NonConvertibleStruct_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.293 ns | 0.0157 ns | 0.0139 ns | 13.293 ns |  0.90 |    0.00 |      - |     - |     - |         - |
+   From_NonConvertibleStruct_Nullable_NoValue_AsObject |        net461 | 22.143 ns | 0.0456 ns | 0.0427 ns | 22.133 ns |  1.49 |    0.00 |      - |     - |     - |         - |
+   From_NonConvertibleStruct_Nullable_NoValue_AsObject |        net472 | 22.444 ns | 0.0211 ns | 0.0187 ns | 22.448 ns |  1.51 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                             From_Enum | .NET Core 2.0 | 13.193 ns | 0.0141 ns | 0.0125 ns | 13.191 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                             From_Enum | .NET Core 2.2 | 11.963 ns | 0.1189 ns | 0.1112 ns | 12.017 ns |  0.91 |    0.01 |      - |     - |     - |         - |
-                                             From_Enum | .NET Core 3.0 |  9.516 ns | 0.0204 ns | 0.0170 ns |  9.512 ns |  0.72 |    0.00 |      - |     - |     - |         - |
-                                             From_Enum |        net461 | 13.008 ns | 0.0168 ns | 0.0140 ns | 13.008 ns |  0.99 |    0.00 |      - |     - |     - |         - |
-                                             From_Enum |        net472 | 13.063 ns | 0.0245 ns | 0.0230 ns | 13.062 ns |  0.99 |    0.00 |      - |     - |     - |         - |
+                                             From_Enum | .NET Core 2.0 | 11.841 ns | 0.0161 ns | 0.0150 ns | 11.841 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                             From_Enum | .NET Core 2.2 | 10.484 ns | 0.0141 ns | 0.0132 ns | 10.481 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                                             From_Enum | .NET Core 3.0 |  9.454 ns | 0.0152 ns | 0.0135 ns |  9.455 ns |  0.80 |    0.00 |      - |     - |     - |         - |
+                                             From_Enum |        net461 | 12.226 ns | 0.0206 ns | 0.0193 ns | 12.224 ns |  1.03 |    0.00 |      - |     - |     - |         - |
+                                             From_Enum |        net472 | 12.335 ns | 0.0161 ns | 0.0143 ns | 12.331 ns |  1.04 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                    From_Enum_AsObject | .NET Core 2.0 | 45.751 ns | 0.3544 ns | 0.3315 ns | 45.593 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
-                                    From_Enum_AsObject | .NET Core 2.2 | 47.621 ns | 0.1149 ns | 0.1075 ns | 47.609 ns |  1.04 |    0.01 | 0.0038 |     - |     - |      24 B |
-                                    From_Enum_AsObject | .NET Core 3.0 | 38.940 ns | 0.7072 ns | 0.6269 ns | 39.173 ns |  0.85 |    0.01 | 0.0038 |     - |     - |      24 B |
-                                    From_Enum_AsObject |        net461 | 50.693 ns | 0.1041 ns | 0.0923 ns | 50.691 ns |  1.11 |    0.01 | 0.0037 |     - |     - |      24 B |
-                                    From_Enum_AsObject |        net472 | 56.024 ns | 0.0705 ns | 0.0625 ns | 56.028 ns |  1.22 |    0.01 | 0.0038 |     - |     - |      24 B |
+                                    From_Enum_AsObject | .NET Core 2.0 | 48.616 ns | 0.1538 ns | 0.1439 ns | 48.555 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
+                                    From_Enum_AsObject | .NET Core 2.2 | 42.569 ns | 0.1268 ns | 0.1124 ns | 42.553 ns |  0.88 |    0.00 | 0.0038 |     - |     - |      24 B |
+                                    From_Enum_AsObject | .NET Core 3.0 | 37.798 ns | 0.7659 ns | 1.0984 ns | 37.272 ns |  0.80 |    0.02 | 0.0038 |     - |     - |      24 B |
+                                    From_Enum_AsObject |        net461 | 55.174 ns | 1.3253 ns | 3.9075 ns | 51.861 ns |  1.19 |    0.07 | 0.0037 |     - |     - |      24 B |
+                                    From_Enum_AsObject |        net472 | 50.772 ns | 0.0760 ns | 0.0635 ns | 50.795 ns |  1.04 |    0.00 | 0.0038 |     - |     - |      24 B |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                          From_Enum_Nullable_WithValue | .NET Core 2.0 | 13.447 ns | 0.0181 ns | 0.0161 ns | 13.442 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                          From_Enum_Nullable_WithValue | .NET Core 2.2 | 10.670 ns | 0.0142 ns | 0.0126 ns | 10.669 ns |  0.79 |    0.00 |      - |     - |     - |         - |
-                          From_Enum_Nullable_WithValue | .NET Core 3.0 |  9.993 ns | 0.0156 ns | 0.0138 ns |  9.994 ns |  0.74 |    0.00 |      - |     - |     - |         - |
-                          From_Enum_Nullable_WithValue |        net461 | 14.169 ns | 0.0294 ns | 0.0260 ns | 14.172 ns |  1.05 |    0.00 |      - |     - |     - |         - |
-                          From_Enum_Nullable_WithValue |        net472 | 13.589 ns | 0.1278 ns | 0.1196 ns | 13.541 ns |  1.01 |    0.01 |      - |     - |     - |         - |
+                          From_Enum_Nullable_WithValue | .NET Core 2.0 | 12.057 ns | 0.0221 ns | 0.0185 ns | 12.065 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                          From_Enum_Nullable_WithValue | .NET Core 2.2 | 11.716 ns | 0.0155 ns | 0.0145 ns | 11.713 ns |  0.97 |    0.00 |      - |     - |     - |         - |
+                          From_Enum_Nullable_WithValue | .NET Core 3.0 | 10.203 ns | 0.2258 ns | 0.2688 ns | 10.416 ns |  0.83 |    0.02 |      - |     - |     - |         - |
+                          From_Enum_Nullable_WithValue |        net461 | 13.365 ns | 0.0128 ns | 0.0114 ns | 13.359 ns |  1.11 |    0.00 |      - |     - |     - |         - |
+                          From_Enum_Nullable_WithValue |        net472 | 12.711 ns | 0.0122 ns | 0.0108 ns | 12.713 ns |  1.05 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                 From_Enum_Nullable_WithValue_AsObject | .NET Core 2.0 | 46.921 ns | 0.3917 ns | 0.3664 ns | 46.790 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
-                 From_Enum_Nullable_WithValue_AsObject | .NET Core 2.2 | 48.229 ns | 0.4269 ns | 0.3993 ns | 48.314 ns |  1.03 |    0.01 | 0.0038 |     - |     - |      24 B |
-                 From_Enum_Nullable_WithValue_AsObject | .NET Core 3.0 | 38.517 ns | 0.7857 ns | 0.9649 ns | 39.211 ns |  0.83 |    0.01 | 0.0038 |     - |     - |      24 B |
-                 From_Enum_Nullable_WithValue_AsObject |        net461 | 50.794 ns | 0.1226 ns | 0.1147 ns | 50.786 ns |  1.08 |    0.01 | 0.0038 |     - |     - |      24 B |
-                 From_Enum_Nullable_WithValue_AsObject |        net472 | 53.461 ns | 0.0649 ns | 0.0575 ns | 53.484 ns |  1.14 |    0.01 | 0.0038 |     - |     - |      24 B |
+                 From_Enum_Nullable_WithValue_AsObject | .NET Core 2.0 | 46.159 ns | 0.0615 ns | 0.0576 ns | 46.144 ns |  1.00 |    0.00 | 0.0038 |     - |     - |      24 B |
+                 From_Enum_Nullable_WithValue_AsObject | .NET Core 2.2 | 42.814 ns | 0.1547 ns | 0.1372 ns | 42.837 ns |  0.93 |    0.00 | 0.0038 |     - |     - |      24 B |
+                 From_Enum_Nullable_WithValue_AsObject | .NET Core 3.0 | 40.761 ns | 0.6000 ns | 0.5612 ns | 40.379 ns |  0.88 |    0.01 | 0.0038 |     - |     - |      24 B |
+                 From_Enum_Nullable_WithValue_AsObject |        net461 | 49.655 ns | 0.1467 ns | 0.1373 ns | 49.624 ns |  1.08 |    0.00 | 0.0038 |     - |     - |      24 B |
+                 From_Enum_Nullable_WithValue_AsObject |        net472 | 54.434 ns | 0.0749 ns | 0.0664 ns | 54.425 ns |  1.18 |    0.00 | 0.0038 |     - |     - |      24 B |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                            From_Enum_Nullable_NoValue | .NET Core 2.0 | 13.222 ns | 0.0129 ns | 0.0115 ns | 13.227 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                            From_Enum_Nullable_NoValue | .NET Core 2.2 | 11.695 ns | 0.0221 ns | 0.0207 ns | 11.689 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                            From_Enum_Nullable_NoValue | .NET Core 3.0 |  9.531 ns | 0.0156 ns | 0.0146 ns |  9.531 ns |  0.72 |    0.00 |      - |     - |     - |         - |
-                            From_Enum_Nullable_NoValue |        net461 | 13.467 ns | 0.0096 ns | 0.0080 ns | 13.467 ns |  1.02 |    0.00 |      - |     - |     - |         - |
-                            From_Enum_Nullable_NoValue |        net472 | 13.512 ns | 0.0136 ns | 0.0121 ns | 13.510 ns |  1.02 |    0.00 |      - |     - |     - |         - |
+                            From_Enum_Nullable_NoValue | .NET Core 2.0 | 13.255 ns | 0.0656 ns | 0.0613 ns | 13.280 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                            From_Enum_Nullable_NoValue | .NET Core 2.2 | 11.271 ns | 0.0227 ns | 0.0212 ns | 11.261 ns |  0.85 |    0.00 |      - |     - |     - |         - |
+                            From_Enum_Nullable_NoValue | .NET Core 3.0 |  9.885 ns | 0.0217 ns | 0.0192 ns |  9.879 ns |  0.75 |    0.00 |      - |     - |     - |         - |
+                            From_Enum_Nullable_NoValue |        net461 | 13.197 ns | 0.0316 ns | 0.0296 ns | 13.207 ns |  1.00 |    0.01 |      - |     - |     - |         - |
+                            From_Enum_Nullable_NoValue |        net472 | 12.742 ns | 0.0145 ns | 0.0121 ns | 12.741 ns |  0.96 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                   From_Enum_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.507 ns | 0.0256 ns | 0.0240 ns | 15.517 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                   From_Enum_Nullable_NoValue_AsObject | .NET Core 2.2 | 12.978 ns | 0.0208 ns | 0.0173 ns | 12.976 ns |  0.84 |    0.00 |      - |     - |     - |         - |
-                   From_Enum_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.903 ns | 0.2380 ns | 0.2226 ns | 13.737 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                   From_Enum_Nullable_NoValue_AsObject |        net461 | 22.093 ns | 0.0339 ns | 0.0283 ns | 22.084 ns |  1.42 |    0.00 |      - |     - |     - |         - |
-                   From_Enum_Nullable_NoValue_AsObject |        net472 | 25.313 ns | 0.0369 ns | 0.0288 ns | 25.312 ns |  1.63 |    0.00 |      - |     - |     - |         - |
+                   From_Enum_Nullable_NoValue_AsObject | .NET Core 2.0 | 20.063 ns | 0.0178 ns | 0.0158 ns | 20.066 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                   From_Enum_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.806 ns | 0.0126 ns | 0.0118 ns | 13.804 ns |  0.69 |    0.00 |      - |     - |     - |         - |
+                   From_Enum_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.686 ns | 0.0765 ns | 0.0716 ns | 13.693 ns |  0.68 |    0.00 |      - |     - |     - |         - |
+                   From_Enum_Nullable_NoValue_AsObject |        net461 | 23.868 ns | 0.0250 ns | 0.0234 ns | 23.872 ns |  1.19 |    0.00 |      - |     - |     - |         - |
+                   From_Enum_Nullable_NoValue_AsObject |        net472 | 22.546 ns | 0.0555 ns | 0.0492 ns | 22.550 ns |  1.12 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                      From_ParentClass | .NET Core 2.0 | 14.077 ns | 0.0998 ns | 0.0933 ns | 14.127 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                      From_ParentClass | .NET Core 2.2 | 12.724 ns | 0.0274 ns | 0.0256 ns | 12.722 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                                      From_ParentClass | .NET Core 3.0 | 12.538 ns | 0.0224 ns | 0.0210 ns | 12.530 ns |  0.89 |    0.01 |      - |     - |     - |         - |
-                                      From_ParentClass |        net461 | 14.533 ns | 0.1332 ns | 0.1181 ns | 14.601 ns |  1.03 |    0.01 |      - |     - |     - |         - |
-                                      From_ParentClass |        net472 | 14.375 ns | 0.0064 ns | 0.0054 ns | 14.376 ns |  1.02 |    0.01 |      - |     - |     - |         - |
+                                      From_ParentClass | .NET Core 2.0 | 14.080 ns | 0.0148 ns | 0.0131 ns | 14.082 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                      From_ParentClass | .NET Core 2.2 | 12.365 ns | 0.0076 ns | 0.0071 ns | 12.365 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                                      From_ParentClass | .NET Core 3.0 | 12.422 ns | 0.0177 ns | 0.0157 ns | 12.422 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                                      From_ParentClass |        net461 | 14.978 ns | 0.0179 ns | 0.0167 ns | 14.979 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                                      From_ParentClass |        net472 | 14.988 ns | 0.0255 ns | 0.0238 ns | 14.997 ns |  1.06 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                             From_ParentClass_AsObject | .NET Core 2.0 | 17.841 ns | 0.0320 ns | 0.0300 ns | 17.837 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                             From_ParentClass_AsObject | .NET Core 2.2 | 15.371 ns | 0.1012 ns | 0.0947 ns | 15.352 ns |  0.86 |    0.01 |      - |     - |     - |         - |
-                             From_ParentClass_AsObject | .NET Core 3.0 | 15.827 ns | 0.3403 ns | 0.5094 ns | 15.507 ns |  0.91 |    0.03 |      - |     - |     - |         - |
-                             From_ParentClass_AsObject |        net461 | 23.972 ns | 0.0260 ns | 0.0244 ns | 23.970 ns |  1.34 |    0.00 |      - |     - |     - |         - |
-                             From_ParentClass_AsObject |        net472 | 27.797 ns | 0.0417 ns | 0.0369 ns | 27.796 ns |  1.56 |    0.00 |      - |     - |     - |         - |
+                             From_ParentClass_AsObject | .NET Core 2.0 | 17.174 ns | 0.0302 ns | 0.0235 ns | 17.179 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                             From_ParentClass_AsObject | .NET Core 2.2 | 15.802 ns | 0.0170 ns | 0.0159 ns | 15.801 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+                             From_ParentClass_AsObject | .NET Core 3.0 | 16.038 ns | 0.0617 ns | 0.0577 ns | 16.063 ns |  0.94 |    0.00 |      - |     - |     - |         - |
+                             From_ParentClass_AsObject |        net461 | 27.559 ns | 0.1591 ns | 0.1488 ns | 27.633 ns |  1.60 |    0.01 |      - |     - |     - |         - |
+                             From_ParentClass_AsObject |        net472 | 24.203 ns | 0.0454 ns | 0.0403 ns | 24.195 ns |  1.41 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                              From_ParentClass_NoValue | .NET Core 2.0 | 14.082 ns | 0.1214 ns | 0.1136 ns | 14.156 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                              From_ParentClass_NoValue | .NET Core 2.2 | 12.744 ns | 0.0214 ns | 0.0189 ns | 12.738 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                              From_ParentClass_NoValue | .NET Core 3.0 | 12.573 ns | 0.0269 ns | 0.0225 ns | 12.579 ns |  0.89 |    0.01 |      - |     - |     - |         - |
-                              From_ParentClass_NoValue |        net461 | 14.488 ns | 0.1314 ns | 0.1229 ns | 14.414 ns |  1.03 |    0.01 |      - |     - |     - |         - |
-                              From_ParentClass_NoValue |        net472 | 16.012 ns | 0.0512 ns | 0.0428 ns | 16.016 ns |  1.14 |    0.01 |      - |     - |     - |         - |
+                              From_ParentClass_NoValue | .NET Core 2.0 | 14.061 ns | 0.0164 ns | 0.0153 ns | 14.064 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                              From_ParentClass_NoValue | .NET Core 2.2 | 12.214 ns | 0.0160 ns | 0.0141 ns | 12.217 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                              From_ParentClass_NoValue | .NET Core 3.0 | 12.412 ns | 0.0179 ns | 0.0159 ns | 12.410 ns |  0.88 |    0.00 |      - |     - |     - |         - |
+                              From_ParentClass_NoValue |        net461 | 14.962 ns | 0.0248 ns | 0.0232 ns | 14.962 ns |  1.06 |    0.00 |      - |     - |     - |         - |
+                              From_ParentClass_NoValue |        net472 | 14.281 ns | 0.0122 ns | 0.0114 ns | 14.280 ns |  1.02 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                     From_ParentClass_NoValue_AsObject | .NET Core 2.0 | 14.872 ns | 0.0219 ns | 0.0205 ns | 14.873 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                     From_ParentClass_NoValue_AsObject | .NET Core 2.2 | 14.213 ns | 0.0191 ns | 0.0170 ns | 14.216 ns |  0.96 |    0.00 |      - |     - |     - |         - |
-                     From_ParentClass_NoValue_AsObject | .NET Core 3.0 | 13.434 ns | 0.0342 ns | 0.0286 ns | 13.430 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-                     From_ParentClass_NoValue_AsObject |        net461 | 23.981 ns | 0.0230 ns | 0.0203 ns | 23.978 ns |  1.61 |    0.00 |      - |     - |     - |         - |
-                     From_ParentClass_NoValue_AsObject |        net472 | 26.567 ns | 0.0355 ns | 0.0315 ns | 26.568 ns |  1.79 |    0.00 |      - |     - |     - |         - |
+                     From_ParentClass_NoValue_AsObject | .NET Core 2.0 | 14.803 ns | 0.0209 ns | 0.0174 ns | 14.795 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                     From_ParentClass_NoValue_AsObject | .NET Core 2.2 | 13.524 ns | 0.0739 ns | 0.0691 ns | 13.564 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                     From_ParentClass_NoValue_AsObject | .NET Core 3.0 | 13.132 ns | 0.0160 ns | 0.0142 ns | 13.136 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+                     From_ParentClass_NoValue_AsObject |        net461 | 21.241 ns | 0.0447 ns | 0.0418 ns | 21.250 ns |  1.43 |    0.00 |      - |     - |     - |         - |
+                     From_ParentClass_NoValue_AsObject |        net472 | 22.559 ns | 0.0118 ns | 0.0098 ns | 22.557 ns |  1.52 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                                     From_ParentStruct | .NET Core 2.0 | 43.025 ns | 0.0925 ns | 0.0820 ns | 43.021 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                                     From_ParentStruct | .NET Core 2.2 | 41.352 ns | 0.3503 ns | 0.3277 ns | 41.496 ns |  0.96 |    0.01 |      - |     - |     - |         - |
-                                     From_ParentStruct | .NET Core 3.0 | 42.767 ns | 0.6807 ns | 0.6034 ns | 43.048 ns |  0.99 |    0.01 |      - |     - |     - |         - |
-                                     From_ParentStruct |        net461 | 47.359 ns | 0.3726 ns | 0.3485 ns | 47.198 ns |  1.10 |    0.01 |      - |     - |     - |         - |
-                                     From_ParentStruct |        net472 | 41.814 ns | 0.3906 ns | 0.3654 ns | 42.033 ns |  0.97 |    0.01 |      - |     - |     - |         - |
+                                     From_ParentStruct | .NET Core 2.0 | 42.305 ns | 0.0142 ns | 0.0126 ns | 42.309 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                                     From_ParentStruct | .NET Core 2.2 | 38.646 ns | 0.0693 ns | 0.0649 ns | 38.650 ns |  0.91 |    0.00 |      - |     - |     - |         - |
+                                     From_ParentStruct | .NET Core 3.0 | 41.090 ns | 0.6152 ns | 0.5755 ns | 41.338 ns |  0.97 |    0.01 |      - |     - |     - |         - |
+                                     From_ParentStruct |        net461 | 46.079 ns | 0.0503 ns | 0.0470 ns | 46.071 ns |  1.09 |    0.00 |      - |     - |     - |         - |
+                                     From_ParentStruct |        net472 | 41.776 ns | 0.0858 ns | 0.0803 ns | 41.747 ns |  0.99 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                            From_ParentStruct_AsObject | .NET Core 2.0 | 17.401 ns | 0.1505 ns | 0.1407 ns | 17.332 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                            From_ParentStruct_AsObject | .NET Core 2.2 | 15.343 ns | 0.0379 ns | 0.0354 ns | 15.348 ns |  0.88 |    0.01 |      - |     - |     - |         - |
-                            From_ParentStruct_AsObject | .NET Core 3.0 | 17.286 ns | 0.1172 ns | 0.1039 ns | 17.324 ns |  0.99 |    0.01 |      - |     - |     - |         - |
-                            From_ParentStruct_AsObject |        net461 | 24.187 ns | 0.2488 ns | 0.2327 ns | 24.312 ns |  1.39 |    0.02 |      - |     - |     - |         - |
-                            From_ParentStruct_AsObject |        net472 | 28.154 ns | 0.1751 ns | 0.1462 ns | 28.213 ns |  1.62 |    0.01 |      - |     - |     - |         - |
+                            From_ParentStruct_AsObject | .NET Core 2.0 | 18.691 ns | 0.0215 ns | 0.0201 ns | 18.690 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                            From_ParentStruct_AsObject | .NET Core 2.2 | 15.725 ns | 0.0196 ns | 0.0183 ns | 15.723 ns |  0.84 |    0.00 |      - |     - |     - |         - |
+                            From_ParentStruct_AsObject | .NET Core 3.0 | 15.958 ns | 0.0298 ns | 0.0279 ns | 15.953 ns |  0.85 |    0.00 |      - |     - |     - |         - |
+                            From_ParentStruct_AsObject |        net461 | 23.691 ns | 0.0464 ns | 0.0434 ns | 23.685 ns |  1.27 |    0.00 |      - |     - |     - |         - |
+                            From_ParentStruct_AsObject |        net472 | 24.201 ns | 0.0633 ns | 0.0592 ns | 24.210 ns |  1.29 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                  From_ParentStruct_Nullable_WithValue | .NET Core 2.0 | 42.782 ns | 0.0877 ns | 0.0820 ns | 42.747 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                  From_ParentStruct_Nullable_WithValue | .NET Core 2.2 | 40.454 ns | 0.0276 ns | 0.0245 ns | 40.447 ns |  0.95 |    0.00 |      - |     - |     - |         - |
-                  From_ParentStruct_Nullable_WithValue | .NET Core 3.0 | 37.689 ns | 0.0637 ns | 0.0565 ns | 37.706 ns |  0.88 |    0.00 |      - |     - |     - |         - |
-                  From_ParentStruct_Nullable_WithValue |        net461 | 41.820 ns | 0.3137 ns | 0.2934 ns | 41.625 ns |  0.98 |    0.01 |      - |     - |     - |         - |
-                  From_ParentStruct_Nullable_WithValue |        net472 | 42.147 ns | 0.1277 ns | 0.1195 ns | 42.122 ns |  0.99 |    0.00 |      - |     - |     - |         - |
+                  From_ParentStruct_Nullable_WithValue | .NET Core 2.0 | 41.047 ns | 0.0641 ns | 0.0568 ns | 41.045 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                  From_ParentStruct_Nullable_WithValue | .NET Core 2.2 | 39.061 ns | 0.1645 ns | 0.1458 ns | 39.067 ns |  0.95 |    0.00 |      - |     - |     - |         - |
+                  From_ParentStruct_Nullable_WithValue | .NET Core 3.0 | 39.096 ns | 0.1127 ns | 0.0941 ns | 39.061 ns |  0.95 |    0.00 |      - |     - |     - |         - |
+                  From_ParentStruct_Nullable_WithValue |        net461 | 42.057 ns | 0.0475 ns | 0.0421 ns | 42.052 ns |  1.02 |    0.00 |      - |     - |     - |         - |
+                  From_ParentStruct_Nullable_WithValue |        net472 | 41.508 ns | 0.2057 ns | 0.1823 ns | 41.571 ns |  1.01 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-         From_ParentStruct_Nullable_WithValue_AsObject | .NET Core 2.0 | 17.248 ns | 0.0394 ns | 0.0329 ns | 17.253 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-         From_ParentStruct_Nullable_WithValue_AsObject | .NET Core 2.2 | 15.679 ns | 0.0811 ns | 0.0677 ns | 15.699 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-         From_ParentStruct_Nullable_WithValue_AsObject | .NET Core 3.0 | 15.516 ns | 0.0351 ns | 0.0274 ns | 15.511 ns |  0.90 |    0.00 |      - |     - |     - |         - |
-         From_ParentStruct_Nullable_WithValue_AsObject |        net461 | 24.331 ns | 0.0348 ns | 0.0326 ns | 24.321 ns |  1.41 |    0.00 |      - |     - |     - |         - |
-         From_ParentStruct_Nullable_WithValue_AsObject |        net472 | 27.122 ns | 0.0533 ns | 0.0445 ns | 27.108 ns |  1.57 |    0.00 |      - |     - |     - |         - |
+         From_ParentStruct_Nullable_WithValue_AsObject | .NET Core 2.0 | 17.157 ns | 0.0272 ns | 0.0254 ns | 17.150 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+         From_ParentStruct_Nullable_WithValue_AsObject | .NET Core 2.2 | 15.702 ns | 0.0218 ns | 0.0194 ns | 15.709 ns |  0.92 |    0.00 |      - |     - |     - |         - |
+         From_ParentStruct_Nullable_WithValue_AsObject | .NET Core 3.0 | 16.164 ns | 0.2034 ns | 0.1903 ns | 16.038 ns |  0.94 |    0.01 |      - |     - |     - |         - |
+         From_ParentStruct_Nullable_WithValue_AsObject |        net461 | 23.567 ns | 0.0335 ns | 0.0297 ns | 23.564 ns |  1.37 |    0.00 |      - |     - |     - |         - |
+         From_ParentStruct_Nullable_WithValue_AsObject |        net472 | 25.691 ns | 0.0524 ns | 0.0490 ns | 25.699 ns |  1.50 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-                    From_ParentStruct_Nullable_NoValue | .NET Core 2.0 | 48.968 ns | 0.4160 ns | 0.3891 ns | 49.249 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-                    From_ParentStruct_Nullable_NoValue | .NET Core 2.2 | 40.128 ns | 0.0520 ns | 0.0486 ns | 40.114 ns |  0.82 |    0.01 |      - |     - |     - |         - |
-                    From_ParentStruct_Nullable_NoValue | .NET Core 3.0 | 38.870 ns | 0.2554 ns | 0.2389 ns | 38.953 ns |  0.79 |    0.01 |      - |     - |     - |         - |
-                    From_ParentStruct_Nullable_NoValue |        net461 | 44.181 ns | 0.0749 ns | 0.0585 ns | 44.177 ns |  0.90 |    0.01 |      - |     - |     - |         - |
-                    From_ParentStruct_Nullable_NoValue |        net472 | 43.261 ns | 0.0480 ns | 0.0426 ns | 43.257 ns |  0.88 |    0.01 |      - |     - |     - |         - |
+                    From_ParentStruct_Nullable_NoValue | .NET Core 2.0 | 46.510 ns | 0.0294 ns | 0.0275 ns | 46.513 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+                    From_ParentStruct_Nullable_NoValue | .NET Core 2.2 | 40.612 ns | 0.0519 ns | 0.0486 ns | 40.613 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                    From_ParentStruct_Nullable_NoValue | .NET Core 3.0 | 40.619 ns | 0.5932 ns | 0.5549 ns | 40.890 ns |  0.87 |    0.01 |      - |     - |     - |         - |
+                    From_ParentStruct_Nullable_NoValue |        net461 | 40.673 ns | 0.0841 ns | 0.0787 ns | 40.657 ns |  0.87 |    0.00 |      - |     - |     - |         - |
+                    From_ParentStruct_Nullable_NoValue |        net472 | 42.911 ns | 0.0559 ns | 0.0523 ns | 42.904 ns |  0.92 |    0.00 |      - |     - |     - |         - |
                                                        |               |           |           |           |           |       |         |        |       |       |           |
-           From_ParentStruct_Nullable_NoValue_AsObject | .NET Core 2.0 | 15.140 ns | 0.0300 ns | 0.0281 ns | 15.146 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-           From_ParentStruct_Nullable_NoValue_AsObject | .NET Core 2.2 | 12.986 ns | 0.0278 ns | 0.0246 ns | 12.978 ns |  0.86 |    0.00 |      - |     - |     - |         - |
-           From_ParentStruct_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.710 ns | 0.0319 ns | 0.0283 ns | 13.707 ns |  0.91 |    0.00 |      - |     - |     - |         - |
-           From_ParentStruct_Nullable_NoValue_AsObject |        net461 | 22.446 ns | 0.0461 ns | 0.0432 ns | 22.449 ns |  1.48 |    0.00 |      - |     - |     - |         - |
-           From_ParentStruct_Nullable_NoValue_AsObject |        net472 | 26.159 ns | 0.0429 ns | 0.0380 ns | 26.167 ns |  1.73 |    0.00 |      - |     - |     - |         - |
+           From_ParentStruct_Nullable_NoValue_AsObject | .NET Core 2.0 | 14.884 ns | 0.0112 ns | 0.0104 ns | 14.882 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+           From_ParentStruct_Nullable_NoValue_AsObject | .NET Core 2.2 | 13.940 ns | 0.0204 ns | 0.0191 ns | 13.944 ns |  0.94 |    0.00 |      - |     - |     - |         - |
+           From_ParentStruct_Nullable_NoValue_AsObject | .NET Core 3.0 | 13.175 ns | 0.0155 ns | 0.0145 ns | 13.174 ns |  0.89 |    0.00 |      - |     - |     - |         - |
+           From_ParentStruct_Nullable_NoValue_AsObject |        net461 | 22.102 ns | 0.0259 ns | 0.0243 ns | 22.107 ns |  1.48 |    0.00 |      - |     - |     - |         - |
+           From_ParentStruct_Nullable_NoValue_AsObject |        net472 | 22.429 ns | 0.0416 ns | 0.0368 ns | 22.428 ns |  1.51 |    0.00 |      - |     - |     - |         - |
 
 Benchmarks with issues:
-  ConvertTo_BoolNullable.From_Char_AsObject: Job-LRKCAO(Toolchain=.NET Core 2.0)
-  ConvertTo_BoolNullable.From_Char_AsObject: Job-VAJWLV(Toolchain=.NET Core 2.2)
-  ConvertTo_BoolNullable.From_Char_AsObject: Job-TJIRAH(Toolchain=.NET Core 3.0)
-  ConvertTo_BoolNullable.From_Char_AsObject: Job-HBFVIR(Toolchain=net461)
-  ConvertTo_BoolNullable.From_Char_AsObject: Job-YRWWQX(Toolchain=net472)
-  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-LRKCAO(Toolchain=.NET Core 2.0)
-  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-VAJWLV(Toolchain=.NET Core 2.2)
-  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-TJIRAH(Toolchain=.NET Core 3.0)
-  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-HBFVIR(Toolchain=net461)
-  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-YRWWQX(Toolchain=net472)
-  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-LRKCAO(Toolchain=.NET Core 2.0)
-  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-VAJWLV(Toolchain=.NET Core 2.2)
-  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-TJIRAH(Toolchain=.NET Core 3.0)
-  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-HBFVIR(Toolchain=net461)
-  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-YRWWQX(Toolchain=net472)
-  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-LRKCAO(Toolchain=.NET Core 2.0)
-  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-VAJWLV(Toolchain=.NET Core 2.2)
-  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-TJIRAH(Toolchain=.NET Core 3.0)
-  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-HBFVIR(Toolchain=net461)
-  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-YRWWQX(Toolchain=net472)
-  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-LRKCAO(Toolchain=.NET Core 2.0)
-  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-VAJWLV(Toolchain=.NET Core 2.2)
-  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-TJIRAH(Toolchain=.NET Core 3.0)
-  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-HBFVIR(Toolchain=net461)
-  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-YRWWQX(Toolchain=net472)
+  ConvertTo_BoolNullable.From_Char_AsObject: Job-FWPOAF(Toolchain=.NET Core 2.0)
+  ConvertTo_BoolNullable.From_Char_AsObject: Job-ZZPTUV(Toolchain=.NET Core 2.2)
+  ConvertTo_BoolNullable.From_Char_AsObject: Job-EOJUSV(Toolchain=.NET Core 3.0)
+  ConvertTo_BoolNullable.From_Char_AsObject: Job-KESODJ(Toolchain=net461)
+  ConvertTo_BoolNullable.From_Char_AsObject: Job-PJAXXB(Toolchain=net472)
+  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-FWPOAF(Toolchain=.NET Core 2.0)
+  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-ZZPTUV(Toolchain=.NET Core 2.2)
+  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-EOJUSV(Toolchain=.NET Core 3.0)
+  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-KESODJ(Toolchain=net461)
+  ConvertTo_BoolNullable.From_Char_Nullable_WithValue_AsObject: Job-PJAXXB(Toolchain=net472)
+  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-FWPOAF(Toolchain=.NET Core 2.0)
+  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-ZZPTUV(Toolchain=.NET Core 2.2)
+  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-EOJUSV(Toolchain=.NET Core 3.0)
+  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-KESODJ(Toolchain=net461)
+  ConvertTo_BoolNullable.From_DateTime_AsObject: Job-PJAXXB(Toolchain=net472)
+  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-FWPOAF(Toolchain=.NET Core 2.0)
+  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-ZZPTUV(Toolchain=.NET Core 2.2)
+  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-EOJUSV(Toolchain=.NET Core 3.0)
+  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-KESODJ(Toolchain=net461)
+  ConvertTo_BoolNullable.From_DateTime_Nullable_WithValue_AsObject: Job-PJAXXB(Toolchain=net472)
+  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-FWPOAF(Toolchain=.NET Core 2.0)
+  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-ZZPTUV(Toolchain=.NET Core 2.2)
+  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-EOJUSV(Toolchain=.NET Core 3.0)
+  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-KESODJ(Toolchain=net461)
+  ConvertTo_BoolNullable.From_String_Empty_AsObject: Job-PJAXXB(Toolchain=net472)

@@ -185,6 +185,10 @@ namespace Benchmarks.Core.Deipax
     public class ConvertTo_Enum : ConvertTo_Base<TestEnum>
     {
     }
+
+    public class ConvertTo_EnumNullable : ConvertTo_Base<TestEnum?>
+    {
+    }
     #endregion
 
     #region IParent

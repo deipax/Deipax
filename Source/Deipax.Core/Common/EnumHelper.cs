@@ -9,18 +9,8 @@ namespace Deipax.Core.Common
     {
         static EnumHelper()
         {
-            Type toType = typeof(TTo);
-            Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-
-            foreach (var value in Enum.GetValues(underlyingToType))
-            {
-                TTo enumValue = (TTo)value;
-                int enumAsInt = (int)value;
-
-                _enumValues.Add(enumValue.ToString(), enumAsInt);
-                _enumValues.Add(enumAsInt.ToString(), enumAsInt);
-                _stringValues.Add(enumAsInt, enumValue.ToString());
-            }
+            _enumValues = EnumCache.GetEnumValues<TTo>();
+            _stringValues = EnumCache.GetStringValues<TTo>();
 
             var p = Expression.Parameter(typeof(int));
             var c = Expression.Convert(p, typeof(TTo));
@@ -28,8 +18,8 @@ namespace Deipax.Core.Common
         }
 
         #region Field Members
-        private static Dictionary<string, int> _enumValues = new Dictionary<string, int>();
-        private static Dictionary<int, string> _stringValues = new Dictionary<int, string>();
+        private static IReadOnlyDictionary<string, int> _enumValues;
+        private static IReadOnlyDictionary<int, string> _stringValues;
         private static TTo _default = default;
         private static Func<int, TTo> _cast;
         #endregion
