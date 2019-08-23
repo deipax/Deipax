@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BenchmarkDotNet.Artifacts\results\" />
+  </ItemGroup>
+
 </Project>

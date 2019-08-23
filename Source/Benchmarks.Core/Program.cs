@@ -1,10 +1,14 @@
-﻿using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Columns;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
 using Benchmarks.Core.Deipax;
+using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Benchmarks.Core
@@ -32,28 +36,38 @@ namespace Benchmarks.Core
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
-                .With(MemoryDiagnoser.Default);
+                .With(MemoryDiagnoser.Default)
+                .With(new IColumn[]
+                {
+                    StatisticColumn.Mean,
+                    StatisticColumn.Error,
+                    StatisticColumn.StdDev,
+                    StatisticColumn.Median,
+                    BaselineRatioColumn.RatioMean,
+                    BaselineRatioColumn.RatioStdDev
+                });
 
+            //BenchmarkRunner.Run<AdHoc>(config);
             //RunConvertBenchmarks(config);
             //RunSetterBenchmarks(config);
-            //RunGetterBenchmarks(config);
+            RunGetterBenchmarks(config);
         }
 
         #region Private Members
         private static void RunSetterBenchmarks(IConfig config = null)
         {
-            BenchmarkRunner.Run<Set_Prop_Bool>(config);
+            /*BenchmarkRunner.Run<Set_Prop_Bool>(config);
             BenchmarkRunner.Run<Set_Prop_BoolNullable>(config);
             BenchmarkRunner.Run<Set_Prop_BoolNullable_NoValue>(config);
-
+            
             BenchmarkRunner.Run<Set_Prop_Char>(config);
             BenchmarkRunner.Run<Set_Prop_CharNullable>(config);
             BenchmarkRunner.Run<Set_Prop_CharNullable_NoValue>(config);
-
+            
             BenchmarkRunner.Run<Set_Prop_SByte>(config);
             BenchmarkRunner.Run<Set_Prop_SByteNullable>(config);
             BenchmarkRunner.Run<Set_Prop_SByteNullable_NoValue>(config);
-
+            
             BenchmarkRunner.Run<Set_Prop_Byte>(config);
             BenchmarkRunner.Run<Set_Prop_ByteNullable>(config);
             BenchmarkRunner.Run<Set_Prop_ByteNullable_NoValue>(config);
@@ -75,7 +89,7 @@ namespace Benchmarks.Core
             BenchmarkRunner.Run<Set_Prop_UIntNullable_NoValue>(config);
 
             BenchmarkRunner.Run<Set_Prop_Long>(config);
-            BenchmarkRunner.Run<Set_Prop_LongNullable>(config);
+            BenchmarkRunner.Run<Set_Prop_LongNullable>(config);*/
             BenchmarkRunner.Run<Set_Prop_LongNullable_NoValue>(config);
 
             BenchmarkRunner.Run<Set_Prop_ULong>(config);
@@ -226,5 +240,22 @@ namespace Benchmarks.Core
                 .WithWarmupCount(1);*/
         }
         #endregion
+    }
+
+    public class AdHoc
+    {
+        public DateTime _dt = DateTime.MinValue;
+
+        [Benchmark]
+        public void Convert_Using_ToString()
+        {
+            var tmp = _dt.ToString(CultureInfo.InvariantCulture);
+        }
+
+        [Benchmark]
+        public void Convert_Using_Convert()
+        {
+            var tmp = Convert.ToString(_dt, CultureInfo.InvariantCulture);
+        }
     }
 }
