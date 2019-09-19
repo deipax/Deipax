@@ -1,4 +1,4 @@
-Welcome to my personal github repository.  Over the course of my career I have found some interesting issues that I wanted to further review, this repository is a result of that curiosity.  Currently, there are two libraries:
+Welcome to my personal github repository.  Over the course of my career I have found some interesting issues that I wanted to further review, this repository is a result of that curiosity.  Currently, there are two libraries (See the individual library wiki pages for usage details):
 
 # Deipax - Cloning library
 
