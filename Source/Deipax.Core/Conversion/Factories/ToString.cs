@@ -120,7 +120,9 @@ namespace Deipax.Core.Conversion.Factories
             if (args.UnderlyingFromType.IsEnum)
             {
                 var callExpression = Expression.Call(
-                  typeof(EnumHelper<>).MakeGenericType(args.UnderlyingFromType),
+                  typeof(EnumHelper<,>).MakeGenericType(
+                      args.UnderlyingFromType,
+                      Enum.GetUnderlyingType(args.UnderlyingFromType)),
                   "ConvertToString",
                   new Type [] { },
                   guardedInput,

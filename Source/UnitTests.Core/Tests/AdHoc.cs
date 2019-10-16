@@ -15,8 +15,8 @@ namespace UnitTests.Core.Tests
         {
             TestEnum t = TestEnum.NinetyNine;
 
-            var one = EnumHelper<TestEnum>.ConvertToString(t);
-            var two = EnumHelper<TestEnum>.ConvertToString(t);
+            var one = EnumHelper<TestEnum, int>.ConvertToString(t);
+            var two = EnumHelper<TestEnum, int>.ConvertToString(t);
         }
     }
 }

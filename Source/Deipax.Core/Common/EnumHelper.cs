@@ -5,27 +5,27 @@ using System.Linq.Expressions;
 
 namespace Deipax.Core.Common
 {
-    public static class EnumHelper<TTo>
+    public static class EnumHelper<TEnum, TUnderlyingType> where TUnderlyingType : struct
     {
         static EnumHelper()
         {
-            _enumValues = EnumCache.GetEnumValues<TTo>();
-            _stringValues = EnumCache.GetStringValues<TTo>();
+            _enumValues = EnumCache.GetEnumValues<TEnum, TUnderlyingType>();
+            _stringValues = EnumCache.GetStringValues<TEnum, TUnderlyingType>();
 
-            var p = Expression.Parameter(typeof(int));
-            var c = Expression.Convert(p, typeof(TTo));
-            _cast = Expression.Lambda<Func<int, TTo>>(c, p).Compile();
+            var p = Expression.Parameter(typeof(TUnderlyingType));
+            var c = Expression.Convert(p, typeof(TEnum));
+            _cast = Expression.Lambda<Func<TUnderlyingType, TEnum>>(c, p).Compile();
         }
 
         #region Field Members
-        private static IReadOnlyDictionary<string, int> _enumValues;
-        private static IReadOnlyDictionary<int, string> _stringValues;
-        private static TTo _default = default;
-        private static Func<int, TTo> _cast;
+        private static IReadOnlyDictionary<string, TUnderlyingType> _enumValues;
+        private static IReadOnlyDictionary<TUnderlyingType, string> _stringValues;
+        private static TEnum _default = default;
+        private static Func<TUnderlyingType, TEnum> _cast;
         #endregion
 
         #region Public Members
-        public static TTo ConvertFromObject(
+        public static TEnum ConvertFromObject(
             object from,
             IFormatProvider provider = null)
         {
@@ -34,56 +34,65 @@ namespace Deipax.Core.Common
                 return _default;
             }
 
+            TUnderlyingType? value;
             string key = from as string;
 
             if (key != null)
             {
-                if (key != string.Empty &&
-                    _enumValues.TryGetValue(key, out int returnValue))
+               if (!string.IsNullOrEmpty(key) &&
+                _enumValues.TryGetValue(key, out TUnderlyingType returnValue))
                 {
                     return _cast(returnValue);
                 }
 
-                return _default;
+                value = ConvertTo<TUnderlyingType?, string>.From(key, provider);
+
+                return value.HasValue
+                    ? _cast(value.Value)
+                    : _default;
             }
 
-            int? intKey = ConvertTo<int?, object>.From(from, provider);
+            value = ConvertTo<TUnderlyingType?, object>.From(from, provider);
 
-            return intKey.HasValue
-                ? _cast(intKey.Value)
+            return value.HasValue
+                ? _cast(value.Value)
                 : _default;
         }
 
-        public static TTo ConvertFromString(
+        public static TEnum ConvertFromString(
             string from,
             IFormatProvider provider = null)
         {
             if (!string.IsNullOrEmpty(from) &&
-                _enumValues.TryGetValue(from, out int returnValue))
+                _enumValues.TryGetValue(from, out TUnderlyingType returnValue))
             {
                 return _cast(returnValue);
             }
 
-            return _default;
+            TUnderlyingType? value = ConvertTo<TUnderlyingType?, string>.From(from, provider);
+
+            return value.HasValue
+                ? _cast(value.Value)
+                : _default;
         }
 
-        public static TTo Convert<TFrom>(
+        public static TEnum Convert<TFrom>(
             TFrom from,
             IFormatProvider provider = null)
         {
-            int? intKey = ConvertTo<int?, TFrom>.From(from, provider);
+            TUnderlyingType? value = ConvertTo<TUnderlyingType?, TFrom>.From(from, provider);
 
-            return intKey.HasValue
-                ? _cast(intKey.Value)
+            return value.HasValue
+                ? _cast(value.Value)
                 : _default;
         }
 
         public static string ConvertToString(
-            TTo from,
+            TEnum from,
             IFormatProvider provider = null)
         {
             string returnValue = default;
-            int? value = ConvertTo<int?, TTo>.From(from);
+            TUnderlyingType? value = ConvertTo<TUnderlyingType?, TEnum>.From(from);
 
            if (value.HasValue)
             {

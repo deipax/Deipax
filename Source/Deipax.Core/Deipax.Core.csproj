@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <Platforms>AnyCPU;x64;x86</Platforms>
     <Title>Deipax.Core</Title>
     <Authors>Jeffery Felce</Authors>
     <Copyright>Copyright ©  2018</Copyright>

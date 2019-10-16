@@ -3,64 +3,74 @@ using System.Collections.Generic;
 
 namespace Deipax.Core.Common
 {
+    /// <summary>
+    /// This class holds onto Enum mappings and shares the same
+    /// dictionary between an Enum and its nullable form.
+    /// </summary>
     public static class EnumCache
     {
         #region Field Members
-        private static QuickCache<Type, IReadOnlyDictionary<string, int>> _enumValueCache =
-            new QuickCache<Type, IReadOnlyDictionary<string, int>>(ReferenceEqualsComparer.Instance);
+        private static QuickCache<Type, object> _enumValueCache =
+            new QuickCache<Type, object>(ReferenceEqualsComparer.Instance);
 
-        private static QuickCache<Type, IReadOnlyDictionary<int, string>> _stringValueCache =
-            new QuickCache<Type, IReadOnlyDictionary<int, string>>(ReferenceEqualsComparer.Instance);
-
-        private static Func<Type, IReadOnlyDictionary<string, int>> _getEnumValues = GetEnumValues;
-
-        private static Func<Type, IReadOnlyDictionary<int, string>> _getStringValues = GetStringValues;
+        private static QuickCache<Type, object> _stringValueCache =
+            new QuickCache<Type, object>(ReferenceEqualsComparer.Instance);
         #endregion
 
         #region Public Members
-        public static IReadOnlyDictionary<string, int> GetEnumValues<T>()
+        public static IReadOnlyDictionary<string, TUnderlyingType> GetEnumValues<TEnum, TUnderlyingType>()
         {
-            Type toType = typeof(T);
-            Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-            return _enumValueCache.GetOrAdd(underlyingToType, _getEnumValues);
+            Type toType = typeof(TEnum);
+            Type enumType = Nullable.GetUnderlyingType(toType) ?? toType;
+            var cache = _enumValueCache.GetOrAdd(
+                enumType, 
+                (key) => GetEnumValuesHelper<TEnum, TUnderlyingType>());
+            return cache as IReadOnlyDictionary<string, TUnderlyingType>;
         }
 
-        public static IReadOnlyDictionary<int, string> GetStringValues<T>()
+        public static IReadOnlyDictionary<TUnderlyingType, string> GetStringValues<TEnum, TUnderlyingType>()
         {
-            Type toType = typeof(T);
-            Type underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-            return _stringValueCache.GetOrAdd(underlyingToType, _getStringValues);
+            Type toType = typeof(TEnum);
+            Type enumType = Nullable.GetUnderlyingType(toType) ?? toType;
+            var cache = _stringValueCache.GetOrAdd(
+                enumType, 
+                (key) => GetStringValuesHelper<TEnum, TUnderlyingType>());
+            return cache as IReadOnlyDictionary<TUnderlyingType, string>;
         }
         #endregion
 
         #region Private Members
-        private static IReadOnlyDictionary<string, int> GetEnumValues(Type t)
+        public static object GetEnumValuesHelper<TEnum, TUnderlyingType>()
         {
-            Dictionary<string, int> cache = new Dictionary<string, int>();
+            Type toType = typeof(TEnum);
+            Type enumType = Nullable.GetUnderlyingType(toType) ?? toType;
+            Dictionary<string, TUnderlyingType> cache = new Dictionary<string, TUnderlyingType>();
 
-            if (t.IsEnum)
+            if (enumType.IsEnum)
             {
-                foreach (var enumValue in Enum.GetValues(t))
+                foreach (var enumValue in Enum.GetValues(enumType))
                 {
-                    int enumAsInt = (int)enumValue;
-                    cache.Add(enumValue.ToString(), enumAsInt);
-                    cache.Add(enumAsInt.ToString(), enumAsInt);
+                    TUnderlyingType enumAsUnderlyingType = (TUnderlyingType)enumValue;
+                    cache.Add(enumValue.ToString(), enumAsUnderlyingType);
+                    cache.Add(enumAsUnderlyingType.ToString(), enumAsUnderlyingType);
                 }
             }
 
             return cache;
         }
 
-        private static IReadOnlyDictionary<int, string> GetStringValues(Type t)
+        private static object GetStringValuesHelper<TEnum, TUnderlyingType>()
         {
-            Dictionary<int, string> cache = new Dictionary<int, string>();
+            Type toType = typeof(TEnum);
+            Type enumType = Nullable.GetUnderlyingType(toType) ?? toType;
+            Dictionary<TUnderlyingType, string> cache = new Dictionary<TUnderlyingType, string>();
 
-            if (t.IsEnum)
+            if (enumType.IsEnum)
             {
-                foreach (var enumValue in Enum.GetValues(t))
+                foreach (var enumValue in Enum.GetValues(enumType))
                 {
-                    int enumAsInt = (int)enumValue;
-                    cache.Add(enumAsInt, enumValue.ToString());
+                    TUnderlyingType enumAsUnderlyingType = (TUnderlyingType)enumValue;
+                    cache.Add(enumAsUnderlyingType, enumValue.ToString());
                 }
             }
 

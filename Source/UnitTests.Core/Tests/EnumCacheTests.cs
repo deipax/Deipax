@@ -10,16 +10,16 @@ namespace UnitTests.Core
         [TestMethod]
         public void EnumValuesAreShared()
         {
-            var enumValues = EnumCache.GetEnumValues<TestEnum>();
-            var nullableEnumValues = EnumCache.GetEnumValues<TestEnum?>();
+            var enumValues = EnumCache.GetEnumValues<TestEnum, int>();
+            var nullableEnumValues = EnumCache.GetEnumValues<TestEnum?, int>();
             Assert.AreSame(enumValues, nullableEnumValues);
         }
 
         [TestMethod]
         public void StringValuesAreShared()
         {
-            var stringValues = EnumCache.GetStringValues<TestEnum>();
-            var nullableStringValues = EnumCache.GetStringValues<TestEnum?>();
+            var stringValues = EnumCache.GetStringValues<TestEnum, int>();
+            var nullableStringValues = EnumCache.GetStringValues<TestEnum?, int>();
             Assert.AreSame(stringValues, nullableStringValues);
         }
     }

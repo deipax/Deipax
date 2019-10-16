@@ -246,6 +246,12 @@ namespace UnitTests.Core.TestClasses
         NinetyNine = 99,
     }
 
+    public enum TestEnumLong : long
+    {
+        Min = long.MinValue,
+        Max = long.MaxValue
+    }
+
     public interface IParent
     {
     }

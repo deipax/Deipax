@@ -19,7 +19,9 @@ namespace Deipax.Core.Conversion.Factories
                 if (args.FromType == typeof(string))
                 {
                     callExpression = Expression.Call(
-                        typeof(EnumHelper<>).MakeGenericType(args.ToType),
+                        typeof(EnumHelper<,>).MakeGenericType(
+                            args.ToType,
+                            Enum.GetUnderlyingType(args.UnderlyingToType)),
                         "ConvertFromString",
                         new Type [] { },
                         args.Input,
@@ -28,7 +30,9 @@ namespace Deipax.Core.Conversion.Factories
                 else if (args.FromType == typeof(object))
                 {
                     callExpression = Expression.Call(
-                        typeof(EnumHelper<>).MakeGenericType(args.ToType),
+                        typeof(EnumHelper<,>).MakeGenericType(
+                            args.ToType,
+                            Enum.GetUnderlyingType(args.UnderlyingToType)),
                         "ConvertFromObject",
                         new Type [] { },
                         args.Input,
@@ -41,7 +45,9 @@ namespace Deipax.Core.Conversion.Factories
                         : (Expression)args.Input;
 
                     callExpression = Expression.Call(
-                        typeof(EnumHelper<>).MakeGenericType(args.ToType),
+                        typeof(EnumHelper<,>).MakeGenericType(
+                            args.ToType,
+                            Enum.GetUnderlyingType(args.UnderlyingToType)),
                         "Convert",
                         new[] { args.UnderlyingFromType },
                         guardedInput,

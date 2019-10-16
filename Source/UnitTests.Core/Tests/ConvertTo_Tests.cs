@@ -406,6 +406,24 @@ namespace UnitTests.Core.Conversion
             return base.GetExpected(from);
         }
     }
+
+    [TestClass]
+    public class ConvertToEnumLong : ConvertTo_Base<TestEnumLong>
+    {
+        protected override TestEnumLong GetExpected<TFrom>(TFrom from)
+        {
+            return base.GetExpected(from);
+        }
+    }
+
+    [TestClass]
+    public class ConvertToEnumLongNullable : ConvertTo_Base<TestEnumLong?>
+    {
+        protected override TestEnumLong? GetExpected<TFrom>(TFrom from)
+        {
+            return base.GetExpected(from);
+        }
+    }
     #endregion
 
     #region IParent
