@@ -93,7 +93,7 @@ namespace Deipax.Cloning.Extensions
 
         private static bool CheckCloneConfigHelper<T>()
         {
-            return CloneConfig<T>.ShallowCloneType;
+            return CloneCmdConfig<T>.ShallowCloneType;
         }
         #endregion
     }

@@ -62,14 +62,14 @@ namespace UnitTests.Cloning
 
             try
             {
-                CloneConfig<ComplexStruct>.ShallowCloneType = true;
+                CloneCmdConfig<ComplexStruct>.ShallowCloneType = true;
                 Assert.AreEqual(true, type.CanShallowClone());
-                CloneConfig<ComplexStruct>.Reset();
+                CloneCmdConfig<ComplexStruct>.Reset();
                 Assert.AreEqual(false, type.CanShallowClone());
             }
             finally
             {
-                CloneConfig<ComplexStruct>.Reset();
+                CloneCmdConfig<ComplexStruct>.Reset();
             }
         }
 
@@ -88,14 +88,14 @@ namespace UnitTests.Cloning
 
             try
             {
-                CloneConfig<HelperClass2>.ShallowCloneType = true;
+                CloneCmdConfig<HelperClass2>.ShallowCloneType = true;
                 Assert.AreEqual(true, type.CanShallowClone());
-                CloneConfig<HelperClass2>.Reset();
+                CloneCmdConfig<HelperClass2>.Reset();
                 Assert.AreEqual(false, type.CanShallowClone());
             }
             finally
             {
-                CloneConfig<HelperClass2>.Reset();
+                CloneCmdConfig<HelperClass2>.Reset();
             }
         }
 
@@ -124,7 +124,7 @@ namespace UnitTests.Cloning
                 Assert.AreSame(source3.PropOne, source4.PropOne);
                 Assert.AreNotSame(target3.PropOne, target4.PropOne);
 
-                CloneConfig<List<int>>.ShallowCloneType = true;
+                CloneCmdConfig<List<int>>.ShallowCloneType = true;
                 Cloner<List<int>>.Reset();
                 Cloner<HelperClass3>.Reset();
                 Cloner<HelperClass4>.Reset();
@@ -139,7 +139,7 @@ namespace UnitTests.Cloning
             }
             finally
             {
-                CloneConfig<List<int>>.Reset();
+                CloneCmdConfig<List<int>>.Reset();
                 Cloner<List<int>>.Reset();
                 Cloner<HelperClass3>.Reset();
                 Cloner<HelperClass4>.Reset();
@@ -173,7 +173,7 @@ namespace UnitTests.Cloning
             }
             finally
             {
-                CloneConfig<List<int>>.Reset();
+                CloneCmdConfig<List<int>>.Reset();
                 Cloner<List<int>>.Reset();
                 Cloner<HelperClass3>.Reset();
                 Cloner<HelperClass4>.Reset();
@@ -199,7 +199,7 @@ namespace UnitTests.Cloning
                 Assert.AreNotSame(source7.FieldTwo, target7.FieldTwo);
                 Assert.AreNotSame(target7.FieldOne, target7.FieldTwo);
 
-                CloneConfig<HelperClass7>.ShallowClone(x => x.FieldTwo);
+                CloneCmdConfig<HelperClass7>.ShallowClone(x => x.FieldTwo);
                 Cloner<HelperClass7>.Reset();
 
                 target7 = source7.GetClone();
@@ -210,7 +210,7 @@ namespace UnitTests.Cloning
             }
             finally
             {
-                CloneConfig<HelperClass7>.Reset();
+                CloneCmdConfig<HelperClass7>.Reset();
                 Cloner<HelperClass7>.Reset();
             }
         }
@@ -234,7 +234,7 @@ namespace UnitTests.Cloning
                 Assert.AreNotSame(source8.PropTwo, target8.PropTwo);
                 Assert.AreNotSame(target8.PropOne, target8.PropTwo);
 
-                CloneConfig<HelperClass8>.ShallowClone(x => x.PropTwo);
+                CloneCmdConfig<HelperClass8>.ShallowClone(x => x.PropTwo);
                 Cloner<HelperClass8>.Reset();
 
                 target8 = source8.GetClone();
@@ -245,7 +245,7 @@ namespace UnitTests.Cloning
             }
             finally
             {
-                CloneConfig<HelperClass8>.Reset();
+                CloneCmdConfig<HelperClass8>.Reset();
                 Cloner<HelperClass8>.Reset();
             }
         }

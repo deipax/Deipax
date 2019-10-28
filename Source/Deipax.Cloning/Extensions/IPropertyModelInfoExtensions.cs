@@ -33,7 +33,7 @@ namespace Deipax.Cloning.Extensions
         private static bool CanShallowClonePropHelper<T>(
             string propName)
         {
-            return CloneConfig<T>.CanShallowClone(propName);
+            return CloneCmdConfig<T>.CanShallowClone(propName);
         }
         #endregion
     }

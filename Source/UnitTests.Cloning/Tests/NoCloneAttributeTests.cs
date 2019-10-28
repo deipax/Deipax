@@ -157,10 +157,10 @@ namespace UnitTests.Cloning
                 PropFour = 4
             };
 
-            CloneConfig<TestClass4>.CloneCmd = CloneCmd.All;
-            CloneConfig<TestClass4>.NoClone(x => x.PropOne);
-            CloneConfig<TestClass4>.NoClone(x => x.PropTwo);
-            CloneConfig<TestClass4>.NoClone("PropSix");
+            CloneCmdConfig<TestClass4>.CloneCmd = CloneCmd.All;
+            CloneCmdConfig<TestClass4>.NoClone(x => x.PropOne);
+            CloneCmdConfig<TestClass4>.NoClone(x => x.PropTwo);
+            CloneCmdConfig<TestClass4>.NoClone("PropSix");
 
             var propFive = ModelAccess<TestClass4>.GetGetter("PropFive").GetDelegate<object>();
             var propSix = ModelAccess<TestClass4>.GetGetter("PropSix").GetDelegate<object>();

@@ -33,7 +33,7 @@ namespace Deipax.Cloning.Extensions
         private static bool CanShallowCloneFieldHelper<T>(
             string fieldName)
         {
-            return CloneConfig<T>.CanShallowClone(fieldName);
+            return CloneCmdConfig<T>.CanShallowClone(fieldName);
         }
         #endregion
     }

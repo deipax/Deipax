@@ -167,16 +167,16 @@ namespace UnitTests.Cloning
             CloneDel<T> cloneDel = null,
             ICloneDelFactory factory = null)
         {
-            CloneConfig<T>.Reset();
-            CloneConfigHelper.UserFactories.Clear();
+            CloneCmdConfig<T>.Reset();
+            CloneConfig.UserFactories.Clear();
 
             if (factory != null)
             {
-                CloneConfigHelper.UserFactories.Add(factory);
+                CloneConfig.UserFactories.Add(factory);
             }
 
-            CloneConfig<T>.Initializer = initializer;
-            CloneConfig<T>.CloneDel = cloneDel;
+            CloneCmdConfig<T>.Initializer = initializer;
+            CloneCmdConfig<T>.CloneDel = cloneDel;
             Cloner<T>.Reset();
         }
         #endregion

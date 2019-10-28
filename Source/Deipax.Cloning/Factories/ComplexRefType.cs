@@ -20,12 +20,12 @@ namespace Deipax.Cloning.Factories
                 !type.IsAnonymous())
             {
                 if (type.HasDefaultConstructor() ||
-                    CloneConfig<T>.Initializer != null)
+                    CloneCmdConfig<T>.Initializer != null)
                 {
                     var args = CloneArgs.Create(type, true);
 
-                    Expression createExpression = CloneConfig<T>.Initializer != null ?
-                        (Expression)Expression.Invoke(Expression.Constant(CloneConfig<T>.Initializer), args.Source) :
+                    Expression createExpression = CloneCmdConfig<T>.Initializer != null ?
+                        (Expression)Expression.Invoke(Expression.Constant(CloneCmdConfig<T>.Initializer), args.Source) :
                         (Expression)Expression.New(args.Type);
 
                     List<Expression> expressions = new List<Expression>()

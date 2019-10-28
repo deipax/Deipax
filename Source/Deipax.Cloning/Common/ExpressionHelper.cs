@@ -79,7 +79,7 @@ namespace Deipax.Cloning.Common
         {
             List<Expression> expressions = new List<Expression>();
 
-            foreach (var field in CloneConfig<T>.GetFields())
+            foreach (var field in CloneCmdConfig<T>.GetFields())
             {
                 var memberType = field.Type;
                 var memberInfo = field.FieldInfo;
@@ -94,7 +94,7 @@ namespace Deipax.Cloning.Common
                     cloneExpression));
             }
 
-            foreach (var prop in CloneConfig<T>.GetProperties())
+            foreach (var prop in CloneCmdConfig<T>.GetProperties())
             {
                 var memberType = prop.Type;
                 var memberInfo = prop.HasBackingField ?

@@ -3,6 +3,7 @@ using Deipax.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Deipax.Core.Conversion
@@ -48,35 +49,43 @@ namespace Deipax.Core.Conversion
         #region Public Members
         public static IFormatProvider DefaultProvider { get; set; }
         public static IConvertFactory Default { get; set; }
+        public static IReadOnlyList<IConvertFactory> UserFactories { get; set; }
 
         public static IConvertResult<TFrom, TTo> Get<TFrom, TTo>()
         {
-            IExpArgs<TFrom, TTo> args = new ExpArgs<TFrom, TTo>();
+            var args = new ExpArgs<TFrom, TTo>();
 
-            Expression<Convert<TFrom, TTo>> result = null;
+            var result = GetResult(UserFactories, args);
+            if (result != null) return result;
 
-            foreach (var factory in _defaults)
-            {
-                result = factory.Get(args);
+            result = GetResult(_defaults, args);
+            if (result != null) return result;
 
-                if (result != null)
-                {
-                    return new Result<TFrom, TTo>()
-                    {
-                        Factory = factory,
-                        Func = result.Compile(),
-                        Expression = result
-                    };
-                }
-            }
+            return GetResult(Default, args);
+        }
+        #endregion
 
-            result = Default?.Get(args);
+        #region Private Members
+        private static Result<TFrom, TTo> GetResult<TFrom, TTo>(
+            IReadOnlyList<IConvertFactory> factories,
+            IExpArgs<TFrom, TTo> args)
+        {
+            return factories?
+                .Select(x => GetResult(x, args))
+                .FirstOrDefault(x => x != null);
+        }
+
+        private static Result<TFrom, TTo> GetResult<TFrom, TTo>(
+            IConvertFactory factory,
+            IExpArgs<TFrom, TTo> args)
+        {
+            var result = factory?.Get(args);
 
             if (result != null)
             {
                 return new Result<TFrom, TTo>()
                 {
-                    Factory = Default,
+                    Factory = factory,
                     Func = result.Compile(),
                     Expression = result
                 };
