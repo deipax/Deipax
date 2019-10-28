@@ -3,6 +3,7 @@ using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using UnitTests.Common;
 
 namespace UnitTests.Cloning
@@ -11,175 +12,114 @@ namespace UnitTests.Cloning
     public class CloneConfigTests
     {
         [TestMethod]
-        public void UserFactory()
+        public void UserFactory_Override()
         {
-            try
-            {
-                int callCount = 0;
-                Helper1 mysource = new Helper1();
+            int callCount = 0;
+            var source = new TestClass1();
 
-                HelperFactory<Helper1> helperFactory = new HelperFactory<Helper1>()
+            HelperFactory<TestClass1> helperFactory = new HelperFactory<TestClass1>()
+            {
+                MyFunc = (x, y) =>
                 {
-                    MyFunc = (x, y) =>
-                    {
-                        callCount++;
-                        return mysource;
-                    }
-                };
+                    callCount++;
+                    return source;
+                }
+            };
 
-                Reset<Helper1>(factory: helperFactory);
-
-                var source = new Helper1();
-                var target = source.GetClone();
-
-                Assert.AreSame(mysource, target);
-                Assert.AreEqual(1, callCount);
-            }
-            finally
+            CloneConfig.UserFactories = new List<ICloneDelFactory>
             {
-                Reset<Helper1>();
-            }
+                helperFactory
+            };
+
+            var target = source.GetClone();
+
+            Assert.AreSame(source, target);
+            Assert.AreEqual(1, callCount);
         }
 
         [TestMethod]
         public void Initializer_Override_Class()
         {
-            try
+            int methodCalled = 0;
+
+            CloneConfig<TestClass2>.Initializer = (x) =>
             {
-                int methodCalled = 0;
+                methodCalled++;
+                return new TestClass2(x.Prop);
+            };
 
-                Func<Helper5, Helper5> func = (x) =>
-                {
-                    methodCalled++;
-                    return new Helper5(x.Prop);
-                };
+            var source = new TestClass2(6);
+            var dest = source.GetClone();
 
-                Reset(initializer: func);
-
-                var source = new Helper5(6);
-                var dest = source.GetClone();
-
-                Assert.IsNotNull(dest);
-                Assert.AreNotSame(source, dest);
-                Assert.AreEqual(source.Prop, dest.Prop);
-                Assert.AreEqual(dest.Prop, 6);
-                Assert.AreEqual(methodCalled, 1);
-            }
-            finally
-            {
-                Reset<Helper5>();
-            }
+            Assert.IsNotNull(dest);
+            Assert.AreNotSame(source, dest);
+            Assert.AreEqual(source.Prop, dest.Prop);
+            Assert.AreEqual(dest.Prop, 6);
+            Assert.AreEqual(methodCalled, 1);
         }
 
         [TestMethod]
         public void Initializer_Override_Struct()
         {
-            try
+            int methodCalled = 0;
+
+            CloneConfig<TestStruct1>.Initializer = (x) =>
             {
-                int methodCalled = 0;
+                methodCalled++;
+                return new TestStruct1(x.Prop);
+            };
 
-                Func<HelperStruct6, HelperStruct6> func = (x) =>
-                {
-                    methodCalled++;
-                    return new HelperStruct6(x.Prop);
-                };
+            var source = new TestStruct1(6);
+            var dest = source.GetClone();
 
-                Reset(initializer: func);
-
-                var source = new HelperStruct6(6);
-                var dest = source.GetClone();
-
-                Assert.IsNotNull(dest);
-                Assert.AreEqual(source.Prop, dest.Prop);
-                Assert.AreEqual(dest.Prop, 6);
-                Assert.AreEqual(methodCalled, 1);
-            }
-            finally
-            {
-                Reset<HelperStruct6>();
-            }
+            Assert.IsNotNull(dest);
+            Assert.AreEqual(source.Prop, dest.Prop);
+            Assert.AreEqual(dest.Prop, 6);
+            Assert.AreEqual(1, methodCalled);
         }
 
         [TestMethod]
         public void CloneDel_Override_Class()
         {
-            try
+            int methodCalled = 0;
+
+            CloneConfig<TestClass3>.CloneDel = (x, y) =>
             {
-                int methodCalled = 0;
+                methodCalled++;
+                return x;
+            };
 
-                CloneDel<Helper1_1> cloneDel = (x, y) =>
-                {
-                    methodCalled++;
-                    return x;
-                };
+            var source = new TestClass3();
+            source.PropOne = 6;
 
-                Reset(cloneDel: cloneDel);
+            var dest = source.GetClone();
 
-                var source = new Helper1_1();
-                source.PropOne = 6;
-
-                var dest = source.GetClone();
-
-                Assert.IsNotNull(dest);
-                Assert.AreSame(source, dest);
-                Assert.AreEqual(source.PropOne, dest.PropOne);
-                Assert.AreEqual(dest.PropOne, 6);
-                Assert.AreEqual(methodCalled, 1);
-            }
-            finally
-            {
-                Reset<Helper1_1>();
-            }
+            Assert.IsNotNull(dest);
+            Assert.AreSame(source, dest);
+            Assert.AreEqual(source.PropOne, dest.PropOne);
+            Assert.AreEqual(dest.PropOne, 6);
+            Assert.AreEqual(methodCalled, 1);
         }
 
         [TestMethod]
         public void CloneDel_Override_Struct()
         {
-            try
+            int methodCalled = 0;
+
+            CloneConfig<TestStruct2>.CloneDel = (x, y) =>
             {
-                int methodCalled = 0;
+                methodCalled++;
+                return x;
+            };
 
-                CloneDel<HelperStruct6> cloneDel = (x, y) =>
-                {
-                    methodCalled++;
-                    return x;
-                };
+            var source = new TestStruct2(6);
+            var dest = source.GetClone();
 
-                Reset(cloneDel: cloneDel);
-
-                var source = new HelperStruct6(6);
-                var dest = source.GetClone();
-
-                Assert.IsNotNull(dest);
-                Assert.AreEqual(source.Prop, dest.Prop);
-                Assert.AreEqual(dest.Prop, 6);
-                Assert.AreEqual(methodCalled, 1);
-            }
-            finally
-            {
-                Reset<HelperStruct6>();
-            }
+            Assert.IsNotNull(dest);
+            Assert.AreEqual(source.Prop, dest.Prop);
+            Assert.AreEqual(dest.Prop, 6);
+            Assert.AreEqual(1, methodCalled);
         }
-
-        #region Private Members
-        private static void Reset<T>(
-            Func<T, T> initializer = null,
-            CloneDel<T> cloneDel = null,
-            ICloneDelFactory factory = null)
-        {
-            CloneCmdConfig<T>.Reset();
-            CloneConfig.UserFactories.Clear();
-
-            if (factory != null)
-            {
-                CloneConfig.UserFactories.Add(factory);
-            }
-
-            CloneCmdConfig<T>.Initializer = initializer;
-            CloneCmdConfig<T>.CloneDel = cloneDel;
-            Cloner<T>.Reset();
-        }
-        #endregion
 
         #region Helpers
         class HelperFactory<X> : ICloneDelFactory
@@ -190,6 +130,49 @@ namespace UnitTests.Cloning
             {
                 return MyFunc as CloneDel<T>;
             }
+        }
+
+        class TestClass1
+        {
+        }
+
+        class TestClass2
+        {
+            public TestClass2(int prop)
+            {
+                this.Prop = prop;
+            }
+
+            public int Prop { get; private set; }
+        }
+
+        class TestClass3
+        {
+            public int PropOne { get; set; }
+        }
+
+        struct TestStruct1
+        {
+            public TestStruct1(int prop)
+            {
+                this.Prop = prop;
+                this.Helper1 = new Helper1();
+            }
+
+            public int Prop { get; private set; }
+            public Helper1 Helper1 { get; set; }
+        }
+
+        struct TestStruct2
+        {
+            public TestStruct2(int prop)
+            {
+                this.Prop = prop;
+                this.Helper1 = new Helper1();
+            }
+
+            public int Prop { get; private set; }
+            public Helper1 Helper1 { get; set; }
         }
         #endregion
     }

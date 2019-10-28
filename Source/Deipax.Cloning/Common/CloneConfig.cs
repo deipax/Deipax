@@ -1,11 +1,18 @@
 ﻿using Deipax.Cloning.Factories;
 using Deipax.Cloning.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Deipax.Cloning.Common
 {
     public delegate T CloneDel<T>(T source, CopyContext context);
+
+    public static class CloneConfig<T>
+    {
+        public static Func<T, T> Initializer { get; set; }
+        public static CloneDel<T> CloneDel { get; set; }
+    }
 
     public static class CloneConfig
     {
@@ -39,11 +46,11 @@ namespace Deipax.Cloning.Common
         #endregion
 
         #region Public Members
-        public static List<ICloneDelFactory> UserFactories { get; set; }
+        public static IReadOnlyList<ICloneDelFactory> UserFactories { get; set; }
 
         public static CloneDel<T> Get<T>()
         {
-            CloneDel<T> cloneDel = CloneCmdConfig<T>.CloneDel;
+            CloneDel<T> cloneDel = CloneConfig<T>.CloneDel;
             if (cloneDel != null) return cloneDel;
 
             cloneDel = Get<T>(UserFactories);

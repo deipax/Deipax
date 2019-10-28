@@ -22,10 +22,6 @@ namespace Deipax.Cloning.Common
         #endregion
 
         #region Public Members
-        public static Func<T, T> Initializer { get; set; }
-
-        public static CloneDel<T> CloneDel { get; set; }
-
         public static CloneCmd CloneCmd { get; set; }
 
         public static bool ShallowCloneType { get; set; }
@@ -37,7 +33,7 @@ namespace Deipax.Cloning.Common
 
         public static void ShallowClone(Expression<Func<T, object>> expression)
         {
-           ShallowClone(expression.ExtractMemberName());
+            ShallowClone(expression.ExtractMemberName());
         }
 
         public static void Clone(string name)
@@ -136,8 +132,6 @@ namespace Deipax.Cloning.Common
 
         public static void Reset()
         {
-            Initializer = null;
-            CloneDel = null;
             _clone.Clear();
             _noClone.Clear();
             _shallow.Clear();
@@ -162,38 +156,16 @@ namespace Deipax.Cloning.Common
 
             foreach (var field in fields)
             {
-                if (field.GetCustomAttributes<CloneAttribute>().Count() > 0)
-                {
-                    Clone(field.Name);
-                }
-
-                if (field.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
-                {
-                    NoClone(field.Name);
-                }
-
-                if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)
-                {
-                    ShallowClone(field.Name);
-                }
+                if (field.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(field.Name);
+                if (field.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(field.Name);
+                if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(field.Name);
             }
 
             foreach (var prop in type.GetFilteredProperties(fields))
             {
-                if (prop.GetCustomAttributes<CloneAttribute>().Count() > 0)
-                {
-                    Clone(prop.Name);
-                }
-
-                if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0)
-                {
-                    NoClone(prop.Name);
-                }
-
-                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0)
-                {
-                    ShallowClone(prop.Name);
-                }
+                if (prop.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(prop.Name);
+                if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(prop.Name);
+                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(prop.Name);
             }
         }
         #endregion

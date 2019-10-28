@@ -300,7 +300,6 @@ namespace UnitTests.Cloning
         {
             [ShallowClone]
             public HelperClass2 FieldOne;
-
             public HelperClass2 FieldTwo;
         }
 
@@ -308,7 +307,6 @@ namespace UnitTests.Cloning
         {
             [ShallowClone]
             public HelperClass2 PropOne { get; set; }
-
             public HelperClass2 PropTwo { get; set; }
         }
         #endregion
