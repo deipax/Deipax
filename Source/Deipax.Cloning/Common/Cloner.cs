@@ -37,12 +37,6 @@ namespace Deipax.Cloning.Common
 
             return del(source, context);
         }
-
-        public static void Reset()
-        {   
-            _cache.Clear();
-            _del = CloneConfig.Get<T>();
-        }
         #endregion
 
         #region Private Members

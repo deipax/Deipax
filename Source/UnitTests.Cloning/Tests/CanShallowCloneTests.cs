@@ -55,199 +55,147 @@ namespace UnitTests.Cloning
         }
 
         [TestMethod]
-        public void CanShallowCloneType_CloneConfig()
+        public void StructByRegistrationExtension()
         {
-            var type = typeof(ComplexStruct);
+            // Test a complex struct.
+            var type = typeof(Test1Struct);
             Assert.AreEqual(false, type.CanShallowClone());
-
-            try
-            {
-                CloneCmdConfig<ComplexStruct>.ShallowCloneType = true;
-                Assert.AreEqual(true, type.CanShallowClone());
-                CloneCmdConfig<ComplexStruct>.Reset();
-                Assert.AreEqual(false, type.CanShallowClone());
-            }
-            finally
-            {
-                CloneCmdConfig<ComplexStruct>.Reset();
-            }
-        }
-
-        [TestMethod]
-        public void CanShallowCloneType_ByAttribute()
-        {
-            var type = typeof(HelperClass1);
+            CloneCmdConfig<Test1Struct>.ShallowCloneType = true;
             Assert.AreEqual(true, type.CanShallowClone());
         }
 
         [TestMethod]
-        public void CanShallowCloneType_ByRegistration()
+        public void ComplexStructWithShallowCloneMembers()
         {
-            var type = typeof(HelperClass2);
+            // A complex struct whose members can be shallow
+            // cloned implies the struct itself can be shallow cloned.
+            var type = typeof(Test2Struct);
+            Assert.AreEqual(true, type.CanShallowClone());
+        }
+
+        [TestMethod]
+        public void ClassByAttributeExtension()
+        {
+            var type = typeof(Test3Class);
+            Assert.AreEqual(true, type.CanShallowClone());
+        }
+
+        [TestMethod]
+        public void ClassByRegistrationExtension()
+        {
+            var type = typeof(Test4Class);
             Assert.AreEqual(false, type.CanShallowClone());
-
-            try
-            {
-                CloneCmdConfig<HelperClass2>.ShallowCloneType = true;
-                Assert.AreEqual(true, type.CanShallowClone());
-                CloneCmdConfig<HelperClass2>.Reset();
-                Assert.AreEqual(false, type.CanShallowClone());
-            }
-            finally
-            {
-                CloneCmdConfig<HelperClass2>.Reset();
-            }
+            CloneCmdConfig<Test4Class>.ShallowCloneType = true;
+            Assert.AreEqual(true, type.CanShallowClone());
         }
 
         [TestMethod]
-        public void CanShallowCloneType_ByRegistration_Global()
+        public void ClassByRegistration()
         {
-            List<int> listOne = new List<int>();
+            Test5_3Class<int> listOne = new Test5_3Class<int>();
 
-            HelperClass3 source3 = new HelperClass3()
+            Test5_1Class source1 = new Test5_1Class()
             {
                 PropOne = listOne
             };
 
-            HelperClass4 source4 = new HelperClass4()
+            Test5_2Class source2 = new Test5_2Class()
             {
                 PropOne = listOne
             };
 
-            try
-            {
-                HelperClass3 target3 = source3.GetClone();
-                HelperClass4 target4 = source4.GetClone();
 
-                Assert.AreNotSame(source3.PropOne, target3.PropOne);
-                Assert.AreNotSame(source4.PropOne, target4.PropOne);
-                Assert.AreSame(source3.PropOne, source4.PropOne);
-                Assert.AreNotSame(target3.PropOne, target4.PropOne);
+            CloneCmdConfig<Test5_3Class<int>>.ShallowCloneType = true;
 
-                CloneCmdConfig<List<int>>.ShallowCloneType = true;
-                Cloner<List<int>>.Reset();
-                Cloner<HelperClass3>.Reset();
-                Cloner<HelperClass4>.Reset();
+            var target1 = source1.GetClone();
+            var target2 = source2.GetClone();
 
-                target3 = source3.GetClone();
-                target4 = source4.GetClone();
-
-                Assert.AreSame(source3.PropOne, target3.PropOne);
-                Assert.AreSame(source4.PropOne, target4.PropOne);
-                Assert.AreSame(source3.PropOne, source4.PropOne);
-                Assert.AreSame(target3.PropOne, target4.PropOne);
-            }
-            finally
-            {
-                CloneCmdConfig<List<int>>.Reset();
-                Cloner<List<int>>.Reset();
-                Cloner<HelperClass3>.Reset();
-                Cloner<HelperClass4>.Reset();
-            }
+            Assert.AreSame(source1.PropOne, source2.PropOne);
+            Assert.AreSame(source1.PropOne, target1.PropOne);
+            Assert.AreSame(source2.PropOne, target2.PropOne);
+            Assert.AreSame(source2.PropOne, target1.PropOne);
+            Assert.AreSame(target1.PropOne, target2.PropOne);
         }
 
         [TestMethod]
-        public void CanShallowCloneType_ByAttribute_Global()
+        public void ClassByAttribute()
         {
-            HelperClass1 one = new HelperClass1();
+            Test6_3Class one = new Test6_3Class();
 
-            HelperClass5 source5 = new HelperClass5()
+            Test6_1Class source1 = new Test6_1Class()
             {
                 PropOne = one
             };
 
-            HelperClass6 source6 = new HelperClass6()
+            Test6_2Class source2 = new Test6_2Class()
             {
                 PropOne = one
             };
 
-            try
-            {
-                HelperClass5 target5 = source5.GetClone();
-                HelperClass6 target6 = source6.GetClone();
+            var target1 = source1.GetClone();
+            var target2 = source2.GetClone();
 
-                Assert.AreSame(source5.PropOne, target5.PropOne);
-                Assert.AreSame(source6.PropOne, target6.PropOne);
-                Assert.AreSame(source5.PropOne, source6.PropOne);
-                Assert.AreSame(target5.PropOne, target6.PropOne);
-            }
-            finally
-            {
-                CloneCmdConfig<List<int>>.Reset();
-                Cloner<List<int>>.Reset();
-                Cloner<HelperClass3>.Reset();
-                Cloner<HelperClass4>.Reset();
-            }
+            Assert.AreSame(source1.PropOne, source2.PropOne);
+            Assert.AreSame(source1.PropOne, target1.PropOne);
+            Assert.AreSame(source2.PropOne, target2.PropOne);
+            Assert.AreSame(source2.PropOne, target1.PropOne);
+            Assert.AreSame(target1.PropOne, target2.PropOne);
         }
 
         [TestMethod]
-        public void CanShallowClone_Field()
+        public void FieldByAttribute()
         {
-            HelperClass2 two = new HelperClass2();
+            Test7_2Class two = new Test7_2Class();
 
-            HelperClass7 source7 = new HelperClass7()
+            Test7_1Class source1 = new Test7_1Class()
             {
                 FieldOne = two,
                 FieldTwo = two
             };
 
-            try
-            {
-                HelperClass7 target7 = source7.GetClone();
+            var target1 = source1.GetClone();
 
-                Assert.AreSame(source7.FieldOne, target7.FieldOne);
-                Assert.AreNotSame(source7.FieldTwo, target7.FieldTwo);
-                Assert.AreNotSame(target7.FieldOne, target7.FieldTwo);
-
-                CloneCmdConfig<HelperClass7>.ShallowClone(x => x.FieldTwo);
-                Cloner<HelperClass7>.Reset();
-
-                target7 = source7.GetClone();
-
-                Assert.AreSame(source7.FieldOne, target7.FieldOne);
-                Assert.AreSame(source7.FieldTwo, target7.FieldTwo);
-                Assert.AreSame(target7.FieldOne, target7.FieldTwo);
-            }
-            finally
-            {
-                CloneCmdConfig<HelperClass7>.Reset();
-                Cloner<HelperClass7>.Reset();
-            }
+            Assert.AreSame(source1.FieldOne, source1.FieldTwo);
+            Assert.AreSame(source1.FieldOne, target1.FieldOne);
+            Assert.AreNotSame(source1.FieldTwo, target1.FieldTwo);
+            Assert.AreNotSame(target1.FieldOne, target1.FieldTwo);
         }
 
         [TestMethod]
-        public void CanShallowClone_Property()
+        public void PropertyByAttribute()
         {
-            HelperClass2 two = new HelperClass2();
+            Test8_2Class two = new Test8_2Class();
 
-            HelperClass8 source8 = new HelperClass8()
+            Test8_1Class source1 = new Test8_1Class()
             {
-                PropOne = two,
-                PropTwo = two
+                FieldOne = two,
+                FieldTwo = two
             };
 
-            try
-            {
-                HelperClass8 target8 = source8.GetClone();
+            var target1 = source1.GetClone();
 
-                Assert.AreSame(source8.PropOne, target8.PropOne);
-                Assert.AreNotSame(source8.PropTwo, target8.PropTwo);
-                Assert.AreNotSame(target8.PropOne, target8.PropTwo);
+            Assert.AreSame(source1.FieldOne, source1.FieldTwo);
+            Assert.AreSame(source1.FieldOne, target1.FieldOne);
+            Assert.AreNotSame(source1.FieldTwo, target1.FieldTwo);
+            Assert.AreNotSame(target1.FieldOne, target1.FieldTwo);
+        }
 
-                CloneCmdConfig<HelperClass8>.ShallowClone(x => x.PropTwo);
-                Cloner<HelperClass8>.Reset();
+        [TestMethod]
+        public void FieldByRegistration()
+        {
+            var type = typeof(Test9_class);
+            Assert.AreEqual(false, CloneCmdConfig<Test9_class>.CanShallowClone(x => x.FieldOne));
+            CloneCmdConfig<Test9_class>.ShallowCloneType = true;
+            Assert.AreEqual(false, CloneCmdConfig<Test9_class>.CanShallowClone(x => x.FieldOne));
+        }
 
-                target8 = source8.GetClone();
-
-                Assert.AreSame(source8.PropOne, target8.PropOne);
-                Assert.AreSame(source8.PropTwo, target8.PropTwo);
-                Assert.AreSame(target8.PropOne, target8.PropTwo);
-            }
-            finally
-            {
-                CloneCmdConfig<HelperClass8>.Reset();
-                Cloner<HelperClass8>.Reset();
-            }
+        [TestMethod]
+        public void PropertyByRegistration()
+        {
+            var type = typeof(Test10_class);
+            Assert.AreEqual(false, CloneCmdConfig<Test10_class>.CanShallowClone(x => x.PropOne));
+            CloneCmdConfig<Test10_class>.ShallowCloneType = true;
+            Assert.AreEqual(false, CloneCmdConfig<Test10_class>.CanShallowClone(x => x.PropOne));
         }
 
         #region Private Members
@@ -267,47 +215,95 @@ namespace UnitTests.Cloning
         #endregion
 
         #region Helpers
+        struct Test1Struct
+        {
+            public int Int { get; set; }
+            public Test1Class One { get; set; }
+        }
+
+        class Test1Class
+        {
+        }
+
+        struct Test2Struct
+        {
+            public int Int { get; set; }
+            public Test2Class One { get; set; }
+        }
+
         [ShallowClone]
-        class HelperClass1
+        class Test2Class
         {
         }
 
-        class HelperClass2
+        [ShallowClone]
+        class Test3Class
         {
         }
 
-        class HelperClass3
+        class Test4Class
         {
-            public List<int> PropOne { get; set; }
         }
 
-        class HelperClass4
+        class Test5_1Class
         {
-            public List<int> PropOne { get; set; }
+            public Test5_3Class<int> PropOne { get; set; }
         }
 
-        class HelperClass5
+        class Test5_2Class
         {
-            public HelperClass1 PropOne { get; set; }
+            public Test5_3Class<int> PropOne { get; set; }
         }
 
-        class HelperClass6
+        class Test5_3Class<T> : List<T>
         {
-            public HelperClass1 PropOne { get; set; }
         }
 
-        class HelperClass7
+        class Test6_1Class
+        {
+            public Test6_3Class PropOne { get; set; }
+        }
+
+        class Test6_2Class
+        {
+            public Test6_3Class PropOne { get; set; }
+        }
+
+        [ShallowClone]
+        class Test6_3Class
+        {
+        }
+
+        class Test7_1Class
         {
             [ShallowClone]
-            public HelperClass2 FieldOne;
-            public HelperClass2 FieldTwo;
+            public Test7_2Class FieldOne;
+            public Test7_2Class FieldTwo;
         }
 
-        class HelperClass8
+        class Test7_2Class
+        {
+        }
+
+        class Test8_1Class
         {
             [ShallowClone]
-            public HelperClass2 PropOne { get; set; }
-            public HelperClass2 PropTwo { get; set; }
+            public Test8_2Class FieldOne { get; set; }
+            public Test8_2Class FieldTwo { get; set; }
+        }
+
+        class Test8_2Class
+        {
+        }
+
+        class Test9_class
+        {
+            public int FieldOne;
+        }
+
+        class Test10_class
+        {
+            public int PropOne { get; set; }
         }
         #endregion
     }

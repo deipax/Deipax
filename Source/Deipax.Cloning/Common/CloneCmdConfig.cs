@@ -12,7 +12,37 @@ namespace Deipax.Cloning.Common
     {
         static CloneCmdConfig()
         {
-            Reset();
+            var type = typeof(T);
+
+            var cloneCmdAttr = type
+                .GetCustomAttributes<CloneCmdAttribute>()
+                .FirstOrDefault();
+
+            var shallowAttr = type
+                .GetCustomAttributes<ShallowCloneAttribute>()
+                .FirstOrDefault();
+
+            CloneCmd = cloneCmdAttr != null
+                ? cloneCmdAttr.Cmd
+                : CloneCmd.Default;
+
+            ShallowCloneType = shallowAttr != null;
+
+            var fields = type.GetAllFields();
+
+            foreach (var field in fields)
+            {
+                if (field.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(field.Name);
+                if (field.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(field.Name);
+                if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(field.Name);
+            }
+
+            foreach (var prop in type.GetFilteredProperties(fields))
+            {
+                if (prop.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(prop.Name);
+                if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(prop.Name);
+                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(prop.Name);
+            }
         }
 
         #region Field Members
@@ -128,45 +158,6 @@ namespace Deipax.Cloning.Common
                     (x.IsPublic || _clone.Contains(x.Name)) &&
                     !_noClone.Contains(x.Name))
                 .ToList();
-        }
-
-        public static void Reset()
-        {
-            _clone.Clear();
-            _noClone.Clear();
-            _shallow.Clear();
-
-            var type = typeof(T);
-
-            var cloneCmdAttr = type
-                .GetCustomAttributes<CloneCmdAttribute>()
-                .FirstOrDefault();
-
-            var shallowAttr = type
-                .GetCustomAttributes<ShallowCloneAttribute>()
-                .FirstOrDefault();
-
-            CloneCmd = cloneCmdAttr != null
-                ? cloneCmdAttr.Cmd
-                : CloneCmd.Default;
-
-            ShallowCloneType = shallowAttr != null;
-
-            var fields = type.GetAllFields();
-
-            foreach (var field in fields)
-            {
-                if (field.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(field.Name);
-                if (field.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(field.Name);
-                if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(field.Name);
-            }
-
-            foreach (var prop in type.GetFilteredProperties(fields))
-            {
-                if (prop.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(prop.Name);
-                if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(prop.Name);
-                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(prop.Name);
-            }
         }
         #endregion
     }
