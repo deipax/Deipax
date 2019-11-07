@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using UnitTests.Core.TestClasses;
 
-namespace UnitTests.Core.BaseClasses
+namespace UnitTests.Model.BaseClasses
 {
     [TestClass]
     public abstract class GetterSetterBase<T, P> where T : new()

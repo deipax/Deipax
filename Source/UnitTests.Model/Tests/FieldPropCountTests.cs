@@ -3,13 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using UnitTests.Common;
 
-namespace UnitTests.Core
+namespace UnitTests.Model
 {
     [TestClass]
     public class FieldPropCountTests
     {
         [TestMethod]
-        public void FieldPropCountTests_ShadowFieldProps()
+        public void ShadowFieldProps()
         {
             AssertFields<DerivedClassOne>(10, 7, 2, 0, 0, 10, 10);
             AssertProperties<DerivedClassOne>(6, 6, 6, 0, 6, 6, 0, 4);
@@ -19,28 +19,28 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void FieldPropCountTests_GrandChildClass()
+        public void GrandChildClass()
         {
             AssertFields<GrandChildClass>(51, 30, 15, 12, 3, 51, 39);
             AssertProperties<GrandChildClass>(30, 18, 30, 6, 30, 24, 0, 2);
         }
 
         [TestMethod]
-        public void FieldPropCountTests_ChildAbstractClass()
+        public void ChildAbstractClass()
         {
             AssertFields<ChildAbstractClass>(34, 20, 10, 8, 2, 34, 26);
             AssertProperties<ChildAbstractClass>(20, 12, 20, 4, 20, 16, 0, 2);
         }
 
         [TestMethod]
-        public void FieldPropCountTests_ParentAbstractClass()
+        public void ParentAbstractClass()
         {
             AssertFields<ParentAbstractClass>(17, 10, 5, 4, 1, 17, 13);
             AssertProperties<ParentAbstractClass>(10, 6, 10, 2, 10, 8, 0, 2);
         }
 
         [TestMethod]
-        public void FieldPropCountTests_MyInterface()
+        public void MyInterface()
         {
             AssertFields<MyInterface>(0, 0, 0, 0, 0, 0, 0);
             AssertProperties<MyInterface>(2, 2, 0, 0, 2, 1, 2, 2);

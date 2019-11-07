@@ -6,31 +6,31 @@ using System.Collections.Generic;
 using System.Linq;
 using UnitTests.Common;
 
-namespace UnitTests.Core
+namespace UnitTests.Model
 {
     [TestClass]
     public class ModelAccessTests
     {
         [TestMethod]
-        public void ModelAccessTests_BackingFieldCounts_GrandChildClass()
+        public void BackingFieldCounts_GrandChildClass()
         {
             AssertBackingFieldCount<GrandChildClass>(15, 12, 24, 18, 24, 18);
         }
 
         [TestMethod]
-        public void ModelAccessTests_BackingFieldCounts_ChildAbstractClass()
+        public void BackingFieldCounts_ChildAbstractClass()
         {
             AssertBackingFieldCount<ChildAbstractClass>(10, 8, 16, 12, 16, 12);
         }
 
         [TestMethod]
-        public void ModelAccessTests_BackingFieldCounts_ParentAbstractClass()
+        public void BackingFieldCounts_ParentAbstractClass()
         {
             AssertBackingFieldCount<ParentAbstractClass>(5, 4, 8, 6, 8, 6);
         }
 
         [TestMethod]
-        public void ModelAccessTests_GettersSetters_All()
+        public void GettersSetters_All()
         {
             AssertAllGettersSetters<GrandChildClass>(39, 30, 30);
             AssertAllGettersSetters<ChildAbstractClass>(26, 20, 20);
@@ -65,7 +65,7 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void ModelAccessTests_GettersSetters()
+        public void GettersSetters()
         {
             AssertGettersSetters<GrandChildClass>(31, 22, 22);
             AssertGettersSetters<ChildAbstractClass>(22, 16, 16);
@@ -100,13 +100,13 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void ModelAccessTests_AccessTest()
+        public void AccessTest()
         {
             AssertAccess<GrandChildClass>();
         }
 
         [TestMethod]
-        public void ModelAccessTests_GetGettersByName()
+        public void GetGettersByName()
         {
             var names = ModelAccess<GrandChildClass>
                 .Getters
@@ -123,7 +123,7 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void ModelAccessTests_GetGettersByName_CaseInsensitive()
+        public void GetGettersByName_CaseInsensitive()
         {
             var names = ModelAccess<GrandChildClass>
                 .Getters
@@ -141,7 +141,7 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void ModelAccessTests_GetSettersByName()
+        public void GetSettersByName()
         {
             var names = ModelAccess<GrandChildClass>
                 .Setters
@@ -158,7 +158,7 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void ModelAccessTests_GetSettersByName_CaseInsensitive()
+        public void GetSettersByName_CaseInsensitive()
         {
             var names = ModelAccess<GrandChildClass>
                 .Setters
@@ -176,21 +176,21 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
-        public void ModelAccessTests_GetGetterByExpression()
+        public void GetGetterByExpression()
         {
             var getter = ModelAccess<GrandChildClass>.GetGetter(x => x.Child_PublicField);
             Assert.IsTrue(getter != null);
         }
 
         [TestMethod]
-        public void ModelAccessTests_GetSetterByExpression()
+        public void GetSetterByExpression()
         {
             var setter = ModelAccess<GrandChildClass>.GetSetter(x => x.Child_PublicField);
             Assert.IsTrue(setter != null);
         }
 
         [TestMethod]
-        public void ModelAccessTests_StructTest()
+        public void StructTest()
         {
             var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo).GetDelegate<int>();
             var setter = ModelAccess<MyStruct>.GetSetter(x => x.PropTwo).GetDelegate<int>();
