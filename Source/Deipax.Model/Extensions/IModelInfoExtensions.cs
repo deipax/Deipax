@@ -1,11 +1,11 @@
-﻿using Deipax.Core.Interfaces;
+﻿using Deipax.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Deipax.Core.Extensions
+namespace Deipax.Model.Extensions
 {
-	public static class IModelInfoExtensions
+    public static class IModelInfoExtensions
 	{
 		public static IEnumerable<T> GetCustomAttributes<T>(
 			this IModelInfo source) where T : Attribute

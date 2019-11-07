@@ -1,12 +1,12 @@
-﻿using Deipax.Core.Conversion.Factories;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Factories;
+using Deipax.Convert.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Conversion
+namespace Deipax.Convert
 {
     public static class ConvertConfig
     {

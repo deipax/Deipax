@@ -1,12 +1,13 @@
-﻿using Deipax.Core.Common;
+﻿using Deipax.Convert.Common;
+using Deipax.Convert.Extensions;
+using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Deipax.Core.Conversion.Factories
+namespace Deipax.Convert.Factories
 {
     public class ToString : IConvertFactory
     {
@@ -49,7 +50,7 @@ namespace Deipax.Core.Conversion.Factories
             IExpArgs<TFrom, TTo> args,
             Expression guardedInput)
         {
-            var method = typeof(Convert)
+            var method = typeof(System.Convert)
                 .GetRuntimeMethods()
                 .Where(x =>
                     x.ReturnType == typeof(string) &&

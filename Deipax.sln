@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests.Cloning", "Source
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks.DataAccess", "Source\Benchmarks.DataAccess\Benchmarks.DataAccess.csproj", "{F05E3EDD-9C00-437A-8910-0CFE24349AC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deipax.Convert", "Source\Deipax.Convert\Deipax.Convert.csproj", "{0E545F52-34E4-4ACE-985D-E08580F26F7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deipax.Model", "Source\Deipax.Model\Deipax.Model.csproj", "{E809A3DF-D515-4E8D-9563-9B207C3A14DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,14 @@ Global
 		{F05E3EDD-9C00-437A-8910-0CFE24349AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05E3EDD-9C00-437A-8910-0CFE24349AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F05E3EDD-9C00-437A-8910-0CFE24349AC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E545F52-34E4-4ACE-985D-E08580F26F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E545F52-34E4-4ACE-985D-E08580F26F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E545F52-34E4-4ACE-985D-E08580F26F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E545F52-34E4-4ACE-985D-E08580F26F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E809A3DF-D515-4E8D-9563-9B207C3A14DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E809A3DF-D515-4E8D-9563-9B207C3A14DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E809A3DF-D515-4E8D-9563-9B207C3A14DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E809A3DF-D515-4E8D-9563-9B207C3A14DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

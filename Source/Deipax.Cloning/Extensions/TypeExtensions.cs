@@ -1,10 +1,11 @@
-﻿using Deipax.Core.Common;
+﻿using Deipax.Cloning.Common;
+using Deipax.Core.Common;
 using Deipax.Core.Extensions;
+using Deipax.Model.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Deipax.Cloning.Common;
 
 namespace Deipax.Cloning.Extensions
 {

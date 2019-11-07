@@ -1,8 +1,5 @@
-﻿using Deipax.Core.Common;
+﻿using Deipax.Convert.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnitTests.Core.TestClasses;
 
 namespace UnitTests.Core.Tests

@@ -1,6 +1,6 @@
 ﻿using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
-using Deipax.Core.Common;
+using Deipax.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Cloning

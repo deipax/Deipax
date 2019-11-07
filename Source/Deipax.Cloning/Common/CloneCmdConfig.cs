@@ -1,5 +1,6 @@
 ﻿using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
+using Deipax.Model.Extensions;
+using Deipax.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

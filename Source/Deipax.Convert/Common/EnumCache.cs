@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Deipax.Core.Common;
+using System;
 using System.Collections.Generic;
 
-namespace Deipax.Core.Common
+namespace Deipax.Convert.Common
 {
     /// <summary>
     /// This class holds onto Enum mappings and shares the same

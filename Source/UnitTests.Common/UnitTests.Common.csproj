@@ -34,6 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Cloning\Deipax.Cloning.csproj" />
     <ProjectReference Include="..\Deipax.DataAccess\Deipax.DataAccess.csproj" />
+    <ProjectReference Include="..\Deipax.Model\Deipax.Model.csproj" />
   </ItemGroup>
 
 </Project>

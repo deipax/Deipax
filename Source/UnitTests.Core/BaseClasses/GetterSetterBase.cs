@@ -1,5 +1,5 @@
-﻿using Deipax.Core.Common;
-using Deipax.Core.Conversion;
+﻿using Deipax.Convert;
+using Deipax.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;

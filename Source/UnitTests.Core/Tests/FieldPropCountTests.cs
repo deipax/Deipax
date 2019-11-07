@@ -1,4 +1,4 @@
-﻿using Deipax.Core.Extensions;
+﻿using Deipax.Model.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using UnitTests.Common;

@@ -1,11 +1,12 @@
-﻿using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Extensions;
+using Deipax.Convert.Interfaces;
+using Deipax.Core.Extensions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Deipax.Core.Conversion.Factories
+namespace Deipax.Convert.Factories
 {
     public class FromObject : IConvertFactory
     {

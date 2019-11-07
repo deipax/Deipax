@@ -1,6 +1,6 @@
-﻿using Deipax.Core.Common;
-using Deipax.Core.Interfaces;
-using Deipax.DataAccess.Extensions;
+﻿using Deipax.DataAccess.Extensions;
+using Deipax.Model;
+using Deipax.Model.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

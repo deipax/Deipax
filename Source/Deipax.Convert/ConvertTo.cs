@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Interfaces;
+using System.Linq.Expressions;
 
-namespace Deipax.Core.Conversion
+namespace Deipax.Convert
 {
     public static class ConvertTo<TTo, TFrom>
     {

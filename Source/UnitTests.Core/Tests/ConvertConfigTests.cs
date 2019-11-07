@@ -1,5 +1,5 @@
-﻿using Deipax.Core.Conversion;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert;
+using Deipax.Convert.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq.Expressions;

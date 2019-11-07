@@ -1,11 +1,12 @@
-﻿using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Extensions;
+using Deipax.Convert.Interfaces;
+using Deipax.Core.Extensions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Deipax.Core.Conversion.Factories
+namespace Deipax.Convert.Factories
 {
     public class FromString : IConvertFactory
     {
@@ -16,7 +17,7 @@ namespace Deipax.Core.Conversion.Factories
             if (args.FromType == typeof(string) &&
                 args.ToType != typeof(object))
             {
-                var methodInfo = typeof(Convert)
+                var methodInfo = typeof(System.Convert)
                     .GetRuntimeMethods()
                     .Where(x =>
                         x.ReturnType == args.UnderlyingToType &&

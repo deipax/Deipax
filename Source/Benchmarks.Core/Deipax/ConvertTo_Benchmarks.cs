@@ -1,7 +1,7 @@
-﻿using Benchmarks.Core.TestClasses;
-using Deipax.Core.Conversion;
+﻿using Benchmarks.Core.BaseClasses;
+using Benchmarks.Core.TestClasses;
+using Deipax.Convert;
 using System;
-using Benchmarks.Core.BaseClasses;
 
 namespace Benchmarks.Core.Deipax
 {

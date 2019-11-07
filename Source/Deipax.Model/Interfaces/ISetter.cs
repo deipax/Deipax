@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Interfaces
+namespace Deipax.Model.Interfaces
 {
     public delegate void Set<T, X>(
         ref T instance,

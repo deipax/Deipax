@@ -1,12 +1,13 @@
-﻿using Deipax.Core.Concretes;
-using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Core.Extensions;
+using Deipax.Model.Concretes;
+using Deipax.Model.Extensions;
+using Deipax.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Common
+namespace Deipax.Model
 {
     public static class ModelAccess<T>
     {

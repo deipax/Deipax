@@ -1,8 +1,8 @@
-﻿using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Interfaces;
 using System;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Conversion.Factories
+namespace Deipax.Convert.Factories
 {
     public class ToOrFromDBNull : IConvertFactory
     {

@@ -1,5 +1,5 @@
-﻿using Deipax.Core.Common;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Model;
+using Deipax.Model.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

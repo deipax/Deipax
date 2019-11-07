@@ -1,8 +1,9 @@
-﻿using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Extensions;
+using Deipax.Convert.Interfaces;
+using Deipax.Core.Extensions;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Conversion.Factories
+namespace Deipax.Convert.Factories
 {
     public class NoConvert : IConvertFactory
     {

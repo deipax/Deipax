@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Interfaces;
+using System.Linq.Expressions;
 
-namespace Deipax.Core.Conversion.Factories
+namespace Deipax.Convert.Factories
 {
     public class DefaultFactory : IConvertFactory
     {

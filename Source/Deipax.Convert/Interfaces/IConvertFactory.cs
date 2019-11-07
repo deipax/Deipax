@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Interfaces
+namespace Deipax.Convert.Interfaces
 {
     public delegate TTo Convert<TFrom, TTo>(
         TFrom from,

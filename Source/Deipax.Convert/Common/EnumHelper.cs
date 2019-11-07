@@ -1,9 +1,8 @@
-﻿using Deipax.Core.Conversion;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Common
+namespace Deipax.Convert.Common
 {
     public static class EnumHelper<TEnum, TUnderlyingType> where TUnderlyingType : struct
     {

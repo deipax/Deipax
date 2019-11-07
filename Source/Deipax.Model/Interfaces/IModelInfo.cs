@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Deipax.Core.Interfaces
+namespace Deipax.Model.Interfaces
 {
 	public interface IModelInfo
 	{

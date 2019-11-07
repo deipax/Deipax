@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Benchmarks.Core.TestClasses;
-using Deipax.Core.Common;
-using Deipax.Core.Interfaces;
+using Deipax.Model;
+using Deipax.Model.Interfaces;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;

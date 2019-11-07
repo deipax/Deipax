@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <Platforms>AnyCPU;x64;x86</Platforms>
-    <Title>Deipax.Cloning</Title>
+    <Title>Deipax.Model</Title>
     <Authors>Jeffery Felce</Authors>
     <Copyright>Copyright ©  2018</Copyright>
     <Company>Jeffery Felce</Company>
@@ -13,7 +14,10 @@
     <Version>1.0.0.14</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Deipax.Model\Deipax.Model.csproj" />
+    <ProjectReference Include="..\Deipax.Convert\Deipax.Convert.csproj" />
+    <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
   </ItemGroup>
+
 </Project>

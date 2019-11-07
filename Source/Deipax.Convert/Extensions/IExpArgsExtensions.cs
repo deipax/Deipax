@@ -1,9 +1,9 @@
-﻿using Deipax.Core.Conversion;
-using Deipax.Core.Interfaces;
+﻿using Deipax.Convert.Interfaces;
+using Deipax.Core.Extensions;
 using System;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Extensions
+namespace Deipax.Convert.Extensions
 {
     public static class IExpArgsExtensions
     {

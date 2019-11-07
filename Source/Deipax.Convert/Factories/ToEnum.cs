@@ -1,10 +1,11 @@
-﻿using Deipax.Core.Common;
+﻿using Deipax.Convert.Common;
+using Deipax.Convert.Extensions;
+using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
 using System;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Conversion.Factories
+namespace Deipax.Convert.Factories
 {
     public class ToEnum : IConvertFactory
     {

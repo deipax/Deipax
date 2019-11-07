@@ -1,4 +1,4 @@
-﻿using Deipax.Core.Conversion;
+﻿using Deipax.Convert;
 using Deipax.DataAccess.Common;
 using System;
 using System.Collections.Generic;

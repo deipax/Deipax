@@ -1,11 +1,12 @@
-﻿using Deipax.Core.Conversion;
+﻿using Deipax.Convert;
 using Deipax.Core.Extensions;
-using Deipax.Core.Interfaces;
+using Deipax.Model.Extensions;
+using Deipax.Model.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 
-namespace Deipax.Core.Concretes
+namespace Deipax.Model.Concretes
 {
     internal class Setter<T, P> : ISetter<T>
     {

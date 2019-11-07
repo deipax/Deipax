@@ -1,4 +1,4 @@
-﻿using Deipax.Core.Conversion;
+﻿using Deipax.Convert;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using UnitTests.Core.BaseClasses;
