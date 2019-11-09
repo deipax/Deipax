@@ -4,7 +4,6 @@ using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
-using Benchmarks.Cloning.DeepCopy;
 using Benchmarks.Cloning.Deipax;
 using System.Linq;
 
@@ -35,7 +34,6 @@ namespace Benchmarks.Cloning
                 .With(MemoryDiagnoser.Default);
 
             RunDeipaxBenchmarks(config);
-            //RunDeepCopyBenchmarks(config);
         }
 
         #region Private Members
@@ -61,29 +59,6 @@ namespace Benchmarks.Cloning
             BenchmarkRunner.Run<PrimitiveDeipax>(config);
             BenchmarkRunner.Run<TupleDeipax>(config);
             BenchmarkRunner.Run<CanShallowCloneDeipax>(config);
-        }
-
-        private static void RunDeepCopyBenchmarks(IConfig config = null)
-        {
-            BenchmarkRunner.Run<IntDeepCopy>(config);
-            BenchmarkRunner.Run<StringDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexClassDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexStructDeepCopy>(config);
-            BenchmarkRunner.Run<SimpleClassDeepCopy>(config);        
-            BenchmarkRunner.Run<SimpleStructDeepCopy>(config);
-            BenchmarkRunner.Run<DoubleSimpleClassDeepCopy>(config);
-            BenchmarkRunner.Run<NullableIntDeepCopy>(config);
-            BenchmarkRunner.Run<NullableSimpleStructDeepCopy>(config);
-            BenchmarkRunner.Run<NullableComplexStructDeepCopy>(config);
-
-            BenchmarkRunner.Run<AbstractDeepCopy>(config);
-            BenchmarkRunner.Run<ArrayDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexRefTypeDeepCopy>(config);
-            BenchmarkRunner.Run<ComplexValueTypeDeepCopy>(config);
-            BenchmarkRunner.Run<KeyValueDeepCopy>(config);
-            BenchmarkRunner.Run<NullableDeepCopy>(config);
-            BenchmarkRunner.Run<PrimitiveDeepCopy>(config);
-            BenchmarkRunner.Run<TupleDeepCopy>(config);
         }
 
         private static Job ConfigureJob(Job source)

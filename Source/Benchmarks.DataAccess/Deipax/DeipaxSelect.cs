@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Dapper;
 using Deipax.DataAccess.Common;
 using Deipax.DataAccess.Interfaces;
 using System.Data;
@@ -60,24 +59,6 @@ namespace Benchmarks.DataAccess.Deipax
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
                 .AsDynamicList();
-        }
-
-        [Benchmark]
-        public void AllFieldsAsClass_Dapper()
-        {
-            var tmp = _dbConnection.Query<MultipleFieldClass>(_sql);
-        }
-
-        [Benchmark]
-        public void AllFieldsAsStruct_Dapper()
-        {
-            var tmp = _dbConnection.Query<MultipleFieldStruct>(_sql);
-        }
-
-        [Benchmark]
-        public void DynamicList_Dapper()
-        {
-            var tmp = _dbConnection.Query(_sql);
         }
     }
 }

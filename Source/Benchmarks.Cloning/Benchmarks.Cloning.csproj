@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
-    <PackageReference Include="DeepCopy" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>
