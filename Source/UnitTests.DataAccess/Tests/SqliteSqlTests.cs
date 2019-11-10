@@ -1,11 +1,10 @@
 ﻿using Deipax.DataAccess.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.DataAccess
 {
-    [TestClass]
     public class SqliteSqlTests : SqliteSql
     {
         #region Field Members
@@ -13,33 +12,14 @@ namespace UnitTests.DataAccess
         private IDbConnection _dbConnection;
         #endregion
 
-        [TestInitialize]
-        public void Init()
+        public SqliteSqlTests()
         {
             _dbCon = DbHelper.GetNorthwind().CreateDbCon();
             _dbConnection = _dbCon.GetConnection();
             _dbConnection.Open();
-
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsList<MultipleFieldClass>();
-
-            var tmp3 = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsDynamicList();
         }
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _dbCon.Dispose();
-        }
-
-        [TestMethod]
+        [Fact]
         public void AllFieldsAsClass()
         {
             var tmp = _dbCon
@@ -49,7 +29,7 @@ namespace UnitTests.DataAccess
                 .AsList<MultipleFieldClass>();
         }
 
-        [TestMethod]
+        [Fact]
         public void AllFieldsAsStruct()
         {
             var tmp = _dbCon
@@ -59,7 +39,7 @@ namespace UnitTests.DataAccess
                 .AsList<MultipleFieldStruct>();
         }
 
-        [TestMethod]
+        [Fact]
         public void AllFieldsAsDynamic()
         {
             var tmp = _dbCon

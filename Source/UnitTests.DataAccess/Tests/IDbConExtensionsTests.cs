@@ -1,18 +1,17 @@
 ﻿using Deipax.DataAccess.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.DataAccess
 {
-    [TestClass]
     public class IDbConExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void CreateParameter()
         {
             SetupAndAssertClosedConnection(dbCon =>
@@ -24,16 +23,16 @@ namespace UnitTests.DataAccess
                     DbType.Int32,
                     10);
 
-                Assert.IsTrue(parameter.ParameterName == "John");
-                Assert.IsTrue(parameter.Value is int);
-                Assert.IsTrue(((int)parameter.Value) == 1);
-                Assert.IsTrue(parameter.Direction == ParameterDirection.Input);
-                Assert.IsTrue(parameter.DbType == DbType.Int32);
-                Assert.IsTrue(parameter.Size == 10);
+                Assert.Equal("John", parameter.ParameterName);
+                Assert.IsType<int>(parameter.Value);
+                Assert.Equal(1, (int)parameter.Value);
+                Assert.Equal(ParameterDirection.Input, parameter.Direction);
+                Assert.Equal(DbType.Int32, parameter.DbType);
+                Assert.Equal(10, parameter.Size);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateParameters()
         {
             SetupAndAssertClosedConnection(dbCon =>
@@ -45,20 +44,20 @@ namespace UnitTests.DataAccess
 
                 var parameters = dbCon.CreateParameters("MyBaseName", list);
 
-                Assert.IsTrue(parameters != null);
-                Assert.IsTrue(parameters.Count() == list.Count);
+                Assert.NotNull(parameters);
+                Assert.Equal(list.Count, parameters.Count());
 
                 for (int i = 0; i < list.Count; i++)
                 {
                     var p = parameters.ElementAt(i);
 
-                    Assert.IsTrue(p.ParameterName.IndexOf("MyBaseName") >= 0);
-                    Assert.IsTrue(p.Value == list[i]);
+                    Assert.Contains("MyBaseName", p.ParameterName);
+                    Assert.Equal(list[i], p.Value);
                 }
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void AsBatch()
         {
             SetupAndAssert(dbCon =>
@@ -67,19 +66,19 @@ namespace UnitTests.DataAccess
 
                 dbCon.AsBatch(dbBatch =>
                 {
-                    Assert.IsTrue(dbBatch.Connection != null);
-                    Assert.IsTrue(dbBatch.Transaction == null);
-                    Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Closed);
+                    Assert.NotNull(dbBatch.Connection);
+                    Assert.Null(dbBatch.Transaction);
+                    Assert.Equal(ConnectionState.Closed, dbBatch.Connection.State);
                     connection = dbBatch.Connection;
                     connection.Open();
-                    Assert.IsTrue(connection.State == ConnectionState.Open);
+                    Assert.Equal(ConnectionState.Open, connection.State);
                 });
 
-                Assert.IsTrue(connection.State == ConnectionState.Open);
+                Assert.Equal(ConnectionState.Open, connection.State);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void AsBatch_WithReturn()
         {
             SetupAndAssert(dbCon =>
@@ -88,20 +87,20 @@ namespace UnitTests.DataAccess
 
                 var result = dbCon.AsBatch(dbBatch =>
                 {
-                    Assert.IsTrue(dbBatch.Connection != null);
-                    Assert.IsTrue(dbBatch.Transaction == null);
-                    Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Closed);
+                    Assert.NotNull(dbBatch.Connection);
+                    Assert.Null(dbBatch.Transaction);
+                    Assert.Equal(ConnectionState.Closed, dbBatch.Connection.State);
                     connection = dbBatch.Connection;
                     connection.Open();
-                    Assert.IsTrue(connection.State == ConnectionState.Open);
+                    Assert.Equal(ConnectionState.Open, connection.State);
                     return 1;
                 });
 
-                Assert.IsTrue(connection.State == ConnectionState.Open);
+                Assert.Equal(ConnectionState.Open, connection.State);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void AsTransaction()
         {
             SetupAndAssert(dbCon =>
@@ -111,22 +110,22 @@ namespace UnitTests.DataAccess
 
                 dbCon.AsTransaction(dbBatch =>
                 {
-                    Assert.IsTrue(dbBatch.Connection != null);
-                    Assert.IsTrue(dbBatch.Transaction != null);
-                    Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Open);
+                    Assert.NotNull(dbBatch.Connection);
+                    Assert.NotNull(dbBatch.Transaction);
+                    Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
                     connection = dbBatch.Connection;
                     transaction = dbBatch.Transaction;
 
-                    Assert.IsTrue(transaction.IsolationLevel == IsolationLevel.Serializable);
-                    Assert.IsTrue(transaction.Connection == connection);
+                    Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
+                    Assert.Same(connection, transaction.Connection);
                 });
 
-                Assert.IsTrue(connection.State == ConnectionState.Open);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 AssertTransactionDisposed(transaction);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void AsTransaction_IsolationLevel()
         {
             SetupAndAssert(dbCon =>
@@ -137,23 +136,23 @@ namespace UnitTests.DataAccess
 
                 dbCon.AsTransaction(level, dbBatch =>
                 {
-                    Assert.IsTrue(dbBatch.Connection != null);
-                    Assert.IsTrue(dbBatch.Transaction != null);
-                    Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Open);
+                    Assert.NotNull(dbBatch.Connection);
+                    Assert.NotNull(dbBatch.Transaction);
+                    Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
                     connection = dbBatch.Connection;
                     transaction = dbBatch.Transaction;
 
                     // In sqlite, all transactions have an Isolation level of serializable
-                    Assert.IsTrue(transaction.IsolationLevel == IsolationLevel.Serializable);
-                    Assert.IsTrue(transaction.Connection == connection);
+                    Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
+                    Assert.Same(connection, transaction.Connection);
                 });
 
-                Assert.IsTrue(connection.State == ConnectionState.Open);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 AssertTransactionDisposed(transaction);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void AsTransaction_WithReturn()
         {
             SetupAndAssert(dbCon =>
@@ -163,24 +162,24 @@ namespace UnitTests.DataAccess
 
                 var result = dbCon.AsTransaction(dbBatch =>
                 {
-                    Assert.IsTrue(dbBatch.Connection != null);
-                    Assert.IsTrue(dbBatch.Transaction != null);
-                    Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Open);
+                    Assert.NotNull(dbBatch.Connection);
+                    Assert.NotNull(dbBatch.Transaction);
+                    Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
                     connection = dbBatch.Connection;
                     transaction = dbBatch.Transaction;
 
-                    Assert.IsTrue(transaction.IsolationLevel == IsolationLevel.Serializable);
-                    Assert.IsTrue(transaction.Connection == connection);
+                    Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
+                    Assert.Same(connection, transaction.Connection);
                     return 1;
                 });
 
-                Assert.IsTrue(connection.State == ConnectionState.Open);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 AssertTransactionDisposed(transaction);
-                Assert.IsTrue(result == 1);
+                Assert.Equal(1, result);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void AsTransaction_IsolationLevel_WithReturn()
         {
             SetupAndAssert(dbCon =>
@@ -191,21 +190,21 @@ namespace UnitTests.DataAccess
 
                 var result = dbCon.AsTransaction(level, dbBatch =>
                 {
-                    Assert.IsTrue(dbBatch.Connection != null);
-                    Assert.IsTrue(dbBatch.Transaction != null);
-                    Assert.IsTrue(dbBatch.Connection.State == ConnectionState.Open);
+                    Assert.NotNull(dbBatch.Connection);
+                    Assert.NotNull(dbBatch.Transaction);
+                    Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
                     connection = dbBatch.Connection;
                     transaction = dbBatch.Transaction;
 
                     // In sqlite, all transactions have an Isolation level of serializable
-                    Assert.IsTrue(transaction.IsolationLevel == IsolationLevel.Serializable);
-                    Assert.IsTrue(transaction.Connection == connection);
+                    Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
+                    Assert.Same(connection, transaction.Connection);
                     return 1;
                 });
 
-                Assert.IsTrue(connection.State == ConnectionState.Open);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 AssertTransactionDisposed(transaction);
-                Assert.IsTrue(result == 1);
+                Assert.Equal(1, result);
             });
         }
 
@@ -214,9 +213,9 @@ namespace UnitTests.DataAccess
         {
             using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
             {
-                Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
+                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
                 act(dbCon);
-                Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
+                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
             }
         }
 
@@ -224,7 +223,7 @@ namespace UnitTests.DataAccess
         {
             using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
             {
-                Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
+                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
                 act(dbCon);
             }
         }
@@ -233,7 +232,7 @@ namespace UnitTests.DataAccess
         {
             var field = trans.GetType().GetField("disposed", BindingFlags.NonPublic | BindingFlags.Instance);
             var disposed = (bool)field.GetValue(trans);
-            Assert.IsTrue(disposed);
+            Assert.True(disposed);
         }
         #endregion
     }

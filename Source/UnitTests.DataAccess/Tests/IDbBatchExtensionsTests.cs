@@ -1,43 +1,42 @@
 ﻿using Deipax.DataAccess.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using UnitTests.Common;
 using UnitTests.DataAccess.Concretes;
+using Xunit;
 
 namespace UnitTests.DataAccess
 {
-    [TestClass]
     public class IDbBatchExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void SetTransaction()
         {
             SetupAndAssertClosedConnection(dbCmd =>
             {
                 var trans = new TestTransaction();
-                Assert.IsTrue(dbCmd.Transaction == null);
+                Assert.Null(dbCmd.Transaction);
                 var dbCmd2 = dbCmd.SetTransaction(trans);
-                Assert.IsTrue(dbCmd == dbCmd2);
-                Assert.IsTrue(dbCmd.Transaction == trans);
+                Assert.Same(dbCmd, dbCmd2);
+                Assert.Same(trans, dbCmd.Transaction);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void SetConnection()
         {
             SetupAndAssertClosedConnection(dbCmd =>
             {
-                Assert.IsTrue(dbCmd.Connection != null);
+                Assert.NotNull(dbCmd.Connection);
                 var dbCmd2 = dbCmd.SetConnection(null);
-                Assert.IsTrue(dbCmd == dbCmd2);
-                Assert.IsTrue(dbCmd.Connection == null);
+                Assert.Same(dbCmd, dbCmd2);
+                Assert.Null(dbCmd.Connection);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateParameter()
         {
             SetupAndAssertClosedConnection(dbBatch =>
@@ -49,16 +48,16 @@ namespace UnitTests.DataAccess
                     DbType.Int32,
                     10);
 
-                Assert.IsTrue(parameter.ParameterName == "John");
-                Assert.IsTrue(parameter.Value is int);
-                Assert.IsTrue(((int)parameter.Value) == 1);
-                Assert.IsTrue(parameter.Direction == ParameterDirection.Input);
-                Assert.IsTrue(parameter.DbType == DbType.Int32);
-                Assert.IsTrue(parameter.Size == 10);
+                Assert.Equal("John", parameter.ParameterName);
+                Assert.IsType<int>(parameter.Value);
+                Assert.Equal(1, (int)parameter.Value);
+                Assert.Equal(ParameterDirection.Input, parameter.Direction);
+                Assert.Equal(DbType.Int32, parameter.DbType);
+                Assert.Equal(10, parameter.Size);
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateParameters()
         {
             SetupAndAssertClosedConnection(dbBatch =>
@@ -70,15 +69,15 @@ namespace UnitTests.DataAccess
 
                 var parameters = dbBatch.CreateParameters("MyBaseName", list);
 
-                Assert.IsTrue(parameters != null);
-                Assert.IsTrue(parameters.Count() == list.Count);
+                Assert.NotNull(parameters);
+                Assert.Equal(list.Count, parameters.Count());
 
                 for (int i = 0; i < list.Count; i++)
                 {
                     var p = parameters.ElementAt(i);
 
-                    Assert.IsTrue(p.ParameterName.IndexOf("MyBaseName") >= 0);
-                    Assert.IsTrue(p.Value == list[i]);
+                    Assert.Contains("MyBaseName", p.ParameterName);
+                    Assert.Equal(list[i], p.Value);
                 }
             });
         }
@@ -88,9 +87,9 @@ namespace UnitTests.DataAccess
         {
             using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
             {
-                Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
+                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
                 act(dbCon.CreateDbBatch());
-                Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
+                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
             }
         }
 
@@ -98,7 +97,7 @@ namespace UnitTests.DataAccess
         {
             using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
             {
-                Assert.IsTrue(dbCon.GetConnection().State == ConnectionState.Closed);
+                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
                 act(dbCon.CreateDbBatch());
             }
         }

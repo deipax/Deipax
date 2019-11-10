@@ -1,27 +1,26 @@
 ﻿using Deipax.DataAccess.Common;
 using Deipax.DataAccess.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using UnitTests.Common;
 using UnitTests.DataAccess.BaseTests;
+using Xunit;
 
 namespace UnitTests.DataAccess
 {
-    [TestClass]
     public class DbConfigTests : BaseTest
     {
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_DbBatchFactoryOverride()
         {
             try
             {
                 DbConfig.DbBatchFactoryOverride = null;
                 var dbBatch = DbConfig.CreateDbBatch(DbHelper.GetNorthwind());
-                Assert.IsNotNull(dbBatch);
-                Assert.IsNotInstanceOfType(dbBatch, typeof(DbBatchHelperClass));
+                Assert.NotNull(dbBatch);
+                Assert.IsNotType<DbBatchHelperClass>(dbBatch);
 
                 DbConfig.DbBatchFactoryOverride = (db) =>
                 {
@@ -33,8 +32,8 @@ namespace UnitTests.DataAccess
 
                 var dbBatch2 = DbConfig.CreateDbBatch(DbHelper.GetNorthwind());
 
-                Assert.IsNotNull(dbBatch2);
-                Assert.IsInstanceOfType(dbBatch2, typeof(DbBatchHelperClass));
+                Assert.NotNull(dbBatch2);
+                Assert.IsType<DbBatchHelperClass>(dbBatch2);
             }
             finally
             {
@@ -42,15 +41,15 @@ namespace UnitTests.DataAccess
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_DbCmdFactoryOverride()
         {
             try
             {
                 DbConfig.DbCmdFactoryOverride = null;
                 var dbCmd = DbConfig.CreateDbCmd(DbHelper.GetNorthwind());
-                Assert.IsNotNull(dbCmd);
-                Assert.IsNotInstanceOfType(dbCmd, typeof(DbCmdHelperClass));
+                Assert.NotNull(dbCmd);
+                Assert.IsNotType<DbCmdHelperClass>(dbCmd);
 
                 DbConfig.DbCmdFactoryOverride = (db) =>
                 {
@@ -62,8 +61,8 @@ namespace UnitTests.DataAccess
 
                 var dbCmd2 = DbConfig.CreateDbCmd(DbHelper.GetNorthwind());
 
-                Assert.IsNotNull(dbCmd2);
-                Assert.IsInstanceOfType(dbCmd2, typeof(DbCmdHelperClass));
+                Assert.NotNull(dbCmd2);
+                Assert.IsType<DbCmdHelperClass>(dbCmd2);
             }
             finally
             {
@@ -71,15 +70,15 @@ namespace UnitTests.DataAccess
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_DbConFactoryOverride()
         {
             try
             {
                 DbConfig.DbConFactoryOverride = null;
                 var dbCon1 = DbConfig.CreateDbCon(DbHelper.GetNorthwind());
-                Assert.IsNotNull(dbCon1);
-                Assert.IsNotInstanceOfType(dbCon1, typeof(DbConHelperClass));
+                Assert.NotNull(dbCon1);
+                Assert.IsNotType<DbConHelperClass>(dbCon1);
 
                 DbConfig.DbConFactoryOverride = (db) =>
                 {
@@ -91,8 +90,8 @@ namespace UnitTests.DataAccess
 
                 var dbCon2 = DbConfig.CreateDbCon(DbHelper.GetNorthwind());
 
-                Assert.IsNotNull(dbCon2);
-                Assert.IsInstanceOfType(dbCon2, typeof(DbConHelperClass));
+                Assert.NotNull(dbCon2);
+                Assert.IsType<DbConHelperClass>(dbCon2);
             }
             finally
             {
@@ -100,7 +99,7 @@ namespace UnitTests.DataAccess
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_DbFactoryOverride()
         {
             try
@@ -109,7 +108,7 @@ namespace UnitTests.DataAccess
 
                 var db1 = DbConfig.CreateDb("jon", "cs", "pro");
 
-                Assert.IsNotNull(db1);
+                Assert.NotNull(db1);
 
                 DbConfig.DbFactoryOverride = (name, cs, provider, func) =>
                 {
@@ -124,11 +123,11 @@ namespace UnitTests.DataAccess
 
                 var db2 = DbConfig.CreateDb("jon", "cs", "pro");
 
-                Assert.IsInstanceOfType(db2, typeof(DbHelperClass));
-                Assert.AreEqual(db2.Name, "jon");
-                Assert.AreEqual(db2.ConnectionFactory, db1.ConnectionFactory);
-                Assert.AreEqual(db2.ConnectionString, "cs");
-                Assert.AreEqual(db2.ProviderName, "pro");
+                Assert.IsType<DbHelperClass>(db2);
+                Assert.Equal("jon", db2.Name);
+                Assert.Same(db1.ConnectionFactory, db2.ConnectionFactory);
+                Assert.Equal("cs", db2.ConnectionString);
+                Assert.Equal("pro", db2.ProviderName);
             }
             finally
             {
@@ -136,7 +135,7 @@ namespace UnitTests.DataAccess
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_CreateDb()
         {
             Func<IDb, IDbConnection> func = ConnectionFactory;
@@ -147,13 +146,13 @@ namespace UnitTests.DataAccess
                 "provider",
                 func);
 
-            Assert.IsTrue(db.Name == "name");
-            Assert.IsTrue(db.ProviderName == "provider");
-            Assert.IsTrue(db.ConnectionString == "cs");
-            Assert.AreSame(db.ConnectionFactory, func);
+            Assert.Equal("name", db.Name);
+            Assert.Equal("provider", db.ProviderName);
+            Assert.Equal("cs", db.ConnectionString);
+            Assert.Same(func, db.ConnectionFactory);
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_CreateManagedOracleDb()
         {
             Func<IDb, IDbConnection> func = ConnectionFactory;
@@ -163,13 +162,13 @@ namespace UnitTests.DataAccess
                 "cs",
                 func);
 
-            Assert.IsTrue(db.Name == "name");
-            Assert.IsTrue(db.ProviderName == "Oracle.ManagedDataAccess.Client");
-            Assert.IsTrue(db.ConnectionString == "cs");
-            Assert.AreSame(db.ConnectionFactory, func);
+            Assert.Equal("name", db.Name);
+            Assert.Equal("Oracle.ManagedDataAccess.Client", db.ProviderName);
+            Assert.Equal("cs", db.ConnectionString);
+            Assert.Same(func, db.ConnectionFactory);
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_CreateOracleDb()
         {
             Func<IDb, IDbConnection> func = ConnectionFactory;
@@ -179,13 +178,13 @@ namespace UnitTests.DataAccess
                 "cs",
                 func);
 
-            Assert.IsTrue(db.Name == "name");
-            Assert.IsTrue(db.ProviderName == "Oracle.DataAccess.Client");
-            Assert.IsTrue(db.ConnectionString == "cs");
-            Assert.AreSame(db.ConnectionFactory, func);
+            Assert.Equal("name", db.Name);
+            Assert.Equal("Oracle.DataAccess.Client", db.ProviderName);
+            Assert.Equal("cs", db.ConnectionString);
+            Assert.Same(func, db.ConnectionFactory);
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_CreateSqLiteDb()
         {
             Func<IDb, IDbConnection> func = ConnectionFactory;
@@ -195,13 +194,13 @@ namespace UnitTests.DataAccess
                 "cs",
                 func);
 
-            Assert.IsTrue(db.Name == "name");
-            Assert.IsTrue(db.ProviderName == "System.Data.SQLite");
-            Assert.IsTrue(db.ConnectionString == "cs");
-            Assert.AreSame(db.ConnectionFactory, func);
+            Assert.Equal("name", db.Name);
+            Assert.Equal("System.Data.SQLite", db.ProviderName);
+            Assert.Equal("cs", db.ConnectionString);
+            Assert.Same(func, db.ConnectionFactory);
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_CreateSqlServerDb()
         {
             Func<IDb, IDbConnection> func = ConnectionFactory;
@@ -211,44 +210,44 @@ namespace UnitTests.DataAccess
                 "cs",
                 func);
 
-            Assert.IsTrue(db.Name == "name");
-            Assert.IsTrue(db.ProviderName == "System.Data.SqlClient");
-            Assert.IsTrue(db.ConnectionString == "cs");
-            Assert.AreSame(db.ConnectionFactory, func);
+            Assert.Equal("name", db.Name);
+            Assert.Equal("System.Data.SqlClient", db.ProviderName);
+            Assert.Equal("cs", db.ConnectionString);
+            Assert.Same(func, db.ConnectionFactory);
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_Get()
         {
             var db1 = DbConfig.Get("Northwind");
-            Assert.IsTrue(db1 != null);
+            Assert.NotNull(db1);
 
             var db2 = DbConfig.Get("BogusName");
-            Assert.IsTrue(db2 == null);
+            Assert.Null(db2);
 
             var db3 = DbConfig.Get("Northwind");
-            Assert.AreSame(db1, db3);
+            Assert.Same(db1, db3);
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_GetAll()
         {
             var dbs = DbConfig.GetAll();
 
-            Assert.IsTrue(dbs != null);
-            Assert.IsTrue(dbs.Count() > 0);
+            Assert.NotNull(dbs);
+            Assert.True(dbs.Count() > 0);
         }
 
-        [TestMethod]
+        [Fact]
         public void DbConfigTests_Clear()
         {
             var db1 = DbConfig.Get("Northwind");
             // Verify that resetting the initializer, clears the IDbs.
             DbConfig.SetDbInitializer(DbHelper.Initialize);
             var db2 = DbHelper.GetNorthwind();
-            Assert.IsNotNull(db1);
-            Assert.IsNotNull(db2);
-            Assert.AreNotSame(db1, db2);
+            Assert.NotNull(db1);
+            Assert.NotNull(db2);
+            Assert.NotSame(db1, db2);
         }
 
         #region Private Members
