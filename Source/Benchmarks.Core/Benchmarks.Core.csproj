@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;netcoreapp2.2;netcoreapp3.0;net461;net472</TargetFrameworks>
-    <ApplicationIcon />
     <OutputType>Exe</OutputType>
-    <GenerateProgramFile>false</GenerateProgramFile>
-    <StartupObject />
+    <TargetFrameworks>netcoreapp2.0;netcoreapp2.2;netcoreapp3.0;net461;net472</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

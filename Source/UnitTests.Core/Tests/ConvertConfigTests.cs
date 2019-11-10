@@ -1,4 +1,5 @@
 ﻿using Deipax.Convert;
+using Deipax.Convert.Factories;
 using Deipax.Convert.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -10,6 +11,13 @@ namespace UnitTests.Core.Tests
     [TestClass]
     public class ConvertConfigTests
     {
+        [TestCleanup]
+        public void Cleanup()
+        {
+            ConvertConfig.Default = new DefaultFactory();
+            ConvertConfig.UserFactories = null;
+        }
+
         [TestMethod]
         public void DefaultOverride()
         {

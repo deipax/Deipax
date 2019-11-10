@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;netcoreapp2.2;netcoreapp3.0;net45;net461;net472</TargetFrameworks>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <Title>Deipax.Convert</Title>
     <Authors>Jeffery Felce</Authors>
