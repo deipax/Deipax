@@ -14,8 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Source\Deipax.Convert\Deipax.Convert.csproj" />
-    <ProjectReference Include="..\Source\UnitTests.Common\UnitTests.Common.csproj" />
+    <ProjectReference Include="..\Deipax.Convert\Deipax.Convert.csproj" />
+    <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
   </ItemGroup>
+
 
 </Project>
