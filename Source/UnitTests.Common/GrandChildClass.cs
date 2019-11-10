@@ -1,5 +1,4 @@
 ﻿using Deipax.Cloning.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -80,18 +79,6 @@ namespace UnitTests.Common
             });
 
             return grandChild;
-        }
-
-        public static void AreEqual(
-            GrandChildClass one,
-            GrandChildClass two)
-        {
-            _fields.ForEach(x =>
-            {
-                var valueOne = x.GetValue(one);
-                var valueTwo = x.GetValue(two);
-                Assert.AreEqual(one, two);
-            });
         }
     }
 

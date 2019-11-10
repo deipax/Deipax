@@ -1,9 +1,8 @@
 ﻿using Deipax.Convert.Common;
-using Deipax.Core.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnitTests.Core.TestClasses;
+using UnitTests.Common;
 
-namespace UnitTests.Core
+namespace UnitTests.Convert
 {
     [TestClass]
     public class EnumCacheTests

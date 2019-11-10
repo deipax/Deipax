@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
-using UnitTests.Core.TestClasses;
+using UnitTests.Common;
 
-namespace UnitTests.Core.BaseClasses
+namespace UnitTests.Convert.BaseClasses
 {
     [TestClass]
     public abstract class BaseConvertTo<TTo>
@@ -320,12 +320,12 @@ namespace UnitTests.Core.BaseClasses
                         }
                         else
                         {
-                            var intValue = Convert.ChangeType(from, typeof(int), CultureInfo.InvariantCulture);
+                            var intValue = System.Convert.ChangeType(from, typeof(int), CultureInfo.InvariantCulture);
                             return (TTo)Enum.Parse(underlyingToType, intValue.ToString(), true);
                         }
                     }
 
-                    return (TTo)Convert.ChangeType(from, underlyingToType, CultureInfo.InvariantCulture);
+                    return (TTo)System.Convert.ChangeType(from, underlyingToType, CultureInfo.InvariantCulture);
                 }
             }
             catch(Exception ex)

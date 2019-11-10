@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using UnitTests.Common;
 using UnitTests.Model.BaseClasses;
-using UnitTests.Core.TestClasses;
 
 namespace UnitTests.Model.GetterSetter
 {

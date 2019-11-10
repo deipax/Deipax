@@ -1,10 +1,10 @@
 ﻿using Deipax.Convert;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using UnitTests.Core.BaseClasses;
-using UnitTests.Core.TestClasses;
+using UnitTests.Common;
+using UnitTests.Convert.BaseClasses;
 
-namespace UnitTests.Core.Conversion
+namespace UnitTests.Convert
 {
     [TestClass]
     public class ConvertTo_Base<TTo> : BaseConvertTo<TTo>

@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Model\Deipax.Model.csproj" />
-    <ProjectReference Include="..\UnitTests.Core\UnitTests.Core.csproj" />
+    <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
   </ItemGroup>
 
 </Project>

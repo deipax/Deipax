@@ -4,9 +4,9 @@ using Deipax.Convert.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using UnitTests.Core.TestClasses;
+using UnitTests.Common;
 
-namespace UnitTests.Core.Tests
+namespace UnitTests.Convert
 {
     [TestClass]
     public class ConvertConfigTests

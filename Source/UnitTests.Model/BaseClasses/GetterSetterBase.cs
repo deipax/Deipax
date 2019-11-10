@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
-using UnitTests.Core.TestClasses;
+using UnitTests.Common;
 
 namespace UnitTests.Model.BaseClasses
 {
