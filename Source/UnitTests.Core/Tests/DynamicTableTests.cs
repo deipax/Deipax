@@ -1,71 +1,69 @@
-﻿using System.Linq;
-using Deipax.Core.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Deipax.Core.Common;
+using Xunit;
 
 namespace UnitTests.Core
 {
-    [TestClass]
     public class DynamicTableTests
     {
-        [TestMethod]
+        [Fact]
         public void CreateFromNull()
         {
             DynamicTable table = new DynamicTable(null);
             var names = table.GetNames();
 
-            Assert.IsNotNull(names);
-            Assert.IsTrue(names.Count() == 0);
-            Assert.IsTrue(table.GetFieldCount() == 0);
-            Assert.IsTrue(table.GetIndex("tmp") == -1);
-            Assert.IsFalse(table.FieldExists("tmp"));
+            Assert.NotNull(names);
+            Assert.Empty(names);
+            Assert.Equal(0, table.GetFieldCount());
+            Assert.Equal(-1, table.GetIndex("tmp"));
+            Assert.False(table.FieldExists("tmp"));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateFromEmpty()
         {
             DynamicTable table = new DynamicTable(new string[0]);
             var names = table.GetNames();
 
-            Assert.IsNotNull(names);
-            Assert.IsTrue(names.Count() == 0);
-            Assert.IsTrue(table.GetFieldCount() == 0);
-            Assert.IsTrue(table.GetIndex("tmp") == -1);
-            Assert.IsFalse(table.FieldExists("tmp"));
+            Assert.NotNull(names);
+            Assert.Empty(names);
+            Assert.Equal(0, table.GetFieldCount());
+            Assert.Equal(-1, table.GetIndex("tmp"));
+            Assert.False(table.FieldExists("tmp"));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateWithOneField()
         {
             DynamicTable table = new DynamicTable(new[] { "tmp" });
             var names = table.GetNames();
 
-            Assert.IsNotNull(names);
-            Assert.IsTrue(names.Count() == 1);
-            Assert.IsTrue(table.GetFieldCount() == 1);
-            Assert.IsTrue(table.GetIndex("tmp") == 0);
-            Assert.IsTrue(table.FieldExists("tmp"));
+            Assert.NotNull(names);
+            Assert.Single(names);
+            Assert.Equal(1, table.GetFieldCount());
+            Assert.Equal(0, table.GetIndex("tmp"));
+            Assert.True(table.FieldExists("tmp"));
         }
 
-        [TestMethod]
+        [Fact]
         public void AddField()
         {
             DynamicTable table = new DynamicTable(null);
             var names = table.GetNames();
 
-            Assert.IsNotNull(names);
-            Assert.IsTrue(names.Count() == 0);
-            Assert.IsTrue(table.GetFieldCount() == 0);
-            Assert.IsTrue(table.GetIndex("tmp") == -1);
-            Assert.IsFalse(table.FieldExists("tmp"));
+            Assert.NotNull(names);
+            Assert.Empty(names);
+            Assert.Equal(0, table.GetFieldCount());
+            Assert.Equal(-1, table.GetIndex("tmp"));
+            Assert.False(table.FieldExists("tmp"));
 
             table.AddField("tmp");
             names = table.GetNames();
 
-            Assert.IsNotNull(names);
-            Assert.IsTrue(names.Count() == 1);
-            Assert.IsTrue(table.GetFieldCount() == 1);
-            Assert.IsTrue(table.GetIndex("tmp") == 0);
-            Assert.IsTrue(table.FieldExists("tmp"));
+            Assert.NotNull(names);
+            Assert.Single(names);
+            Assert.Equal(1, table.GetFieldCount());
+            Assert.Equal(0, table.GetIndex("tmp"));
+            Assert.True(table.FieldExists("tmp"));
         }
     }
 }

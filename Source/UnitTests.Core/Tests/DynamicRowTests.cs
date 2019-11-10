@@ -1,13 +1,20 @@
-﻿using System.Collections.Generic;
-using Deipax.Core.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Deipax.Core.Common;
+using System.Collections.Generic;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Core
 {
-    [TestClass]
     public class DynamicRowTests
     {
+        public DynamicRowTests()
+        {
+            DynamicTable table = new DynamicTable(_fieldNames);
+            _dynamicRow = new DynamicRow(table);
+            _dynamicRowAsDict = _dynamicRow;
+            _fieldNames.ForEach(x => _dynamicRow.Add(x, RandGen.GenerateInt()));
+        }
+
         #region Fields
         private static readonly List<string> _fieldNames = new List<string>
         {
@@ -27,16 +34,7 @@ namespace UnitTests.Core
         private IDictionary<string, object> _dynamicRowAsDict;
         #endregion
 
-        [TestInitialize]
-        public void GlobalSetup()
-        {
-            DynamicTable table = new DynamicTable(_fieldNames);
-            _dynamicRow = new DynamicRow(table);
-            _dynamicRowAsDict = _dynamicRow;
-            _fieldNames.ForEach(x => _dynamicRow.Add(x, RandGen.GenerateInt()));
-        }
-
-        [TestMethod]
+        [Fact]
         public void CreateFromEmpty()
         {
             DynamicTable table = new DynamicTable();
@@ -50,14 +48,14 @@ namespace UnitTests.Core
             DynamicRow rowTwo = new DynamicRow(table);
             dynamic dRowTwo = rowTwo;
 
-            Assert.AreEqual(dRowOne.PropOne, "PropOne");
-            Assert.AreEqual(dRowOne.PropTwo, 2);
+            Assert.Equal("PropOne", dRowOne.PropOne);
+            Assert.Equal(2, dRowOne.PropTwo);
 
-            Assert.AreEqual(dRowTwo.PropOne, default(object));
-            Assert.AreEqual(dRowTwo.PropTwo, default(object));
+            Assert.Equal(default(object), dRowTwo.PropOne);
+            Assert.Equal(default(object), dRowTwo.PropTwo);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadAsDictionary_DynamicRow()
         {
             foreach (var field in _fieldNames)
@@ -66,7 +64,7 @@ namespace UnitTests.Core
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteAsDictionary_DynamicRow()
         {
             foreach (var field in _fieldNames)
@@ -75,7 +73,7 @@ namespace UnitTests.Core
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadAsDynamic_DynamicRow()
         {
             var tmp0 = _dynamicRow.Field0;
@@ -90,7 +88,7 @@ namespace UnitTests.Core
             var tmp9 = _dynamicRow.Field9;
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteAsDynamic_DynamicRow()
         {
             _dynamicRow.Field0 = 10;

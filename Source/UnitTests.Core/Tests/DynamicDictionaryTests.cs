@@ -1,13 +1,19 @@
 ﻿using Deipax.Core.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Core
 {
-    [TestClass]
     public class DynamicDictionaryTests
     {
+        public DynamicDictionaryTests()
+        {
+            _dynamic = new DynamicDictionary();
+            _dynamicDict = _dynamic;
+            _fieldNames.ForEach(x => _dynamicDict.Add(x, RandGen.GenerateInt()));
+        }
+
         #region Fields
         private static readonly List<string> _fieldNames = new List<string>
         {
@@ -27,15 +33,7 @@ namespace UnitTests.Core
         private IDictionary<string, object> _dynamicDict;
         #endregion
 
-        [TestInitialize]
-        public void GlobalSetup()
-        {
-            _dynamic = new DynamicDictionary();
-            _dynamicDict = _dynamic;
-            _fieldNames.ForEach(x => _dynamicDict.Add(x, RandGen.GenerateInt()));
-        }
-
-        [TestMethod]
+        [Fact]
         public void ReadAsDictionary_DynamicDict()
         {
             foreach (var field in _fieldNames)
@@ -44,7 +42,7 @@ namespace UnitTests.Core
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteAsDictionary_DynamicDict()
         {
             foreach (var field in _fieldNames)
@@ -53,7 +51,7 @@ namespace UnitTests.Core
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadAsDynamic_DynamicDict()
         {
             var tmp0 = _dynamic.Field0;
@@ -68,7 +66,7 @@ namespace UnitTests.Core
             var tmp9 = _dynamic.Field9;
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteAsDynamic_DynamicDict()
         {
             _dynamic.Field0 = 10;
