@@ -1,14 +1,13 @@
 ﻿using Deipax.Model.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Model
 {
-    [TestClass]
-    public class FieldPropCountTests
+    public class FieldPropCount
     {
-        [TestMethod]
+        [Fact]
         public void ShadowFieldProps()
         {
             AssertFields<DerivedClassOne>(10, 7, 2, 0, 0, 10, 10);
@@ -18,28 +17,28 @@ namespace UnitTests.Model
             AssertProperties<D>(2, 2, 2, 0, 2, 2, 0, 2);
         }
 
-        [TestMethod]
+        [Fact]
         public void GrandChildClass()
         {
             AssertFields<GrandChildClass>(51, 30, 15, 12, 3, 51, 39);
             AssertProperties<GrandChildClass>(30, 18, 30, 6, 30, 24, 0, 2);
         }
 
-        [TestMethod]
+        [Fact]
         public void ChildAbstractClass()
         {
             AssertFields<ChildAbstractClass>(34, 20, 10, 8, 2, 34, 26);
             AssertProperties<ChildAbstractClass>(20, 12, 20, 4, 20, 16, 0, 2);
         }
 
-        [TestMethod]
+        [Fact]
         public void ParentAbstractClass()
         {
             AssertFields<ParentAbstractClass>(17, 10, 5, 4, 1, 17, 13);
             AssertProperties<ParentAbstractClass>(10, 6, 10, 2, 10, 8, 0, 2);
         }
 
-        [TestMethod]
+        [Fact]
         public void MyInterface()
         {
             AssertFields<MyInterface>(0, 0, 0, 0, 0, 0, 0);
@@ -82,13 +81,13 @@ namespace UnitTests.Model
                 .Where(x => x.CanWrite)
                 .ToList();
 
-            Assert.IsTrue(fields1.Count() == fieldCount);
-            Assert.IsTrue(backingFields.Count == backingFieldCount);
-            Assert.IsTrue(publicFields.Count == publicFieldCount);
-            Assert.IsTrue(staticFields.Count == staticFieldCount);
-            Assert.IsTrue(literalFields.Count == literalFieldCount);
-            Assert.IsTrue(canReadFields.Count == canReadFieldCount);
-            Assert.IsTrue(canWriteFields.Count == canWriteFieldCount);
+            Assert.Equal(fieldCount, fields1.Count());
+            Assert.Equal(backingFieldCount, backingFields.Count);
+            Assert.Equal(publicFieldCount, publicFields.Count);
+            Assert.Equal(staticFieldCount, staticFields.Count);
+            Assert.Equal(literalFieldCount, literalFields.Count);
+            Assert.Equal(canReadFieldCount, canReadFields.Count);
+            Assert.Equal(canWriteFieldCount, canWriteFields.Count);
         }
 
         private static void AssertProperties<T>(
@@ -139,16 +138,16 @@ namespace UnitTests.Model
                 .Where(x => x.IsLiteral)
                 .ToList();
 
-            Assert.IsTrue(props1.Count() == propCount);
-            Assert.IsTrue(publicProps.Count == publicPropCount);
-            Assert.IsTrue(backingFields.Count == backingFieldCount);
-            Assert.IsTrue(staticProps.Count == staticPropCount);
-            Assert.IsTrue(canReadProps.Count == canReadPropCount);
-            Assert.IsTrue(canWriteProps.Count == canWritePropCount);
-            Assert.IsTrue(abstractProps.Count == abstractPropCount);
-            Assert.IsTrue(vitrualProps.Count == virtualPropCount);
-            Assert.IsTrue(literalProps.Count == 0);
-            Assert.IsTrue(hasParameters.Count == 0);
+            Assert.Equal(propCount, props1.Count());
+            Assert.Equal(publicPropCount, publicProps.Count);
+            Assert.Equal(backingFieldCount, backingFields.Count);
+            Assert.Equal(staticPropCount, staticProps.Count);
+            Assert.Equal(canReadPropCount, canReadProps.Count);
+            Assert.Equal(canWritePropCount, canWriteProps.Count);
+            Assert.Equal(abstractPropCount, abstractProps.Count);
+            Assert.Equal(virtualPropCount, vitrualProps.Count);
+            Assert.Empty(literalProps);
+            Assert.Empty(hasParameters);
         }
         #endregion
     }

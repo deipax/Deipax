@@ -1,35 +1,34 @@
 ﻿using Deipax.Model;
 using Deipax.Model.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Model
 {
-    [TestClass]
-    public class ModelAccessTests
+    public class ModelAccess
     {
-        [TestMethod]
+        [Fact]
         public void BackingFieldCounts_GrandChildClass()
         {
             AssertBackingFieldCount<GrandChildClass>(15, 12, 24, 18, 24, 18);
         }
 
-        [TestMethod]
+        [Fact]
         public void BackingFieldCounts_ChildAbstractClass()
         {
             AssertBackingFieldCount<ChildAbstractClass>(10, 8, 16, 12, 16, 12);
         }
 
-        [TestMethod]
+        [Fact]
         public void BackingFieldCounts_ParentAbstractClass()
         {
             AssertBackingFieldCount<ParentAbstractClass>(5, 4, 8, 6, 8, 6);
         }
 
-        [TestMethod]
+        [Fact]
         public void GettersSetters_All()
         {
             AssertAllGettersSetters<GrandChildClass>(39, 30, 30);
@@ -64,7 +63,7 @@ namespace UnitTests.Model
 #endif
         }
 
-        [TestMethod]
+        [Fact]
         public void GettersSetters()
         {
             AssertGettersSetters<GrandChildClass>(31, 22, 22);
@@ -99,13 +98,13 @@ namespace UnitTests.Model
 #endif
         }
 
-        [TestMethod]
+        [Fact]
         public void AccessTest()
         {
             AssertAccess<GrandChildClass>();
         }
 
-        [TestMethod]
+        [Fact]
         public void GetGettersByName()
         {
             var names = ModelAccess<GrandChildClass>
@@ -113,16 +112,16 @@ namespace UnitTests.Model
                 .Keys
                 .ToList();
 
-            Assert.IsTrue(names.Count == 31);
+            Assert.Equal(31, names.Count);
 
             foreach (var name in names)
             {
                 var getter = ModelAccess<GrandChildClass>.GetGetter(name);
-                Assert.IsTrue(getter != null);
+                Assert.NotNull(getter);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetGettersByName_CaseInsensitive()
         {
             var names = ModelAccess<GrandChildClass>
@@ -131,16 +130,16 @@ namespace UnitTests.Model
                 .Select(x => x.ToUpperInvariant())
                 .ToList();
 
-            Assert.IsTrue(names.Count == 31);
+            Assert.Equal(31, names.Count);
 
             foreach (var name in names)
             {
                 var getter = ModelAccess<GrandChildClass>.GetGetter(name);
-                Assert.IsTrue(getter != null);
+                Assert.NotNull(getter);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetSettersByName()
         {
             var names = ModelAccess<GrandChildClass>
@@ -148,16 +147,16 @@ namespace UnitTests.Model
                 .Keys
                 .ToList();
 
-            Assert.IsTrue(names.Count == 22);
+            Assert.Equal(22, names.Count);
 
             foreach (var name in names)
             {
                 var setter = ModelAccess<GrandChildClass>.GetSetter(name);
-                Assert.IsTrue(setter != null);
+                Assert.NotNull(setter);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetSettersByName_CaseInsensitive()
         {
             var names = ModelAccess<GrandChildClass>
@@ -166,30 +165,30 @@ namespace UnitTests.Model
                 .Select(x => x.ToUpperInvariant())
                 .ToList();
 
-            Assert.IsTrue(names.Count == 22);
+            Assert.Equal(22, names.Count);
 
             foreach (var name in names)
             {
                 var setter = ModelAccess<GrandChildClass>.GetSetter(name);
-                Assert.IsTrue(setter != null);
+                Assert.NotNull(setter);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetGetterByExpression()
         {
             var getter = ModelAccess<GrandChildClass>.GetGetter(x => x.Child_PublicField);
-            Assert.IsTrue(getter != null);
+            Assert.NotNull(getter);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetSetterByExpression()
         {
             var setter = ModelAccess<GrandChildClass>.GetSetter(x => x.Child_PublicField);
-            Assert.IsTrue(setter != null);
+            Assert.NotNull(setter);
         }
 
-        [TestMethod]
+        [Fact]
         public void StructTest()
         {
             var getter = ModelAccess<MyStruct>.GetGetter(x => x.PropTwo).GetDelegate<int>();
@@ -198,9 +197,9 @@ namespace UnitTests.Model
             MyStruct instance = new MyStruct();
 
             setter(ref instance, 3);
-            var tmp = getter(ref instance);
+            var value = getter(ref instance);
 
-            Assert.IsTrue(tmp == 3);
+            Assert.Equal(3, value);
         }
 
         #region Private Members
@@ -236,16 +235,16 @@ namespace UnitTests.Model
                 .OfType<IPropertyModelInfo>()
                 .ToList();
 
-            Assert.AreEqual(getterFieldCount, getterFields.Count());
-            Assert.AreEqual(setterFieldCount, setterFields.Count());
-            Assert.AreEqual(getterPropCount, getterProps.Count());
-            Assert.AreEqual(setterPropCount, setterProps.Count());
+            Assert.Equal(getterFieldCount, getterFields.Count());
+            Assert.Equal(setterFieldCount, setterFields.Count());
+            Assert.Equal(getterPropCount, getterProps.Count());
+            Assert.Equal(setterPropCount, setterProps.Count());
 
-            Assert.AreEqual(0, getterFields.Where(x => x.IsBackingField).Count());
-            Assert.AreEqual(0, setterFields.Where(x => x.IsBackingField).Count());
+            Assert.Empty(getterFields.Where(x => x.IsBackingField));
+            Assert.Empty(setterFields.Where(x => x.IsBackingField));
 
-            Assert.AreEqual(getterPropBackingFieldCount, getterProps.Where(x => x.HasBackingField).Count());
-            Assert.AreEqual(setterPropBackingFieldCount, setterProps.Where(x => x.HasBackingField).Count());
+            Assert.Equal(getterPropBackingFieldCount, getterProps.Where(x => x.HasBackingField).Count());
+            Assert.Equal(setterPropBackingFieldCount, setterProps.Where(x => x.HasBackingField).Count());
         }
 
         private static void AssertAllGettersSetters<T>(
@@ -263,9 +262,9 @@ namespace UnitTests.Model
 
             var intersect = Intersect<T>.CreateAll();
 
-            Assert.AreEqual(getterCount, getters.Count, $"For type: #{typeof(T).Name} - Getters");
-            Assert.AreEqual(setterCount, setters.Count, $"For type: #{typeof(T).Name} - Setters");
-            Assert.AreEqual(intersectCount, intersect.Count, $"For type: #{typeof(T).Name} - Intersect");
+            Assert.Equal(getterCount, getters.Count);
+            Assert.Equal(setterCount, setters.Count);
+            Assert.Equal(intersectCount, intersect.Count);
         }
 
         private static void AssertGettersSetters<T>(
@@ -285,9 +284,9 @@ namespace UnitTests.Model
 
             var intersect = Intersect<T>.Create();
 
-            Assert.AreEqual(getterCount, getters.Count, $"For type: #{typeof(T).Name} - Getters");
-            Assert.AreEqual(setterCount, setters.Count, $"For type: #{typeof(T).Name} - Setters");
-            Assert.AreEqual(intersectCount, intersect.Count, $"For type: #{typeof(T).Name} - Intersect");
+            Assert.Equal(getterCount, getters.Count);
+            Assert.Equal(setterCount, setters.Count);
+            Assert.Equal(intersectCount, intersect.Count);
         }
 
         private static void AssertAccess<T>() where T : new()
@@ -307,7 +306,7 @@ namespace UnitTests.Model
                 setter(ref source, randValue);
 
                 var actual = getter(ref source);
-                Assert.AreEqual(randValue, actual);
+                Assert.Equal(randValue, actual);
             }
 
             foreach (var i in intersect)
@@ -320,7 +319,7 @@ namespace UnitTests.Model
             foreach (var i in intersect)
             {
                 var getter = i.Getter.GetDelegate<object>();
-                Assert.IsTrue(Equals(getter(ref source), getter(ref dest)));
+                Assert.Same(getter(ref source), getter(ref dest));
             }
         }
         #endregion

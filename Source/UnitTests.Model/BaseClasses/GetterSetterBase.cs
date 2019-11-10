@@ -1,14 +1,13 @@
 ﻿using Deipax.Convert;
 using Deipax.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Model.BaseClasses
 {
-    [TestClass]
     public abstract class GetterSetterBase<T, P> where T : new()
     {
         public GetterSetterBase(
@@ -29,193 +28,193 @@ namespace UnitTests.Model.BaseClasses
         #endregion
 
         #region Public Member
-        [TestMethod]
+        [Fact]
         public void ToBool()
         {
             RunTest<bool>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToBoolNullable()
         {
             RunTest<bool?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToChar()
         {
             RunTest<char>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToCharNullable()
         {
             RunTest<char?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToSByte()
         {
             RunTest<sbyte>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToSByteNullable()
         {
             RunTest<sbyte?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToByte()
         {
             RunTest<byte>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToByteNullable()
         {
             RunTest<byte?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToShort()
         {
             RunTest<short>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToShortNullable()
         {
             RunTest<short>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToUShort()
         {
             RunTest<ushort>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToUShortNullable()
         {
             RunTest<ushort?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToInt()
         {
             RunTest<int>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToIntNullable()
         {
             RunTest<int?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToUInt()
         {
             RunTest<uint>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToUIntNullable()
         {
             RunTest<uint?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToLong()
         {
             RunTest<long>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToLongNullable()
         {
             RunTest<long?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToULong()
         {
             RunTest<ulong>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToULongNullable()
         {
             RunTest<ulong?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToFloat()
         {
             RunTest<float>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToFloatNullable()
         {
             RunTest<float?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToDouble()
         {
             RunTest<double>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToDoubleNullable()
         {
             RunTest<double?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToDecimal()
         {
             RunTest<decimal>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToDecimalNullable()
         {
             RunTest<decimal?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToDateTime()
         {
             RunTest<DateTime>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToDateTimeNullable()
         {
             RunTest<DateTime?>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToObject()
         {
             RunTest<object>();
         }
 
-        [TestMethod]
+        [Fact]
         public void To_String()
         {
             RunTest<string>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToEnum()
         {
             RunTest<TestEnum>();
         }
 
-        [TestMethod]
+        [Fact]
         public void ToEnumNullable()
         {
             RunTest<TestEnum?>();
@@ -229,7 +228,7 @@ namespace UnitTests.Model.BaseClasses
             var setAsP = ModelAccess<T>.GetSetter(_memberExpression).GetDelegate<P>();
 
             setAsP(ref _instance, _testValue);
-            Assert.AreEqual(_testValue, getAsP(ref _instance));
+            Assert.Equal(_testValue, getAsP(ref _instance));
 
             var getAsX = ModelAccess<T>.GetGetter(_memberExpression).GetDelegate<X>();
             var setAsX = ModelAccess<T>.GetSetter(_memberExpression).GetDelegate<X>();
@@ -253,7 +252,7 @@ namespace UnitTests.Model.BaseClasses
             {
             }
 
-            Assert.AreEqual(expectedX, actualX);
+            Assert.Equal(expectedX, actualX);
         }
         #endregion
     }
