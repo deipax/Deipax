@@ -1,64 +1,63 @@
 ﻿using Deipax.Convert;
 using Deipax.Convert.Factories;
 using Deipax.Convert.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Convert
 {
-    [TestClass]
-    public class ConvertConfigTests
+    public class ConvertConfigTests : IDisposable
     {
-        [TestCleanup]
-        public void Cleanup()
-        {
-            ConvertConfig.Default = new DefaultFactory();
-            ConvertConfig.UserFactories = null;
-        }
-
-        [TestMethod]
+        [Fact]
         public void DefaultOverride()
         {
             var testFactory = new TestFactory();
 
             var count = testFactory.GetCount();
-            Assert.AreEqual(0, count);
+            Assert.Equal(0, count);
 
-            ConvertConfig.Default = testFactory;
+            ConvertConfig.DefaultFactory = testFactory;
 
             var result = ConvertConfig.Get<bool, ParentClass>();
 
             count = testFactory.GetCount();
-            Assert.AreEqual(1, count);
+            Assert.Equal(1, count);
         }
 
-        [TestMethod]
+        [Fact]
         public void UserFactoriesOverride()
         {
             var testFactory = new TestFactory();
             var count = testFactory.GetCount();
-            Assert.AreEqual(0, count);
+            Assert.Equal(0, count);
 
             ConvertConfig.UserFactories = new List<IConvertFactory> { testFactory };
 
             var result = ConvertConfig.Get<bool, ParentClass>();
 
             count = testFactory.GetCount();
-            Assert.AreEqual(1, count);
+            Assert.Equal(1, count);
         }
 
+        public void Dispose()
+        {
+            ConvertConfig.DefaultFactory = new DefaultFactory();
+            ConvertConfig.UserFactories = null;
+        }
+
+        #region Helpers
         class TestFactory : IConvertFactory
         {
-            public int _count = 0;
+            private int _count = 0;
 
             public int GetCount()
             {
                 return _count;
             }
 
-            #region IConvertFactory Members
             public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
                 IExpArgs<TFrom, TTo> args)
             {
@@ -66,7 +65,7 @@ namespace UnitTests.Convert
                 args.Add(args.LabelExpression);
                 return args.Get();
             }
-            #endregion
         }
+        #endregion
     }
 }

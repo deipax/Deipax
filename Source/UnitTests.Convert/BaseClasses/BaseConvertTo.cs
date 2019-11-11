@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Globalization;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Convert.BaseClasses
 {
-    [TestClass]
     public abstract class BaseConvertTo<TTo>
     {
         public BaseConvertTo()
@@ -263,7 +262,7 @@ namespace UnitTests.Convert.BaseClasses
             try
             {
                 TTo actualResult = ConvertFrom(from);
-                Assert.AreEqual(expectedResult, actualResult);
+                Assert.Equal(expectedResult, actualResult);
             }
             catch (InvalidCastException)
             {
@@ -280,7 +279,7 @@ namespace UnitTests.Convert.BaseClasses
             {
                 TTo expectedResult = GetExpected(from);
                 TTo actualResult = ConvertFrom(from);
-                Assert.AreEqual(expectedResult, actualResult);
+                Assert.Equal(expectedResult, actualResult);
             }
             catch (InvalidCastException)
             {
@@ -338,37 +337,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Bool
-        [TestMethod]
+        [Fact]
         public virtual void From_Bool()
         {
             TestConvertFrom(_fromBool);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Bool_AsObject()
         {
             TestConvertFrom(_fromBool_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Bool_Nullable_WithValue()
         {
             TestConvertFrom(_fromBoolNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Bool_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromBoolNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Bool_Nullable_NoValue()
         {
             TestConvertFrom(_fromBoolNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Bool_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromBoolNullableNoValue_AsObject, DefaultValue);
@@ -376,37 +375,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Byte
-        [TestMethod]
+        [Fact]
         public virtual void From_Byte()
         {
             TestConvertFrom(_fromByte);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Byte_AsObject()
         {
             TestConvertFrom(_fromByte_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Byte_Nullable_WithValue()
         {
             TestConvertFrom(_fromByteNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Byte_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromByteNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Byte_Nullable_NoValue()
         {
             TestConvertFrom(_fromByteNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Byte_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromByteNullableNoValue_AsObject, DefaultValue);
@@ -414,37 +413,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Char
-        [TestMethod]
+        [Fact]
         public virtual void From_Char()
         {
             TestConvertFrom(_fromChar);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Char_AsObject()
         {
             TestConvertFrom(_fromChar_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Char_Nullable_WithValue()
         {
             TestConvertFrom(_fromCharNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Char_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromCharNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Char_Nullable_NoValue()
         {
             TestConvertFrom(_fromCharNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Char_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromCharNullableNoValue_AsObject, DefaultValue);
@@ -452,37 +451,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From DateTime
-        [TestMethod]
+        [Fact]
         public virtual void From_DateTime()
         {
             TestConvertFrom(_fromDateTime);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_DateTime_AsObject()
         {
             TestConvertFrom(_fromDateTime_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_DateTime_Nullable_WithValue()
         {
             TestConvertFrom(_fromDateTimeNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_DateTime_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromDateTimeNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_DateTime_Nullable_NoValue()
         {
             TestConvertFrom(_fromDateTimeNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_DateTime_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromDateTimeNullableNoValue_AsObject, DefaultValue);
@@ -490,37 +489,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Decimal
-        [TestMethod]
+        [Fact]
         public virtual void From_Decimal()
         {
             TestConvertFrom(_fromDecimal);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Decimal_AsObject()
         {
             TestConvertFrom(_fromDecimal_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Decimal_Nullable_WithValue()
         {
             TestConvertFrom(_fromDecimalNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Decimal_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromDecimalNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Decimal_Nullable_NoValue()
         {
             TestConvertFrom(_fromDecimalNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Decimal_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromDecimalNullableNoValue_AsObject, DefaultValue);
@@ -528,37 +527,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Double
-        [TestMethod]
+        [Fact]
         public virtual void From_Double()
         {
             TestConvertFrom(_fromDouble);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Double_AsObject()
         {
             TestConvertFrom(_fromDouble_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Double_Nullable_WithValue()
         {
             TestConvertFrom(_fromDoubleNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Double_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromDoubleNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Double_Nullable_NoValue()
         {
             TestConvertFrom(_fromDoubleNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Double_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromDoubleNullableNoValue_AsObject, DefaultValue);
@@ -566,37 +565,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Short
-        [TestMethod]
+        [Fact]
         public virtual void From_Short()
         {
             TestConvertFrom(_fromShort);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Short_AsObject()
         {
             TestConvertFrom(_fromShort_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Short_Nullable_WithValue()
         {
             TestConvertFrom(_fromShortNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Short_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromShortNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Short_Nullable_NoValue()
         {
             TestConvertFrom(_fromShortNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Short_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromShortNullableNoValue_AsObject, DefaultValue);
@@ -604,37 +603,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Int
-        [TestMethod]
+        [Fact]
         public virtual void From_Int()
         {
             TestConvertFrom(_fromInt);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Int_AsObject()
         {
             TestConvertFrom(_fromInt_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Int_Nullable_WithValue()
         {
             TestConvertFrom(_fromIntNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Int_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromIntNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Int_Nullable_NoValue()
         {
             TestConvertFrom(_fromIntNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Int_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromIntNullableNoValue_AsObject, DefaultValue);
@@ -642,37 +641,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Long
-        [TestMethod]
+        [Fact]
         public virtual void From_Long()
         {
             TestConvertFrom(_fromLong);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Long_AsObject()
         {
             TestConvertFrom(_fromLong_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Long_Nullable_WithValue()
         {
             TestConvertFrom(_fromLongNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Long_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromLongNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Long_Nullable_NoValue()
         {
             TestConvertFrom(_fromLongNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Long_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromLongNullableNoValue_AsObject, DefaultValue);
@@ -680,37 +679,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From SByte
-        [TestMethod]
+        [Fact]
         public virtual void From_SByte()
         {
             TestConvertFrom(_fromSbyte);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_SByte_AsObject()
         {
             TestConvertFrom(_fromSbyte_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_SByte_Nullable_WithValue()
         {
             TestConvertFrom(_fromSbyteNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_SByte_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromSbyteNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_SByte_Nullable_NoValue()
         {
             TestConvertFrom(_fromSbyteNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_SByte_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromSbyteNullableNoValue_AsObject, DefaultValue);
@@ -718,37 +717,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Float
-        [TestMethod]
+        [Fact]
         public virtual void From_Float()
         {
             TestConvertFrom(_fromFloat);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Float_AsObject()
         {
             TestConvertFrom(_fromFloat_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Float_Nullable_WithValue()
         {
             TestConvertFrom(_fromFloatNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Float_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromFloatNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Float_Nullable_NoValue()
         {
             TestConvertFrom(_fromFloatNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Float_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromFloatNullableNoValue_AsObject, DefaultValue);
@@ -756,37 +755,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From String
-        [TestMethod]
+        [Fact]
         public virtual void From_String()
         {
             TestConvertFrom(_fromString);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_String_AsObject()
         {
             TestConvertFrom(_fromString_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_String_Null()
         {
             TestConvertFrom(_fromStringNull, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_String_Null_AsObject()
         {
             TestConvertFrom(_fromStringNull_AsObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_String_Empty()
         {
             TestConvertFrom(_fromStringEmpty, GetExpected(_fromStringEmpty));
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_String_Empty_AsObject()
         {
             TestConvertFrom(_fromStringEmpty_AsObject, GetExpected(_fromStringEmpty_AsObject));
@@ -794,37 +793,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From UShort
-        [TestMethod]
+        [Fact]
         public virtual void From_UShort()
         {
             TestConvertFrom(_fromUShort);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UShort_AsObject()
         {
             TestConvertFrom(_fromUShort_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UShort_Nullable_WithValue()
         {
             TestConvertFrom(_fromUShortNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UShort_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromUShortNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UShort_Nullable_NoValue()
         {
             TestConvertFrom(_fromUShortNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UShort_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromUShortNullableNoValue_AsObject, DefaultValue);
@@ -832,37 +831,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From UInt
-        [TestMethod]
+        [Fact]
         public virtual void From_UInt()
         {
             TestConvertFrom(_fromUInt);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UInt_AsObject()
         {
             TestConvertFrom(_fromUInt_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UInt_Nullable_WithValue()
         {
             TestConvertFrom(_fromUIntNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UInt_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromUIntNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UInt_Nullable_NoValue()
         {
             TestConvertFrom(_fromUIntNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_UInt_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromUIntNullableNoValue_AsObject, DefaultValue);
@@ -870,37 +869,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From ULong
-        [TestMethod]
+        [Fact]
         public virtual void From_ULong()
         {
             TestConvertFrom(_fromULong);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ULong_AsObject()
         {
             TestConvertFrom(_fromULong_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ULong_Nullable_WithValue()
         {
             TestConvertFrom(_fromULongNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ULong_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromULongNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ULong_Nullable_NoValue()
         {
             TestConvertFrom(_fromULongNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ULong_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromULongNullableNoValue_AsObject, DefaultValue);
@@ -908,19 +907,19 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region Null/DbNull
-        [TestMethod]
+        [Fact]
         public virtual void From_NullObject()
         {
             TestConvertFrom(_nullObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_DBNull()
         {
             TestConvertFrom(DBNull.Value, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_DBNull_AsObject()
         {
             TestConvertFrom(_dbNull_AsObject, DefaultValue);
@@ -928,25 +927,25 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From IConvertible Classes
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleClass()
         {
             TestConvertFrom(_convertibleClass);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleClass_AsObject()
         {
             TestConvertFrom(_convertibleClass_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleClass_NoValue()
         {
             TestConvertFrom(_convertibleClassNoValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleClass_NoValue_AsObject()
         {
             TestConvertFrom(_convertibleClassNoValue_AsObject);
@@ -954,25 +953,25 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Non-IConvertible Classes
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleClass()
         {
             TestConvertFrom(_nonConvertibleClass, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleClass_AsObject()
         {
             TestConvertFrom(_nonConvertibleClass_AsObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleClass_NoValue()
         {
             TestConvertFrom(_nonConvertibleClassNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleClass_NoValue_AsObject()
         {
             TestConvertFrom(_nonConvertibleClassNoValue_AsObject, DefaultValue);
@@ -980,37 +979,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From IConvertible Structs
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleStruct()
         {
             TestConvertFrom(_convertibleStruct);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleStruct_AsObject()
         {
             TestConvertFrom(_convertibleStruct_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleStruct_Nullable_WithValue()
         {
             TestConvertFrom(_convertibleStructNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleStruct_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_convertibleStructNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleStruct_Nullable_NoValue()
         {
             TestConvertFrom(_convertibleStructNullableNoValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ConvertibleStruct_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_convertibleStructNullableNoValue_AsObject);
@@ -1018,37 +1017,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Non-IConvertible Structs
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleStruct()
         {
             TestConvertFrom(_nonConvertibleStruct, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleStruct_AsObject()
         {
             TestConvertFrom(_nonConvertibleStruct_AsObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleStruct_Nullable_WithValue()
         {
             TestConvertFrom(_nonConvertibleStructNullableWithValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_nonConvertibleStructNullableWithValue_AsObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleStruct_Nullable_NoValue()
         {
             TestConvertFrom(_nonConvertibleStructNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_NonConvertibleStruct_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_nonConvertibleStructNullableNoValue_AsObject, DefaultValue);
@@ -1056,37 +1055,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From Enums
-        [TestMethod]
+        [Fact]
         public virtual void From_Enum()
         {
             TestConvertFrom(_fromEnum);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Enum_AsObject()
         {
             TestConvertFrom(_fromEnum_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Enum_Nullable_WithValue()
         {
             TestConvertFrom(_fromEnumNullableWithValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Enum_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_fromEnumNullableWithValue_AsObject);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Enum_Nullable_NoValue()
         {
             TestConvertFrom(_fromEnumNullableNoValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_Enum_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_fromEnumNullableNoValue_AsObject);
@@ -1094,25 +1093,25 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From ParentClass
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentClass()
         {
             TestConvertFrom(_parentClass, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentClass_AsObject()
         {
             TestConvertFrom(_parentClass_AsObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentClass_NoValue()
         {
             TestConvertFrom(_parentClassNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentClass_NoValue_AsObject()
         {
             TestConvertFrom(_parentClassNoValue_AsObject, DefaultValue);
@@ -1120,37 +1119,37 @@ namespace UnitTests.Convert.BaseClasses
         #endregion
 
         #region From ParentStruct
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentStruct()
         {
             TestConvertFrom(_parentStruct, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentStruct_AsObject()
         {
             TestConvertFrom(_parentStruct_AsObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentStruct_Nullable_WithValue()
         {
             TestConvertFrom(_parentStructNullableWithValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentStruct_Nullable_WithValue_AsObject()
         {
             TestConvertFrom(_parentStructNullableWithValue_AsObject, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentStruct_Nullable_NoValue()
         {
             TestConvertFrom(_parentStructNullableNoValue, DefaultValue);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void From_ParentStruct_Nullable_NoValue_AsObject()
         {
             TestConvertFrom(_parentStructNullableNoValue_AsObject, DefaultValue);

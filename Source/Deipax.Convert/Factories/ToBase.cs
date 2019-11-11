@@ -172,7 +172,7 @@ namespace Deipax.Convert.Factories
                 {
                     if (_invalidCastTypes.Exists(x => x == args.UnderlyingFromType))
                     {
-                        return ConvertConfig.Default?.Get(args);
+                        return ConvertConfig.DefaultFactory?.Get(args);
                     }
                     else
                     {

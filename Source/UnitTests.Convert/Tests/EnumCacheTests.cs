@@ -1,26 +1,25 @@
 ﻿using Deipax.Convert.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Convert
 {
-    [TestClass]
     public class EnumCacheTests
     {
-        [TestMethod]
+        [Fact]
         public void EnumValuesAreShared()
         {
             var enumValues = EnumCache.GetEnumValues<TestEnum, int>();
             var nullableEnumValues = EnumCache.GetEnumValues<TestEnum?, int>();
-            Assert.AreSame(enumValues, nullableEnumValues);
+            Assert.Same(enumValues, nullableEnumValues);
         }
 
-        [TestMethod]
+        [Fact]
         public void StringValuesAreShared()
         {
             var stringValues = EnumCache.GetStringValues<TestEnum, int>();
             var nullableStringValues = EnumCache.GetStringValues<TestEnum?, int>();
-            Assert.AreSame(stringValues, nullableStringValues);
+            Assert.Same(stringValues, nullableStringValues);
         }
     }
 }

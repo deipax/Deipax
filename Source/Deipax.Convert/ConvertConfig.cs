@@ -13,7 +13,7 @@ namespace Deipax.Convert
         static ConvertConfig()
         {
             DefaultProvider = CultureInfo.InvariantCulture;
-            Default = new DefaultFactory();
+            DefaultFactory = new DefaultFactory();
 
             _defaults = new List<IConvertFactory>()
             {
@@ -48,7 +48,7 @@ namespace Deipax.Convert
 
         #region Public Members
         public static IFormatProvider DefaultProvider { get; set; }
-        public static IConvertFactory Default { get; set; }
+        public static IConvertFactory DefaultFactory { get; set; }
         public static IReadOnlyList<IConvertFactory> UserFactories { get; set; }
 
         public static IConvertResult<TFrom, TTo> Get<TFrom, TTo>()
@@ -61,7 +61,7 @@ namespace Deipax.Convert
             result = GetResult(_defaults, args);
             if (result != null) return result;
 
-            return GetResult(Default, args);
+            return GetResult(DefaultFactory, args);
         }
         #endregion
 
