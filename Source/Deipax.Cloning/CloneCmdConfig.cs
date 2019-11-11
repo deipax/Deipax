@@ -1,4 +1,5 @@
-﻿using Deipax.Core.Extensions;
+﻿using Deipax.Cloning.Common;
+using Deipax.Core.Extensions;
 using Deipax.Model.Extensions;
 using Deipax.Model.Interfaces;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Deipax.Cloning.Common
+namespace Deipax.Cloning
 {
     public static class CloneCmdConfig<T>
     {

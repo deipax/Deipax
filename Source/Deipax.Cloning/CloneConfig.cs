@@ -1,10 +1,11 @@
-﻿using Deipax.Cloning.Factories;
+﻿using Deipax.Cloning.Common;
+using Deipax.Cloning.Factories;
 using Deipax.Cloning.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Deipax.Cloning.Common
+namespace Deipax.Cloning
 {
     public delegate T CloneDel<T>(T source, CopyContext context);
 

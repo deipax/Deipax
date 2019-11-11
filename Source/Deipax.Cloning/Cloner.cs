@@ -1,10 +1,11 @@
-﻿using Deipax.Cloning.Extensions;
+﻿using Deipax.Cloning.Common;
+using Deipax.Cloning.Extensions;
 using Deipax.Core.Common;
 using Deipax.Core.Extensions;
 using System;
 using System.Linq.Expressions;
 
-namespace Deipax.Cloning.Common
+namespace Deipax.Cloning
 {
     public static class Cloner<T>
     {

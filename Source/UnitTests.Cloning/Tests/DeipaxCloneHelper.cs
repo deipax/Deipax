@@ -1,4 +1,5 @@
-﻿using Deipax.Cloning.Common;
+﻿using Deipax.Cloning;
+using Deipax.Cloning.Common;
 using UnitTests.Cloning.BaseTests;
 
 namespace UnitTests.Cloning

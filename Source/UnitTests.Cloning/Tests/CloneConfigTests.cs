@@ -1,4 +1,5 @@
-﻿using Deipax.Cloning.Common;
+﻿using Deipax.Cloning;
+using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
