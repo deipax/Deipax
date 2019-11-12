@@ -9,10 +9,10 @@ namespace Deipax.DataAccess.Concretes
 	{
 		public DbCmd(IDb db)
 		{
-			this.Db = db;
-			this.Parameters = new Collection<IDbDataParameter>();
-			this.CommandType = CommandType.Text;
-			this.Timeout = -1;
+			Db = db;
+			Parameters = new Collection<IDbDataParameter>();
+			CommandType = CommandType.Text;
+			Timeout = -1;
 		}
 
 		private DbCmd()

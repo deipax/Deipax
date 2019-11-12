@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using UnitTests.Common;
-using UnitTests.DataAccess.BaseTests;
 using UnitTests.DataAccess.Concretes;
 using Xunit;
 
 namespace UnitTests.DataAccess
 {
-    public class IDbCmdExtensionsTests : BaseTest
+    public class IDbCmdExtensionsTests
     {
         [Fact]
         public void SetCommandType()

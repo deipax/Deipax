@@ -92,15 +92,6 @@ namespace UnitTests.DataAccess
                 Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
             }
         }
-
-        private static void SetupAndAssert(Action<IDbBatch> act)
-        {
-            using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
-            {
-                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
-                act(dbCon.CreateDbBatch());
-            }
-        }
         #endregion
     }
 }

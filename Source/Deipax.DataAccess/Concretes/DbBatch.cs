@@ -7,7 +7,7 @@ namespace Deipax.DataAccess.Concretes
 	{
 		public DbBatch(IDb db)
 		{
-			this.Db = db;
+			Db = db;
 		}
 
 		private DbBatch()

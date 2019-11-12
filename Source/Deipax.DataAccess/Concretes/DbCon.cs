@@ -9,7 +9,7 @@ namespace Deipax.DataAccess.Concretes
 	{
 		public DbCon(IDb db)
 		{
-			this.Db = db;
+			Db = db;
 			_factory = db.ConnectionFactory;
 		}
 
@@ -34,7 +34,7 @@ namespace Deipax.DataAccess.Concretes
 				{
 					if (_con == null)
 					{
-						_con = _factory(this.Db);
+						_con = _factory(Db);
 					}
 				}
 			}
@@ -54,7 +54,7 @@ namespace Deipax.DataAccess.Concretes
 					{
 						if (_con.State != ConnectionState.Closed)
 						{
-							using (var time = CloseTimer.Create(this.Db))
+							using (var time = CloseTimer.Create(Db))
 							{
 								_con.Close();
 							}

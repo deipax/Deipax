@@ -8,6 +8,7 @@ namespace Deipax.DataAccess.Interfaces
 		string Name { get; }
 		string ConnectionString { get; }
 		string ProviderName { get; }
+        IDbFactory DbFactory { get; }
 		Func<IDb, IDbConnection> ConnectionFactory { get; }
 	}
 }

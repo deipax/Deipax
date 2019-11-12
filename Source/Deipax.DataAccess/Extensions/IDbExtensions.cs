@@ -1,5 +1,4 @@
-﻿using Deipax.DataAccess.Common;
-using System;
+﻿using System;
 using System.Data;
 
 namespace Deipax.DataAccess.Interfaces
@@ -14,7 +13,7 @@ namespace Deipax.DataAccess.Interfaces
 			string provider = null,
 			Func<IDb, IDbConnection> factory = null)
 		{
-			return DbConfig.CreateDb(
+			return source.DbFactory.CreateDb(
 				name ?? source.Name,
 				cs ?? source.ConnectionString,
 				provider ?? source.ProviderName,
@@ -24,19 +23,19 @@ namespace Deipax.DataAccess.Interfaces
 		public static IDbCon CreateDbCon(
 			this IDb source)
 		{
-			return DbConfig.CreateDbCon(source);
+			return source.DbFactory.CreateDbCon(source);
 		}
 
         public static IDbBatch CreateDbBatch(
             this IDb source)
         {
-            return DbConfig.CreateDbBatch(source);
+            return source.DbFactory.CreateDbBatch(source);
         }
 
         public static IDbCmd CreateDbCmd(
             this IDb source)
         {
-            return DbConfig.CreateDbCmd(source);
+            return source.DbFactory.CreateDbCmd(source);
         }
 
         public static void AsTransaction(
