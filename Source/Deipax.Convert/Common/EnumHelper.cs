@@ -38,8 +38,8 @@ namespace Deipax.Convert.Common
 
             if (key != null)
             {
-               if (!string.IsNullOrEmpty(key) &&
-                _enumValues.TryGetValue(key, out TUnderlyingType returnValue))
+                if (!string.IsNullOrEmpty(key) &&
+                 _enumValues.TryGetValue(key, out TUnderlyingType returnValue))
                 {
                     return _cast(returnValue);
                 }
@@ -93,11 +93,11 @@ namespace Deipax.Convert.Common
             string returnValue = default;
             TUnderlyingType? value = ConvertTo<TUnderlyingType?, TEnum>.From(from);
 
-           if (value.HasValue)
+            if (value.HasValue)
             {
                 _stringValues.TryGetValue(value.Value, out returnValue);
             }
-       
+
             return returnValue;
         }
         #endregion

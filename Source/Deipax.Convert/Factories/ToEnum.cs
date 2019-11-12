@@ -24,7 +24,7 @@ namespace Deipax.Convert.Factories
                             args.ToType,
                             Enum.GetUnderlyingType(args.UnderlyingToType)),
                         "ConvertFromString",
-                        new Type [] { },
+                        new Type[] { },
                         args.Input,
                         args.GetDefaultProvider());
                 }
@@ -35,7 +35,7 @@ namespace Deipax.Convert.Factories
                             args.ToType,
                             Enum.GetUnderlyingType(args.UnderlyingToType)),
                         "ConvertFromObject",
-                        new Type [] { },
+                        new Type[] { },
                         args.Input,
                         args.GetDefaultProvider());
                 }

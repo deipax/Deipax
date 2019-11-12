@@ -24,7 +24,7 @@ namespace Deipax.Convert.Common
             Type toType = typeof(TEnum);
             Type enumType = Nullable.GetUnderlyingType(toType) ?? toType;
             var cache = _enumValueCache.GetOrAdd(
-                enumType, 
+                enumType,
                 (key) => GetEnumValuesHelper<TEnum, TUnderlyingType>());
             return cache as IReadOnlyDictionary<string, TUnderlyingType>;
         }
@@ -34,7 +34,7 @@ namespace Deipax.Convert.Common
             Type toType = typeof(TEnum);
             Type enumType = Nullable.GetUnderlyingType(toType) ?? toType;
             var cache = _stringValueCache.GetOrAdd(
-                enumType, 
+                enumType,
                 (key) => GetStringValuesHelper<TEnum, TUnderlyingType>());
             return cache as IReadOnlyDictionary<TUnderlyingType, string>;
         }

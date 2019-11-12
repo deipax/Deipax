@@ -22,7 +22,7 @@ namespace Deipax.Cloning.Factories
                     var args = CloneArgs.Create(type, false);
 
                     Expression createExpression = CloneConfig<T>.Initializer != null ?
-                        (Expression)Expression.Invoke(Expression.Constant(CloneConfig<T>.Initializer), args.Source) :
+                        Expression.Invoke(Expression.Constant(CloneConfig<T>.Initializer), args.Source) :
                         (Expression)Expression.New(args.Type);
 
                     List<Expression> expressions = new List<Expression>()

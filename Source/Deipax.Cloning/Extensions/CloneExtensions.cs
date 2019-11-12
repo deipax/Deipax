@@ -7,7 +7,7 @@ namespace Deipax.Cloning.Extensions
     {
         #region Field Members
         private static readonly ThreadLocal<CopyContext> _context =
-            new ThreadLocal<CopyContext>(() =>  new CopyContext());
+            new ThreadLocal<CopyContext>(() => new CopyContext());
         #endregion
 
         #region Public Members

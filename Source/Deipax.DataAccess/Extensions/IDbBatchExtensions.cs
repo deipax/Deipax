@@ -4,52 +4,52 @@ using System.Data;
 namespace Deipax.DataAccess.Interfaces
 {
     public static class IDbBatchExtensions
-	{
-		public static IDbCmd CreateDbCmd(
-			this IDbBatch dbBatch)
-		{
-			dbBatch.Connection.OpenSafe(dbBatch.Db);
+    {
+        public static IDbCmd CreateDbCmd(
+            this IDbBatch dbBatch)
+        {
+            dbBatch.Connection.OpenSafe(dbBatch.Db);
 
-			return dbBatch
+            return dbBatch
                 .Db
                 .CreateDbCmd()
-				.SetConnection(dbBatch.Connection)
-				.SetTransaction(dbBatch.Transaction);
-		}
+                .SetConnection(dbBatch.Connection)
+                .SetTransaction(dbBatch.Transaction);
+        }
 
-		public static IDbBatch SetTransaction(
-			this IDbBatch source,
-			IDbTransaction transaction)
-		{
-			source.Transaction = transaction;
-			return source;
-		}
+        public static IDbBatch SetTransaction(
+            this IDbBatch source,
+            IDbTransaction transaction)
+        {
+            source.Transaction = transaction;
+            return source;
+        }
 
-		public static IDbBatch SetConnection(
-			this IDbBatch source,
-			IDbConnection connection)
-		{
-			source.Connection = connection;
-			return source;
-		}
+        public static IDbBatch SetConnection(
+            this IDbBatch source,
+            IDbConnection connection)
+        {
+            source.Connection = connection;
+            return source;
+        }
 
-		public static IDbDataParameter CreateParameter(
-			this IDbBatch source,
-			string name = null,
-			object value = null,
-			ParameterDirection? direction = default(ParameterDirection?),
-			DbType? dbType = default(DbType?),
-			int? size = default(int?))
-		{
-			return source.Connection.CreateParameter(name, value, direction, dbType, size);
-		}
+        public static IDbDataParameter CreateParameter(
+            this IDbBatch source,
+            string name = null,
+            object value = null,
+            ParameterDirection? direction = default(ParameterDirection?),
+            DbType? dbType = default(DbType?),
+            int? size = default(int?))
+        {
+            return source.Connection.CreateParameter(name, value, direction, dbType, size);
+        }
 
-		public static IEnumerable<IDbDataParameter> CreateParameters(
-			this IDbBatch source,
-			string baseName,
-			IEnumerable<object> values)
-		{
-			return source.Connection.CreateParameters(baseName, values);
-		}
-	}
+        public static IEnumerable<IDbDataParameter> CreateParameters(
+            this IDbBatch source,
+            string baseName,
+            IEnumerable<object> values)
+        {
+            return source.Connection.CreateParameters(baseName, values);
+        }
+    }
 }

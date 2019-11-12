@@ -1,5 +1,4 @@
-﻿using Deipax.Cloning.Common;
-using Deipax.Core.Common;
+﻿using Deipax.Core.Common;
 using Deipax.Core.Extensions;
 using Deipax.Model.Extensions;
 using System;
@@ -21,7 +20,7 @@ namespace Deipax.Cloning.Extensions
         private static readonly RuntimeTypeHandle _intPtrTypeHandle = typeof(IntPtr).TypeHandle;
         private static readonly RuntimeTypeHandle _uIntPtrTypeHandle = typeof(UIntPtr).TypeHandle;
 
-        private static readonly QuickCache<Type, bool> _canShallowClone = 
+        private static readonly QuickCache<Type, bool> _canShallowClone =
             new QuickCache<Type, bool>(16, ReferenceEqualsComparer.Instance);
 
         private static readonly Func<Type, bool> _canShallowCloneHelper = CanShallowCloneHelper;
@@ -31,7 +30,7 @@ namespace Deipax.Cloning.Extensions
         public static bool CanShallowClone(
             this Type source)
         {
-            return _canShallowClone.GetOrAdd(source, _canShallowCloneHelper) || 
+            return _canShallowClone.GetOrAdd(source, _canShallowCloneHelper) ||
                 CheckCloneConfig(source);
         }
 

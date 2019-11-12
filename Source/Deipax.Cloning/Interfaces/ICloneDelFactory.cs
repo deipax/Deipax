@@ -1,6 +1,4 @@
-﻿using Deipax.Cloning.Common;
-
-namespace Deipax.Cloning.Interfaces
+﻿namespace Deipax.Cloning.Interfaces
 {
     public interface ICloneDelFactory
     {

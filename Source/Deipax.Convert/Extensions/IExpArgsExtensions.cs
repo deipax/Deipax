@@ -48,7 +48,7 @@ namespace Deipax.Convert.Extensions
                     {
                         var returnIfSame = Expression.IfThen(
                             Expression.Or(
-                                Expression.TypeEqual(args.Input, args.ToType), 
+                                Expression.TypeEqual(args.Input, args.ToType),
                                 Expression.TypeEqual(args.Input, args.UnderlyingToType)),
                             Expression.Return(args.LabelTarget, Expression.Convert(args.Input, args.ToType)));
 

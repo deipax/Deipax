@@ -9,7 +9,7 @@ namespace UnitTests.Cloning
     public class ComplexStructTests : ComplexStructBase
     {
         public ComplexStructTests() : base(DeipaxCloneHelper.Instance)
-        {        
+        {
         }
 
         protected override void AfterArrayOfDiffInstance(

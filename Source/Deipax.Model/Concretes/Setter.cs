@@ -29,7 +29,7 @@ namespace Deipax.Model.Concretes
 
         public Set<T, X> GetDelegate<X>()
         {
-            return (Set<T, X>) _cache.GetOrAdd(typeof(X), x => GetExpression<X>().Compile());
+            return (Set<T, X>)_cache.GetOrAdd(typeof(X), x => GetExpression<X>().Compile());
         }
 
         public Expression<Set<T, X>> GetExpression<X>()
@@ -60,7 +60,7 @@ namespace Deipax.Model.Concretes
                      !xType.IsNullable())
             {
                 block = Expression.Block(Expression.Assign(
-                    memberExpression, 
+                    memberExpression,
                     Expression.Convert(input, typeof(object))));
             }
             else if (ModelInfo.Type == typeof(object) &&
@@ -91,7 +91,7 @@ namespace Deipax.Model.Concretes
                      Nullable.GetUnderlyingType(ModelInfo.Type) == xType)
             {
                 block = Expression.Block(Expression.Assign(
-                    memberExpression, 
+                    memberExpression,
                     Expression.Convert(input, ModelInfo.Type)));
             }
             else if (xType == typeof(object))

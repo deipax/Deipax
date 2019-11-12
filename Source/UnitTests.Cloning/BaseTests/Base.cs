@@ -17,7 +17,7 @@ namespace UnitTests.Cloning.BaseTests
 
             _object = _single;
 
-            _arrayDiff = GenerateItems(10); 
+            _arrayDiff = GenerateItems(10);
 
             _arrayDiffObjects = _arrayDiff.Cast<object>().ToArray();
             _arraySame = Enumerable.Repeat(_single, 10).ToArray();
@@ -599,7 +599,7 @@ namespace UnitTests.Cloning.BaseTests
         {
             Assert.Equal(args.Target.Count, args.Source.Count);
 
-            var targetKeys = args.Target.Keys.ToList();        
+            var targetKeys = args.Target.Keys.ToList();
             var sourceKeys = args.Source.Keys.ToList();
 
             for (int i = 0; i < targetKeys.Count; i++)
@@ -678,7 +678,7 @@ namespace UnitTests.Cloning.BaseTests
         {
             List<T> items = new List<T>();
 
-            while(items.Count != count)
+            while (items.Count != count)
             {
                 T item = GenerateItem();
 

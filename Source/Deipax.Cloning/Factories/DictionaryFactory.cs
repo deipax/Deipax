@@ -67,14 +67,14 @@ namespace Deipax.Cloning.Factories
             {
                 if (context.TryGetCopy(source, out var existingCopy))
                 {
-                    return (Dictionary<X, Y>) existingCopy;
+                    return (Dictionary<X, Y>)existingCopy;
                 }
 
                 var target = new Dictionary<X, Y>(source.Count, source.Comparer);
 
                 context.RecordCopy(source, target);
 
-                foreach(var pair in source)
+                foreach (var pair in source)
                 {
                     target.Add(KeyCloner(pair.Key, context), ValueCloner(pair.Value, context));
                 }

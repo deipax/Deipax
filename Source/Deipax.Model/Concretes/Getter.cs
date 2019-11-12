@@ -70,7 +70,7 @@ namespace Deipax.Model.Concretes
                     Expression.Return(labelTarget, Expression.Default(xType)));
 
                 block = Expression.Block(
-                    xType, 
+                    xType,
                     ifThenElse,
                     labelExpression);
             }
@@ -93,7 +93,7 @@ namespace Deipax.Model.Concretes
                     Expression.Return(labelTarget, Expression.Default(xType)));
 
                 block = Expression.Block(
-                    xType, 
+                    xType,
                     ifThenElse,
                     labelExpression);
             }
@@ -105,7 +105,7 @@ namespace Deipax.Model.Concretes
                     provider);
 
                 block = Expression.Block(
-                    xType, 
+                    xType,
                     Expression.Return(labelTarget, invoke),
                     labelExpression);
             }

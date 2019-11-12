@@ -9,7 +9,7 @@ namespace UnitTests.Cloning
     public class SimpleStructTests : SimpleStructBase
     {
         public SimpleStructTests() : base(DeipaxCloneHelper.Instance)
-        {       
+        {
         }
 
         protected override void AfterArrayOfDiffInstance(

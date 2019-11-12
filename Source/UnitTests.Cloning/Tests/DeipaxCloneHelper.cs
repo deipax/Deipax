@@ -7,7 +7,7 @@ namespace UnitTests.Cloning
     public class DeipaxCloneHelper : ICloneHelper
     {
         private DeipaxCloneHelper()
-        {    
+        {
         }
 
         public static readonly ICloneHelper Instance = new DeipaxCloneHelper();

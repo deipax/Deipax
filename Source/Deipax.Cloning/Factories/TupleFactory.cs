@@ -27,7 +27,7 @@ namespace Deipax.Cloning.Factories
                  type.GetGenericTypeDefinition() == typeof(Tuple<,,,,,,,>)))
             {
                 var args = CloneArgs.Create(type, true);
-        
+
                 Type[] genericTypes = typeof(T).GetGenericArguments();
                 var cloneItems = new Expression[genericTypes.Length];
 
@@ -40,7 +40,7 @@ namespace Deipax.Cloning.Factories
                     var itemType = genericTypes[i];
 
                     cloneItems[i] = itemType.CanShallowClone() ?
-                        (Expression)Expression.Property(args.Source, itemName) :
+                        Expression.Property(args.Source, itemName) :
                         (Expression)ExpressionHelper.GetSafeClone(itemType, Expression.Property(args.Source, itemName), args.Context);
                 }
 
@@ -52,7 +52,7 @@ namespace Deipax.Cloning.Factories
                     var itemType = genericTypes[7];
 
                     cloneItems[7] = itemType.CanShallowClone() ?
-                        (Expression)Expression.Property(args.Source, itemName) :
+                        Expression.Property(args.Source, itemName) :
                         (Expression)ExpressionHelper.GetSafeClone(itemType, Expression.Property(args.Source, itemName), args.Context);
                 }
 

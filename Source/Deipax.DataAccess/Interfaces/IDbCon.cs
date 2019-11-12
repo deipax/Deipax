@@ -3,9 +3,9 @@ using System.Data;
 
 namespace Deipax.DataAccess.Interfaces
 {
-	public interface IDbCon : IDisposable
-	{
-		IDb Db { get; }
-		IDbConnection GetConnection();
-	}
+    public interface IDbCon : IDisposable
+    {
+        IDb Db { get; }
+        IDbConnection GetConnection();
+    }
 }

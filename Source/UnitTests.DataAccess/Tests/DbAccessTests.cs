@@ -14,7 +14,7 @@ namespace UnitTests.DataAccess.Tests
             _access = new DbAccess();
             _access.Add(new DbHelperClass()
             {
-                Name= "NorthWind"
+                Name = "NorthWind"
             });
         }
 
@@ -52,14 +52,14 @@ namespace UnitTests.DataAccess.Tests
 
             _access.Add(new DbHelperClass()
             {
-                Name= "NorthWind"
+                Name = "NorthWind"
             });
 
-             Assert.True(dbs.Count() == 1);
+            Assert.True(dbs.Count() == 1);
 
             _access.Add(new DbHelperClass()
             {
-                Name= "BogusName"
+                Name = "BogusName"
             });
 
             Assert.True(dbs.Count() == 2);

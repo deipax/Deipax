@@ -36,7 +36,7 @@ namespace Benchmarks.Cloning.BaseClasses_Old
                 .Range(0, 10)
                 .Select(x => func)
                 .ToArray();
-        
+
             _arrayOfStringArrays = new string[][]
             {
                 new string [] { "one", "two" },

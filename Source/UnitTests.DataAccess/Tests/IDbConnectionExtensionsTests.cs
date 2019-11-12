@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Xunit;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.DataAccess
 {

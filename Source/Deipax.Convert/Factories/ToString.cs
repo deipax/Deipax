@@ -125,7 +125,7 @@ namespace Deipax.Convert.Factories
                       args.UnderlyingFromType,
                       Enum.GetUnderlyingType(args.UnderlyingFromType)),
                   "ConvertToString",
-                  new Type [] { },
+                  new Type[] { },
                   guardedInput,
                   args.GetDefaultProvider());
 

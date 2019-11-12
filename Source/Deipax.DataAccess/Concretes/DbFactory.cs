@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Deipax.DataAccess.Interfaces;
+using System;
 using System.Data;
-using Deipax.DataAccess.Interfaces;
 
 namespace Deipax.DataAccess.Concretes
 {

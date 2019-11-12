@@ -1,7 +1,7 @@
-﻿using System;
-using Deipax.Cloning.Common;
+﻿using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
 

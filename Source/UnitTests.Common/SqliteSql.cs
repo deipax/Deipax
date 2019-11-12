@@ -103,7 +103,7 @@ namespace UnitTests.Common
         public DateTime OrderRequiredDate { get; set; }
         public DateTime OrderShippedDate { get; set; }
         public int OrderShipVia { get; set; }
-        public decimal OrderFreight { get; set; }                  
+        public decimal OrderFreight { get; set; }
         public string OrderShipName { get; set; }
         public string OrderShipAddress { get; set; }
         public string OrderShipCity { get; set; }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnitTests.Common;
+﻿using UnitTests.Common;
 using Xunit;
 
 namespace UnitTests.Cloning.BaseTests

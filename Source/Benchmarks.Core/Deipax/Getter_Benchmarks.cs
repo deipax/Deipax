@@ -1,6 +1,6 @@
-﻿using System;
-using Benchmarks.Core.BaseClasses;
+﻿using Benchmarks.Core.BaseClasses;
 using Benchmarks.Core.TestClasses;
+using System;
 
 namespace Benchmarks.Core.Deipax
 {

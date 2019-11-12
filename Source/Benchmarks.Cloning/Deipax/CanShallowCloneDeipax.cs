@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
 using Deipax.Cloning.Extensions;
 using System;
 using UnitTests.Common;

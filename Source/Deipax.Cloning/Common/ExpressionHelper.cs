@@ -85,7 +85,7 @@ namespace Deipax.Cloning.Common
                 var memberInfo = field.FieldInfo;
 
                 var cloneExpression = field.CanShallowClone()
-                    ? (Expression)Expression.MakeMemberAccess(source, memberInfo)
+                    ? Expression.MakeMemberAccess(source, memberInfo)
                     : (Expression)GetSafeClone(memberType, Expression.MakeMemberAccess(source, memberInfo),
                         context);
 
@@ -98,11 +98,11 @@ namespace Deipax.Cloning.Common
             {
                 var memberType = prop.Type;
                 var memberInfo = prop.HasBackingField ?
-                    (MemberInfo)prop.BackingField.FieldInfo :
+                    prop.BackingField.FieldInfo :
                     (MemberInfo)prop.PropertyInfo;
 
                 var cloneExpression = prop.CanShallowClone()
-                    ? (Expression)Expression.MakeMemberAccess(source, memberInfo)
+                    ? Expression.MakeMemberAccess(source, memberInfo)
                     : (Expression)GetSafeClone(memberType, Expression.MakeMemberAccess(source, memberInfo), context);
 
                 expressions.Add(Expression.Assign(
@@ -148,7 +148,7 @@ namespace Deipax.Cloning.Common
                     .FirstOrDefault();
 
                 Expression cloneItem = itemType.CanShallowClone()
-                    ? (Expression)currentProperty
+                    ? currentProperty
                     : (Expression)GetSafeClone(itemType, currentProperty, context);
 
                 LoopExpression loop = Expression.Loop(

@@ -72,7 +72,7 @@ namespace UnitTests.Model
             AssertGettersSetters<MyInterface>(2, 1, 1);
             AssertGettersSetters<MyStruct>(1, 1, 1);
             AssertGettersSetters<MyStaticClass>(0, 0, 0);
-      
+
             AssertGettersSetters<string[]>(8, 0, 0);
             AssertGettersSetters<IDictionary<int, int>>(2, 0, 0);
             AssertGettersSetters<object>(0, 0, 0);

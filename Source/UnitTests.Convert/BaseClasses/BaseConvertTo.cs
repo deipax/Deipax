@@ -327,7 +327,7 @@ namespace UnitTests.Convert.BaseClasses
                     return (TTo)System.Convert.ChangeType(from, underlyingToType, CultureInfo.InvariantCulture);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string errorMsg = ex.Message;
             }
