@@ -49,7 +49,8 @@ namespace Deipax.Convert.Factories
                 }
                 else if (args.UnderlyingToType == typeof(DateTime))
                 {
-                    return ConvertConfig.DefaultFactory?.Get(args);
+                    args.Add(args.LabelExpression);
+                    return args.Get();
                 }
             }
 

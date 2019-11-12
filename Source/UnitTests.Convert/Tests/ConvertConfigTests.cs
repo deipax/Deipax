@@ -1,5 +1,4 @@
 ﻿using Deipax.Convert;
-using Deipax.Convert.Factories;
 using Deipax.Convert.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace UnitTests.Convert
         [Fact]
         public void DefaultFactoryOverride()
         {
-            var testFactory = new TestFactory(new DefaultFactory());
+            var testFactory = new TestFactory();
 
             var count = testFactory.GetCount();
             Assert.Equal(0, count);
@@ -33,7 +32,7 @@ namespace UnitTests.Convert
             var count = testFactory.GetCount();
             Assert.Equal(0, count);
 
-            ConvertConfig.UserFactories = new List<IConvertFactory> { testFactory };
+            ConvertConfig.Factories = new List<IConvertFactory> { testFactory };
 
             var result = ConvertConfig.Get<bool, TestClass_1>();
 
@@ -43,23 +42,13 @@ namespace UnitTests.Convert
 
         public void Dispose()
         {
-            ConvertConfig.UserFactories = null;
+            ConvertConfig.Factories = null;
         }
 
         #region Helpers
         class TestFactory : IConvertFactory
         {
-            public TestFactory()
-            {
-            }
-
-            public TestFactory(IConvertFactory factory)
-            {
-                _factory = factory;
-            }
-
             private int _count = 0;
-            private IConvertFactory _factory;
 
             public int GetCount()
             {
@@ -76,7 +65,7 @@ namespace UnitTests.Convert
                     return args.Get();
                 }
 
-                return _factory?.Get(args);
+                return null;
             }
         }
 

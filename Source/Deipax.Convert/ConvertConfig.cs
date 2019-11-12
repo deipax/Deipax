@@ -13,9 +13,9 @@ namespace Deipax.Convert
         static ConvertConfig()
         {
             DefaultProvider = CultureInfo.InvariantCulture;
-            DefaultFactory = new DefaultFactory();
+            _defaultFactory = new DefaultFactory();
 
-            _defaults = new List<IConvertFactory>()
+            _defaultFactories = new List<IConvertFactory>()
             {
                 new NoConvert(),
                 new ToEnum(),
@@ -43,25 +43,29 @@ namespace Deipax.Convert
         }
 
         #region Field Members
-        private static IReadOnlyList<IConvertFactory> _defaults;
+        private static IReadOnlyList<IConvertFactory> _defaultFactories;
+        private static IConvertFactory _defaultFactory;
         #endregion
 
         #region Public Members
         public static IFormatProvider DefaultProvider { get; set; }
         public static IConvertFactory DefaultFactory { get; set; }
-        public static IReadOnlyList<IConvertFactory> UserFactories { get; set; }
+        public static IReadOnlyList<IConvertFactory> Factories { get; set; }
 
         public static IConvertResult<TFrom, TTo> Get<TFrom, TTo>()
         {
             var args = new ExpArgs<TFrom, TTo>();
 
-            var result = GetResult(UserFactories, args);
+            var result = GetResult(Factories, args);
             if (result != null) return result;
 
-            result = GetResult(_defaults, args);
+            result = GetResult(_defaultFactories, args);
             if (result != null) return result;
 
-            return GetResult(DefaultFactory, args);
+            result = GetResult(DefaultFactory, args);
+            if (result != null) return result;
+
+            return GetResult(_defaultFactory, args);
         }
         #endregion
 
