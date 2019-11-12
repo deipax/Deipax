@@ -1,15 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class AbstractBaseTests
     {
         protected abstract T GetClone<T>(T source, int expectedCount);
 
-        [TestMethod]
+        [Fact]
         public void IRealOnlyList_String()
         {
             IReadOnlyList<string> source = new List<string>()
@@ -19,26 +18,26 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Count, source.Count);
-            Assert.AreEqual(dest[0], source[0]);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Count, source.Count);
+            Assert.Equal(dest[0], source[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public void GrandChildClass_AsInterface()
         {
             MyInterface source = GrandChildClassHelper.Generate();
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(source.Parent_Public_GetSet_AutoProp, dest.Parent_Public_GetSet_AutoProp);
-            Assert.AreEqual(source.Parent_Public_Get_AutoProp, dest.Parent_Public_Get_AutoProp);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(source.Parent_Public_GetSet_AutoProp, dest.Parent_Public_GetSet_AutoProp);
+            Assert.Equal(source.Parent_Public_Get_AutoProp, dest.Parent_Public_Get_AutoProp);
         }
 
-        [TestMethod]
+        [Fact]
         public void Struct_AsInterface()
         {
             MyTmpInterface source = new HelperStruct3()
@@ -48,13 +47,11 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 0);
 
-            Assert.IsNotNull(dest);
-
-            Assert.AreEqual(source.PropOne, dest.PropOne);
-            Assert.AreNotSame(source.PropOne, dest.PropOne);
+            Assert.NotNull(dest);
+            Assert.Equal(source.PropOne, dest.PropOne);
         }
 
-        [TestMethod]
+        [Fact]
         public void IRealOnlyList_Interface()
         {
             IReadOnlyList<MyTmpInterface> source = new List<MyTmpInterface>()
@@ -66,24 +63,19 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 3);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotSame(dest, source);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
 
-            Assert.IsTrue(dest[0] is Helper1);
-            Assert.IsTrue(dest[1] is Helper1_1);
-            Assert.IsTrue(dest[2] is HelperStruct3);
+            Assert.IsAssignableFrom<Helper1>(dest[0]);
+            Assert.IsAssignableFrom<Helper1_1>(dest[1]);
+            Assert.IsAssignableFrom<HelperStruct3>(dest[2]);
 
-            Assert.AreEqual(source[0].PropOne, dest[0].PropOne);
-            Assert.AreNotSame(source[0].PropOne, dest[0].PropOne);
-
-            Assert.AreEqual(source[1].PropOne, dest[1].PropOne);
-            Assert.AreNotSame(source[1].PropOne, dest[1].PropOne);
-
-            Assert.AreEqual(source[2].PropOne, dest[2].PropOne);
-            Assert.AreNotSame(source[2].PropOne, dest[2].PropOne);
+            Assert.Equal(source[0].PropOne, dest[0].PropOne);
+            Assert.Equal(source[1].PropOne, dest[1].PropOne);
+            Assert.Equal(source[2].PropOne, dest[2].PropOne);
         }
 
-        [TestMethod]
+        [Fact]
         public void ListOfClasses_DuplicateReuse()
         {
             Helper1 tmp = new Helper1();
@@ -97,17 +89,17 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 2);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.NotEqual(dest, source);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Count, source.Count);
 
             var firstItem = dest[0];
 
             for (int i = 0; i < dest.Count; i++)
             {
-                Assert.AreNotSame(source[i], dest[i]);
-                Assert.AreSame(firstItem, dest[i]);
+                Assert.NotSame(source[i], dest[i]);
+                Assert.Same(firstItem, dest[i]);
             }
         }
     }

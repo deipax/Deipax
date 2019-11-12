@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnitTests.Common;
+﻿using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class NullableSimpleStructBase : Base<SimpleStruct?>
     {
         public NullableSimpleStructBase(ICloneHelper helper) : base(helper)
@@ -18,13 +17,13 @@ namespace UnitTests.Cloning.BaseTests
 
         protected override void AssertAreEqual(SimpleStruct? source, SimpleStruct? target)
         {
-            Assert.AreEqual(source, target);
+            Assert.Equal(source, target);
 
             if (source.HasValue)
             {
-                Assert.AreEqual(source.Value.Int, target.Value.Int);
-                Assert.AreEqual(source.Value.Long, target.Value.Long);
-                Assert.AreEqual(source.Value.UInt, target.Value.UInt);
+                Assert.Equal(source.Value.Int, target.Value.Int);
+                Assert.Equal(source.Value.Long, target.Value.Long);
+                Assert.Equal(source.Value.UInt, target.Value.UInt);
             }
         }
 

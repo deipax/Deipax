@@ -1,17 +1,16 @@
 ﻿using Deipax.Cloning;
 using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning
 {
-    [TestClass]
     public class CanShallowCloneTests
     {
-        [TestMethod]
+        [Fact]
         public void AssertDefaultBehavior()
         {
             // Primitives
@@ -55,42 +54,42 @@ namespace UnitTests.Cloning
             AssertShallowClone(new Dictionary<int, int>(), false, false);
         }
 
-        [TestMethod]
+        [Fact]
         public void StructByRegistrationExtension()
         {
             // Test a complex struct.
             var type = typeof(Test1Struct);
-            Assert.AreEqual(false, type.CanShallowClone());
+            Assert.False(type.CanShallowClone());
             CloneCmdConfig<Test1Struct>.ShallowCloneType = true;
-            Assert.AreEqual(true, type.CanShallowClone());
+            Assert.True(type.CanShallowClone());
         }
 
-        [TestMethod]
+        [Fact]
         public void ComplexStructWithShallowCloneMembers()
         {
             // A complex struct whose members can be shallow
             // cloned implies the struct itself can be shallow cloned.
             var type = typeof(Test2Struct);
-            Assert.AreEqual(true, type.CanShallowClone());
+            Assert.True(type.CanShallowClone());
         }
 
-        [TestMethod]
+        [Fact]
         public void ClassByAttributeExtension()
         {
             var type = typeof(Test3Class);
-            Assert.AreEqual(true, type.CanShallowClone());
+            Assert.True(type.CanShallowClone());
         }
 
-        [TestMethod]
+        [Fact]
         public void ClassByRegistrationExtension()
         {
             var type = typeof(Test4Class);
-            Assert.AreEqual(false, type.CanShallowClone());
+            Assert.False(type.CanShallowClone());
             CloneCmdConfig<Test4Class>.ShallowCloneType = true;
-            Assert.AreEqual(true, type.CanShallowClone());
+            Assert.True(type.CanShallowClone());
         }
 
-        [TestMethod]
+        [Fact]
         public void ClassByRegistration()
         {
             Test5_3Class<int> listOne = new Test5_3Class<int>();
@@ -111,14 +110,14 @@ namespace UnitTests.Cloning
             var target1 = source1.GetClone();
             var target2 = source2.GetClone();
 
-            Assert.AreSame(source1.PropOne, source2.PropOne);
-            Assert.AreSame(source1.PropOne, target1.PropOne);
-            Assert.AreSame(source2.PropOne, target2.PropOne);
-            Assert.AreSame(source2.PropOne, target1.PropOne);
-            Assert.AreSame(target1.PropOne, target2.PropOne);
+            Assert.Same(source1.PropOne, source2.PropOne);
+            Assert.Same(source1.PropOne, target1.PropOne);
+            Assert.Same(source2.PropOne, target2.PropOne);
+            Assert.Same(source2.PropOne, target1.PropOne);
+            Assert.Same(target1.PropOne, target2.PropOne);
         }
 
-        [TestMethod]
+        [Fact]
         public void ClassByAttribute()
         {
             Test6_3Class one = new Test6_3Class();
@@ -136,14 +135,14 @@ namespace UnitTests.Cloning
             var target1 = source1.GetClone();
             var target2 = source2.GetClone();
 
-            Assert.AreSame(source1.PropOne, source2.PropOne);
-            Assert.AreSame(source1.PropOne, target1.PropOne);
-            Assert.AreSame(source2.PropOne, target2.PropOne);
-            Assert.AreSame(source2.PropOne, target1.PropOne);
-            Assert.AreSame(target1.PropOne, target2.PropOne);
+            Assert.Same(source1.PropOne, source2.PropOne);
+            Assert.Same(source1.PropOne, target1.PropOne);
+            Assert.Same(source2.PropOne, target2.PropOne);
+            Assert.Same(source2.PropOne, target1.PropOne);
+            Assert.Same(target1.PropOne, target2.PropOne);
         }
 
-        [TestMethod]
+        [Fact]
         public void FieldByAttribute()
         {
             Test7_2Class two = new Test7_2Class();
@@ -156,13 +155,13 @@ namespace UnitTests.Cloning
 
             var target1 = source1.GetClone();
 
-            Assert.AreSame(source1.FieldOne, source1.FieldTwo);
-            Assert.AreSame(source1.FieldOne, target1.FieldOne);
-            Assert.AreNotSame(source1.FieldTwo, target1.FieldTwo);
-            Assert.AreNotSame(target1.FieldOne, target1.FieldTwo);
+            Assert.Same(source1.FieldOne, source1.FieldTwo);
+            Assert.Same(source1.FieldOne, target1.FieldOne);
+            Assert.NotSame(source1.FieldTwo, target1.FieldTwo);
+            Assert.NotSame(target1.FieldOne, target1.FieldTwo);
         }
 
-        [TestMethod]
+        [Fact]
         public void PropertyByAttribute()
         {
             Test8_2Class two = new Test8_2Class();
@@ -175,28 +174,28 @@ namespace UnitTests.Cloning
 
             var target1 = source1.GetClone();
 
-            Assert.AreSame(source1.FieldOne, source1.FieldTwo);
-            Assert.AreSame(source1.FieldOne, target1.FieldOne);
-            Assert.AreNotSame(source1.FieldTwo, target1.FieldTwo);
-            Assert.AreNotSame(target1.FieldOne, target1.FieldTwo);
+            Assert.Same(source1.FieldOne, source1.FieldTwo);
+            Assert.Same(source1.FieldOne, target1.FieldOne);
+            Assert.NotSame(source1.FieldTwo, target1.FieldTwo);
+            Assert.NotSame(target1.FieldOne, target1.FieldTwo);
         }
 
-        [TestMethod]
+        [Fact]
         public void FieldByRegistration()
         {
             var type = typeof(Test9_class);
-            Assert.AreEqual(false, CloneCmdConfig<Test9_class>.CanShallowClone(x => x.FieldOne));
-            CloneCmdConfig<Test9_class>.ShallowCloneType = true;
-            Assert.AreEqual(false, CloneCmdConfig<Test9_class>.CanShallowClone(x => x.FieldOne));
+            Assert.False(CloneCmdConfig<Test9_class>.CanShallowClone(x => x.FieldOne));
+            CloneCmdConfig<Test9_class>.ShallowClone(x => x.FieldOne);
+            Assert.True(CloneCmdConfig<Test9_class>.CanShallowClone(x => x.FieldOne));
         }
 
-        [TestMethod]
+        [Fact]
         public void PropertyByRegistration()
         {
             var type = typeof(Test10_class);
-            Assert.AreEqual(false, CloneCmdConfig<Test10_class>.CanShallowClone(x => x.PropOne));
-            CloneCmdConfig<Test10_class>.ShallowCloneType = true;
-            Assert.AreEqual(false, CloneCmdConfig<Test10_class>.CanShallowClone(x => x.PropOne));
+            Assert.False(CloneCmdConfig<Test10_class>.CanShallowClone(x => x.PropOne));
+            CloneCmdConfig<Test10_class>.ShallowClone(x => x.PropOne);
+            Assert.True(CloneCmdConfig<Test10_class>.CanShallowClone(x => x.PropOne));
         }
 
         #region Private Members
@@ -206,8 +205,8 @@ namespace UnitTests.Cloning
             bool isPrimitive)
         {
             var type = source.GetType();
-            Assert.AreEqual(isPrimitive, type.IsPrimitive);
-            Assert.AreEqual(canShallowClone, type.CanShallowClone());
+            Assert.Equal(isPrimitive, type.IsPrimitive);
+            Assert.Equal(canShallowClone, type.CanShallowClone());
         }
 
         private static void TestDel()

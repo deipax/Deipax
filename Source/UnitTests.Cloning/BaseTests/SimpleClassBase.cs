@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnitTests.Common;
+﻿using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class SimpleClassBase : Base<SimpleClass>
     {
         public SimpleClassBase(ICloneHelper helper) : base(helper)
@@ -18,19 +17,19 @@ namespace UnitTests.Cloning.BaseTests
 
         protected override void AssertAreEqual(SimpleClass source, SimpleClass target)
         {
-            Assert.AreEqual(source.BaseInt, target.BaseInt);
-            Assert.AreEqual(source.Double, target.Double);
-            Assert.AreEqual(source.Float, target.Float);
-            Assert.AreEqual(source.Int, target.Int);
-            Assert.AreEqual(source.Long, target.Long);
-            Assert.AreEqual(source.String, target.String);
-            Assert.AreEqual(source.UInt, target.UInt);
-            Assert.AreEqual(source.ULong, target.ULong);
+            Assert.Equal(source.BaseInt, target.BaseInt);
+            Assert.Equal(source.Double, target.Double);
+            Assert.Equal(source.Float, target.Float);
+            Assert.Equal(source.Int, target.Int);
+            Assert.Equal(source.Long, target.Long);
+            Assert.Equal(source.String, target.String);
+            Assert.Equal(source.UInt, target.UInt);
+            Assert.Equal(source.ULong, target.ULong);
         }
 
         protected override void AssertAreSame(SimpleClass source, SimpleClass target)
         {
-            Assert.AreSame(source, target);
+            Assert.Same(source, target);
         }
         #endregion
     }

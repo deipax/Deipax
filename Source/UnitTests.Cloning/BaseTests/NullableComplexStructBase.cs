@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnitTests.Common;
+﻿using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class NullableComplexStructBase : Base<ComplexStruct?>
     {
         public NullableComplexStructBase(ICloneHelper helper) : base(helper)
@@ -20,15 +19,15 @@ namespace UnitTests.Cloning.BaseTests
         {
             if (source.HasValue)
             {
-                Assert.AreSame(source.Value.One, source.Value.One.One);
-                Assert.AreSame(target.Value.One, target.Value.One.One);
+                Assert.Same(source.Value.One, source.Value.One.One);
+                Assert.Same(target.Value.One, target.Value.One.One);
 
-                Assert.AreEqual(source.Value.Int, target.Value.Int);
-                Assert.AreEqual(source.Value.One.Int, target.Value.One.Int);
+                Assert.Equal(source.Value.Int, target.Value.Int);
+                Assert.Equal(source.Value.One.Int, target.Value.One.Int);
             }
             else
             {
-                Assert.AreEqual(source, target);
+                Assert.Equal(source, target);
             }
         }
 

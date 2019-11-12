@@ -1,36 +1,35 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class ShallowCloneListBase
     {
         protected abstract T GetClone<T>(T source, int expectedCount);
 
-        [TestMethod]
+        [Fact]
         public void ListOfStrings()
         {
             List<string> source = RandGen.GenerateStringList(1000, 10);
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Count, source.Count);
 
             for (int i = 0; i < dest.Count; i++)
             {
-                Assert.AreEqual(dest[i], source[i]);
+                Assert.Equal(dest[i], source[i]);
             }
 
             source.Clear();
 
-            Assert.AreNotEqual(source.Count, dest.Count);
+            Assert.NotEqual(source.Count, dest.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ListOfBytes()
         {
             List<byte> source = RandGen
@@ -39,40 +38,40 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Count, source.Count);
 
             for (int i = 0; i < dest.Count; i++)
             {
-                Assert.AreEqual(dest[i], source[i]);
+                Assert.Equal(dest[i], source[i]);
             }
 
             source.Clear();
 
-            Assert.AreNotEqual(source.Count, dest.Count);
+            Assert.NotEqual(source.Count, dest.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ListOfInts()
         {
             List<int> source = RandGen.GenerateIntList(1000);
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Count, source.Count);
 
             for (int i = 0; i < dest.Count; i++)
             {
-                Assert.AreEqual(dest[i], source[i]);
+                Assert.Equal(dest[i], source[i]);
             }
 
             source.Clear();
 
-            Assert.AreNotEqual(source.Count, dest.Count);
+            Assert.NotEqual(source.Count, dest.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ListOfStringList_DuplicateReuse()
         {
             var helper = RandGen.GenerateStringList(20, 5);
@@ -87,28 +86,27 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 2);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Count, source.Count);
 
             var firstItem = dest[0];
 
             for (int i = 0; i < dest.Count; i++)
             {
-                Assert.AreNotSame(source[i], dest[i]);
-                Assert.AreSame(firstItem, dest[i]);
-                Assert.AreEqual(source[i].Count, dest[i].Count);
+                Assert.NotSame(source[i], dest[i]);
+                Assert.Same(firstItem, dest[i]);
+                Assert.Equal(source[i].Count, dest[i].Count);
 
                 for (int j = 0; j < dest[i].Count; j++)
                 {
-                    Assert.AreEqual(source[i][j], dest[i][j]);
+                    Assert.Equal(source[i][j], dest[i][j]);
                 }
             }
 
             source.Clear();
 
-            Assert.AreNotEqual(source.Count, dest.Count);
+            Assert.NotEqual(source.Count, dest.Count);
         }
     }
 }

@@ -1,18 +1,15 @@
 ﻿using Deipax.Cloning;
-using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
 using Deipax.Cloning.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning
 {
-    [TestClass]
     public class CloneConfigTests
     {
-        [TestMethod]
+        [Fact]
         public void UserFactory_Override()
         {
             int callCount = 0;
@@ -34,11 +31,11 @@ namespace UnitTests.Cloning
 
             var target = source.GetClone();
 
-            Assert.AreSame(source, target);
-            Assert.AreEqual(1, callCount);
+            Assert.Same(source, target);
+            Assert.Equal(1, callCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void Initializer_Override_Class()
         {
             int methodCalled = 0;
@@ -52,14 +49,14 @@ namespace UnitTests.Cloning
             var source = new TestClass2(6);
             var dest = source.GetClone();
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotSame(source, dest);
-            Assert.AreEqual(source.Prop, dest.Prop);
-            Assert.AreEqual(dest.Prop, 6);
-            Assert.AreEqual(methodCalled, 1);
+            Assert.NotNull(dest);
+            Assert.NotSame(source, dest);
+            Assert.Equal(source.Prop, dest.Prop);
+            Assert.Equal(6, dest.Prop);
+            Assert.Equal(1, methodCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void Initializer_Override_Struct()
         {
             int methodCalled = 0;
@@ -73,13 +70,12 @@ namespace UnitTests.Cloning
             var source = new TestStruct1(6);
             var dest = source.GetClone();
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(source.Prop, dest.Prop);
-            Assert.AreEqual(dest.Prop, 6);
-            Assert.AreEqual(1, methodCalled);
+            Assert.Equal(source.Prop, dest.Prop);
+            Assert.Equal(6, dest.Prop);
+            Assert.Equal(1, methodCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void CloneDel_Override_Class()
         {
             int methodCalled = 0;
@@ -95,14 +91,14 @@ namespace UnitTests.Cloning
 
             var dest = source.GetClone();
 
-            Assert.IsNotNull(dest);
-            Assert.AreSame(source, dest);
-            Assert.AreEqual(source.PropOne, dest.PropOne);
-            Assert.AreEqual(dest.PropOne, 6);
-            Assert.AreEqual(methodCalled, 1);
+            Assert.NotNull(dest);
+            Assert.Same(source, dest);
+            Assert.Equal(source.PropOne, dest.PropOne);
+            Assert.Equal(6, dest.PropOne);
+            Assert.Equal(1, methodCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void CloneDel_Override_Struct()
         {
             int methodCalled = 0;
@@ -116,10 +112,9 @@ namespace UnitTests.Cloning
             var source = new TestStruct2(6);
             var dest = source.GetClone();
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(source.Prop, dest.Prop);
-            Assert.AreEqual(dest.Prop, 6);
-            Assert.AreEqual(1, methodCalled);
+            Assert.Equal(source.Prop, dest.Prop);
+            Assert.Equal(6, dest.Prop);
+            Assert.Equal(1, methodCalled);
         }
 
         #region Helpers

@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UnitTests.Common;
+﻿using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class StringBase : Base<string>
     {
         public StringBase(ICloneHelper helper) : base(helper)
@@ -18,7 +17,7 @@ namespace UnitTests.Cloning.BaseTests
 
         protected override void AssertAreEqual(string source, string target)
         {
-            Assert.AreEqual(source, target);
+            Assert.Equal(source, target);
         }
 
         protected override void AssertAreSame(string source, string target)

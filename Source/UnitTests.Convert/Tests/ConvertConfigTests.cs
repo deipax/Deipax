@@ -4,7 +4,6 @@ using Deipax.Convert.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using UnitTests.Common;
 using Xunit;
 
 namespace UnitTests.Convert
@@ -12,16 +11,16 @@ namespace UnitTests.Convert
     public class ConvertConfigTests : IDisposable
     {
         [Fact]
-        public void DefaultOverride()
+        public void DefaultFactoryOverride()
         {
-            var testFactory = new TestFactory();
+            var testFactory = new TestFactory(new DefaultFactory());
 
             var count = testFactory.GetCount();
             Assert.Equal(0, count);
 
             ConvertConfig.DefaultFactory = testFactory;
 
-            var result = ConvertConfig.Get<bool, ParentClass>();
+            var result = ConvertConfig.Get<bool, TestClass_1>();
 
             count = testFactory.GetCount();
             Assert.Equal(1, count);
@@ -36,7 +35,7 @@ namespace UnitTests.Convert
 
             ConvertConfig.UserFactories = new List<IConvertFactory> { testFactory };
 
-            var result = ConvertConfig.Get<bool, ParentClass>();
+            var result = ConvertConfig.Get<bool, TestClass_1>();
 
             count = testFactory.GetCount();
             Assert.Equal(1, count);
@@ -44,14 +43,23 @@ namespace UnitTests.Convert
 
         public void Dispose()
         {
-            ConvertConfig.DefaultFactory = new DefaultFactory();
             ConvertConfig.UserFactories = null;
         }
 
         #region Helpers
         class TestFactory : IConvertFactory
         {
+            public TestFactory()
+            {
+            }
+
+            public TestFactory(IConvertFactory factory)
+            {
+                _factory = factory;
+            }
+
             private int _count = 0;
+            private IConvertFactory _factory;
 
             public int GetCount()
             {
@@ -61,11 +69,19 @@ namespace UnitTests.Convert
             public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
                 IExpArgs<TFrom, TTo> args)
             {
-                _count++;
-                args.Add(args.LabelExpression);
-                return args.Get();
+                if (args.ToType == typeof(TestClass_1))
+                {
+                    _count++;
+                    args.Add(args.LabelExpression);
+                    return args.Get();
+                }
+
+                return _factory?.Get(args);
             }
         }
+
+        class TestClass_1
+        { }
         #endregion
     }
 }

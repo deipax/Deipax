@@ -1,84 +1,79 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class ArrayBaseTests
     {
         protected abstract T GetClone<T>(T source, int expectedCount);
 
-        [TestMethod]
+        [Fact]
         public void NullIntArray()
         {
             int[] source = null;
             var dest = GetClone(source, 0);
-            Assert.IsNull(dest);
+            Assert.Null(dest);
         }
 
-        [TestMethod]
+        [Fact]
         public void EmptyIntArray()
         {
             int[] source = new int[0];
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Length, source.Length);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Length, source.Length);
         }
 
-        [TestMethod]
+        [Fact]
         public void IntArray()
         {
             int[] source = new[] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Length, source.Length);
-            Assert.AreEqual(dest[0], source[0]);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Length, source.Length);
+            Assert.Equal(dest[0], source[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public void StringArray()
         {
             string[] source = new[] { "first string", string.Empty, null };
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Length, source.Length);
-            Assert.AreEqual(dest[0], source[0]);
-            Assert.AreEqual(dest[1], source[1]);
-            Assert.AreEqual(dest[2], source[2]);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Length, source.Length);
+            Assert.Equal(dest[0], source[0]);
+            Assert.Equal(dest[1], source[1]);
+            Assert.Equal(dest[2], source[2]);
         }
 
-        [TestMethod]
+        [Fact]
         public void ByteArray()
         {
             var source = RandGen.GenerateByteArray(1000);
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Length, source.Length);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Length, source.Length);
 
             for (int i = 0; i < dest.Length; i++)
             {
-                Assert.AreNotSame(dest, source);
-                Assert.AreEqual(dest[i], source[i]);
+                Assert.NotSame(dest, source);
+                Assert.Equal(dest[i], source[i]);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ArrayOfStringArrays()
         {
             string[][] source = new string[][]
@@ -89,19 +84,18 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 3);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Length, source.Length);
-            Assert.AreNotEqual(dest[0], source[0]);
-            Assert.AreNotEqual(dest[1], source[1]);
-            Assert.AreEqual(dest[0][0], source[0][0]);
-            Assert.AreEqual(dest[0][1], source[0][1]);
-            Assert.AreEqual(dest[1][0], source[1][0]);
-            Assert.AreEqual(dest[1][1], source[1][1]);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Length, source.Length);
+            Assert.NotSame(dest[0], source[0]);
+            Assert.NotSame(dest[1], source[1]);
+            Assert.Equal(dest[0][0], source[0][0]);
+            Assert.Equal(dest[0][1], source[0][1]);
+            Assert.Equal(dest[1][0], source[1][0]);
+            Assert.Equal(dest[1][1], source[1][1]);
         }
 
-        [TestMethod]
+        [Fact]
         public void ArrayOfStringArrays_DuplicateReuse()
         {
             string[] helper = new string[] { "one", "two" };
@@ -116,57 +110,55 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 2);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Length, source.Length);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Length, source.Length);
 
             var firstItem = dest[0];
 
             for (int i = 0; i < dest.Length; i++)
             {
-                Assert.AreNotSame(source[i], dest[i]);
-                Assert.AreSame(firstItem, dest[i]);
-                Assert.AreEqual(source[i].Length, dest[i].Length);
+                Assert.NotSame(source[i], dest[i]);
+                Assert.Same(firstItem, dest[i]);
+                Assert.Equal(source[i].Length, dest[i].Length);
 
                 for (int j = 0; j < dest[i].Length; j++)
                 {
-                    Assert.AreEqual(source[i][j], dest[i][j]);
+                    Assert.Equal(source[i][j], dest[i][j]);
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ArrayOfStringArrays_Null()
         {
             string[][] source = null;
             var dest = GetClone(source, 0);
-            Assert.IsNull(dest);
+            Assert.Null(dest);
         }
 
-        [TestMethod]
+        [Fact]
         public void ArrayOfNullableInts()
         {
-            Nullable<int>[] source = new Nullable<int>[]
+            int?[] source = new int?[]
             {
-                new Nullable<int>(10),
-                new Nullable<int>(5),
+                new int?(10),
+                new int?(5),
                 null
             };
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Length, source.Length);
-            Assert.AreEqual(dest[0], source[0]);
-            Assert.AreEqual(dest[1], source[1]);
-            Assert.AreEqual(dest[2], source[2]);
-            Assert.IsTrue(!dest[2].HasValue);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Length, source.Length);
+            Assert.Equal(dest[0], source[0]);
+            Assert.Equal(dest[1], source[1]);
+            Assert.Equal(dest[2], source[2]);
+            Assert.True(!dest[2].HasValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void ArrayOfClasses()
         {
             Helper1[] source = new Helper1[1000];
@@ -181,14 +173,13 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 1001);
 
-            Assert.IsTrue(dest != null);
-            Assert.IsTrue(dest.Length == source.Length);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Length, source.Length);
 
             for (int i = 0; i < dest.Length; i++)
             {
-                Assert.AreNotSame(dest[i], source[i]);
-                Assert.AreNotSame(dest[i].PropOne, source[i].PropOne);
-                Assert.AreEqual(dest[i].PropOne, source[i].PropOne);
+                Assert.NotSame(dest[i], source[i]);
+                Assert.Equal(dest[i].PropOne, source[i].PropOne);
             }
         }
     }

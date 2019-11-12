@@ -2,14 +2,13 @@
 using Deipax.Cloning.Common;
 using Deipax.Cloning.Extensions;
 using Deipax.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace UnitTests.Cloning
 {
-    [TestClass]
     public class NoCloneAttributeTests
     {
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestClass1()
         {
             var source = new TestClass1(3, 4)
@@ -26,13 +25,13 @@ namespace UnitTests.Cloning
             var destPropThree = getterPropThree(ref dest);
             var destPropFour = getterPropFour(ref dest);
 
-            Assert.AreEqual(dest.PropOne, 1);
-            Assert.AreEqual(dest.PropTwo, 2);
-            Assert.AreEqual(destPropThree, 3);
-            Assert.AreEqual(destPropFour, 4);
+            Assert.Equal(1, dest.PropOne);
+            Assert.Equal(2, dest.PropTwo);
+            Assert.Equal(3, destPropThree);
+            Assert.Equal(4, destPropFour);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestClass2()
         {
             var source = new TestClass2(3, 4)
@@ -49,13 +48,13 @@ namespace UnitTests.Cloning
             var destPropThree = getterPropThree(ref dest);
             var destPropFour = getterPropFour(ref dest);
 
-            Assert.AreEqual(dest.PropOne, 1);
-            Assert.AreEqual(dest.PropTwo, default(int));
-            Assert.AreEqual(destPropThree, 3);
-            Assert.AreEqual(destPropFour, default(int));
+            Assert.Equal(1, dest.PropOne);
+            Assert.Equal(default, dest.PropTwo);
+            Assert.Equal(3, destPropThree);
+            Assert.Equal(default(int), destPropFour);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestClass3()
         {
             var source = new TestClass3(3, 4)
@@ -72,13 +71,13 @@ namespace UnitTests.Cloning
             var destPropThree = getterPropThree(ref dest);
             var destPropFour = getterPropFour(ref dest);
 
-            Assert.AreEqual(dest.PropOne, default(int));
-            Assert.AreEqual(dest.PropTwo, 2);
-            Assert.AreEqual(destPropThree, default(int));
-            Assert.AreEqual(destPropFour, 4);
+            Assert.Equal(default, dest.PropOne);
+            Assert.Equal(2, dest.PropTwo);
+            Assert.Equal(default(int), destPropThree);
+            Assert.Equal(4, destPropFour);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestStruct1()
         {
             var source = new TestStruct1(3, 4)
@@ -95,13 +94,13 @@ namespace UnitTests.Cloning
             var destPropThree = getterPropThree(ref dest);
             var destPropFour = getterPropFour(ref dest);
 
-            Assert.AreEqual(dest.PropOne, 1);
-            Assert.AreEqual(dest.PropTwo, 2);
-            Assert.AreEqual(destPropThree, 3);
-            Assert.AreEqual(destPropFour, 4);
+            Assert.Equal(1, dest.PropOne);
+            Assert.Equal(2, dest.PropTwo);
+            Assert.Equal(3, destPropThree);
+            Assert.Equal(4, destPropFour);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestStruct2()
         {
             var source = new TestStruct2(3, 4)
@@ -118,13 +117,13 @@ namespace UnitTests.Cloning
             var destPropThree = getterPropThree(ref dest);
             var destPropFour = getterPropFour(ref dest);
 
-            Assert.AreEqual(dest.PropOne, 1);
-            Assert.AreEqual(dest.PropTwo, default(int));
-            Assert.AreEqual(destPropThree, 3);
-            Assert.AreEqual(destPropFour, default(int));
+            Assert.Equal(1, dest.PropOne);
+            Assert.Equal(default, dest.PropTwo);
+            Assert.Equal(3, destPropThree);
+            Assert.Equal(default(int), destPropFour);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestStruct3()
         {
             var source = new TestStruct3(3, 4)
@@ -141,13 +140,13 @@ namespace UnitTests.Cloning
             var destPropThree = getterPropThree(ref dest);
             var destPropFour = getterPropFour(ref dest);
 
-            Assert.AreEqual(dest.PropOne, default(int));
-            Assert.AreEqual(dest.PropTwo, 2);
-            Assert.AreEqual(destPropThree, default(int));
-            Assert.AreEqual(destPropFour, 4);
+            Assert.Equal(default, dest.PropOne);
+            Assert.Equal(2, dest.PropTwo);
+            Assert.Equal(default(int), destPropThree);
+            Assert.Equal(4, destPropFour);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestClass4()
         {
             var source = new TestClass4(5, 6)
@@ -167,19 +166,19 @@ namespace UnitTests.Cloning
             var propSix = ModelAccess<TestClass4>.GetGetter("PropSix").GetDelegate<object>();
             var dest = source.GetClone();
 
-            Assert.AreEqual(default(int), dest.PropOne);
-            Assert.AreEqual(default(int), dest.PropTwo);
-            Assert.AreEqual(source.PropThree, dest.PropThree);
-            Assert.AreEqual(source.PropFour, dest.PropFour);
+            Assert.Equal(default, dest.PropOne);
+            Assert.Equal(default, dest.PropTwo);
+            Assert.Equal(source.PropThree, dest.PropThree);
+            Assert.Equal(source.PropFour, dest.PropFour);
 
-            Assert.AreEqual(propFive(ref source), propFive(ref dest));
-            Assert.AreNotEqual(default(int), propFive(ref dest));
+            Assert.Equal(propFive(ref source), propFive(ref dest));
+            Assert.NotEqual(default(int), propFive(ref dest));
 
-            Assert.AreNotEqual(default(int), propSix(ref source));
-            Assert.AreEqual(default(int), propSix(ref dest));
+            Assert.NotEqual(default(int), propSix(ref source));
+            Assert.Equal(default(int), propSix(ref dest));
         }
 
-        [TestMethod]
+        [Fact]
         public void NoCloneAttributeTests_TestClass5()
         {
             var propOneGet = ModelAccess<TestClass5>.GetGetter("PropOne").GetDelegate<object>();
@@ -203,15 +202,15 @@ namespace UnitTests.Cloning
 
             var dest = source.GetClone();
 
-            Assert.AreNotEqual(default(int), propOneGet(ref source));
-            Assert.AreNotEqual(default(int), propTwoGet(ref source));
-            Assert.AreNotEqual(default(int), propThreeGet(ref source));
-            Assert.AreNotEqual(default(int), propFourGet(ref source));
+            Assert.NotEqual(default(int), propOneGet(ref source));
+            Assert.NotEqual(default(int), propTwoGet(ref source));
+            Assert.NotEqual(default(int), propThreeGet(ref source));
+            Assert.NotEqual(default(int), propFourGet(ref source));
 
-            Assert.AreEqual(propOneGet(ref source), propOneGet(ref dest));
-            Assert.AreEqual(propTwoGet(ref source), propTwoGet(ref dest));
-            Assert.AreEqual(default(int), propThreeGet(ref dest));
-            Assert.AreEqual(default(int), propFourGet(ref dest));
+            Assert.Equal(propOneGet(ref source), propOneGet(ref dest));
+            Assert.Equal(propTwoGet(ref source), propTwoGet(ref dest));
+            Assert.Equal(default(int), propThreeGet(ref dest));
+            Assert.Equal(default(int), propFourGet(ref dest));
         }
 
         #region Helper

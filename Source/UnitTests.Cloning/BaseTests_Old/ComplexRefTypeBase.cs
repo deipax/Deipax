@@ -1,16 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnitTests.Common;
+using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
 {
-    [TestClass]
     public abstract class ComplexRefTypeBase
     {
         protected abstract T GetClone<T>(T source, int expectedCount);
 
-        [TestMethod]
+        [Fact]
         public virtual void ObjectsAreReused()
         {
             Helper1 helper1 = new Helper1();
@@ -27,26 +26,26 @@ namespace UnitTests.Cloning.BaseTests
 
             var target = GetClone(source, 3);
 
-            Assert.IsNotNull(target);
-            Assert.AreEqual(target.Count, source.Count);
+            Assert.NotNull(target);
+            Assert.Equal(target.Count, source.Count);
 
-            Assert.AreNotSame(target, source);
+            Assert.NotSame(target, source);
 
-            Assert.AreNotSame(target[0], source[0]);
-            Assert.AreNotSame(target[0], helper1);
-            Assert.AreNotSame(target[0].Helper, source[0].Helper);
-            Assert.AreNotSame(target[0].Helper, helper2);
+            Assert.NotSame(target[0], source[0]);
+            Assert.NotSame(target[0], helper1);
+            Assert.NotSame(target[0].Helper, source[0].Helper);
+            Assert.NotSame(target[0].Helper, helper2);
 
-            Assert.AreNotSame(target[1], source[1]);
-            Assert.AreNotSame(target[1], helper1);
-            Assert.AreNotSame(target[1].Helper, source[1].Helper);
-            Assert.AreNotSame(target[1].Helper, helper2);
+            Assert.NotSame(target[1], source[1]);
+            Assert.NotSame(target[1], helper1);
+            Assert.NotSame(target[1].Helper, source[1].Helper);
+            Assert.NotSame(target[1].Helper, helper2);
 
-            Assert.AreSame(target[0], target[1]);
-            Assert.AreSame(target[0].Helper, target[1].Helper);
+            Assert.Same(target[0], target[1]);
+            Assert.Same(target[0].Helper, target[1].Helper);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void SimpleClass()
         {
             Helper2 source = new Helper2()
@@ -59,22 +58,21 @@ namespace UnitTests.Cloning.BaseTests
 
             Helper2 dest = GetClone(source, 2);
 
-            Assert.IsNotNull(dest);
-            Assert.IsNotNull(dest.Helper);
-            Assert.AreNotSame(dest.Helper, source.Helper);
-            Assert.AreEqual(dest.Helper.PropOne, source.Helper.PropOne);
-            Assert.AreNotSame(dest.Helper.PropOne, source.Helper.PropOne);
+            Assert.NotNull(dest);
+            Assert.NotNull(dest.Helper);
+            Assert.NotSame(dest.Helper, source.Helper);
+            Assert.Equal(dest.Helper.PropOne, source.Helper.PropOne);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void Null()
         {
             Helper1 source = null;
             var dest = GetClone(source, 0);
-            Assert.IsNull(dest);
+            Assert.Null(dest);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void InheritList_Class()
         {
             var source = new Helper3<Helper1>()
@@ -92,19 +90,18 @@ namespace UnitTests.Cloning.BaseTests
 
             var target = GetClone(source, 1001);
 
-            Assert.AreNotSame(source, target);
-            Assert.AreEqual(target.Count, source.Count);
-            Assert.AreNotSame(target.PropOne, source.PropOne);
-            Assert.AreEqual(target.PropOne, source.PropOne);
+            Assert.NotSame(source, target);
+            Assert.Equal(target.Count, source.Count);
+            Assert.Equal(target.PropOne, source.PropOne);
 
             for (int i = 0; i < target.Count; i++)
             {
-                Assert.AreNotSame(target[i], source[i]);
-                Assert.AreEqual(target[i].PropOne, source[i].PropOne);
+                Assert.NotSame(target[i], source[i]);
+                Assert.Equal(target[i].PropOne, source[i].PropOne);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void InheritList_Int()
         {
             var source = new Helper3<int>();
@@ -116,16 +113,16 @@ namespace UnitTests.Cloning.BaseTests
 
             var target = GetClone(source, 1);
 
-            Assert.AreNotSame(source, target);
-            Assert.AreEqual(target.Count, source.Count);
+            Assert.NotSame(source, target);
+            Assert.Equal(target.Count, source.Count);
 
             for (int i = 0; i < target.Count; i++)
             {
-                Assert.AreNotSame(target[i], source[i]);
+                Assert.Equal(target[i], source[i]);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void InheritList_Stuct()
         {
             var source = new Helper3<HelperStruct1>()
@@ -143,19 +140,17 @@ namespace UnitTests.Cloning.BaseTests
 
             var target = GetClone(source, 1);
 
-            Assert.AreNotSame(source, target);
-            Assert.AreEqual(source.Count, target.Count);
-            Assert.AreNotSame(source.PropOne, target.PropOne);
-            Assert.AreEqual(source.PropOne, target.PropOne);
+            Assert.NotSame(source, target);
+            Assert.Equal(source.Count, target.Count);
+            Assert.Equal(source.PropOne, target.PropOne);
 
             for (int i = 0; i < target.Count; i++)
             {
-                Assert.AreNotSame(source[i], target[i]);
-                Assert.AreEqual(source[i].PropOne, target[i].PropOne);
+                Assert.Equal(source[i].PropOne, target[i].PropOne);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void CyclicalReference()
         {
             Helper4 source = new Helper4();
@@ -163,11 +158,11 @@ namespace UnitTests.Cloning.BaseTests
 
             var target = GetClone(source, 1);
 
-            Assert.AreNotSame(source, target);
-            Assert.AreSame(target, target.Prop);
+            Assert.NotSame(source, target);
+            Assert.Same(target, target.Prop);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void ListOfClasses()
         {
             List<Helper2> source = new List<Helper2>();
@@ -185,19 +180,18 @@ namespace UnitTests.Cloning.BaseTests
 
             List<Helper2> dest = GetClone(source, 2001);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Count, source.Count);
 
             for (int i = 0; i < dest.Count; i++)
             {
-                Assert.AreNotSame(dest[i], source[i]);
-                Assert.AreNotSame(dest[i].Helper, source[i].Helper);
-                Assert.AreEqual(dest[i].Helper.PropOne, source[i].Helper.PropOne);
-                Assert.AreNotSame(dest[i].Helper.PropOne, source[i].Helper.PropOne);
+                Assert.NotSame(dest[i], source[i]);
+                Assert.NotSame(dest[i].Helper, source[i].Helper);
+                Assert.Equal(dest[i].Helper.PropOne, source[i].Helper.PropOne);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void ListOfStructs()
         {
             List<HelperStruct2> source = new List<HelperStruct2>()
@@ -213,15 +207,12 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(source.Count, dest.Count);
-            Assert.AreNotSame(source[0], dest[0]);
-            Assert.AreNotSame(source[0].Helper, dest[0].Helper);
-            Assert.AreEqual(source[0].Helper.PropOne, dest[0].Helper.PropOne);
-            Assert.AreNotSame(source[0].Helper.PropOne, dest[0].Helper.PropOne);
+            Assert.NotNull(dest);
+            Assert.Equal(source.Count, dest.Count);
+            Assert.Equal(source[0].Helper.PropOne, dest[0].Helper.PropOne);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void DictionaryOfStructs()
         {
             Dictionary<HelperStruct1, HelperStruct1> source = new Dictionary<HelperStruct1, HelperStruct1>();
@@ -230,18 +221,18 @@ namespace UnitTests.Cloning.BaseTests
             {
                 source.Add(new HelperStruct1()
                 {
-                    PropOne = RandGen.GenerateInt()
+                    PropOne = RandGen.GenerateInt() + i
                 },
                 new HelperStruct1()
                 {
-                    PropOne = RandGen.GenerateInt()
+                    PropOne = RandGen.GenerateInt() + i
                 });
             }
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Count, source.Count);
 
             var destKeys = dest.Keys.ToList();
             var destValues = dest.Values.ToList();
@@ -250,20 +241,16 @@ namespace UnitTests.Cloning.BaseTests
 
             for (int i = 0; i < dest.Keys.Count; i++)
             {
-                var tmp1 = source.ContainsKey(destKeys[i]);
-                var tmp2 = dest.ContainsKey(sourceKeys[i]);
+                Assert.True(source.ContainsKey(destKeys[i]));
+                Assert.True(dest.ContainsKey(sourceKeys[i]));
 
-                Assert.AreNotSame(destKeys[i], sourceKeys[i]);
-                Assert.AreNotSame(destKeys[i].PropOne, sourceKeys[i].PropOne);
-                Assert.AreEqual(destKeys[i].PropOne, sourceKeys[i].PropOne);
-
-                Assert.AreNotSame(destValues[i], sourceValues[i]);
-                Assert.AreNotSame(destValues[i].PropOne, sourceValues[i].PropOne);
-                Assert.AreEqual(destValues[i].PropOne, sourceValues[i].PropOne);
+                Assert.Equal(destKeys[i].PropOne, sourceKeys[i].PropOne);
+                Assert.Equal(destValues[i], sourceValues[i]);
+                Assert.Equal(destValues[i].PropOne, sourceValues[i].PropOne);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void DictionaryOfClasses()
         {
             Dictionary<Helper1, Helper1> source = new Dictionary<Helper1, Helper1>();
@@ -282,8 +269,8 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 2001);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Count, source.Count);
 
             var destKeys = dest.Keys.ToList();
             var destValues = dest.Values.ToList();
@@ -292,40 +279,36 @@ namespace UnitTests.Cloning.BaseTests
 
             for (int i = 0; i < dest.Keys.Count; i++)
             {
-                Assert.AreNotSame(destKeys[i], sourceKeys[i]);
-                Assert.AreNotSame(destKeys[i].PropOne, sourceKeys[i].PropOne);
-                Assert.AreEqual(destKeys[i].PropOne, sourceKeys[i].PropOne);
+                Assert.NotSame(destKeys[i], sourceKeys[i]);
+                Assert.Equal(destKeys[i].PropOne, sourceKeys[i].PropOne);
 
-                Assert.AreNotSame(destValues[i], sourceValues[i]);
-                Assert.AreNotSame(destValues[i].PropOne, sourceValues[i].PropOne);
-                Assert.AreEqual(destValues[i].PropOne, sourceValues[i].PropOne);
+                Assert.NotSame(destValues[i], sourceValues[i]);
+                Assert.Equal(destValues[i].PropOne, sourceValues[i].PropOne);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void DictionaryOfPrimitives()
         {
             Dictionary<int, int> source = new Dictionary<int, int>();
 
             for (int i = 0; i < 1000; i++)
             {
-                source.Add(RandGen.GenerateInt(), RandGen.GenerateInt());
+                source.Add(i, RandGen.GenerateInt());
             }
 
             var dest = GetClone(source, 1);
 
-            Assert.IsNotNull(dest);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.Equal(dest.Count, source.Count);
 
             foreach (var key in dest.Keys)
             {
-                Assert.AreNotSame(dest[key], source[key]);
-                Assert.AreNotSame(dest[key], source[key]);
-                Assert.AreEqual(dest[key], source[key]);
+                Assert.Equal(dest[key], source[key]);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void ListStringArrays_DuplicateReuse()
         {
             var helper = RandGen
@@ -342,27 +325,26 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 2);
 
-            Assert.IsNotNull(dest);
-            Assert.AreNotEqual(dest, source);
-            Assert.AreNotSame(dest, source);
-            Assert.AreEqual(dest.Count, source.Count);
+            Assert.NotNull(dest);
+            Assert.NotSame(dest, source);
+            Assert.Equal(dest.Count, source.Count);
 
             var firstItem = dest[0];
 
             for (int i = 0; i < dest.Count; i++)
             {
-                Assert.AreNotSame(source[i], dest[i]);
-                Assert.AreSame(firstItem, dest[i]);
-                Assert.AreEqual(source[i].Length, dest[i].Length);
+                Assert.NotSame(source[i], dest[i]);
+                Assert.Same(firstItem, dest[i]);
+                Assert.Equal(source[i].Length, dest[i].Length);
 
                 for (int j = 0; j < dest[i].Length; j++)
                 {
-                    Assert.AreEqual(source[i][j], dest[i][j]);
+                    Assert.Equal(source[i][j], dest[i][j]);
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void PolymorphicSupport()
         {
             Message source = new Message()
@@ -376,21 +358,22 @@ namespace UnitTests.Cloning.BaseTests
 
             var dest = GetClone(source, 2);
 
-            Assert.IsNotNull(dest);
-            Assert.IsNotNull(dest.aRef);
-            Assert.AreNotSame(dest, source);
-            Assert.AreNotSame(dest.aRef, source.aRef);
-            Assert.AreEqual(dest.aRef.iBase, source.aRef.iBase);
-            Assert.AreSame(dest.aRef.GetType(), source.aRef.GetType());
-            Assert.AreEqual(dest.aRef.GetType(), typeof(Derived));
+            Assert.NotNull(dest);
+            Assert.NotNull(dest.aRef);
+            Assert.NotSame(dest, source);
+            Assert.NotSame(dest.aRef, source.aRef);
+            Assert.Equal(dest.aRef.iBase, source.aRef.iBase);
+
+            Assert.IsType<Derived>(source.aRef);
+            Assert.IsType<Derived>(dest.aRef);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void ListOfObjects()
         {
             List<object> source = new List<object>()
             {
-                (int)1,
+                1,
                 (double)2,
                 new Helper1(),
                 new Helper2()
@@ -402,51 +385,51 @@ namespace UnitTests.Cloning.BaseTests
 
             var target = GetClone(source, 4);
 
-            Assert.IsNotNull(target);
-            Assert.AreNotSame(source, target);
+            Assert.NotNull(target);
+            Assert.NotSame(source, target);
 
-            Assert.AreEqual(source[0], target[0]);
-            Assert.IsInstanceOfType(target[0], typeof(int));
+            Assert.Equal(source[0], target[0]);
+            Assert.IsType<int>(target[0]);
 
-            Assert.AreEqual(source[1], target[1]);
-            Assert.IsInstanceOfType(target[1], typeof(double));
+            Assert.Equal(source[1], target[1]);
+            Assert.IsType<double>(target[1]);
 
-            Assert.AreNotSame(source[2], target[2]);
-            Assert.AreNotEqual(source[2], target[2]);
-            Assert.IsInstanceOfType(target[2], typeof(Helper1));
+            Assert.NotSame(source[2], target[2]);
+            Assert.NotEqual(source[2], target[2]);
+            Assert.IsType<Helper1>(target[2]);
 
-            Assert.AreNotSame(source[3], target[3]);
-            Assert.AreNotEqual(source[3], target[3]);
-            Assert.IsInstanceOfType(target[3], typeof(Helper2));
+            Assert.NotSame(source[3], target[3]);
+            Assert.NotEqual(source[3], target[3]);
+            Assert.IsType<Helper2>(target[3]);
 
-            Assert.AreEqual(source[4], target[4]);
-            Assert.IsInstanceOfType(target[4], typeof(string));
+            Assert.Equal(source[4], target[4]);
+            Assert.IsType<string>(target[4]);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void Object()
         {
             object source = new object();
             var target = GetClone(source, 1);
-            Assert.IsNotNull(target);
-            Assert.AreNotSame(source, target);
+            Assert.NotNull(target);
+            Assert.NotSame(source, target);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void IntAsObject()
         {
             int sourceAsInt = 1;
-            object source = (object)sourceAsInt;
+            object source = sourceAsInt;
             var target = GetClone(source, 0);
 
-            Assert.IsNotNull(target);
+            Assert.NotNull(target);
 
             var targetAsInt = (int)target;
 
-            Assert.AreEqual(sourceAsInt, targetAsInt);
+            Assert.Equal(sourceAsInt, targetAsInt);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void Anon()
         {
             var source = new
@@ -456,11 +439,11 @@ namespace UnitTests.Cloning.BaseTests
 
             var target = GetClone(source, 1);
 
-            Assert.AreEqual(target, source);
-            Assert.AreNotSame(target, source);
+            Assert.Equal(target, source);
+            Assert.NotSame(target, source);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void ShadowFieldProps1()
         {
             DerivedClassOne source = new DerivedClassOne()
@@ -473,58 +456,58 @@ namespace UnitTests.Cloning.BaseTests
                 VirtualProperty3 = "test1"
             };
 
-            Assert.AreEqual(2, ((BaseClassOne)source).VirtualProperty);
-            Assert.AreEqual(3, ((BaseClassOne)source).VirtualProperty2);
-            Assert.AreEqual(4, ((BaseClassOne)source).AbstractProperty);
-            Assert.AreEqual("test1", ((BaseClassOne)source).VirtualProperty3);
+            Assert.Equal(2, source.VirtualProperty);
+            Assert.Equal(3, source.VirtualProperty2);
+            Assert.Equal(4, source.AbstractProperty);
+            Assert.Equal("test1", source.VirtualProperty3);
 
             ((BaseClassOne)source).MyField = 2;
             ((BaseClassOne)source).Property = 5;
-            ((BaseClassOne)source).VirtualProperty = 6;
-            ((BaseClassOne)source).VirtualProperty2 = 7;
-            ((BaseClassOne)source).AbstractProperty = 8;
-            ((BaseClassOne)source).VirtualProperty3 = "test2";
+            source.VirtualProperty = 6;
+            source.VirtualProperty2 = 7;
+            source.AbstractProperty = 8;
+            source.VirtualProperty3 = "test2";
 
-            Assert.AreEqual(1, source.MyField);
-            Assert.AreEqual(2, ((BaseClassOne)source).MyField);
+            Assert.Equal(1, source.MyField);
+            Assert.Equal(2, ((BaseClassOne)source).MyField);
 
-            Assert.AreEqual(1, source.Property);
-            Assert.AreEqual(5, ((BaseClassOne)source).Property);
+            Assert.Equal(1, source.Property);
+            Assert.Equal(5, ((BaseClassOne)source).Property);
 
-            Assert.AreEqual(6, source.VirtualProperty);
-            Assert.AreEqual(6, ((BaseClassOne)source).VirtualProperty);
+            Assert.Equal(6, source.VirtualProperty);
+            Assert.Equal(6, source.VirtualProperty);
 
-            Assert.AreEqual(7, source.VirtualProperty2);
-            Assert.AreEqual(7, ((BaseClassOne)source).VirtualProperty2);
+            Assert.Equal(7, source.VirtualProperty2);
+            Assert.Equal(7, source.VirtualProperty2);
 
-            Assert.AreEqual(8, source.AbstractProperty);
-            Assert.AreEqual(8, ((BaseClassOne)source).AbstractProperty);
+            Assert.Equal(8, source.AbstractProperty);
+            Assert.Equal(8, source.AbstractProperty);
 
-            Assert.AreEqual("test2", source.VirtualProperty3);
-            Assert.AreEqual("test2", ((BaseClassOne)source).VirtualProperty3);
+            Assert.Equal("test2", source.VirtualProperty3);
+            Assert.Equal("test2", source.VirtualProperty3);
 
             var target = GetClone(source, 1);
 
-            Assert.AreEqual(1, target.MyField);
-            Assert.AreEqual(2, ((BaseClassOne)target).MyField);
+            Assert.Equal(1, target.MyField);
+            Assert.Equal(2, ((BaseClassOne)target).MyField);
 
-            Assert.AreEqual(1, target.Property);
-            Assert.AreEqual(5, ((BaseClassOne)target).Property);
+            Assert.Equal(1, target.Property);
+            Assert.Equal(5, ((BaseClassOne)target).Property);
 
-            Assert.AreEqual(6, target.VirtualProperty);
-            Assert.AreEqual(6, ((BaseClassOne)target).VirtualProperty);
+            Assert.Equal(6, target.VirtualProperty);
+            Assert.Equal(6, target.VirtualProperty);
 
-            Assert.AreEqual(7, target.VirtualProperty2);
-            Assert.AreEqual(7, ((BaseClassOne)target).VirtualProperty2);
+            Assert.Equal(7, target.VirtualProperty2);
+            Assert.Equal(7, target.VirtualProperty2);
 
-            Assert.AreEqual(8, target.AbstractProperty);
-            Assert.AreEqual(8, ((BaseClassOne)target).AbstractProperty);
+            Assert.Equal(8, target.AbstractProperty);
+            Assert.Equal(8, target.AbstractProperty);
 
-            Assert.AreEqual("test2", target.VirtualProperty3);
-            Assert.AreEqual("test2", ((BaseClassOne)target).VirtualProperty3);
+            Assert.Equal("test2", target.VirtualProperty3);
+            Assert.Equal("test2", target.VirtualProperty3);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void ShadowFieldProps2()
         {
             D source = new D()
@@ -532,28 +515,28 @@ namespace UnitTests.Cloning.BaseTests
                 Foo = "D"
             };
 
-            ((C)source).Foo = "C";
+            source.Foo = "C";
             ((B)source).Foo = "B";
             ((A)source).Foo = "A";
 
-            Assert.AreEqual("C", source.Foo);
-            Assert.AreEqual("C", ((C)source).Foo);
-            Assert.AreEqual("A", ((B)source).Foo);
-            Assert.AreEqual("A", ((A)source).Foo);
+            Assert.Equal("C", source.Foo);
+            Assert.Equal("C", source.Foo);
+            Assert.Equal("A", ((B)source).Foo);
+            Assert.Equal("A", ((A)source).Foo);
 
             var target = GetClone(source, 1);
 
-            Assert.AreEqual("C", target.Foo);
-            Assert.AreEqual("C", ((C)target).Foo);
-            Assert.AreEqual("A", ((B)target).Foo);
-            Assert.AreEqual("A", ((A)target).Foo);
+            Assert.Equal("C", target.Foo);
+            Assert.Equal("C", target.Foo);
+            Assert.Equal("A", ((B)target).Foo);
+            Assert.Equal("A", ((A)target).Foo);
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void NoDefaultConstructor_Class()
         {
             var source = new Helper5(1);
-            var target = GetClone(source, 1);
+            GetClone(source, 1);
         }
     }
 }
