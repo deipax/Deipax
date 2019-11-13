@@ -2,7 +2,6 @@
 using Deipax.Convert.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -12,7 +11,6 @@ namespace Deipax.Convert
     {
         static ConvertConfig()
         {
-            DefaultProvider = CultureInfo.InvariantCulture;
             _defaultFactory = new DefaultFactory();
 
             _defaultFactories = new List<IConvertFactory>()
@@ -48,7 +46,6 @@ namespace Deipax.Convert
         #endregion
 
         #region Public Members
-        public static IFormatProvider DefaultProvider { get; set; }
         public static IConvertFactory DefaultFactory { get; set; }
         public static IReadOnlyList<IConvertFactory> Factories { get; set; }
 

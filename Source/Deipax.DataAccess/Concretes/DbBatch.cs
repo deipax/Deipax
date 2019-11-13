@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Deipax.DataAccess.Concretes
 {
-    internal class DbBatch : IDbBatch
+    public class DbBatch : IDbBatch
     {
         public DbBatch(IDb db)
         {

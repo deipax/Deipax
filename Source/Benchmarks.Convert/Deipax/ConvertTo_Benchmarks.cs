@@ -1,15 +1,16 @@
-﻿using Benchmarks.Core.BaseClasses;
-using Benchmarks.Core.TestClasses;
+﻿using Benchmarks.Convert.BaseClasses;
 using Deipax.Convert;
 using System;
+using System.Globalization;
+using UnitTests.Common;
 
-namespace Benchmarks.Core.Deipax
+namespace Benchmarks.Convert.Deipax
 {
     public class ConvertTo_Base<TTo> : BaseConvertTo<TTo>
     {
         protected override TTo ConvertFrom<TFrom>(TFrom from)
         {
-            return ConvertTo<TTo, TFrom>.From(from, ConvertConfig.DefaultProvider);
+            return ConvertTo<TTo, TFrom>.From(from, CultureInfo.InvariantCulture);
         }
     }
 

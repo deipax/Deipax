@@ -1,8 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Benchmarks.Core.TestClasses;
 using System;
+using UnitTests.Common;
 
-namespace Benchmarks.Core.BaseClasses
+namespace Benchmarks.Convert.BaseClasses
 {
     public abstract class BaseConvertTo<TTo>
     {

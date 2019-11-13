@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Deipax.DataAccess.Concretes
 {
-    internal class DbCmd : IDbCmd
+    public class DbCmd : IDbCmd
     {
         public DbCmd(IDb db)
         {

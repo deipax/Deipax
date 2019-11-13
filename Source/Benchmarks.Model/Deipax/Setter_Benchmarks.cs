@@ -1,8 +1,8 @@
-﻿using Benchmarks.Core.BaseClasses;
-using Benchmarks.Core.TestClasses;
+﻿using Benchmarks.Model.BaseClasses;
 using System;
+using UnitTests.Common;
 
-namespace Benchmarks.Core.Deipax
+namespace Benchmarks.Model.Deipax
 {
     #region Bool/BoolNullable
     public class Set_Prop_Bool : SetterBase<ParentClass, bool>

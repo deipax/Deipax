@@ -9,6 +9,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
     {
         public ComplexRefTypeBase()
         {
+            _null = null;
+
             _simpleClass = new Helper1()
             {
                 PropOne = RandGen.GenerateInt(),
@@ -46,7 +48,7 @@ namespace Benchmarks.Cloning.BaseClasses_Old
                 });
             };
 
-            var _inheritListInt = new Helper3<int>();
+            _inheritListInt = new Helper3<int>();
 
             for (int i = 0; i < 10000; i++)
             {

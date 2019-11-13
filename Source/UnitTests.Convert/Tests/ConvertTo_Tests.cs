@@ -1,5 +1,6 @@
 ﻿using Deipax.Convert;
 using System;
+using System.Globalization;
 using UnitTests.Common;
 using UnitTests.Convert.BaseClasses;
 using Xunit;
@@ -10,7 +11,7 @@ namespace UnitTests.Convert
     {
         protected override TTo ConvertFrom<TFrom>(TFrom from)
         {
-            return ConvertTo<TTo, TFrom>.From(from, ConvertConfig.DefaultProvider);
+            return ConvertTo<TTo, TFrom>.From(from, CultureInfo.InvariantCulture);
         }
     }
 

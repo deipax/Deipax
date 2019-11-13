@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Deipax.DataAccess.Concretes
 {
-    internal class Db : IDb
+    public class Db : IDb
     {
         public Db(
             string name,

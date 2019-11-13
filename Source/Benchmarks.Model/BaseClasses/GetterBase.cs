@@ -1,12 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Benchmarks.Core.TestClasses;
 using Deipax.Model;
 using Deipax.Model.Interfaces;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
+using UnitTests.Common;
 
-namespace Benchmarks.Core.BaseClasses
+namespace Benchmarks.Model.BaseClasses
 {
     public abstract class GetterBase<T, P> where T : new()
     {

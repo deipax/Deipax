@@ -1,6 +1,7 @@
 ﻿using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System;
+using System.Globalization;
 using System.Linq.Expressions;
 
 namespace Deipax.Convert.Extensions
@@ -12,7 +13,7 @@ namespace Deipax.Convert.Extensions
         {
             return Expression.Coalesce(
                 args.Provider,
-                Expression.Constant(ConvertConfig.DefaultProvider));
+                Expression.Constant(CultureInfo.InvariantCulture));
         }
 
         public static void AddGuards<TFrom, TTo>(

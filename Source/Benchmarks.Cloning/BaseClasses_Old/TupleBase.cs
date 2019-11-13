@@ -9,6 +9,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
     {
         public TupleBase()
         {
+            _null = null;
+
             _primitives = new Tuple<int, string, int, int, int, int, int, Tuple<int>>(
                 RandGen.GenerateInt(),
                 RandGen.GenerateString(10),

@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Deipax.DataAccess.Concretes
 {
-    internal class DbCon : IDbCon
+    public class DbCon : IDbCon
     {
         public DbCon(IDb db)
         {
