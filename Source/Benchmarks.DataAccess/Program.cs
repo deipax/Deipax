@@ -25,7 +25,7 @@ namespace Benchmarks.DataAccess
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp20)).AsBaseline(),
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net461)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
                     ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
                 })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
