@@ -10,20 +10,13 @@ namespace Deipax.Model.Extensions
         public static IEnumerable<T> GetCustomAttributes<T>(
             this IModelInfo source) where T : Attribute
         {
-            if (source != null)
-            {
-                return source.MemberInfo.GetCustomAttributes<T>();
-            }
-
-            return new List<T>();
+            return source?.MemberInfo.GetCustomAttributes<T>() ?? new List<T>();
         }
 
         public static MemberInfo GetOptimalMemberInfo(
             this IModelInfo source)
         {
-            var propInfo = source as IPropertyModelInfo;
-
-            if (propInfo != null)
+            if (source is IPropertyModelInfo propInfo)
             {
                 if (propInfo.HasBackingField)
                 {
@@ -34,11 +27,12 @@ namespace Deipax.Model.Extensions
                     return propInfo.PropertyInfo;
                 }
             }
-            else
+            else if (source is IFieldModelInfo fieldInfo)
             {
-                var fieldInfo = source as IFieldModelInfo;
                 return fieldInfo.FieldInfo;
             }
+
+            return null;
         }
     }
 }

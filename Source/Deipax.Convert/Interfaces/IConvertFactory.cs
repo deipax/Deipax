@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Deipax.Convert.Interfaces
 {
-    public delegate TTo Convert<TFrom, TTo>(
+    public delegate TTo ConvertDelegate<TFrom, TTo>(
         TFrom from,
         IFormatProvider provider = null);
 
@@ -17,22 +17,22 @@ namespace Deipax.Convert.Interfaces
         ParameterExpression Provider { get; }
         LabelTarget LabelTarget { get; }
         LabelExpression LabelExpression { get; }
-        DefaultExpression Default { get; }
+        DefaultExpression DefaultExpression { get; }
 
         void Add(Expression expr);
         void AddVariable(ParameterExpression variable);
-        Expression<Convert<TFrom, TTo>> Get();
+        Expression<ConvertDelegate<TFrom, TTo>> Create();
     }
 
     public interface IConvertFactory
     {
-        Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(IExpArgs<TFrom, TTo> args);
+        Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(IExpArgs<TFrom, TTo> args);
     }
 
     public interface IConvertResult<TFrom, TTo>
     {
         IConvertFactory Factory { get; }
-        Convert<TFrom, TTo> Func { get; }
-        Expression<Convert<TFrom, TTo>> Expression { get; }
+        ConvertDelegate<TFrom, TTo> Func { get; }
+        Expression<ConvertDelegate<TFrom, TTo>> Expression { get; }
     }
 }

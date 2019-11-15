@@ -29,7 +29,7 @@ namespace Deipax.Convert.Extensions
 
                 var ifNullOrEmptyReturn = Expression.IfThen(
                     isNullOrEmpty,
-                    Expression.Return(args.LabelTarget, args.Default));
+                    Expression.Return(args.LabelTarget, args.DefaultExpression));
 
                 args.Add(ifNullOrEmptyReturn);
             }
@@ -39,7 +39,7 @@ namespace Deipax.Convert.Extensions
                     Expression.Or(
                         Expression.Equal(args.Input, Expression.Constant(null, typeof(object))),
                         Expression.Equal(args.Input, Expression.Constant(DBNull.Value, typeof(object)))),
-                    Expression.Return(args.LabelTarget, args.Default));
+                    Expression.Return(args.LabelTarget, args.DefaultExpression));
 
                 args.Add(ifNullReturnExpression);
 
@@ -69,7 +69,7 @@ namespace Deipax.Convert.Extensions
             {
                 var ifNoValueReturn = Expression.IfThen(
                     Expression.Not(Expression.Property(args.Input, "HasValue")),
-                    Expression.Return(args.LabelTarget, args.Default));
+                    Expression.Return(args.LabelTarget, args.DefaultExpression));
 
                 args.Add(ifNoValueReturn);
             }

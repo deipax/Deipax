@@ -7,7 +7,7 @@ namespace Deipax.Cloning.Factories
     internal class NotSupported : ICloneDelFactory
     {
         #region ICloneDelegateFactory Members
-        public CloneDel<T> Get<T>()
+        public CloneDel<T> Create<T>()
         {
             return ThrowNotSupportedType;
         }

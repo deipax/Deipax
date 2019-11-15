@@ -8,7 +8,7 @@ namespace Deipax.Cloning.Factories
     class ArrayRankNShallow : ICloneDelFactory
     {
         #region ICloneDelFactory Members 
-        public CloneDel<T> Get<T>()
+        public CloneDel<T> Create<T>()
         {
             var type = typeof(T);
 
@@ -36,9 +36,7 @@ namespace Deipax.Cloning.Factories
                 return (T)existingCopy;
             }
 
-            var sourceAsArray = source as Array;
-
-            if (sourceAsArray == null)
+            if (!(source is Array sourceAsArray))
             {
                 throw new InvalidCastException($"Cannot cast non-array type {source?.GetType()} to Array.");
             }

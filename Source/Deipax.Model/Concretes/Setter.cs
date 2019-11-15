@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Deipax.Model.Concretes
 {
-    internal class Setter<T, P> : ISetter<T>
+    internal class Setter<T, TProp> : ISetter<T>
     {
         public Setter(IModelInfo info)
         {
@@ -18,26 +18,24 @@ namespace Deipax.Model.Concretes
         }
 
         #region Field Members
-
-        private ConcurrentDictionary<Type, Delegate> _cache;
-
+        private readonly ConcurrentDictionary<Type, Delegate> _cache;
         #endregion
 
         #region ISetter<T> Members
         public string Name { get; private set; }
         public IModelInfo ModelInfo { get; private set; }
 
-        public Set<T, X> GetDelegate<X>()
+        public SetDelegate<T, TValue> GetDelegate<TValue>()
         {
-            return (Set<T, X>)_cache.GetOrAdd(typeof(X), x => GetExpression<X>().Compile());
+            return (SetDelegate<T, TValue>)_cache.GetOrAdd(typeof(TValue), x => GetExpression<TValue>().Compile());
         }
 
-        public Expression<Set<T, X>> GetExpression<X>()
+        public Expression<SetDelegate<T, TValue>> GetExpression<TValue>()
         {
-            var xType = typeof(X);
+            var xType = typeof(TValue);
 
-            var tmp = Expression.Variable(typeof(P), "tmp");
-            var input = Expression.Parameter(typeof(X), "input");
+            var tmp = Expression.Variable(typeof(TProp), "tmp");
+            var input = Expression.Parameter(typeof(TValue), "input");
             var instance = Expression.Parameter(typeof(T).MakeByRefType(), "instance");
             var provider = Expression.Parameter(typeof(IFormatProvider), "provider");
 
@@ -46,7 +44,7 @@ namespace Deipax.Model.Concretes
                 ModelInfo.GetOptimalMemberInfo());
 
             var invoke = Expression.Invoke(
-                ConvertTo<P, X>.Expression,
+                ConvertTo<TProp, TValue>.Result.Expression,
                 input,
                 provider);
 
@@ -114,7 +112,7 @@ namespace Deipax.Model.Concretes
                     Expression.Assign(memberExpression, tmp));
             }
 
-            return Expression.Lambda<Set<T, X>>(
+            return Expression.Lambda<SetDelegate<T, TValue>>(
                 block,
                 instance,
                 input,

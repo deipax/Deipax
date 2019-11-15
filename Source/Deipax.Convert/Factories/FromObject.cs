@@ -11,7 +11,7 @@ namespace Deipax.Convert.Factories
     public class FromObject : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             // This will only return a func IF TFrom is an object
@@ -23,7 +23,7 @@ namespace Deipax.Convert.Factories
                     .GetRuntimeMethods()
                     .Where(x =>
                         x.ReturnType == args.UnderlyingToType &&
-                        x.GetParameters().Count() == 1 &&
+                        x.GetParameters().Length == 1 &&
                         x.GetParameters()[0].ParameterType == typeof(IFormatProvider))
                     .FirstOrDefault();
 
@@ -37,7 +37,7 @@ namespace Deipax.Convert.Factories
 
                     var ifConverterNullReturn = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
-                        Expression.Return(args.LabelTarget, args.Default));
+                        Expression.Return(args.LabelTarget, args.DefaultExpression));
 
                     Expression callExpression = Expression.Call(
                         converter,
@@ -54,7 +54,7 @@ namespace Deipax.Convert.Factories
                     args.Add(ifConverterNullReturn);
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
-                    return args.Get();
+                    return args.Create();
                 }
                 else
                 {
@@ -67,12 +67,12 @@ namespace Deipax.Convert.Factories
 
                     Expression tryCatchExpression = Expression.TryCatch(
                         returnExpression,
-                        Expression.Catch(ex, Expression.Return(args.LabelTarget, args.Default)));
+                        Expression.Catch(ex, Expression.Return(args.LabelTarget, args.DefaultExpression)));
 
                     args.AddGuards();
                     args.Add(tryCatchExpression);
                     args.Add(args.LabelExpression);
-                    return args.Get();
+                    return args.Create();
                 }
             }
 

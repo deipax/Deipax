@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Deipax.Core.Common
@@ -8,7 +9,7 @@ namespace Deipax.Core.Common
         public DynamicTable(
             IEnumerable<string> fields = null)
         {
-            _fields = (fields ?? new string[0])
+            _fields = (fields ?? Array.Empty<string>())
                 .Where(x => !string.IsNullOrEmpty(x))
                 .Distinct()
                 .ToList();
@@ -20,8 +21,8 @@ namespace Deipax.Core.Common
         }
 
         #region Field Members
-        private List<string> _fields;
-        private Dictionary<string, int> _lookup;
+        private readonly List<string> _fields;
+        private readonly Dictionary<string, int> _lookup;
         #endregion
 
         #region Public Members
@@ -49,7 +50,7 @@ namespace Deipax.Core.Common
 
         public int GetFieldCount()
         {
-            return _fields.Count();
+            return _fields.Count;
         }
 
         public int AddField(string name)

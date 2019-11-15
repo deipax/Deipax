@@ -6,7 +6,7 @@ namespace Deipax.DataAccess.Common
     public class DbAccess
     {
         #region Field Members
-        private Dictionary<string, IDb> _dbs = new Dictionary<string, IDb>();
+        private readonly Dictionary<string, IDb> _dbs = new Dictionary<string, IDb>();
         #endregion
 
         #region Public Members

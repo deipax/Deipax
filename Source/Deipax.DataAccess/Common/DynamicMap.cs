@@ -10,15 +10,11 @@ using System.Reflection;
 
 namespace Deipax.DataAccess.Common
 {
-    public class DynamicMap
+    public static class DynamicMap
     {
-        static DynamicMap()
-        {
-            _cache = new ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>>();
-        }
-
         #region Field Members
-        private static ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>> _cache;
+        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>> _cache = 
+            new ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>>();
 
         private readonly static MethodInfo _addMethod = typeof(DynamicDictionary)
             .GetRuntimeMethods()
@@ -51,11 +47,12 @@ namespace Deipax.DataAccess.Common
                 labelTarget,
                 Expression.Default(typeof(DynamicDictionary)));
 
-            List<Expression> expressions = new List<Expression>();
-
-            expressions.Add(Expression.Assign(
+            List<Expression> expressions = new List<Expression>
+            {
+                Expression.Assign(
                 returnItem,
-                Expression.New(typeof(DynamicDictionary))));
+                Expression.New(typeof(DynamicDictionary)))
+            };
 
             for (int i = 0; i < r.FieldCount; i++)
             {

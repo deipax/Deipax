@@ -3,16 +3,16 @@ using System.Linq.Expressions;
 
 namespace Deipax.Model.Interfaces
 {
-    public delegate void Set<T, X>(
+    public delegate void SetDelegate<T, TValue>(
         ref T instance,
-        X value,
+        TValue value,
         IFormatProvider provider = null);
 
     public interface ISetter<T>
     {
         string Name { get; }
         IModelInfo ModelInfo { get; }
-        Set<T, X> GetDelegate<X>();
-        Expression<Set<T, X>> GetExpression<X>();
+        SetDelegate<T, TValue> GetDelegate<TValue>();
+        Expression<SetDelegate<T, TValue>> GetExpression<TValue>();
     }
 }

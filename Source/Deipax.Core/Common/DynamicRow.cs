@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Deipax.Core.Common
 {
-    public class DynamicRow :
+    public sealed class DynamicRow :
         IDynamicMetaObjectProvider,
         IDictionary<string, object>,
         IReadOnlyDictionary<string, object>
@@ -65,8 +65,7 @@ namespace Deipax.Core.Common
         public object GetValue(
             string key)
         {
-            object val = default(object);
-            TryGetValue(key, out val);
+            TryGetValue(key, out object val);
             return val;
         }
         #endregion

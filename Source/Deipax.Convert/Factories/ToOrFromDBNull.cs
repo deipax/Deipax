@@ -7,7 +7,7 @@ namespace Deipax.Convert.Factories
     public class ToOrFromDBNull : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.ToType == typeof(DBNull))
@@ -23,13 +23,13 @@ namespace Deipax.Convert.Factories
             {
                 GotoExpression returnExpression = Expression.Return(
                     args.LabelTarget,
-                    args.Default);
+                    args.DefaultExpression);
 
                 args.Add(returnExpression);
                 args.Add(args.LabelExpression);
             }
 
-            return args.Get();
+            return args.Create();
         }
         #endregion
     }

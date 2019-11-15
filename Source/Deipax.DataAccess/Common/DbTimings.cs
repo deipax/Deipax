@@ -11,7 +11,7 @@ namespace Deipax.DataAccess.Common
         public static Action<IDb, double> Close { get; set; }
     }
 
-    public class OpenTimer : IDisposable
+    public sealed class OpenTimer : IDisposable
     {
         private OpenTimer(IDb db)
         {
@@ -22,8 +22,8 @@ namespace Deipax.DataAccess.Common
         {
         }
 
-        private Stopwatch _watch = Stopwatch.StartNew();
-        private IDb _db;
+        private readonly Stopwatch _watch = Stopwatch.StartNew();
+        private readonly IDb _db;
 
         public static OpenTimer Create(IDb db)
         {
@@ -39,7 +39,7 @@ namespace Deipax.DataAccess.Common
         }
     }
 
-    public class CloseTimer : IDisposable
+    public sealed class CloseTimer : IDisposable
     {
         private CloseTimer(IDb db)
         {
@@ -50,8 +50,8 @@ namespace Deipax.DataAccess.Common
         {
         }
 
-        private Stopwatch _watch = Stopwatch.StartNew();
-        private IDb _db;
+        private readonly Stopwatch _watch = Stopwatch.StartNew();
+        private readonly IDb _db;
 
         public static CloseTimer Create(IDb db)
         {
@@ -67,7 +67,7 @@ namespace Deipax.DataAccess.Common
         }
     }
 
-    public class RunTimer : IDisposable
+    public sealed class RunTimer : IDisposable
     {
         private RunTimer(IDbCmd dbCmd)
         {
@@ -78,8 +78,8 @@ namespace Deipax.DataAccess.Common
         {
         }
 
-        private Stopwatch _watch = Stopwatch.StartNew();
-        private IDbCmd _dbCmd;
+        private readonly Stopwatch _watch = Stopwatch.StartNew();
+        private readonly IDbCmd _dbCmd;
 
         public static RunTimer Create(IDbCmd dbCmd)
         {

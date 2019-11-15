@@ -1,6 +1,7 @@
 ﻿using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
+using System;
 using System.Linq.Expressions;
 
 namespace Deipax.Convert.Factories
@@ -8,7 +9,7 @@ namespace Deipax.Convert.Factories
     public class NoConvert : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.FromType == args.ToType)
@@ -47,7 +48,7 @@ namespace Deipax.Convert.Factories
 
                     GotoExpression returnDefault = Expression.Return(
                         args.LabelTarget,
-                        args.Default);
+                        args.DefaultExpression);
 
                     var ifThenElse = Expression.IfThenElse(
                         hasValue,
@@ -89,7 +90,7 @@ namespace Deipax.Convert.Factories
                 args.Add(args.LabelExpression);
             }
 
-            return args.Get();
+            return args.Create();
         }
         #endregion
     }

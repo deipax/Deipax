@@ -29,6 +29,7 @@ namespace Benchmarks.Model
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
                     ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
                     ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net48)),
                 })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())

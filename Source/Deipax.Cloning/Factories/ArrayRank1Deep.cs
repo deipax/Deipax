@@ -16,7 +16,7 @@ namespace Deipax.Cloning.Factories
         #endregion
 
         #region ICloneDelFactory Members
-        public CloneDel<T> Get<T>()
+        public CloneDel<T> Create<T>()
         {
             var type = typeof(T);
 

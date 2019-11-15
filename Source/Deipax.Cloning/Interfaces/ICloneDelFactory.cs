@@ -2,6 +2,6 @@
 {
     public interface ICloneDelFactory
     {
-        CloneDel<T> Get<T>();
+        CloneDel<T> Create<T>();
     }
 }

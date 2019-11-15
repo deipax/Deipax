@@ -12,7 +12,7 @@ namespace Deipax.Cloning.Factories
     internal class ListShallow : ICloneDelFactory
     {
         #region ICloneDelFactory Members 
-        public CloneDel<T> Get<T>()
+        public CloneDel<T> Create<T>()
         {
             var type = typeof(T);
 

@@ -149,11 +149,11 @@ namespace Deipax.Convert.Factories
         }
 
         #region Field Member
-        private List<Type> _invalidCastTypes;
+        private readonly List<Type> _invalidCastTypes;
         #endregion
 
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.UnderlyingToType == typeof(T) &&
@@ -164,7 +164,7 @@ namespace Deipax.Convert.Factories
                     .GetRuntimeMethods()
                     .Where(x =>
                         x.ReturnType == args.UnderlyingToType &&
-                        x.GetParameters().Count() == 1 &&
+                        x.GetParameters().Length == 1 &&
                         x.GetParameters()[0].ParameterType == args.UnderlyingFromType)
                     .FirstOrDefault();
 
@@ -173,7 +173,7 @@ namespace Deipax.Convert.Factories
                     if (_invalidCastTypes.Exists(x => x == args.UnderlyingFromType))
                     {
                         args.Add(args.LabelExpression);
-                        return args.Get();
+                        return args.Create();
                     }
                     else
                     {
@@ -193,7 +193,7 @@ namespace Deipax.Convert.Factories
                         args.Add(returnExpression);
                         args.Add(args.LabelExpression);
 
-                        return args.Get();
+                        return args.Create();
                     }
                 }
             }

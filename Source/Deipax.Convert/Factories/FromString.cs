@@ -11,7 +11,7 @@ namespace Deipax.Convert.Factories
     public class FromString : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.FromType == typeof(string) &&
@@ -21,7 +21,7 @@ namespace Deipax.Convert.Factories
                     .GetRuntimeMethods()
                     .Where(x =>
                         x.ReturnType == args.UnderlyingToType &&
-                        x.GetParameters().Count() == 2 &&
+                        x.GetParameters().Length == 2 &&
                         x.GetParameters()[0].ParameterType == args.FromType &&
                         x.GetParameters()[1].ParameterType == typeof(IFormatProvider))
                     .FirstOrDefault();
@@ -41,7 +41,7 @@ namespace Deipax.Convert.Factories
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
 
-                    return args.Get();
+                    return args.Create();
                 }
             }
 

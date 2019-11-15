@@ -6,21 +6,13 @@ namespace Deipax.Convert.Common
 {
     public static class EnumHelper<TEnum, TUnderlyingType> where TUnderlyingType : struct
     {
-        static EnumHelper()
-        {
-            _enumValues = EnumCache.GetEnumValues<TEnum, TUnderlyingType>();
-            _stringValues = EnumCache.GetStringValues<TEnum, TUnderlyingType>();
-
-            var p = Expression.Parameter(typeof(TUnderlyingType));
-            var c = Expression.Convert(p, typeof(TEnum));
-            _cast = Expression.Lambda<Func<TUnderlyingType, TEnum>>(c, p).Compile();
-        }
-
         #region Field Members
-        private static IReadOnlyDictionary<string, TUnderlyingType> _enumValues;
-        private static IReadOnlyDictionary<TUnderlyingType, string> _stringValues;
-        private static TEnum _default = default;
-        private static Func<TUnderlyingType, TEnum> _cast;
+        private static readonly IReadOnlyDictionary<string, TUnderlyingType> _enumValues =
+            EnumCache.GetEnumValues<TEnum, TUnderlyingType>();
+        private static readonly IReadOnlyDictionary<TUnderlyingType, string> _stringValues =
+            EnumCache.GetStringValues<TEnum, TUnderlyingType>();
+        private static readonly TEnum _default = default;
+        private static readonly Func<TUnderlyingType, TEnum> _cast = InitCast();
         #endregion
 
         #region Public Members
@@ -34,9 +26,8 @@ namespace Deipax.Convert.Common
             }
 
             TUnderlyingType? value;
-            string key = from as string;
 
-            if (key != null)
+            if (from is string key)
             {
                 if (!string.IsNullOrEmpty(key) &&
                  _enumValues.TryGetValue(key, out TUnderlyingType returnValue))
@@ -91,7 +82,7 @@ namespace Deipax.Convert.Common
             IFormatProvider provider = null)
         {
             string returnValue = default;
-            TUnderlyingType? value = ConvertTo<TUnderlyingType?, TEnum>.From(from);
+            TUnderlyingType? value = ConvertTo<TUnderlyingType?, TEnum>.From(from, provider);
 
             if (value.HasValue)
             {
@@ -99,6 +90,15 @@ namespace Deipax.Convert.Common
             }
 
             return returnValue;
+        }
+        #endregion
+
+        #region Members
+        private static Func<TUnderlyingType, TEnum> InitCast()
+        {
+            var p = Expression.Parameter(typeof(TUnderlyingType));
+            var c = Expression.Convert(p, typeof(TEnum));
+            return Expression.Lambda<Func<TUnderlyingType, TEnum>>(c, p).Compile();
         }
         #endregion
     }

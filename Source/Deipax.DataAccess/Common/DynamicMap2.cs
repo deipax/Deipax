@@ -10,24 +10,21 @@ using System.Reflection;
 
 namespace Deipax.DataAccess.Common
 {
-    public class DynamicMap2
+    public static class DynamicMap2
     {
-        static DynamicMap2()
-        {
-            _headers = new ConcurrentDictionary<int, IEnumerable<string>>();
-            _maps = new ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
-        }
-
         #region Field Members
-        private static ConcurrentDictionary<int, IEnumerable<string>> _headers;
-        private static ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps;
+        private static readonly ConcurrentDictionary<int, IEnumerable<string>> _headers = 
+            new ConcurrentDictionary<int, IEnumerable<string>>();
 
-        private static MethodInfo _getValueMethod = typeof(IDataRecord)
+        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps = 
+            new ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
+
+        private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)
             .GetRuntimeMethods()
             .Where(x => x.Name == "GetValue")
             .FirstOrDefault();
 
-        private static ConstructorInfo _constructor = typeof(DynamicRow)
+        private static readonly ConstructorInfo _constructor = typeof(DynamicRow)
             .GetConstructors()
             .First();
         #endregion
@@ -70,11 +67,12 @@ namespace Deipax.DataAccess.Common
                 labelTarget,
                 Expression.Default(typeof(DynamicRow)));
 
-            List<Expression> expressions = new List<Expression>();
-
-            expressions.Add(Expression.Assign(
+            List<Expression> expressions = new List<Expression>
+            {
+                Expression.Assign(
                 values,
-                Expression.NewArrayBounds(typeof(object), Expression.Constant(r.FieldCount))));
+                Expression.NewArrayBounds(typeof(object), Expression.Constant(r.FieldCount)))
+            };
 
             for (int fieldIndex = 0; fieldIndex < r.FieldCount; fieldIndex++)
             {

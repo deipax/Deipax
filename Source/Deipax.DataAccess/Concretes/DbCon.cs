@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Deipax.DataAccess.Concretes
 {
-    public class DbCon : IDbCon
+    public sealed class DbCon : IDbCon
     {
         public DbCon(IDb db)
         {
@@ -18,9 +18,9 @@ namespace Deipax.DataAccess.Concretes
         }
 
         #region Field Members
-        private Func<IDb, IDbConnection> _factory;
+        private readonly Func<IDb, IDbConnection> _factory;
         private IDbConnection _con;
-        private object _lock = new object();
+        private readonly object _lock = new object();
         #endregion
 
         #region IDbCon Members

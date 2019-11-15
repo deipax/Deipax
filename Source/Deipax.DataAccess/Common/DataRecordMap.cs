@@ -11,22 +11,18 @@ using System.Reflection;
 
 namespace Deipax.DataAccess.Common
 {
-    public class DataRecordMap<T> where T : new()
+    public static class DataRecordMap<T> where T : new()
     {
-        static DataRecordMap()
-        {
-            _cache = new ConcurrentDictionary<int, Func<IDataRecord, T>>();
-        }
-
         #region Field Members
-        private static ConcurrentDictionary<int, Func<IDataRecord, T>> _cache;
+        private static readonly ConcurrentDictionary<int, Func<IDataRecord, T>> _cache = 
+            new ConcurrentDictionary<int, Func<IDataRecord, T>>();
 
-        private static MethodInfo _getValueMethod = typeof(IDataRecord)
+        private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)
             .GetRuntimeMethods()
             .Where(x => x.Name == "GetValue")
             .FirstOrDefault();
 
-        private static MethodInfo _createSetNullableField = typeof(DataRecordMap<T>)
+        private static readonly MethodInfo _createSetNullableField = typeof(DataRecordMap<T>)
             .GetRuntimeMethods()
             .Where(x => x.Name == "CreateSetNullableField")
             .FirstOrDefault();

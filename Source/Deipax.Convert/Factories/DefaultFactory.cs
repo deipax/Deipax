@@ -6,11 +6,11 @@ namespace Deipax.Convert.Factories
     public class DefaultFactory : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             args.Add(args.LabelExpression);
-            return args.Get();
+            return args.Create();
         }
         #endregion
     }

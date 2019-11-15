@@ -17,33 +17,27 @@ namespace Deipax.Cloning
 
     public static class CloneConfig
     {
-        static CloneConfig()
-        {
-            _defaults = new List<ICloneDelFactory>
-            {
-                new DictionaryFactory(),
-                new KeyValueFactory(),
-                new TupleFactory(),
-                new ListDeep(),
-                new ListShallow(),
-                new NullableShallow(),
-                new NullableDeep(),
-                new ShallowClone(),
-                new ArrayRank1Shallow(),
-                new ArrayRank1Deep(),
-                new ArrayRank2Shallow(),
-                new ArrayRank2Deep(),
-                new ArrayRankNShallow(),
-                new ArrayRankNDeep(),
-                new ComplexRefType(),
-                new ComplexValueType(),
-                new NotSupported()
-            };
-            UserFactories = new List<ICloneDelFactory>();
-        }
-
         #region Field Members
-        private static IReadOnlyList<ICloneDelFactory> _defaults;
+        private static readonly IReadOnlyList<ICloneDelFactory> _defaults = new List<ICloneDelFactory>
+        {
+            new DictionaryFactory(),
+            new KeyValueFactory(),
+            new TupleFactory(),
+            new ListDeep(),
+            new ListShallow(),
+            new NullableShallow(),
+            new NullableDeep(),
+            new ShallowClone(),
+            new ArrayRank1Shallow(),
+            new ArrayRank1Deep(),
+            new ArrayRank2Shallow(),
+            new ArrayRank2Deep(),
+            new ArrayRankNShallow(),
+            new ArrayRankNDeep(),
+            new ComplexRefType(),
+            new ComplexValueType(),
+            new NotSupported()
+        };
         #endregion
 
         #region Public Members
@@ -66,7 +60,7 @@ namespace Deipax.Cloning
             IReadOnlyList<ICloneDelFactory> factories)
         {
             return factories?
-                .Select(x => x?.Get<T>())
+                .Select(x => x?.Create<T>())
                 .FirstOrDefault(x => x != null);
         }
         #endregion

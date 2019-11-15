@@ -11,7 +11,6 @@ namespace Deipax.Cloning.Extensions
     public static class TypeExtensions
     {
         #region Field Members
-
         private static MethodInfo _cloneConfigHelper = typeof(TypeExtensions)
             .GetRuntimeMethods()
             .Where(x => x.Name == "CheckCloneConfigHelper")

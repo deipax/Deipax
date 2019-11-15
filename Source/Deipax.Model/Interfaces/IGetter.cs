@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Deipax.Model.Interfaces
 {
-    public delegate X Get<T, X>(
+    public delegate TValue GetDelegate<T, TValue>(
         ref T instance,
         IFormatProvider provider = null);
 
@@ -11,7 +11,7 @@ namespace Deipax.Model.Interfaces
     {
         string Name { get; }
         IModelInfo ModelInfo { get; }
-        Get<T, X> GetDelegate<X>();
-        Expression<Get<T, X>> GetExpression<X>();
+        GetDelegate<T, TValue> GetDelegate<TValue>();
+        Expression<GetDelegate<T, TValue>> GetExpression<TValue>();
     }
 }

@@ -11,7 +11,7 @@ namespace Deipax.Convert.Factories
     public class FromIConvertible : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (typeof(IConvertible).IsAssignableFrom(args.UnderlyingFromType) &&
@@ -21,7 +21,7 @@ namespace Deipax.Convert.Factories
                     .GetRuntimeMethods()
                     .Where(x =>
                         x.ReturnType == args.UnderlyingToType &&
-                        x.GetParameters().Count() == 1 &&
+                        x.GetParameters().Length == 1 &&
                         x.GetParameters()[0].ParameterType == typeof(IFormatProvider))
                     .FirstOrDefault();
 
@@ -39,7 +39,7 @@ namespace Deipax.Convert.Factories
 
                     var ifConverterNullReturn = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
-                        Expression.Return(args.LabelTarget, args.Default));
+                        Expression.Return(args.LabelTarget, args.DefaultExpression));
 
                     var callExpression = Expression.Call(
                         converter,
@@ -57,7 +57,7 @@ namespace Deipax.Convert.Factories
                     args.Add(returnExpression);
                     args.Add(args.LabelExpression);
 
-                    return args.Get();
+                    return args.Create();
                 }
             }
 

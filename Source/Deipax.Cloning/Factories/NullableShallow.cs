@@ -9,7 +9,7 @@ namespace Deipax.Cloning.Factories
     public class NullableShallow : ICloneDelFactory
     {
         #region ICloneDelFactory Members
-        public CloneDel<T> Get<T>()
+        public CloneDel<T> Create<T>()
         {
             var type = typeof(T);
 

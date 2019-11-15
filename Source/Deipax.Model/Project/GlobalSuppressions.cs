@@ -1,0 +1,15 @@
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~M:Deipax.Model.ModelAccess`1.GetGetter(System.String)~Deipax.Model.Interfaces.IGetter{`0}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~M:Deipax.Model.ModelAccess`1.GetGetter``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})~Deipax.Model.Interfaces.IGetter{`0}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~M:Deipax.Model.ModelAccess`1.GetSetter(System.String)~Deipax.Model.Interfaces.ISetter{`0}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~M:Deipax.Model.ModelAccess`1.GetSetter``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})~Deipax.Model.Interfaces.ISetter{`0}")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~P:Deipax.Model.ModelAccess`1.AllGetters")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~P:Deipax.Model.ModelAccess`1.AllSetters")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~P:Deipax.Model.ModelAccess`1.Getters")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1000:Do not declare static members on generic types", Justification = "<Pending>", Scope = "member", Target = "~P:Deipax.Model.ModelAccess`1.Setters")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1812:Getter<T, P> is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static members, make it static (Shared in Visual Basic).", Justification = "<Pending>", Scope = "type", Target = "~T:Deipax.Model.Concretes.Getter`2")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1812:Setter<T, TProp> is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static members, make it static (Shared in Visual Basic).", Justification = "<Pending>", Scope = "type", Target = "~T:Deipax.Model.Concretes.Setter`2")]

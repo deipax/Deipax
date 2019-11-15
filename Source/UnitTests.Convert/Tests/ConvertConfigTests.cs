@@ -55,14 +55,14 @@ namespace UnitTests.Convert
                 return _count;
             }
 
-            public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+            public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
                 IExpArgs<TFrom, TTo> args)
             {
                 if (args.ToType == typeof(TestClass_1))
                 {
                     _count++;
                     args.Add(args.LabelExpression);
-                    return args.Get();
+                    return args.Create();
                 }
 
                 return null;

@@ -122,7 +122,7 @@ namespace UnitTests.Cloning
         {
             public CloneDel<X> MyFunc { get; set; }
 
-            public CloneDel<T> Get<T>()
+            public CloneDel<T> Create<T>()
             {
                 return MyFunc as CloneDel<T>;
             }

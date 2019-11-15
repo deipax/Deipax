@@ -34,23 +34,23 @@ namespace Deipax.Cloning
 
             foreach (var field in fields)
             {
-                if (field.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(field.Name);
-                if (field.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(field.Name);
-                if (field.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(field.Name);
+                if (field.GetCustomAttributes<CloneAttribute>().Any()) Clone(field.Name);
+                if (field.GetCustomAttributes<NoCloneAttribute>().Any()) NoClone(field.Name);
+                if (field.GetCustomAttributes<ShallowCloneAttribute>().Any()) ShallowClone(field.Name);
             }
 
             foreach (var prop in type.GetFilteredProperties(fields))
             {
-                if (prop.GetCustomAttributes<CloneAttribute>().Count() > 0) Clone(prop.Name);
-                if (prop.GetCustomAttributes<NoCloneAttribute>().Count() > 0) NoClone(prop.Name);
-                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Count() > 0) ShallowClone(prop.Name);
+                if (prop.GetCustomAttributes<CloneAttribute>().Any()) Clone(prop.Name);
+                if (prop.GetCustomAttributes<NoCloneAttribute>().Any()) NoClone(prop.Name);
+                if (prop.GetCustomAttributes<ShallowCloneAttribute>().Any()) ShallowClone(prop.Name);
             }
         }
 
         #region Field Members
-        private static List<string> _clone = new List<string>();
-        private static List<string> _noClone = new List<string>();
-        private static List<string> _shallow = new List<string>();
+        private static readonly List<string> _clone = new List<string>();
+        private static readonly List<string> _noClone = new List<string>();
+        private static readonly List<string> _shallow = new List<string>();
         #endregion
 
         #region Public Members

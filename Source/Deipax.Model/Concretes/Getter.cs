@@ -18,21 +18,21 @@ namespace Deipax.Model.Concretes
         }
 
         #region Field Members
-        private ConcurrentDictionary<Type, Delegate> _cache;
+        private readonly ConcurrentDictionary<Type, Delegate> _cache;
         #endregion
 
         #region IGetter<T> Members
         public string Name { get; private set; }
         public IModelInfo ModelInfo { get; private set; }
 
-        public Get<T, X> GetDelegate<X>()
+        public GetDelegate<T, TValue> GetDelegate<TValue>()
         {
-            return (Get<T, X>)_cache.GetOrAdd(typeof(X), x => GetExpression<X>().Compile());
+            return (GetDelegate<T, TValue>)_cache.GetOrAdd(typeof(TValue), x => GetExpression<TValue>().Compile());
         }
 
-        public Expression<Get<T, X>> GetExpression<X>()
+        public Expression<GetDelegate<T, TValue>> GetExpression<TValue>()
         {
-            var xType = typeof(X);
+            var xType = typeof(TValue);
             var labelTarget = Expression.Label(xType);
             var labelExpression = Expression.Label(labelTarget, Expression.Default(xType));
             var instance = Expression.Parameter(typeof(T).MakeByRefType(), "instance");
@@ -100,7 +100,7 @@ namespace Deipax.Model.Concretes
             else if (xType != ModelInfo.Type)
             {
                 var invoke = Expression.Invoke(
-                    ConvertTo<X, P>.Expression,
+                    ConvertTo<TValue, P>.Result.Expression,
                     memberExpression,
                     provider);
 
@@ -110,7 +110,7 @@ namespace Deipax.Model.Concretes
                     labelExpression);
             }
 
-            return Expression.Lambda<Get<T, X>>(
+            return Expression.Lambda<GetDelegate<T, TValue>>(
                 block,
                 instance,
                 provider);

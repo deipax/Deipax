@@ -9,7 +9,7 @@ namespace Deipax.Cloning.Factories
     public class NullableDeep : ICloneDelFactory
     {
         #region ICloneDelFactory Members
-        public CloneDel<T> Get<T>()
+        public CloneDel<T> Create<T>()
         {
             var type = typeof(T);
 
@@ -21,7 +21,6 @@ namespace Deipax.Cloning.Factories
                 {
                     var args = CloneArgs.Create(type, false);
                     var sourceProperty = Expression.Property(args.Source, "Value");
-
                     var cloneCall = ExpressionHelper.GetUnSafeClone(structType, sourceProperty, args.Context);
                     var newNullable = Expression.New(typeof(T).GetConstructor(new[] { structType }), cloneCall);
                     args.CloneExpression = Expression.Assign(args.Target, newNullable);

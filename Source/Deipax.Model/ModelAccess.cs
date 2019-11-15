@@ -42,7 +42,7 @@ namespace Deipax.Model
             return Getters.TryGetValue(name);
         }
 
-        public static IGetter<T> GetGetter<P>(Expression<Func<T, P>> expression)
+        public static IGetter<T> GetGetter<TValue>(Expression<Func<T, TValue>> expression)
         {
             return GetGetter(expression.ExtractMemberName());
         }
@@ -52,7 +52,7 @@ namespace Deipax.Model
             return Setters.TryGetValue(name);
         }
 
-        public static ISetter<T> GetSetter<P>(Expression<Func<T, P>> expression)
+        public static ISetter<T> GetSetter<TValue>(Expression<Func<T, TValue>> expression)
         {
             return GetSetter(expression.ExtractMemberName());
         }

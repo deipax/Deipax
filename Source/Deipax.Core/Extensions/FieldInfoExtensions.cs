@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Deipax.Core.Extensions
 {
@@ -8,7 +9,7 @@ namespace Deipax.Core.Extensions
         {
             if (source != null)
             {
-                return source.Name.IndexOf(">k__BackingField", 0) >= 0;
+                return source.Name.IndexOf(">k__BackingField", 0, StringComparison.InvariantCulture) >= 0;
             }
 
             return defaultValue;

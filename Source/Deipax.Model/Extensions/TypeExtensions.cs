@@ -3,6 +3,7 @@ using Deipax.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -19,10 +20,7 @@ namespace Deipax.Model.Extensions
             this Type type,
             IEnumerable<IFieldModelInfo> fields = null)
         {
-            var allFields = fields != null ?
-                fields :
-                type.GetAllFields();
-
+            var allFields = fields ?? type.GetAllFields();
             return GetAllPropertiesHelper(allFields, type, 0);
         }
 
@@ -171,12 +169,12 @@ namespace Deipax.Model.Extensions
                 PropertyInfo info,
                 int depth)
             {
-                string key = string.Format("<{0}>k__BackingField", info.Name);
+                string key = string.Format(CultureInfo.InvariantCulture, "<{0}>k__BackingField", info.Name);
 
                 var backingField = fields
                     .Where(x =>
                         x.IsBackingField &&
-                        string.Equals(x.FieldInfo.Name, key) &&
+                        string.Equals(x.FieldInfo.Name, key, StringComparison.InvariantCulture) &&
                         x.FieldInfo.DeclaringType == info.DeclaringType &&
                         x.Depth == depth)
                     .FirstOrDefault();

@@ -40,7 +40,7 @@ namespace Deipax.Cloning.Common
         {
         }
 
-        public readonly CloneCmd Cmd;
+        public CloneCmd Cmd { get; private set; }
     }
 
     public enum CloneCmd

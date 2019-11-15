@@ -10,12 +10,12 @@ namespace Deipax.Convert.Factories
     public class ToEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.UnderlyingToType.IsEnum)
             {
-                MethodCallExpression callExpression = null;
+                MethodCallExpression callExpression;
 
                 if (args.FromType == typeof(string))
                 {
@@ -24,7 +24,7 @@ namespace Deipax.Convert.Factories
                             args.ToType,
                             Enum.GetUnderlyingType(args.UnderlyingToType)),
                         "ConvertFromString",
-                        new Type[] { },
+                        Array.Empty<Type>(),
                         args.Input,
                         args.GetDefaultProvider());
                 }
@@ -35,7 +35,7 @@ namespace Deipax.Convert.Factories
                             args.ToType,
                             Enum.GetUnderlyingType(args.UnderlyingToType)),
                         "ConvertFromObject",
-                        new Type[] { },
+                        Array.Empty<Type>(),
                         args.Input,
                         args.GetDefaultProvider());
                 }
@@ -63,7 +63,7 @@ namespace Deipax.Convert.Factories
                 args.Add(returnExpression);
                 args.Add(args.LabelExpression);
 
-                return args.Get();
+                return args.Create();
             }
 
             return null;

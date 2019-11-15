@@ -12,7 +12,7 @@ namespace Deipax.Convert.Factories
     public class ToString : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<Convert<TFrom, TTo>> Get<TFrom, TTo>(
+        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.ToType == typeof(string))
@@ -30,7 +30,7 @@ namespace Deipax.Convert.Factories
 
                 if (result == null)
                 {
-                    result = GetIConvertible(args, guardedInput);
+                    result = GetIConvertible(args);
                 }
 
                 if (result == null)
@@ -46,7 +46,7 @@ namespace Deipax.Convert.Factories
         #endregion
 
         #region Private Members
-        private static Expression<Convert<TFrom, TTo>> GetConvert<TFrom, TTo>(
+        private static Expression<ConvertDelegate<TFrom, TTo>> GetConvert<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args,
             Expression guardedInput)
         {
@@ -73,20 +73,19 @@ namespace Deipax.Convert.Factories
                 args.AddGuards();
                 args.Add(returnExpression);
                 args.Add(args.LabelExpression);
-                return args.Get();
+                return args.Create();
             }
 
             return null;
         }
 
-        private static Expression<Convert<TFrom, TTo>> GetIConvertible<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args,
-            Expression guardedInput)
+        private static Expression<ConvertDelegate<TFrom, TTo>> GetIConvertible<TFrom, TTo>(
+            IExpArgs<TFrom, TTo> args)
         {
-            return new FromIConvertible().Get(args);
+            return new FromIConvertible().Create(args);
         }
 
-        private static Expression<Convert<TFrom, TTo>> GetToString<TFrom, TTo>(
+        private static Expression<ConvertDelegate<TFrom, TTo>> GetToString<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args,
             Expression guardedInput)
         {
@@ -108,13 +107,13 @@ namespace Deipax.Convert.Factories
                 args.AddGuards();
                 args.Add(returnExpression);
                 args.Add(args.LabelExpression);
-                return args.Get();
+                return args.Create();
             }
 
             return null;
         }
 
-        private static Expression<Convert<TFrom, TTo>> GetEnum<TFrom, TTo>(
+        private static Expression<ConvertDelegate<TFrom, TTo>> GetEnum<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args,
             Expression guardedInput)
         {
@@ -125,7 +124,7 @@ namespace Deipax.Convert.Factories
                       args.UnderlyingFromType,
                       Enum.GetUnderlyingType(args.UnderlyingFromType)),
                   "ConvertToString",
-                  new Type[] { },
+                  Array.Empty<Type>(),
                   guardedInput,
                   args.GetDefaultProvider());
 
@@ -133,7 +132,7 @@ namespace Deipax.Convert.Factories
                 args.Add(Expression.Return(args.LabelTarget, callExpression));
                 args.Add(args.LabelExpression);
 
-                return args.Get();
+                return args.Create();
             }
 
             return null;
