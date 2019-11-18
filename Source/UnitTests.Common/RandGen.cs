@@ -7,7 +7,8 @@ namespace UnitTests.Common
     public static class RandGen
     {
         #region Field Members
-        private static string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+        private static readonly string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+        private static readonly Random _rand = new Random();
         #endregion
 
         #region Public Members
@@ -15,11 +16,10 @@ namespace UnitTests.Common
             uint length)
         {
             StringBuilder sb = new StringBuilder();
-            var rand = new Random();
 
             for (int i = 0; i < length; i++)
             {
-                sb.Append(_chars[(int)(rand.NextDouble() * _chars.Length)]);
+                sb.Append(_chars[(int)(_rand.NextDouble() * _chars.Length)]);
             }
 
             return sb.ToString();
@@ -43,7 +43,7 @@ namespace UnitTests.Common
             int min = int.MinValue,
             int max = int.MaxValue)
         {
-            return new Random().Next(min, max);
+            return _rand.Next(min, max);
         }
 
         public static List<int> GenerateIntList(
@@ -64,7 +64,7 @@ namespace UnitTests.Common
         public static DateTime? GenerateNullableDate(
             uint daysFromNow)
         {
-            var days = new Random().Next((int)daysFromNow);
+            var days = _rand.Next((int)daysFromNow);
 
             if (days % 2 == 0)
             {
@@ -78,11 +78,10 @@ namespace UnitTests.Common
             uint length)
         {
             List<byte> data = new List<byte>((int)length);
-            var rand = new Random();
 
             for (int x = 0; x < length; x++)
             {
-                data.Add((byte)rand.Next(0, 255));
+                data.Add((byte)_rand.Next(0, 255));
             }
 
             return data.ToArray();

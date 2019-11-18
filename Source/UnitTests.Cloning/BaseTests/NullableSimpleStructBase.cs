@@ -1,5 +1,5 @@
-﻿using UnitTests.Common;
-using Xunit;
+﻿using System.Collections.Generic;
+using UnitTests.Common;
 
 namespace UnitTests.Cloning.BaseTests
 {
@@ -9,27 +9,32 @@ namespace UnitTests.Cloning.BaseTests
         {
         }
 
-        #region Protected Members
-        protected override SimpleStruct? GenerateItem()
+        #region Private Member
+        protected override ItemGenerator<SimpleStruct?> GetItemGenerator()
         {
-            return SimpleStruct.Generate();
+            return new ItemGenerator<SimpleStruct?>(() => SimpleStruct.Generate(), new EqualityComparer());
         }
+        #endregion
 
-        protected override void AssertAreEqual(SimpleStruct? source, SimpleStruct? target)
+        #region Helpers
+        private class EqualityComparer : IEqualityComparer<SimpleStruct?>
         {
-            Assert.Equal(source, target);
-
-            if (source.HasValue)
+            public bool Equals(SimpleStruct? source, SimpleStruct? target)
             {
-                Assert.Equal(source.Value.Int, target.Value.Int);
-                Assert.Equal(source.Value.Long, target.Value.Long);
-                Assert.Equal(source.Value.UInt, target.Value.UInt);
-            }
-        }
+                if (source.HasValue && target.HasValue)
+                {
+                    return source.Value.Int == target.Value.Int &&
+                        source.Value.Long == target.Value.Long &&
+                        source.Value.UInt == target.Value.UInt;
+                }
 
-        protected override void AssertAreSame(SimpleStruct? source, SimpleStruct? target)
-        {
-            AssertAreEqual(source, target);
+                return !source.HasValue && !target.HasValue;
+            }
+
+            public int GetHashCode(SimpleStruct? obj)
+            {
+                return obj.GetHashCode();
+            }
         }
         #endregion
     }

@@ -1,5 +1,5 @@
-﻿using UnitTests.Common;
-using Xunit;
+﻿using System.Collections.Generic;
+using UnitTests.Common;
 
 namespace UnitTests.Cloning.BaseTests
 {
@@ -10,29 +10,33 @@ namespace UnitTests.Cloning.BaseTests
         }
 
         #region Private Member
-        protected override DoubleSimpleClass GenerateItem()
+        protected override ItemGenerator<DoubleSimpleClass> GetItemGenerator()
         {
-            return DoubleSimpleClass.Generate();
+            return new ItemGenerator<DoubleSimpleClass>(DoubleSimpleClass.Generate, new EqualityComparer());
         }
+        #endregion
 
-        protected override void AssertAreEqual(DoubleSimpleClass source, DoubleSimpleClass target)
+        #region Helpers
+        private class EqualityComparer : IEqualityComparer<DoubleSimpleClass>
         {
-            Assert.Same(source.One, source.Two);
-            Assert.Same(target.One, target.Two);
+            public bool Equals(DoubleSimpleClass source, DoubleSimpleClass target)
+            {
+                return ReferenceEquals(source.One, source.Two) &&
+                    ReferenceEquals(target.One, target.Two) &&
+                    source.One.BaseInt == target.One.BaseInt &&
+                    source.One.Double == target.One.Double &&
+                    source.One.Float == target.One.Float &&
+                    source.One.Int == target.One.Int &&
+                    source.One.Long == target.One.Long &&
+                    source.One.String == target.One.String &&
+                    source.One.UInt == target.One.UInt &&
+                    source.One.ULong == target.One.ULong;
+            }
 
-            Assert.Equal(source.One.BaseInt, target.One.BaseInt);
-            Assert.Equal(source.One.Double, target.One.Double);
-            Assert.Equal(source.One.Float, target.One.Float);
-            Assert.Equal(source.One.Int, target.One.Int);
-            Assert.Equal(source.One.Long, target.One.Long);
-            Assert.Equal(source.One.String, target.One.String);
-            Assert.Equal(source.One.UInt, target.One.UInt);
-            Assert.Equal(source.One.ULong, target.One.ULong);
-        }
-
-        protected override void AssertAreSame(DoubleSimpleClass source, DoubleSimpleClass target)
-        {
-            Assert.Same(source, target);
+            public int GetHashCode(DoubleSimpleClass obj)
+            {
+                return obj.GetHashCode();
+            }
         }
         #endregion
     }

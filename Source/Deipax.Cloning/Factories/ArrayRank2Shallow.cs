@@ -10,9 +10,9 @@ namespace Deipax.Cloning.Factories
     internal class ArrayRank2Shallow : ICloneDelFactory
     {
         #region Field Members
-        private static MethodInfo _methodInfo = typeof(ArrayRank2Shallow)
+        private static readonly MethodInfo _methodInfo = typeof(ArrayRank2Shallow)
             .GetRuntimeMethods()
-            .Where(x => x.Name == "Copy")
+            .Where(x => x.Name == nameof(ArrayRank2Shallow.Copy))
             .FirstOrDefault();
         #endregion
 
@@ -45,9 +45,7 @@ namespace Deipax.Cloning.Factories
                 return (T[,])existingCopy;
             }
 
-            var lenI = source.GetLength(0);
-            var lenJ = source.GetLength(1);
-            var result = new T[lenI, lenJ];
+            var result = new T[source.GetLength(0), source.GetLength(1)];
             context.RecordCopy(source, result);
             Array.Copy(source, result, source.Length);
             return result;

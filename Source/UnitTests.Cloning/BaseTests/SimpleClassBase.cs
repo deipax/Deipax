@@ -1,5 +1,5 @@
-﻿using UnitTests.Common;
-using Xunit;
+﻿using System.Collections.Generic;
+using UnitTests.Common;
 
 namespace UnitTests.Cloning.BaseTests
 {
@@ -10,26 +10,31 @@ namespace UnitTests.Cloning.BaseTests
         }
 
         #region Private Member
-        protected override SimpleClass GenerateItem()
+        protected override ItemGenerator<SimpleClass> GetItemGenerator()
         {
-            return SimpleClass.Generate();
+            return new ItemGenerator<SimpleClass>(SimpleClass.Generate, new EqualityComparer());
         }
+        #endregion
 
-        protected override void AssertAreEqual(SimpleClass source, SimpleClass target)
+        #region Helpers
+        private class EqualityComparer : IEqualityComparer<SimpleClass>
         {
-            Assert.Equal(source.BaseInt, target.BaseInt);
-            Assert.Equal(source.Double, target.Double);
-            Assert.Equal(source.Float, target.Float);
-            Assert.Equal(source.Int, target.Int);
-            Assert.Equal(source.Long, target.Long);
-            Assert.Equal(source.String, target.String);
-            Assert.Equal(source.UInt, target.UInt);
-            Assert.Equal(source.ULong, target.ULong);
-        }
+            public bool Equals(SimpleClass source, SimpleClass target)
+            {
+                return source.BaseInt == target.BaseInt &&
+                    source.Double == target.Double &&
+                    source.Float == target.Float &&
+                    source.Int == target.Int &&
+                    source.Long == target.Long &&
+                    source.String == target.String &&
+                    source.UInt == target.UInt &&
+                    source.ULong == target.ULong;
+            }
 
-        protected override void AssertAreSame(SimpleClass source, SimpleClass target)
-        {
-            Assert.Same(source, target);
+            public int GetHashCode(SimpleClass obj)
+            {
+                return obj.GetHashCode();
+            }
         }
         #endregion
     }

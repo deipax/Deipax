@@ -14,7 +14,7 @@ namespace Deipax.Cloning
             ? Nullable.GetUnderlyingType(typeof(T))
             : typeof(T);
 
-        private static CloneDel<T> _del = CloneConfig.Get<T>();
+        private static readonly CloneDel<T> _del = CloneConfig.Get<T>().Func;
 
         private static readonly QuickCache<Type, CloneDel<T>> _cache =
             new QuickCache<Type, CloneDel<T>>(16, ReferenceEqualsComparer.Instance);

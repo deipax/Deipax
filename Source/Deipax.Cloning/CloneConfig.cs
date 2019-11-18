@@ -41,27 +41,56 @@ namespace Deipax.Cloning
         #endregion
 
         #region Public Members
-        public static IReadOnlyList<ICloneDelFactory> UserFactories { get; set; }
+        public static IReadOnlyList<ICloneDelFactory> Factories { get; set; }
 
-        public static CloneDel<T> Get<T>()
+        public static ICloneDelResult<T> Get<T>()
         {
-            CloneDel<T> cloneDel = CloneConfig<T>.CloneDel;
-            if (cloneDel != null) return cloneDel;
+            Result<T> result = new Result<T>()
+            {
+                Func = CloneConfig<T>.CloneDel
+            };
 
-            cloneDel = Get<T>(UserFactories);
-            if (cloneDel != null) return cloneDel;
+            if (result.Func != null) return result;
 
-            return Get<T>(_defaults);
+            result = GetResult<T>(Factories);
+            if (result != null) return result;
+
+            return GetResult<T>(_defaults);
         }
         #endregion
 
         #region Private Members
-        private static CloneDel<T> Get<T>(
+        private static Result<T> GetResult<T>(
             IReadOnlyList<ICloneDelFactory> factories)
         {
             return factories?
-                .Select(x => x?.Create<T>())
+                .Select(x => GetResult<T>(x))
                 .FirstOrDefault(x => x != null);
+        }
+
+        private static Result<T> GetResult<T>(
+            ICloneDelFactory factory)
+        {
+            var result = factory?.Create<T>();
+
+            if (result != null)
+            {
+                return new Result<T>()
+                {
+                    Factory = factory,
+                    Func = result,
+                };
+            }
+
+            return null;
+        }
+        #endregion
+
+        #region Helpers
+        class Result<T> : ICloneDelResult<T>
+        {
+            public ICloneDelFactory Factory { get; set; }
+            public CloneDel<T> Func { get; set; }
         }
         #endregion
     }

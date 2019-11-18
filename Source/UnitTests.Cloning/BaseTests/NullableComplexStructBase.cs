@@ -1,5 +1,5 @@
-﻿using UnitTests.Common;
-using Xunit;
+﻿using System.Collections.Generic;
+using UnitTests.Common;
 
 namespace UnitTests.Cloning.BaseTests
 {
@@ -9,31 +9,33 @@ namespace UnitTests.Cloning.BaseTests
         {
         }
 
-        #region Protected Members
-        protected override ComplexStruct? GenerateItem()
+        #region Private Member
+        protected override ItemGenerator<ComplexStruct?> GetItemGenerator()
         {
-            return ComplexStruct.Generate();
+            return new ItemGenerator<ComplexStruct?>(() => ComplexStruct.Generate(), new EqualityComparer());
         }
+        #endregion
 
-        protected override void AssertAreEqual(ComplexStruct? source, ComplexStruct? target)
+        #region Helpers
+        private class EqualityComparer : IEqualityComparer<ComplexStruct?>
         {
-            if (source.HasValue)
+            public bool Equals(ComplexStruct? source, ComplexStruct? target)
             {
-                Assert.Same(source.Value.One, source.Value.One.One);
-                Assert.Same(target.Value.One, target.Value.One.One);
+                if (source.HasValue && target.HasValue)
+                {
+                    return ReferenceEquals(source.Value.One, source.Value.One.One) &&
+                        ReferenceEquals(target.Value.One, target.Value.One.One) &&
+                        source.Value.Int == target.Value.Int &&
+                        source.Value.One.Int == target.Value.One.Int;
+                }
 
-                Assert.Equal(source.Value.Int, target.Value.Int);
-                Assert.Equal(source.Value.One.Int, target.Value.One.Int);
+                return !source.HasValue && !target.HasValue;
             }
-            else
+
+            public int GetHashCode(ComplexStruct? obj)
             {
-                Assert.Equal(source, target);
+                return obj.GetHashCode();
             }
-        }
-
-        protected override void AssertAreSame(ComplexStruct? source, ComplexStruct? target)
-        {
-            AssertAreEqual(source, target);
         }
         #endregion
     }

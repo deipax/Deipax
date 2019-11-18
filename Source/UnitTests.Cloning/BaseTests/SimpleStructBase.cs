@@ -1,5 +1,5 @@
-﻿using UnitTests.Common;
-using Xunit;
+﻿using System.Collections.Generic;
+using UnitTests.Common;
 
 namespace UnitTests.Cloning.BaseTests
 {
@@ -9,23 +9,27 @@ namespace UnitTests.Cloning.BaseTests
         {
         }
 
-        #region Protected Members
-        protected override SimpleStruct GenerateItem()
+        #region Private Member
+        protected override ItemGenerator<SimpleStruct> GetItemGenerator()
         {
-            return SimpleStruct.Generate();
+            return new ItemGenerator<SimpleStruct>(SimpleStruct.Generate, new EqualityComparer());
         }
+        #endregion
 
-        protected override void AssertAreSame(SimpleStruct source, SimpleStruct target)
+        #region Helpers
+        private class EqualityComparer : IEqualityComparer<SimpleStruct>
         {
-            AssertAreEqual(source, target);
-        }
+            public bool Equals(SimpleStruct source, SimpleStruct target)
+            {
+                return source.Int == target.Int &&
+                    source.Long == target.Long &&
+                    source.UInt == target.UInt;
+            }
 
-        protected override void AssertAreEqual(SimpleStruct source, SimpleStruct target)
-        {
-            Assert.Equal(source, target);
-            Assert.Equal(source.Int, target.Int);
-            Assert.Equal(source.Long, target.Long);
-            Assert.Equal(source.UInt, target.UInt);
+            public int GetHashCode(SimpleStruct obj)
+            {
+                return obj.GetHashCode();
+            }
         }
         #endregion
     }

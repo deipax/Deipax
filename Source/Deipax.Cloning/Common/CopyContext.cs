@@ -5,8 +5,18 @@ namespace Deipax.Cloning.Common
 {
     public class CopyContext
     {
+        public CopyContext() : 
+            this(new Dictionary<object, object>(16, ReferenceEqualsComparer.Instance))
+        {
+        }
+
+        public CopyContext(IDictionary<object, object> dict)
+        {
+            _dict = dict;
+        }
+
         #region Field Members
-        private readonly Dictionary<object, object> _dict = new Dictionary<object, object>(16, ReferenceEqualsComparer.Instance);
+        private readonly IDictionary<object, object> _dict;
         #endregion
 
         #region ICopyContext Members

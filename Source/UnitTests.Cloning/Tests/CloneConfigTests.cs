@@ -24,7 +24,7 @@ namespace UnitTests.Cloning
                 }
             };
 
-            CloneConfig.UserFactories = new List<ICloneDelFactory>
+            CloneConfig.Factories = new List<ICloneDelFactory>
             {
                 helperFactory
             };

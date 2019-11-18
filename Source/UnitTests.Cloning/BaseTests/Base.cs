@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnitTests.Common;
 using Xunit;
 
 namespace UnitTests.Cloning.BaseTests
@@ -9,45 +10,48 @@ namespace UnitTests.Cloning.BaseTests
     {
         public Base(ICloneHelper cloneHelper)
         {
+            _generator = GetItemGenerator();
+
             _default = default;
 
             _cloneHelper = cloneHelper;
 
-            _single = GenerateItem();
+            _single = _generator.GetItem();
 
             _object = _single;
 
-            _arrayDiff = GenerateItems(10);
+            _arrayDiff = _generator.GetItems(10).ToArray();
 
             _arrayDiffObjects = _arrayDiff.Cast<object>().ToArray();
             _arraySame = Enumerable.Repeat(_single, 10).ToArray();
             _arraySameObjects = _arraySame.Cast<object>().ToArray();
 
-            _array2dDiff = Enumerable
-                .Range(0, 10)
-                .Select(x => Enumerable.Range(0, 10).Select(y => GenerateItem()).ToArray())
-                .ToArray();
-
-            _array2dSame = Enumerable.Repeat(_array2dDiff[0], 10).ToArray();
-
             _arrayDefault = Enumerable.Repeat(default(T), 10).ToArray();
 
-            _arrayRank2Diff = new T[10, 10];
-            _arrayRank2Same = new T[10, 10];
-            _arrayRank3Diff = new T[10, 10, 10];
-            _arrayRank3Same = new T[10, 10, 10];
+            _jaggedArray2dDiff = new T[10][];
+            _jaggedArray2dSame = new T[10][];
+            _multiDimArrayRank2Diff = new T[10, 10];
+            _multiDimArrayRank2Same = new T[10, 10];
+            _multiDimArrayRank3Diff = new T[10, 10, 10];
+            _multiDimArrayRank3Same = new T[10, 10, 10];
 
             for (int i = 0; i < 10; i++)
             {
+                _jaggedArray2dSame[i] = new T[10];
+                _jaggedArray2dDiff[i] = new T[10];
+
                 for (int j = 0; j < 10; j++)
                 {
-                    _arrayRank2Same[i, j] = _single;
-                    _arrayRank2Diff[i, j] = GenerateItem();
+                    _jaggedArray2dSame[i][j] = _single;
+                    _jaggedArray2dDiff[i][j] = _generator.GetItem();
+
+                    _multiDimArrayRank2Same[i, j] = _single;
+                    _multiDimArrayRank2Diff[i, j] = _generator.GetItem();
 
                     for (int k = 0; k < 10; k++)
                     {
-                        _arrayRank3Same[i, j, k] = _single;
-                        _arrayRank3Diff[i, j, k] = GenerateItem();
+                        _multiDimArrayRank3Same[i, j, k] = _single;
+                        _multiDimArrayRank3Diff[i, j, k] = _generator.GetItem();
                     }
                 }
             }
@@ -57,11 +61,11 @@ namespace UnitTests.Cloning.BaseTests
             _listDiffObject = _arrayDiffObjects.ToList();
             _listSameObject = _arraySameObjects.ToList();
             _keyValueSame = new KeyValuePair<T, T>(_single, _single);
-            _keyValueDiff = new KeyValuePair<T, T>(GenerateItem(), GenerateItem());
+            _keyValueDiff = new KeyValuePair<T, T>(_generator.GetItem(), _generator.GetItem());
             _tupleSame = new Tuple<T, T>(_single, _single);
-            _tupleDiff = new Tuple<T, T>(GenerateItem(), GenerateItem());
+            _tupleDiff = new Tuple<T, T>(_generator.GetItem(), _generator.GetItem());
             _dictSame = _listDiff.ToDictionary(x => x, x => x);
-            _dictDiff = _listDiff.ToDictionary(x => x, x => GenerateItem());
+            _dictDiff = _listDiff.ToDictionary(x => x, x => _generator.GetItem());
         }
 
         private Base()
@@ -69,6 +73,7 @@ namespace UnitTests.Cloning.BaseTests
         }
 
         #region Field Members
+        private readonly ItemGenerator<T> _generator;
         private readonly T _default;
         private readonly T _single;
         private readonly object _object;
@@ -76,14 +81,14 @@ namespace UnitTests.Cloning.BaseTests
         private readonly T[] _arrayDiff;
         private readonly object[] _arraySameObjects;
         private readonly object[] _arrayDiffObjects;
-        private readonly T[][] _array2dDiff;
-        private readonly T[][] _array2dSame;
+        private readonly T[][] _jaggedArray2dDiff;
+        private readonly T[][] _jaggedArray2dSame;
         private readonly T[] _arrayDefault;
         private readonly ICloneHelper _cloneHelper;
-        private readonly T[,] _arrayRank2Diff;
-        private readonly T[,] _arrayRank2Same;
-        private readonly T[,,] _arrayRank3Diff;
-        private readonly T[,,] _arrayRank3Same;
+        private readonly T[,] _multiDimArrayRank2Diff;
+        private readonly T[,] _multiDimArrayRank2Same;
+        private readonly T[,,] _multiDimArrayRank3Diff;
+        private readonly T[,,] _multiDimArrayRank3Same;
         private readonly List<T> _listSame;
         private readonly List<T> _listDiff;
         private readonly List<object> _listSameObject;
@@ -153,19 +158,19 @@ namespace UnitTests.Cloning.BaseTests
         }
 
         [Fact]
-        public void Array2dOfDiffInstance()
+        public void JaggedArray2dOfDiffInstance()
         {
-            var args = CreateArgs(_array2dDiff);
+            var args = CreateArgs(_jaggedArray2dDiff);
             _cloneHelper.Clone(args);
-            AfterArray2dOfDiffInstance(args);
+            AfterJaggedArray2dOfDiffInstance(args);
         }
 
         [Fact]
-        public void Array2dOfSameInstance()
+        public void JaggedArray2dOfSameInstance()
         {
-            var args = CreateArgs(_array2dSame);
+            var args = CreateArgs(_jaggedArray2dSame);
             _cloneHelper.Clone(args);
-            AfterArray2dOfSameInstance(args);
+            AfterJaggedArray2dOfSameInstance(args);
         }
 
         [Fact]
@@ -177,35 +182,35 @@ namespace UnitTests.Cloning.BaseTests
         }
 
         [Fact]
-        public void ArrayRank2OfSameInstance()
+        public void MultiDimArrayRank2OfSameInstance()
         {
-            var args = CreateArgs(_arrayRank2Same);
+            var args = CreateArgs(_multiDimArrayRank2Same);
             _cloneHelper.Clone(args);
-            AfterArrayRank2OfSameInstance(args);
+            AfterMultiDimArrayRank2OfSameInstance(args);
         }
 
         [Fact]
-        public void ArrayRank2OfDiffInstance()
+        public void MultiDimArrayRank2OfDiffInstance()
         {
-            var args = CreateArgs(_arrayRank2Diff);
+            var args = CreateArgs(_multiDimArrayRank2Diff);
             _cloneHelper.Clone(args);
-            AfterArrayRank2OfDiffInstance(args);
+            AfterMultiDimArrayRank2OfDiffInstance(args);
         }
 
         [Fact]
-        public void ArrayRank3OfSameInstance()
+        public void MultiDimArrayRank3OfSameInstance()
         {
-            var args = CreateArgs(_arrayRank3Same);
+            var args = CreateArgs(_multiDimArrayRank3Same);
             _cloneHelper.Clone(args);
             AfterArrayRank3OfSameInstance(args);
         }
 
         [Fact]
-        public void ArrayRank3OfDiffInstance()
+        public void MultiDimArrayRank3OfDiffInstance()
         {
-            var args = CreateArgs(_arrayRank3Diff);
+            var args = CreateArgs(_multiDimArrayRank3Diff);
             _cloneHelper.Clone(args);
-            AfterArrayRank3OfDiffInstance(args);
+            AfterMultiDimArrayRank3OfDiffInstance(args);
         }
 
         [Fact]
@@ -289,9 +294,7 @@ namespace UnitTests.Cloning.BaseTests
         }
 
         #region Protected Members
-        protected abstract T GenerateItem();
-        protected abstract void AssertAreSame(T source, T target);
-        protected abstract void AssertAreEqual(T source, T target);
+        protected abstract ItemGenerator<T> GetItemGenerator();
 
         protected virtual void AfterArrayOfDiffInstance(
             CloneArguments<T[]> args)
@@ -299,9 +302,12 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Length, args.Target.Length);
 
-            for (int i = 0; i < args.Source.Length; i++)
+            for (int i = 0; i < args.Target.Length; i++)
             {
-                AssertAreEqual(args.Source[i], args.Target[i]);
+                Assert.Equal(args.Source[i], args.Target[i], _generator.Comparer);
+
+                if (i == 0) continue;
+                Assert.True(AreNotSame(args.Target[0], args.Target[i]));
             }
         }
 
@@ -311,14 +317,10 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Length, args.Target.Length);
 
-            for (int i = 0; i < args.Source.Length; i++)
-            {
-                AssertAreEqual(args.Source[i], args.Target[i]);
-            }
-
             for (int i = 0; i < args.Target.Length; i++)
             {
-                AssertAreSame(args.Target[0], args.Target[i]);
+                Assert.Equal(args.Source[i], args.Target[i], _generator.Comparer);
+                Assert.True(AreSame(args.Target[0], args.Target[i]));
             }
         }
 
@@ -328,9 +330,12 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Length, args.Target.Length);
 
-            for (int i = 0; i < args.Source.Length; i++)
+            for (int i = 0; i < args.Target.Length; i++)
             {
-                AssertAreEqual((T)args.Source[i], (T)args.Target[i]);
+                Assert.Equal((T)args.Source[i], (T)args.Target[i], _generator.Comparer);
+
+                if (i == 0) continue;
+                Assert.True(AreNotSame((T)args.Target[0], (T)args.Target[i]));
             }
         }
 
@@ -340,27 +345,23 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Length, args.Target.Length);
 
-            for (int i = 0; i < args.Source.Length; i++)
-            {
-                AssertAreEqual((T)args.Source[i], (T)args.Target[i]);
-            }
-
             for (int i = 0; i < args.Target.Length; i++)
             {
-                AssertAreSame((T)args.Target[0], (T)args.Target[i]);
+                Assert.Equal((T)args.Source[i], (T)args.Target[i], _generator.Comparer);
+                Assert.True(AreSame((T)args.Target[0], (T)args.Target[i]));
             }
         }
 
         protected virtual void AfterSingleInstance(
             CloneArguments<T> args)
         {
-            AssertAreEqual(args.Source, args.Target);
+            Assert.Equal(args.Source, args.Target, _generator.Comparer);
         }
 
         protected virtual void AfterObjectInstance(
             CloneArguments<object> args)
         {
-            AssertAreEqual((T)args.Source, (T)args.Target);
+            Assert.Equal((T)args.Source, (T)args.Target, _generator.Comparer);
         }
 
         protected virtual void AfterDefaultInstance(
@@ -370,50 +371,37 @@ namespace UnitTests.Cloning.BaseTests
             Assert.Equal(default, args.Source);
         }
 
-        protected virtual void AfterArray2dOfDiffInstance(
+        protected virtual void AfterJaggedArray2dOfDiffInstance(
             CloneArguments<T[][]> args)
         {
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Length, args.Target.Length);
 
-            for (int i = 0; i < args.Source.Length; i++)
+            for (int i = 0; i < args.Target.Length; i++)
             {
-                var sourceArray = args.Source[i];
-                var targetArray = args.Target[i];
-
-                Assert.NotNull(sourceArray);
-                Assert.NotNull(targetArray);
-
-                for (int j = 0; j < sourceArray.Length; j++)
+                for (int j = 0; j < args.Target[i].Length; j++)
                 {
-                    AssertAreEqual(sourceArray[j], targetArray[j]);
+                    Assert.Equal(args.Source[i][j], args.Target[i][j], _generator.Comparer);
+
+                    if (j == 0 && i == 0) continue;
+                    Assert.True(AreNotSame(args.Target[0][0], args.Target[i][j]));
                 }
             }
         }
 
-        protected virtual void AfterArray2dOfSameInstance(
+        protected virtual void AfterJaggedArray2dOfSameInstance(
             CloneArguments<T[][]> args)
         {
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Length, args.Target.Length);
 
-            for (int i = 0; i < args.Source.Length; i++)
-            {
-                var sourceArray = args.Source[i];
-                var targetArray = args.Target[i];
-
-                Assert.NotNull(sourceArray);
-                Assert.NotNull(targetArray);
-
-                for (int j = 0; j < sourceArray.Length; j++)
-                {
-                    AssertAreEqual(sourceArray[j], targetArray[j]);
-                }
-            }
-
             for (int i = 0; i < args.Target.Length; i++)
             {
-                Assert.Same(args.Target[0], args.Target[i]);
+                for (int j = 0; j < args.Target[i].Length; j++)
+                {
+                    Assert.Equal(args.Source[i][j], args.Target[i][j], _generator.Comparer);
+                    Assert.True(AreSame(args.Target[0][0], args.Target[i][j]));
+                }
             }
         }
 
@@ -430,7 +418,7 @@ namespace UnitTests.Cloning.BaseTests
             }
         }
 
-        protected virtual void AfterArrayRank2OfSameInstance(
+        protected virtual void AfterMultiDimArrayRank2OfSameInstance(
             CloneArguments<T[,]> args)
         {
             Assert.NotSame(args.Source, args.Target);
@@ -441,13 +429,13 @@ namespace UnitTests.Cloning.BaseTests
             {
                 for (int j = 0; j < args.Source.GetLength(1); j++)
                 {
-                    AssertAreEqual(args.Source[i, j], args.Target[i, j]);
-                    AssertAreSame(args.Target[0, 0], args.Target[i, j]);
+                    Assert.Equal(args.Source[i, j], args.Target[i, j], _generator.Comparer);
+                    Assert.True(AreSame(args.Target[0, 0], args.Target[i, j]));
                 }
             }
         }
 
-        protected virtual void AfterArrayRank2OfDiffInstance(
+        protected virtual void AfterMultiDimArrayRank2OfDiffInstance(
             CloneArguments<T[,]> args)
         {
             Assert.NotSame(args.Source, args.Target);
@@ -458,7 +446,10 @@ namespace UnitTests.Cloning.BaseTests
             {
                 for (int j = 0; j < args.Source.GetLength(1); j++)
                 {
-                    AssertAreEqual(args.Source[i, j], args.Target[i, j]);
+                    Assert.Equal(args.Source[i, j], args.Target[i, j], _generator.Comparer);
+
+                    if (j == 0 && i == 0) continue;
+                    Assert.True(AreNotSame(args.Target[0, 0], args.Target[i, j]));
                 }
             }
         }
@@ -477,14 +468,14 @@ namespace UnitTests.Cloning.BaseTests
                 {
                     for (int k = 0; k < args.Source.GetLength(2); k++)
                     {
-                        AssertAreEqual(args.Source[i, j, k], args.Target[i, j, k]);
-                        AssertAreSame(args.Target[0, 0, 0], args.Target[i, j, k]);
+                        Assert.Equal(args.Source[i, j, k], args.Target[i, j, k], _generator.Comparer);
+                        Assert.True(AreSame(args.Target[0, 0, 0], args.Target[i, j, k]));
                     }
                 }
             }
         }
 
-        protected virtual void AfterArrayRank3OfDiffInstance(
+        protected virtual void AfterMultiDimArrayRank3OfDiffInstance(
             CloneArguments<T[,,]> args)
         {
             Assert.NotSame(args.Source, args.Target);
@@ -498,7 +489,10 @@ namespace UnitTests.Cloning.BaseTests
                 {
                     for (int k = 0; k < args.Source.GetLength(2); k++)
                     {
-                        AssertAreEqual(args.Source[i, j, k], args.Target[i, j, k]);
+                        Assert.Equal(args.Source[i, j, k], args.Target[i, j, k], _generator.Comparer);
+
+                        if (i == 0 && j == 0 && k == 0) continue;
+                        Assert.True(AreNotSame(args.Target[0, 0, 0], args.Target[i, j, k]));
                     }
                 }
             }
@@ -510,9 +504,12 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Count, args.Target.Count);
 
-            for (int i = 0; i < args.Source.Count; i++)
+            for (int i = 0; i < args.Target.Count; i++)
             {
-                AssertAreEqual(args.Source[i], args.Target[i]);
+                Assert.Equal(args.Source[i], args.Target[i], _generator.Comparer);
+
+                if (i == 0) continue;
+                Assert.True(AreNotSame(args.Target[0], args.Target[i]));
             }
         }
 
@@ -522,14 +519,10 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Count, args.Target.Count);
 
-            for (int i = 0; i < args.Source.Count; i++)
-            {
-                AssertAreEqual(args.Source[i], args.Target[i]);
-            }
-
             for (int i = 0; i < args.Target.Count; i++)
             {
-                AssertAreSame(args.Target[0], args.Target[i]);
+                Assert.Equal(args.Source[i], args.Target[i], _generator.Comparer);
+                Assert.True(AreSame(args.Target[0], args.Target[i]));
             }
         }
 
@@ -539,9 +532,12 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Count, args.Target.Count);
 
-            for (int i = 0; i < args.Source.Count; i++)
+            for (int i = 0; i < args.Target.Count; i++)
             {
-                AssertAreEqual((T)args.Source[i], (T)args.Target[i]);
+                Assert.Equal((T)args.Source[i], (T)args.Target[i], _generator.Comparer);
+
+                if (i == 0) continue;
+                Assert.True(AreNotSame((T)args.Target[0], (T)args.Target[i]));
             }
         }
 
@@ -551,47 +547,43 @@ namespace UnitTests.Cloning.BaseTests
             Assert.NotSame(args.Source, args.Target);
             Assert.Equal(args.Source.Count, args.Target.Count);
 
-            for (int i = 0; i < args.Source.Count; i++)
-            {
-                AssertAreEqual((T)args.Source[i], (T)args.Target[i]);
-            }
-
             for (int i = 0; i < args.Target.Count; i++)
             {
-                AssertAreSame((T)args.Target[0], (T)args.Target[i]);
+                Assert.Equal((T)args.Source[i], (T)args.Target[i], _generator.Comparer);
+                Assert.True(AreSame((T)args.Target[0], (T)args.Target[i]));
             }
         }
 
         protected virtual void AfterKeyValuePairSame(
             CloneArguments<KeyValuePair<T, T>> args)
         {
-            AssertAreSame(args.Source.Key, args.Source.Value);
-            AssertAreSame(args.Target.Key, args.Target.Value);
-            AssertAreEqual(args.Source.Key, args.Target.Key);
-            AssertAreEqual(args.Source.Value, args.Target.Value);
+            Assert.True(AreSame(args.Source.Key, args.Source.Value));
+            Assert.True(AreSame(args.Target.Key, args.Target.Value));
+            Assert.Equal(args.Source.Key, args.Target.Key, _generator.Comparer);
+            Assert.Equal(args.Source.Value, args.Target.Value, _generator.Comparer);
         }
 
         protected virtual void AfterKeyValuePairDiff(
             CloneArguments<KeyValuePair<T, T>> args)
         {
-            AssertAreEqual(args.Source.Key, args.Target.Key);
-            AssertAreEqual(args.Source.Value, args.Target.Value);
+            Assert.Equal(args.Source.Key, args.Target.Key, _generator.Comparer);
+            Assert.Equal(args.Source.Value, args.Target.Value, _generator.Comparer);
         }
 
         protected virtual void AfterTupleSameInstance(
             CloneArguments<Tuple<T, T>> args)
         {
-            AssertAreSame(args.Source.Item1, args.Source.Item2);
-            AssertAreSame(args.Target.Item1, args.Target.Item2);
-            AssertAreEqual(args.Source.Item1, args.Target.Item1);
-            AssertAreEqual(args.Source.Item2, args.Target.Item2);
+            Assert.True(AreSame(args.Source.Item1, args.Source.Item2));
+            Assert.True(AreSame(args.Target.Item1, args.Target.Item2));
+            Assert.Equal(args.Source.Item1, args.Target.Item1, _generator.Comparer);
+            Assert.Equal(args.Source.Item2, args.Target.Item2, _generator.Comparer);
         }
 
         protected virtual void AfterTupleDiffInstance(
             CloneArguments<Tuple<T, T>> args)
         {
-            AssertAreEqual(args.Source.Item1, args.Target.Item1);
-            AssertAreEqual(args.Source.Item2, args.Target.Item2);
+            Assert.Equal(args.Source.Item1, args.Target.Item1, _generator.Comparer);
+            Assert.Equal(args.Source.Item2, args.Target.Item2, _generator.Comparer);
         }
 
         protected virtual void AfterDictionarySameInstance(
@@ -599,28 +591,12 @@ namespace UnitTests.Cloning.BaseTests
         {
             Assert.Equal(args.Target.Count, args.Source.Count);
 
-            var targetKeys = args.Target.Keys.ToList();
-            var sourceKeys = args.Source.Keys.ToList();
-
-            for (int i = 0; i < targetKeys.Count; i++)
+            for (int i = 0; i < args.Target.Keys.Count; i++)
             {
-                var targetKey = targetKeys[i];
-                var sourceKey = sourceKeys[i];
+                Assert.Equal(args.Source.Values.ElementAt(i), args.Target.Values.ElementAt(i), _generator.Comparer);
+                Assert.Equal(args.Source.Keys.ElementAt(i), args.Target.Keys.ElementAt(i), _generator.Comparer);
 
-                AssertAreEqual(targetKey, sourceKey);
-
-                var targetValue = args.Target[targetKey];
-                var sourceValue = args.Source[sourceKey];
-
-                AssertAreEqual(targetValue, sourceValue);
-            }
-
-            var tmpKey = targetKeys[0];
-            var tmpValue = args.Target[tmpKey];
-
-            foreach (var item in args.Target)
-            {
-                AssertAreSame(item.Key, item.Value);
+                Assert.True(AreSame(args.Target.Keys.ElementAt(i), args.Target.Values.ElementAt(i)));
             }
         }
 
@@ -629,20 +605,12 @@ namespace UnitTests.Cloning.BaseTests
         {
             Assert.Equal(args.Target.Count, args.Source.Count);
 
-            var targetKeys = args.Target.Keys.ToList();
-            var sourceKeys = args.Source.Keys.ToList();
-
-            for (int i = 0; i < targetKeys.Count; i++)
+            for (int i = 0; i < args.Target.Keys.Count; i++)
             {
-                var targetKey = targetKeys[i];
-                var sourceKey = sourceKeys[i];
+                Assert.Equal(args.Source.Values.ElementAt(i), args.Target.Values.ElementAt(i), _generator.Comparer);
+                Assert.Equal(args.Source.Keys.ElementAt(i), args.Target.Keys.ElementAt(i), _generator.Comparer);
 
-                AssertAreEqual(targetKey, sourceKey);
-
-                var targetValue = args.Target[targetKey];
-                var sourceValue = args.Source[sourceKey];
-
-                AssertAreEqual(targetValue, sourceValue);
+                Assert.True(AreNotSame(args.Target.Keys.ElementAt(i), args.Target.Values.ElementAt(i)));
             }
         }
 
@@ -674,21 +642,18 @@ namespace UnitTests.Cloning.BaseTests
             };
         }
 
-        private T[] GenerateItems(int count)
+        private bool AreSame(T source, T target)
         {
-            List<T> items = new List<T>();
+            return typeof(T).IsClass
+                ? ReferenceEquals(source, target)
+                : _generator.Comparer.Equals(source, target);
+        }
 
-            while (items.Count != count)
-            {
-                T item = GenerateItem();
-
-                if (!items.Contains(item))
-                {
-                    items.Add(item);
-                }
-            };
-
-            return items.ToArray();
+        private bool AreNotSame(T source, T target)
+        {
+            return typeof(T).IsClass
+                ? !ReferenceEquals(source, target)
+                : !_generator.Comparer.Equals(source, target);
         }
         #endregion
     }
@@ -697,7 +662,7 @@ namespace UnitTests.Cloning.BaseTests
     {
         public T Source { get; set; }
         public T Target { get; set; }
-        public int CacheCount { get; set; }
+        public IDictionary<object, object> Context { get; set; }
     }
 
     public interface ICloneHelper

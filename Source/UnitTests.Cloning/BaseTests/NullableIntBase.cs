@@ -1,5 +1,5 @@
-﻿using UnitTests.Common;
-using Xunit;
+﻿using System.Collections.Generic;
+using UnitTests.Common;
 
 namespace UnitTests.Cloning.BaseTests
 {
@@ -9,20 +9,30 @@ namespace UnitTests.Cloning.BaseTests
         {
         }
 
-        #region Protected Members
-        protected override int? GenerateItem()
+        #region Private Member
+        protected override ItemGenerator<int?> GetItemGenerator()
         {
-            return RandGen.GenerateInt();
+            return new ItemGenerator<int?>(() => RandGen.GenerateInt(), new EqualityComparer());
         }
+        #endregion
 
-        protected override void AssertAreEqual(int? source, int? target)
+        #region Helpers
+        private class EqualityComparer : IEqualityComparer<int?>
         {
-            Assert.Equal(source, target);
-        }
+            public bool Equals(int? source, int? target)
+            {
+                if (source.HasValue && target.HasValue)
+                {
+                    return source.Value == target.Value;
+                }
 
-        protected override void AssertAreSame(int? source, int? target)
-        {
-            AssertAreEqual(source, target);
+                return !source.HasValue && !target.HasValue;
+            }
+
+            public int GetHashCode(int? obj)
+            {
+                return obj.GetHashCode();
+            }
         }
         #endregion
     }
