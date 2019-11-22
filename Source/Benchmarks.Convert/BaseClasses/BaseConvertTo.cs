@@ -8,7 +8,7 @@ namespace Benchmarks.Convert.BaseClasses
     {
         public BaseConvertTo()
         {
-            Default = default(TTo);
+            Default = default;
 
             _dbNull_AsObject = DBNull.Value;
 

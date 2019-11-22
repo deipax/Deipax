@@ -365,7 +365,7 @@ namespace Benchmarks.Model.BaseClasses
             {
             }
 
-            return default(TTo);
+            return default;
         }
         #endregion
     }

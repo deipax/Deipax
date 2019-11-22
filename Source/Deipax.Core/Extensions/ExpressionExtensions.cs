@@ -5,7 +5,7 @@ namespace Deipax.Core.Extensions
 {
     public static class ExpressionExtensions
     {
-        public static string ExtractMemberName<TDelegate>(this Expression<TDelegate> source)
+        public static string ExtractMemberName<T>(this Expression<T> source)
         {
             if (source != null)
             {

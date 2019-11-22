@@ -9,7 +9,7 @@ namespace UnitTests.Convert.BaseClasses
     {
         public BaseConvertTo()
         {
-            DefaultValue = default(TTo);
+            DefaultValue = default;
 
             _dbNull_AsObject = DBNull.Value;
 

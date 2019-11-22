@@ -34,8 +34,7 @@ namespace Deipax.Core.Common
 
         public object GetValue(string key)
         {
-            object val = default(object);
-            TryGetValue(key, out val);
+            TryGetValue(key, out object val);
             return val;
         }
         #endregion

@@ -62,9 +62,9 @@ namespace Deipax.DataAccess.Interfaces
             this IDbCmd source,
             string name = null,
             object value = null,
-            ParameterDirection? direction = default(ParameterDirection?),
-            DbType? dbType = default(DbType?),
-            int? size = default(int?))
+            ParameterDirection? direction = default,
+            DbType? dbType = default,
+            int? size = default)
         {
             source.AddParameter(source.Connection.CreateParameter(name, value, direction, dbType, size));
             return source;

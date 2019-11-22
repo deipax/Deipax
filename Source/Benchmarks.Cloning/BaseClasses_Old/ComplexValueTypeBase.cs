@@ -24,7 +24,7 @@ namespace Benchmarks.Cloning.BaseClasses_Old
                 PropThree = RandGen.GenerateInt()
             };
 
-            _nullStruct = default(HelperStruct1);
+            _nullStruct = default;
         }
 
         #region Field Members

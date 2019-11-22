@@ -37,9 +37,9 @@ namespace Deipax.DataAccess.Interfaces
             this IDbBatch source,
             string name = null,
             object value = null,
-            ParameterDirection? direction = default(ParameterDirection?),
-            DbType? dbType = default(DbType?),
-            int? size = default(int?))
+            ParameterDirection? direction = default,
+            DbType? dbType = default,
+            int? size = default)
         {
             return source.Connection.CreateParameter(name, value, direction, dbType, size);
         }

@@ -233,8 +233,8 @@ namespace UnitTests.Model.BaseClasses
             var getAsX = ModelAccess<T>.GetGetter(_memberExpression).GetDelegate<X>();
             var setAsX = ModelAccess<T>.GetSetter(_memberExpression).GetDelegate<X>();
 
-            X expectedX = default(X);
-            X actualX = default(X);
+            X expectedX = default;
+            X actualX = default;
 
             try
             {

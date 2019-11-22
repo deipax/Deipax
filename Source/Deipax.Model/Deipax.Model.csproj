@@ -5,7 +5,7 @@
     <Platforms>AnyCPU;x64;x86</Platforms>
     <Title>Deipax.Model</Title>
     <Authors>Jeffery Felce</Authors>
-    <Copyright>Copyright ©  2018</Copyright>
+    <Copyright>Copyright (c) 2019 Jeffery Felce</Copyright>
     <Company>Jeffery Felce</Company>
     <PackageLicenseUrl>https://github.com/deipax/Deipax/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/deipax/Deipax</PackageProjectUrl>

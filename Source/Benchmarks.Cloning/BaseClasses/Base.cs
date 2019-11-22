@@ -9,7 +9,7 @@ namespace Benchmarks.Cloning.BaseClasses
     {
         public Base()
         {
-            _default = default(T);
+            _default = default;
             _single = GenerateItem();
             _object = _single;
 

@@ -13,9 +13,9 @@ namespace Deipax.DataAccess.Interfaces
             this IDbConnection source,
             string name = null,
             object value = null,
-            ParameterDirection? direction = default(ParameterDirection?),
-            DbType? dbType = default(DbType?),
-            int? size = default(int?))
+            ParameterDirection? direction = default,
+            DbType? dbType = default,
+            int? size = default)
         {
             using (var cmd = source.CreateCommand())
             {
