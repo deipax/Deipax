@@ -10,7 +10,7 @@ Access any relational database that provides an Ado.Net implementation in a linq
 
 # Deipax - Convert
 
-A strongly typed conversion library built on top of System.Convert with the intent to avoid the costs associated with boxing/unboxing.
+A strongly typed conversion library, with a generic interface, built on top of System.Convert with the intent to avoid the costs associated with boxing/unboxing.
 
 ## Credits 
  - The cloning functionality is heavily base off the [CloneExtensions](https://github.com/MarcinJuraszek/CloneExtensions) project authored by [Marcin Juraszek](https://github.com/MarcinJuraszek).
