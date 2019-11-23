@@ -8,6 +8,10 @@ A high performance, customizable, deep cloning library.
 
 Access any relational database that provides an Ado.Net implementation in a linq like fashion using extension methods.
 
+# Deipax - Convert
+
+A strongly typed conversion library built on top of System.Convert with the intent to avoid the costs associated with boxing/unboxing.
+
 ## Credits 
  - The cloning functionality is heavily base off the [CloneExtensions](https://github.com/MarcinJuraszek/CloneExtensions) project authored by [Marcin Juraszek](https://github.com/MarcinJuraszek).
  - Many performance tweaks and observations came from the [DeepCopy](https://github.com/ReubenBond/DeepCopy) project authored by [Reuben Bond](https://github.com/ReubenBond).
