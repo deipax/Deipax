@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Interfaces;
+﻿using Deipax.Convert.Extensions;
+using Deipax.Convert.Interfaces;
 using System;
 using System.Linq.Expressions;
 
@@ -7,7 +8,7 @@ namespace Deipax.Convert.Factories
     public class ToOrFromDBNull : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.ToType == typeof(DBNull))
@@ -16,8 +17,10 @@ namespace Deipax.Convert.Factories
                     args.LabelTarget,
                     Expression.Constant(DBNull.Value));
 
-                args.Add(returnExpression);
-                args.Add(args.LabelExpression);
+                return args
+                    .Add(returnExpression)
+                    .Add(args.LabelExpression)
+                    .ToResult(this);
             }
             else if (args.FromType == typeof(DBNull))
             {
@@ -25,11 +28,13 @@ namespace Deipax.Convert.Factories
                     args.LabelTarget,
                     args.DefaultExpression);
 
-                args.Add(returnExpression);
-                args.Add(args.LabelExpression);
+                return args
+                    .Add(returnExpression)
+                    .Add(args.LabelExpression)
+                    .ToResult(this);
             }
 
-            return args.Create();
+            return null;
         }
         #endregion
     }

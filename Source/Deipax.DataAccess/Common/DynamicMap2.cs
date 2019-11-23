@@ -13,10 +13,10 @@ namespace Deipax.DataAccess.Common
     public static class DynamicMap2
     {
         #region Field Members
-        private static readonly ConcurrentDictionary<int, IEnumerable<string>> _headers = 
+        private static readonly ConcurrentDictionary<int, IEnumerable<string>> _headers =
             new ConcurrentDictionary<int, IEnumerable<string>>();
 
-        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps = 
+        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps =
             new ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
 
         private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)

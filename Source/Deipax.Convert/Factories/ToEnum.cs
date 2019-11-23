@@ -10,7 +10,7 @@ namespace Deipax.Convert.Factories
     public class ToEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.UnderlyingToType.IsEnum)
@@ -59,11 +59,11 @@ namespace Deipax.Convert.Factories
                     ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
                     : Expression.Return(args.LabelTarget, callExpression);
 
-                args.AddGuards();
-                args.Add(returnExpression);
-                args.Add(args.LabelExpression);
-
-                return args.Create();
+                return args
+                    .AddGuards()
+                    .Add(returnExpression)
+                    .Add(args.LabelExpression)
+                    .ToResult(this);
             }
 
             return null;

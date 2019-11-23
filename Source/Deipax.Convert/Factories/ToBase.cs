@@ -153,7 +153,7 @@ namespace Deipax.Convert.Factories
         #endregion
 
         #region IConvertFactory Members
-        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.UnderlyingToType == typeof(T) &&
@@ -172,8 +172,9 @@ namespace Deipax.Convert.Factories
                 {
                     if (_invalidCastTypes.Exists(x => x == args.UnderlyingFromType))
                     {
-                        args.Add(args.LabelExpression);
-                        return args.Create();
+                        return args
+                            .Add(args.LabelExpression)
+                            .ToResult(this);
                     }
                     else
                     {
@@ -189,11 +190,11 @@ namespace Deipax.Convert.Factories
                             ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
                             : Expression.Return(args.LabelTarget, callExpression);
 
-                        args.AddGuards();
-                        args.Add(returnExpression);
-                        args.Add(args.LabelExpression);
-
-                        return args.Create();
+                        return args
+                            .AddGuards()
+                            .Add(returnExpression)
+                            .Add(args.LabelExpression)
+                            .ToResult(this);
                     }
                 }
             }

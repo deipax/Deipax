@@ -11,7 +11,7 @@ namespace Deipax.Convert.Factories
     public class FromEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.UnderlyingFromType.IsEnum &&
@@ -41,16 +41,17 @@ namespace Deipax.Convert.Factories
                         args.LabelTarget,
                         Expression.Convert(callExpression, args.ToType));
 
-                    args.AddGuards();
-                    args.Add(returnExpression);
-                    args.Add(args.LabelExpression);
-
-                    return args.Create();
+                    return args
+                        .AddGuards()
+                        .Add(returnExpression)
+                        .Add(args.LabelExpression)
+                        .ToResult(this);
                 }
                 else if (args.UnderlyingToType == typeof(DateTime))
                 {
-                    args.Add(args.LabelExpression);
-                    return args.Create();
+                    return args
+                        .Add(args.LabelExpression)
+                        .ToResult(this);
                 }
             }
 

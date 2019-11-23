@@ -7,7 +7,7 @@ namespace UnitTests.Common
     public class ItemGenerator<T>
     {
         public ItemGenerator(
-            Func<T> initializer, 
+            Func<T> initializer,
             IEqualityComparer<T> equalityComparer)
         {
             _initializer = initializer;
@@ -34,9 +34,9 @@ namespace UnitTests.Common
         {
             T item;
 
-            while(true)
+            while (true)
             {
-                item =  _initializer();
+                item = _initializer();
 
                 if (!_uniqueItems.Contains(item, Comparer))
                 {

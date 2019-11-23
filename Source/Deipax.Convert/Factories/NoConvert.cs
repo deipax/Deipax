@@ -1,7 +1,6 @@
 ﻿using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
-using System;
 using System.Linq.Expressions;
 
 namespace Deipax.Convert.Factories
@@ -9,7 +8,7 @@ namespace Deipax.Convert.Factories
     public class NoConvert : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             if (args.FromType == args.ToType)
@@ -18,8 +17,10 @@ namespace Deipax.Convert.Factories
                     args.LabelTarget,
                     args.Input);
 
-                args.Add(returnExpression);
-                args.Add(args.LabelExpression);
+                return args
+                    .Add(returnExpression)
+                    .Add(args.LabelExpression)
+                    .ToResult(this);
             }
             else if (args.UnderlyingToType == args.UnderlyingFromType)
             {
@@ -31,9 +32,11 @@ namespace Deipax.Convert.Factories
                     ? Expression.Return(args.LabelTarget, Expression.Convert(guardedInput, args.ToType))
                     : Expression.Return(args.LabelTarget, guardedInput);
 
-                args.AddGuards();
-                args.Add(returnExpression);
-                args.Add(args.LabelExpression);
+                return args
+                    .AddGuards()
+                    .Add(returnExpression)
+                    .Add(args.LabelExpression)
+                    .ToResult(this);
             }
             else if (args.ToType == typeof(object))
             {
@@ -55,8 +58,10 @@ namespace Deipax.Convert.Factories
                         returnValue,
                         returnDefault);
 
-                    args.Add(ifThenElse);
-                    args.Add(args.LabelExpression);
+                    return args
+                        .Add(ifThenElse)
+                        .Add(args.LabelExpression)
+                        .ToResult(this);
                 }
                 else
                 {
@@ -64,8 +69,10 @@ namespace Deipax.Convert.Factories
                         args.LabelTarget,
                         Expression.Convert(args.Input, typeof(object)));
 
-                    args.Add(returnExpression);
-                    args.Add(args.LabelExpression);
+                    return args
+                        .Add(returnExpression)
+                        .Add(args.LabelExpression)
+                        .ToResult(this);
                 }
             }
             else if (args.ToType.IsAssignableFrom(args.FromType))
@@ -74,8 +81,10 @@ namespace Deipax.Convert.Factories
                     args.LabelTarget,
                     Expression.Convert(args.Input, args.ToType));
 
-                args.Add(returnExpression);
-                args.Add(args.LabelExpression);
+                return args
+                    .Add(returnExpression)
+                    .Add(args.LabelExpression)
+                    .ToResult(this);
             }
             else if (args.ToType.IsAssignableFrom(args.UnderlyingFromType))
             {
@@ -85,12 +94,14 @@ namespace Deipax.Convert.Factories
                     args.LabelTarget,
                     Expression.Convert(value, args.ToType));
 
-                args.AddGuards();
-                args.Add(returnExpression);
-                args.Add(args.LabelExpression);
+                return args
+                    .AddGuards()
+                    .Add(returnExpression)
+                    .Add(args.LabelExpression)
+                    .ToResult(this);
             }
 
-            return args.Create();
+            return null;
         }
         #endregion
     }

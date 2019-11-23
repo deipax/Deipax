@@ -9,38 +9,42 @@ namespace Deipax.Convert
 {
     public static class ConvertConfig
     {
-        #region Field Members
-        private static readonly IReadOnlyList<IConvertFactory> _defaultFactories = new List<IConvertFactory>()
+        static ConvertConfig()
         {
-            new NoConvert(),
-            new ToEnum(),
-            new ToOrFromDBNull(),
-            new ToString(),
-            new ToBool(),
-            new ToChar(),
-            new ToByte(),
-            new ToSByte(),
-            new ToShort(),
-            new ToUShort(),
-            new ToInt(),
-            new ToUInt(),
-            new ToLong(),
-            new ToULong(),
-            new ToFloat(),
-            new ToDouble(),
-            new ToDecimal(),
-            new ToDateTime(),
-            new FromEnum(),
-            new FromString(),
-            new FromIConvertible(),
-            new FromObject(),
-        };
+            DefaultFactories = new List<IConvertFactory>()
+            {
+                new NoConvert(),
+                new ToEnum(),
+                new ToOrFromDBNull(),
+                new ToString(),
+                new ToBool(),
+                new ToChar(),
+                new ToByte(),
+                new ToSByte(),
+                new ToShort(),
+                new ToUShort(),
+                new ToInt(),
+                new ToUInt(),
+                new ToLong(),
+                new ToULong(),
+                new ToFloat(),
+                new ToDouble(),
+                new ToDecimal(),
+                new ToDateTime(),
+                new FromEnum(),
+                new FromString(),
+                new FromIConvertible(),
+                new FromObject(),
+            };
+        }
+        #region Field Members
         private static readonly IConvertFactory _defaultFactory = new DefaultFactory();
         #endregion
 
         #region Public Members
         public static IConvertFactory DefaultFactory { get; set; }
         public static IReadOnlyList<IConvertFactory> Factories { get; set; }
+        public static IReadOnlyList<IConvertFactory> DefaultFactories { get; private set; }
 
         public static IConvertResult<TFrom, TTo> Get<TFrom, TTo>()
         {
@@ -49,54 +53,28 @@ namespace Deipax.Convert
             var result = GetResult(Factories, args);
             if (result != null) return result;
 
-            result = GetResult(_defaultFactories, args);
+            result = GetResult(DefaultFactories, args);
             if (result != null) return result;
 
-            result = GetResult(DefaultFactory, args);
+            result = DefaultFactory?.Create(args);
             if (result != null) return result;
 
-            return GetResult(_defaultFactory, args);
+            return _defaultFactory?.Create(args);
         }
         #endregion
 
         #region Private Members
-        private static Result<TFrom, TTo> GetResult<TFrom, TTo>(
+        private static IConvertResult<TFrom, TTo> GetResult<TFrom, TTo>(
             IReadOnlyList<IConvertFactory> factories,
             IExpArgs<TFrom, TTo> args)
         {
             return factories?
-                .Select(x => GetResult(x, args))
+                .Select(x => x.Create(args))
                 .FirstOrDefault(x => x != null);
-        }
-
-        private static Result<TFrom, TTo> GetResult<TFrom, TTo>(
-            IConvertFactory factory,
-            IExpArgs<TFrom, TTo> args)
-        {
-            var result = factory?.Create(args);
-
-            if (result != null)
-            {
-                return new Result<TFrom, TTo>()
-                {
-                    Factory = factory,
-                    Func = result.Compile(),
-                    Expression = result
-                };
-            }
-
-            return null;
         }
         #endregion
 
         #region Helpers
-        class Result<TFrom, TTo> : IConvertResult<TFrom, TTo>
-        {
-            public IConvertFactory Factory { get; set; }
-            public ConvertDelegate<TFrom, TTo> Func { get; set; }
-            public Expression<ConvertDelegate<TFrom, TTo>> Expression { get; set; }
-        }
-
         class ExpArgs<TFrom, TTo> : IExpArgs<TFrom, TTo>
         {
             public ExpArgs()
@@ -129,20 +107,24 @@ namespace Deipax.Convert
             public LabelExpression LabelExpression { get; private set; }
             public DefaultExpression DefaultExpression { get; private set; }
 
-            public void Add(Expression expr)
+            public IExpArgs<TFrom, TTo> Add(Expression expr)
             {
                 if (expr != null)
                 {
                     _expressions.Add(expr);
                 }
+
+                return this;
             }
 
-            public void AddVariable(ParameterExpression variable)
+            public IExpArgs<TFrom, TTo> AddVariable(ParameterExpression variable)
             {
                 if (variable != null)
                 {
                     _variables.Add(variable);
                 }
+
+                return this;
             }
 
             public Expression<ConvertDelegate<TFrom, TTo>> Create()

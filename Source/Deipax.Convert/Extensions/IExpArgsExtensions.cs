@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Interfaces;
+﻿using Deipax.Convert.Common;
+using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System;
 using System.Globalization;
@@ -12,11 +13,11 @@ namespace Deipax.Convert.Extensions
             this IExpArgs<TFrom, TTo> args)
         {
             return Expression.Coalesce(
-                args.Provider,
+                args?.Provider,
                 Expression.Constant(CultureInfo.InvariantCulture));
         }
 
-        public static void AddGuards<TFrom, TTo>(
+        public static IExpArgs<TFrom, TTo> AddGuards<TFrom, TTo>(
             this IExpArgs<TFrom, TTo> args)
         {
             if (args.FromType == typeof(string))
@@ -73,6 +74,22 @@ namespace Deipax.Convert.Extensions
 
                 args.Add(ifNoValueReturn);
             }
+
+            return args;
+        }
+
+        public static IConvertResult<TFrom, TTo> ToResult<TFrom, TTo>(
+            this IExpArgs<TFrom, TTo> args,
+            IConvertFactory factory)
+        {
+            var convertExpression = args?.Create();
+
+            return new ConvertResult<TFrom, TTo>()
+            {
+                Factory = factory,
+                Expression = convertExpression,
+                Func = convertExpression?.Compile()
+            };
         }
     }
 }

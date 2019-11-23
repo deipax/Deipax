@@ -13,7 +13,7 @@ namespace Deipax.DataAccess.Common
     public static class DynamicMap
     {
         #region Field Members
-        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>> _cache = 
+        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>> _cache =
             new ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>>();
 
         private readonly static MethodInfo _addMethod = typeof(DynamicDictionary)

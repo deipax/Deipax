@@ -14,7 +14,7 @@ namespace Deipax.DataAccess.Common
     public static class DataRecordMap<T> where T : new()
     {
         #region Field Members
-        private static readonly ConcurrentDictionary<int, Func<IDataRecord, T>> _cache = 
+        private static readonly ConcurrentDictionary<int, Func<IDataRecord, T>> _cache =
             new ConcurrentDictionary<int, Func<IDataRecord, T>>();
 
         private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)

@@ -11,7 +11,7 @@ namespace Deipax.Convert.Factories
     public class FromObject : IConvertFactory
     {
         #region IConvertFactory Members
-        public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
             IExpArgs<TFrom, TTo> args)
         {
             // This will only return a func IF TFrom is an object
@@ -48,13 +48,14 @@ namespace Deipax.Convert.Factories
                         ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
                         : Expression.Return(args.LabelTarget, callExpression);
 
-                    args.AddVariable(converter);
-                    args.AddGuards();
-                    args.Add(assignConverter);
-                    args.Add(ifConverterNullReturn);
-                    args.Add(returnExpression);
-                    args.Add(args.LabelExpression);
-                    return args.Create();
+                    return args
+                        .AddVariable(converter)
+                        .AddGuards()
+                        .Add(assignConverter)
+                        .Add(ifConverterNullReturn)
+                        .Add(returnExpression)
+                        .Add(args.LabelExpression)
+                        .ToResult(this);
                 }
                 else
                 {
@@ -69,10 +70,11 @@ namespace Deipax.Convert.Factories
                         returnExpression,
                         Expression.Catch(ex, Expression.Return(args.LabelTarget, args.DefaultExpression)));
 
-                    args.AddGuards();
-                    args.Add(tryCatchExpression);
-                    args.Add(args.LabelExpression);
-                    return args.Create();
+                    return args
+                        .AddGuards()
+                        .Add(tryCatchExpression)
+                        .Add(args.LabelExpression)
+                        .ToResult(this);
                 }
             }
 

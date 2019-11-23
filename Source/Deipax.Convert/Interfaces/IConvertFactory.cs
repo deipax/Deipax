@@ -19,14 +19,14 @@ namespace Deipax.Convert.Interfaces
         LabelExpression LabelExpression { get; }
         DefaultExpression DefaultExpression { get; }
 
-        void Add(Expression expr);
-        void AddVariable(ParameterExpression variable);
+        IExpArgs<TFrom, TTo> Add(Expression expr);
+        IExpArgs<TFrom, TTo> AddVariable(ParameterExpression variable);
         Expression<ConvertDelegate<TFrom, TTo>> Create();
     }
 
     public interface IConvertFactory
     {
-        Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(IExpArgs<TFrom, TTo> args);
+        IConvertResult<TFrom, TTo> Create<TFrom, TTo>(IExpArgs<TFrom, TTo> args);
     }
 
     public interface IConvertResult<TFrom, TTo>

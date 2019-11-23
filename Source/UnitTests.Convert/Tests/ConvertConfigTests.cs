@@ -1,8 +1,8 @@
 ﻿using Deipax.Convert;
+using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Xunit;
 
 namespace UnitTests.Convert
@@ -19,7 +19,7 @@ namespace UnitTests.Convert
 
             ConvertConfig.DefaultFactory = testFactory;
 
-            var result = ConvertConfig.Get<bool, TestClass_1>();
+            ConvertConfig.Get<bool, TestClass_1>();
 
             count = testFactory.GetCount();
             Assert.Equal(1, count);
@@ -34,7 +34,7 @@ namespace UnitTests.Convert
 
             ConvertConfig.Factories = new List<IConvertFactory> { testFactory };
 
-            var result = ConvertConfig.Get<bool, TestClass_1>();
+            ConvertConfig.Get<bool, TestClass_1>();
 
             count = testFactory.GetCount();
             Assert.Equal(1, count);
@@ -55,14 +55,14 @@ namespace UnitTests.Convert
                 return _count;
             }
 
-            public Expression<ConvertDelegate<TFrom, TTo>> Create<TFrom, TTo>(
+            public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
                 IExpArgs<TFrom, TTo> args)
             {
                 if (args.ToType == typeof(TestClass_1))
                 {
                     _count++;
                     args.Add(args.LabelExpression);
-                    return args.Create();
+                    return args.ToResult(this);
                 }
 
                 return null;

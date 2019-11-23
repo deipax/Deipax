@@ -5,7 +5,7 @@ namespace Deipax.Cloning.Common
 {
     public class CopyContext
     {
-        public CopyContext() : 
+        public CopyContext() :
             this(new Dictionary<object, object>(16, ReferenceEqualsComparer.Instance))
         {
         }
