@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -20,7 +21,7 @@ namespace Deipax.DataAccess.Interfaces
         {
             var con = source
                 .GetConnection()
-                .OpenSafe(source.Db);
+                .OpenSafe();
 
             return source
                 .Db
@@ -28,7 +29,7 @@ namespace Deipax.DataAccess.Interfaces
                 .SetConnection(con);
         }
 
-        public static IDbDataParameter CreateParameter(
+        public static DbParameter CreateParameter(
             this IDbCon source,
             string name = null,
             object value = null,
@@ -41,7 +42,7 @@ namespace Deipax.DataAccess.Interfaces
                 .CreateParameter(name, value, direction, dbType, size);
         }
 
-        public static IEnumerable<IDbDataParameter> CreateParameters(
+        public static IEnumerable<DbParameter> CreateParameters(
             this IDbCon source,
             string baseName,
             IEnumerable<object> values)
@@ -70,7 +71,7 @@ namespace Deipax.DataAccess.Interfaces
             Action<IDbBatch> func)
         {
             var batch = source.CreateDbBatch();
-            batch.Connection.OpenSafe(source.Db);
+            batch.Connection.OpenSafe();
 
             using (var trans = batch.Connection.BeginTransaction())
             {
@@ -93,7 +94,7 @@ namespace Deipax.DataAccess.Interfaces
             Action<IDbBatch> func)
         {
             var batch = source.CreateDbBatch();
-            batch.Connection.OpenSafe(source.Db);
+            batch.Connection.OpenSafe();
 
             using (var trans = batch.Connection.BeginTransaction(isolationLevel))
             {
@@ -115,7 +116,7 @@ namespace Deipax.DataAccess.Interfaces
             Func<IDbBatch, T> func)
         {
             var batch = source.CreateDbBatch();
-            batch.Connection.OpenSafe(source.Db);
+            batch.Connection.OpenSafe();
 
             using (var trans = batch.Connection.BeginTransaction())
             {
@@ -139,7 +140,7 @@ namespace Deipax.DataAccess.Interfaces
             Func<IDbBatch, T> func)
         {
             var batch = source.CreateDbBatch();
-            batch.Connection.OpenSafe(source.Db);
+            batch.Connection.OpenSafe();
 
             using (var trans = batch.Connection.BeginTransaction(isolationLevel))
             {

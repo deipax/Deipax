@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -8,7 +9,7 @@ namespace Deipax.DataAccess.Interfaces
         public static IDbCmd CreateDbCmd(
             this IDbBatch dbBatch)
         {
-            dbBatch.Connection.OpenSafe(dbBatch.Db);
+            dbBatch.Connection.OpenSafe();
 
             return dbBatch
                 .Db
@@ -19,7 +20,7 @@ namespace Deipax.DataAccess.Interfaces
 
         public static IDbBatch SetTransaction(
             this IDbBatch source,
-            IDbTransaction transaction)
+            DbTransaction transaction)
         {
             source.Transaction = transaction;
             return source;
@@ -27,13 +28,13 @@ namespace Deipax.DataAccess.Interfaces
 
         public static IDbBatch SetConnection(
             this IDbBatch source,
-            IDbConnection connection)
+            DbConnection connection)
         {
             source.Connection = connection;
             return source;
         }
 
-        public static IDbDataParameter CreateParameter(
+        public static DbParameter CreateParameter(
             this IDbBatch source,
             string name = null,
             object value = null,
@@ -44,7 +45,7 @@ namespace Deipax.DataAccess.Interfaces
             return source.Connection.CreateParameter(name, value, direction, dbType, size);
         }
 
-        public static IEnumerable<IDbDataParameter> CreateParameters(
+        public static IEnumerable<DbParameter> CreateParameters(
             this IDbBatch source,
             string baseName,
             IEnumerable<object> values)

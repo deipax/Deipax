@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using UnitTests.Common;
 using UnitTests.DataAccess.Concretes;
@@ -17,7 +18,7 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 Assert.Equal(CommandType.Text, dbCmd.CommandType);
-                var dbCmd2 = dbCmd.SetCommandType(CommandType.StoredProcedure);
+                IDbCmd dbCmd2 = dbCmd.SetCommandType(CommandType.StoredProcedure);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal(CommandType.StoredProcedure, dbCmd.CommandType);
             });
@@ -29,7 +30,7 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 Assert.NotNull(dbCmd.Connection);
-                var dbCmd2 = dbCmd.SetConnection(null);
+                IDbCmd dbCmd2 = dbCmd.SetConnection(null);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Null(dbCmd.Connection);
             });
@@ -41,7 +42,7 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 Assert.True(dbCmd.Timeout <= 0);
-                var dbCmd2 = dbCmd.SetTimeout(1000);
+                IDbCmd dbCmd2 = dbCmd.SetTimeout(1000);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal(1000, dbCmd.Timeout);
             });
@@ -52,9 +53,9 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(dbCmd =>
             {
-                var trans = new TestTransaction();
+                TestTransaction trans = new TestTransaction();
                 Assert.Null(dbCmd.Transaction);
-                var dbCmd2 = dbCmd.SetTransaction(trans);
+                IDbCmd dbCmd2 = dbCmd.SetTransaction(trans);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Same(trans, dbCmd.Transaction);
             });
@@ -66,7 +67,7 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 Assert.True(string.IsNullOrEmpty(dbCmd.Name));
-                var dbCmd2 = dbCmd.SetName("Bill");
+                IDbCmd dbCmd2 = dbCmd.SetName("Bill");
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal("Bill", dbCmd.Name);
             });
@@ -78,7 +79,7 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 Assert.True(string.IsNullOrEmpty(dbCmd.Sql));
-                var dbCmd2 = dbCmd.SetSql("Bill");
+                IDbCmd dbCmd2 = dbCmd.SetSql("Bill");
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal("Bill", dbCmd.Sql);
             });
@@ -92,7 +93,7 @@ namespace UnitTests.DataAccess
                 Assert.NotNull(dbCmd.Parameters);
                 Assert.Empty(dbCmd.Parameters);
 
-                var dbCmd2 = dbCmd.AddParameter(
+                IDbCmd dbCmd2 = dbCmd.AddParameter(
                     "John",
                     1,
                     ParameterDirection.Input,
@@ -103,7 +104,7 @@ namespace UnitTests.DataAccess
                 Assert.NotNull(dbCmd.Parameters);
                 Assert.Equal(1, dbCmd.Parameters.Count);
 
-                var parameter = dbCmd.Parameters.ElementAt(0);
+                DbParameter parameter = dbCmd.Parameters.ElementAt(0);
 
                 Assert.Equal("John", parameter.ParameterName);
                 Assert.IsType<int>(parameter.Value);
@@ -122,9 +123,9 @@ namespace UnitTests.DataAccess
                 Assert.NotNull(dbCmd.Parameters);
                 Assert.Empty(dbCmd.Parameters);
 
-                var parameter = dbCmd.Connection.CreateParameter();
+                DbParameter parameter = dbCmd.Connection.CreateParameter();
 
-                var dbCmd2 = dbCmd.AddParameter(parameter);
+                IDbCmd dbCmd2 = dbCmd.AddParameter(parameter);
 
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.NotNull(dbCmd.Parameters);
@@ -141,13 +142,13 @@ namespace UnitTests.DataAccess
                 Assert.NotNull(dbCmd.Parameters);
                 Assert.Empty(dbCmd.Parameters);
 
-                List<IDbDataParameter> list = new List<IDbDataParameter>()
+                List<DbParameter> list = new List<DbParameter>()
                 {
                     dbCmd.Connection.CreateParameter(),
                     dbCmd.Connection.CreateParameter(),
                 };
 
-                var dbCmd2 = dbCmd.AddParameters(list);
+                IDbCmd dbCmd2 = dbCmd.AddParameters(list);
 
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.NotNull(dbCmd.Parameters);
@@ -173,7 +174,7 @@ namespace UnitTests.DataAccess
                     1, 2
                 };
 
-                var dbCmd2 = dbCmd.AddParameters("MyBaseName", list);
+                IDbCmd dbCmd2 = dbCmd.AddParameters("MyBaseName", list);
 
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.NotNull(dbCmd.Parameters);
@@ -181,7 +182,7 @@ namespace UnitTests.DataAccess
 
                 for (int i = 0; i < list.Count; i++)
                 {
-                    var p = dbCmd.Parameters.ElementAt(i);
+                    DbParameter p = dbCmd.Parameters.ElementAt(i);
 
                     Assert.Contains("MyBaseName", p.ParameterName);
                     Assert.Equal(list[i], p.Value);
@@ -292,7 +293,7 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(dbCmd =>
             {
-                var result = dbCmd
+                int result = dbCmd
                 .SetCommandType(CommandType.Text)
                 .SetSql(@"
 				update main.[Category] SET
@@ -373,7 +374,7 @@ namespace UnitTests.DataAccess
             {
                 bool funcCalled = false;
 
-                var result = dbCmd.ExecuteConnection(dbConnection =>
+                int result = dbCmd.ExecuteConnection(dbConnection =>
                 {
                     funcCalled = true;
                     return 12;
@@ -391,7 +392,7 @@ namespace UnitTests.DataAccess
             {
                 bool funcCalled = false;
 
-                var result = dbCmd.ExecuteCommand(dbCommand =>
+                int result = dbCmd.ExecuteCommand(dbCommand =>
                 {
                     funcCalled = true;
                     return 12;
@@ -405,7 +406,7 @@ namespace UnitTests.DataAccess
         #region Private Members
         private static void SetupAndAssert(Action<IDbCmd> act)
         {
-            using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
+            using (IDbCon dbCon = DbHelper.GetNorthwind().CreateDbCon())
             {
                 Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
                 act(dbCon.CreateDbCmd());

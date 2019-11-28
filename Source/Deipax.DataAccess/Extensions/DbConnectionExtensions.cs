@@ -1,23 +1,23 @@
-﻿using Deipax.DataAccess.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Globalization;
 using System.Linq;
 
 namespace Deipax.DataAccess.Interfaces
 {
-    public static class IDbConnectionExtensions
+    public static class DbConnectionExtensions
     {
-        public static IDbDataParameter CreateParameter(
-            this IDbConnection source,
+        public static DbParameter CreateParameter(
+            this DbConnection source,
             string name = null,
             object value = null,
             ParameterDirection? direction = default,
             DbType? dbType = default,
             int? size = default)
         {
-            using (var cmd = source.CreateCommand())
+            using (var cmd = source?.CreateCommand())
             {
                 var p = cmd.CreateParameter();
 
@@ -54,12 +54,12 @@ namespace Deipax.DataAccess.Interfaces
             }
         }
 
-        public static IEnumerable<IDbDataParameter> CreateParameters(
-            this IDbConnection source,
+        public static IEnumerable<DbParameter> CreateParameters(
+            this DbConnection source,
             string baseName,
             IEnumerable<object> values)
         {
-            List<IDbDataParameter> list = new List<IDbDataParameter>();
+            List<DbParameter> list = new List<DbParameter>();
 
             if (values != null)
             {
@@ -76,9 +76,8 @@ namespace Deipax.DataAccess.Interfaces
             return list;
         }
 
-        internal static IDbConnection OpenSafe(
-            this IDbConnection source,
-            IDb db)
+        internal static DbConnection OpenSafe(
+            this DbConnection source)
         {
             if (source.State != ConnectionState.Open)
             {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using UnitTests.Common;
 using Xunit;
@@ -57,7 +58,7 @@ namespace UnitTests.DataAccess
         }
 
         #region Private Members
-        private static void SetupAndAssertClosedConnection(Action<IDbConnection> act)
+        private static void SetupAndAssertClosedConnection(Action<DbConnection> act)
         {
             using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
             {

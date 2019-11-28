@@ -1,6 +1,7 @@
 ﻿using Deipax.DataAccess.Interfaces;
 using System;
 using System.Data;
+using System.Data.Common;
 using System.Reflection;
 using UnitTests.Common;
 using Xunit;
@@ -49,7 +50,7 @@ namespace UnitTests.DataAccess
             Assert.Equal(db1.ConnectionFactory, db2.ConnectionFactory);
 
 
-            Func<IDb, IDbConnection> func = (x) =>
+            Func<IDb, DbConnection> func = (x) =>
             {
                 return null;
             };

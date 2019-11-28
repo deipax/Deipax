@@ -1,5 +1,5 @@
 ﻿using Deipax.DataAccess.Interfaces;
-using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Concretes
 {
@@ -16,8 +16,8 @@ namespace Deipax.DataAccess.Concretes
 
         #region IDbCon Members
         public IDb Db { get; set; }
-        public IDbConnection Connection { get; set; }
-        public IDbTransaction Transaction { get; set; }
+        public DbConnection Connection { get; set; }
+        public DbTransaction Transaction { get; set; }
         #endregion
     }
 }

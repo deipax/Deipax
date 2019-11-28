@@ -1,7 +1,7 @@
 ﻿using Deipax.DataAccess.Common;
 using Deipax.DataAccess.Interfaces;
 using System;
-using System.Data;
+using System.Data.Common;
 using System.Linq;
 using Xunit;
 
@@ -72,7 +72,7 @@ namespace UnitTests.DataAccess.Tests
             public string Name { get; set; }
             public string ProviderName { get; set; }
             public IDbFactory DbFactory { get; set; }
-            public Func<IDb, IDbConnection> ConnectionFactory { get; set; }
+            public Func<IDb, DbConnection> ConnectionFactory { get; set; }
         }
         #endregion
     }

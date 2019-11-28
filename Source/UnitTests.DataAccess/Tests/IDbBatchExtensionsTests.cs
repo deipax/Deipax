@@ -85,7 +85,7 @@ namespace UnitTests.DataAccess
         #region Private Members
         private static void SetupAndAssertClosedConnection(Action<IDbBatch> act)
         {
-            using (var dbCon = DbHelper.GetNorthwind().CreateDbCon())
+            using (IDbCon dbCon = DbHelper.GetNorthwind().CreateDbCon())
             {
                 Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
                 act(dbCon.CreateDbBatch());
