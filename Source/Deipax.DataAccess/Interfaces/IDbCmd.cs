@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
     public interface IDbCmd
     {
         IDb Db { get; }
-        IDbConnection Connection { get; set; }
-        IDbTransaction Transaction { get; set; }
+        DbConnection Connection { get; set; }
+        DbTransaction Transaction { get; set; }
         string Name { get; set; }
         string Sql { get; set; }
         CommandType CommandType { get; set; }
         int Timeout { get; set; }
-        ICollection<IDbDataParameter> Parameters { get; }
+        ICollection<DbParameter> Parameters { get; }
     }
 }

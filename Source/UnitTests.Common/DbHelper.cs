@@ -2,7 +2,6 @@
 using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
 
@@ -27,8 +26,8 @@ namespace UnitTests.Common
         }
 
         #region Field Members
-        private static DbAccess _dbAccess;
-        private static IReadOnlyDictionary<string, DbProviderFactory> _dbProviders;
+        private static readonly DbAccess _dbAccess;
+        private static readonly IReadOnlyDictionary<string, DbProviderFactory> _dbProviders;
         #endregion
 
         #region Public Members
@@ -39,7 +38,7 @@ namespace UnitTests.Common
         #endregion
 
         #region Private Members
-        private static IDbConnection CreateDbConnection(IDb db)
+        private static DbConnection CreateDbConnection(IDb db)
         {
             var factory = _dbProviders[db.ProviderName];
             var con = factory.CreateConnection();

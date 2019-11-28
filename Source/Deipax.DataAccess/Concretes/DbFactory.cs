@@ -1,6 +1,6 @@
 ﻿using Deipax.DataAccess.Interfaces;
 using System;
-using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Concretes
 {
@@ -11,7 +11,7 @@ namespace Deipax.DataAccess.Concretes
             string name,
             string cs,
             string provider,
-            Func<IDb, IDbConnection> connectionFactory)
+            Func<IDb, DbConnection> connectionFactory)
         {
             return new Db(
                 name ?? string.Empty,

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -9,6 +9,6 @@ namespace Deipax.DataAccess.Interfaces
         string ConnectionString { get; }
         string ProviderName { get; }
         IDbFactory DbFactory { get; }
-        Func<IDb, IDbConnection> ConnectionFactory { get; }
+        Func<IDb, DbConnection> ConnectionFactory { get; }
     }
 }

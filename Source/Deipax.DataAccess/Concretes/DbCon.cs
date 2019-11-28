@@ -1,6 +1,7 @@
 ﻿using Deipax.DataAccess.Interfaces;
 using System;
 using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Concretes
 {
@@ -17,15 +18,15 @@ namespace Deipax.DataAccess.Concretes
         }
 
         #region Field Members
-        private readonly Func<IDb, IDbConnection> _factory;
-        private IDbConnection _con;
+        private readonly Func<IDb, DbConnection> _factory;
+        private DbConnection _con;
         private readonly object _lock = new object();
         #endregion
 
         #region IDbCon Members
         public IDb Db { get; private set; }
 
-        public IDbConnection GetConnection()
+        public DbConnection GetConnection()
         {
             if (_con == null)
             {

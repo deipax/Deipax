@@ -1,7 +1,7 @@
 ﻿using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System;
-using System.Data;
+using System.Data.Common;
 using Xunit;
 
 namespace UnitTests.DataAccess.Tests
@@ -12,7 +12,7 @@ namespace UnitTests.DataAccess.Tests
         public void CreateDb()
         {
             DbFactory factory = new DbFactory();
-            Func<IDb, IDbConnection> func = ConnectionFactory;
+            Func<IDb, DbConnection> func = ConnectionFactory;
 
             var db = factory.CreateDb(
                 "name",
@@ -30,7 +30,7 @@ namespace UnitTests.DataAccess.Tests
         public void CreateOracleDb()
         {
             DbFactory factory = new DbFactory();
-            Func<IDb, IDbConnection> func = ConnectionFactory;
+            Func<IDb, DbConnection> func = ConnectionFactory;
 
             var db = factory.CreateOracleDb(
                 "name",
@@ -47,7 +47,7 @@ namespace UnitTests.DataAccess.Tests
         public void CreateManagedOracleDb()
         {
             DbFactory factory = new DbFactory();
-            Func<IDb, IDbConnection> func = ConnectionFactory;
+            Func<IDb, DbConnection> func = ConnectionFactory;
 
             var db = factory.CreateManagedOracleDb(
                 "name",
@@ -64,7 +64,7 @@ namespace UnitTests.DataAccess.Tests
         public void CreateSqLiteDb()
         {
             DbFactory factory = new DbFactory();
-            Func<IDb, IDbConnection> func = ConnectionFactory;
+            Func<IDb, DbConnection> func = ConnectionFactory;
 
             var db = factory.CreateSqLiteDb(
                 "name",
@@ -81,7 +81,7 @@ namespace UnitTests.DataAccess.Tests
         public void CreateSqlServerDb()
         {
             DbFactory factory = new DbFactory();
-            Func<IDb, IDbConnection> func = ConnectionFactory;
+            Func<IDb, DbConnection> func = ConnectionFactory;
 
             var db = factory.CreateSqlServerDb(
                 "name",
@@ -95,7 +95,7 @@ namespace UnitTests.DataAccess.Tests
         }
 
         #region Private Members
-        private IDbConnection ConnectionFactory(IDb db)
+        private DbConnection ConnectionFactory(IDb db)
         {
             return null;
         }

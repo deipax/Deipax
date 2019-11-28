@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -9,7 +9,7 @@ namespace Deipax.DataAccess.Interfaces
             string name,
             string cs,
             string provider,
-            Func<IDb, IDbConnection> connectionFactory);
+            Func<IDb, DbConnection> connectionFactory);
 
         IDbCon CreateDbCon(IDb db);
         IDbBatch CreateDbBatch(IDb db);

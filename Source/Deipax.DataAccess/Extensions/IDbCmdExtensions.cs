@@ -3,7 +3,7 @@ using Deipax.DataAccess.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -12,7 +12,7 @@ namespace Deipax.DataAccess.Interfaces
         #region Public Members
         public static IDbCmd SetTransaction(
             this IDbCmd source,
-            IDbTransaction transaction)
+            DbTransaction transaction)
         {
             source.Transaction = transaction;
             return source;
@@ -20,7 +20,7 @@ namespace Deipax.DataAccess.Interfaces
 
         public static IDbCmd SetConnection(
             this IDbCmd source,
-            IDbConnection connection)
+            DbConnection connection)
         {
             source.Connection = connection;
             return source;
@@ -72,7 +72,7 @@ namespace Deipax.DataAccess.Interfaces
 
         public static IDbCmd AddParameter(
             this IDbCmd source,
-            IDbDataParameter parameter)
+            DbParameter parameter)
         {
             source.Parameters.Add(parameter);
             return source;
@@ -80,7 +80,7 @@ namespace Deipax.DataAccess.Interfaces
 
         public static IDbCmd AddParameters(
             this IDbCmd source,
-            IEnumerable<IDbDataParameter> parameters)
+            IEnumerable<DbParameter> parameters)
         {
             foreach (var p in parameters)
             {

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -9,7 +9,7 @@ namespace Deipax.DataAccess.Interfaces
             this IDbFactory source,
             string name,
             string cs,
-            Func<IDb, IDbConnection> connectionFactory)
+            Func<IDb, DbConnection> connectionFactory)
         {
             return source.CreateDb(name, cs, "System.Data.SQLite", connectionFactory);
         }
@@ -18,7 +18,7 @@ namespace Deipax.DataAccess.Interfaces
             this IDbFactory source,
             string name,
             string cs,
-            Func<IDb, IDbConnection> connectionFactory)
+            Func<IDb, DbConnection> connectionFactory)
         {
             return source.CreateDb(name, cs, "System.Data.SqlClient", connectionFactory);
         }
@@ -27,7 +27,7 @@ namespace Deipax.DataAccess.Interfaces
             this IDbFactory source,
             string name,
             string cs,
-            Func<IDb, IDbConnection> connectionFactory)
+            Func<IDb, DbConnection> connectionFactory)
         {
             return source.CreateDb(name, cs, "Oracle.DataAccess.Client", connectionFactory);
         }
@@ -36,7 +36,7 @@ namespace Deipax.DataAccess.Interfaces
             this IDbFactory source,
             string name,
             string cs,
-            Func<IDb, IDbConnection> connectionFactory)
+            Func<IDb, DbConnection> connectionFactory)
         {
             return source.CreateDb(name, cs, "Oracle.ManagedDataAccess.Client", connectionFactory);
         }

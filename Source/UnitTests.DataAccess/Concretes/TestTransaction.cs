@@ -1,37 +1,20 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 
 namespace UnitTests.DataAccess.Concretes
 {
-    public class TestTransaction : IDbTransaction
+    public class TestTransaction : DbTransaction
     {
-        public IDbConnection Connection
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public override IsolationLevel IsolationLevel { get; }
+        protected override DbConnection DbConnection { get; }
 
-        public IsolationLevel IsolationLevel
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void Commit()
+        public override void Commit()
         {
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Rollback()
+        public override void Rollback()
         {
             throw new NotImplementedException();
         }

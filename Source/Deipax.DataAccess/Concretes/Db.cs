@@ -1,6 +1,6 @@
 ﻿using Deipax.DataAccess.Interfaces;
 using System;
-using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Concretes
 {
@@ -11,7 +11,7 @@ namespace Deipax.DataAccess.Concretes
             string cs,
             string provider,
             IDbFactory dbFactory,
-            Func<IDb, IDbConnection> conFactory)
+            Func<IDb, DbConnection> conFactory)
         {
             Name = name;
             ConnectionString = cs;
@@ -28,7 +28,7 @@ namespace Deipax.DataAccess.Concretes
         public string ConnectionString { get; private set; }
         public string Name { get; private set; }
         public string ProviderName { get; private set; }
-        public Func<IDb, IDbConnection> ConnectionFactory { get; private set; }
+        public Func<IDb, DbConnection> ConnectionFactory { get; private set; }
         public IDbFactory DbFactory { get; private set; }
         #endregion
     }

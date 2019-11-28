@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
     public interface IDbCon : IDisposable
     {
         IDb Db { get; }
-        IDbConnection GetConnection();
+        DbConnection GetConnection();
     }
 }

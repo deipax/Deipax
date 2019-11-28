@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -11,7 +12,7 @@ namespace Deipax.DataAccess.Interfaces
             string name = null,
             string cs = null,
             string provider = null,
-            Func<IDb, IDbConnection> factory = null)
+            Func<IDb, DbConnection> factory = null)
         {
             return source.DbFactory.CreateDb(
                 name ?? source.Name,
@@ -65,7 +66,7 @@ namespace Deipax.DataAccess.Interfaces
         {
             using (var con = source.CreateDbCon())
             {
-                return con.AsTransaction<T>(func);
+                return con.AsTransaction(func);
             }
         }
 
@@ -76,7 +77,7 @@ namespace Deipax.DataAccess.Interfaces
         {
             using (var con = source.CreateDbCon())
             {
-                return con.AsTransaction<T>(isolationLevel, func);
+                return con.AsTransaction(isolationLevel, func);
             }
         }
 
