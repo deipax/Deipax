@@ -25,6 +25,7 @@ namespace UnitTests.Common
                 "System.Data.SQLite",
                 CreateDbConnection));
         }
+
         #region Field Members
         private static DbAccess _dbAccess;
         private static IReadOnlyDictionary<string, DbProviderFactory> _dbProviders;

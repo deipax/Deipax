@@ -223,7 +223,8 @@ namespace UnitTests.DataAccess
                 List<dynamic> result = dbCmd
                 .SetCommandType(CommandType.Text)
                 .SetSql(@"select * from main.[Category]")
-                .AsDynamicList();
+                .AsDynamicEnumerable()
+                .ToList();
 
                 Assert.NotNull(result);
                 Assert.True(result.Count() > 0);
@@ -271,7 +272,8 @@ namespace UnitTests.DataAccess
                 IEnumerable<CategoryAsStruct> result = dbCmd
                 .SetCommandType(CommandType.Text)
                 .SetSql(@"select * from main.[Category]")
-                .AsList<CategoryAsStruct>();
+                .AsEnumerable<CategoryAsStruct>()
+                .ToList();
 
                 Assert.NotNull(result);
                 Assert.True(result.Count() > 0);
