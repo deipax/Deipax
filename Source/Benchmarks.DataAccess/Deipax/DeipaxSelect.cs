@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Deipax.DataAccess.Interfaces;
 using System.Data;
+using System.Linq;
 using UnitTests.Common;
 
 namespace Benchmarks.DataAccess.Deipax
@@ -35,7 +36,8 @@ namespace Benchmarks.DataAccess.Deipax
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<MultipleFieldClass>();
+                .AsEnumerable<MultipleFieldClass>()
+                .ToList();
         }
 
         [Benchmark]
@@ -45,7 +47,8 @@ namespace Benchmarks.DataAccess.Deipax
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<MultipleFieldStruct>();
+                .AsEnumerable<MultipleFieldStruct>()
+                .ToList();
         }
 
         [Benchmark]
@@ -55,7 +58,8 @@ namespace Benchmarks.DataAccess.Deipax
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsDynamicList();
+                .AsDynamicEnumerable()
+                .ToList();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Deipax.DataAccess.Common;
-using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Interfaces;
 using System;
 using System.Data;
 
@@ -54,10 +53,7 @@ namespace Deipax.DataAccess.Concretes
                     {
                         if (_con.State != ConnectionState.Closed)
                         {
-                            using (var time = CloseTimer.Create(Db))
-                            {
-                                _con.Close();
-                            }
+                            _con.Close();
                         }
 
                         _con.Dispose();

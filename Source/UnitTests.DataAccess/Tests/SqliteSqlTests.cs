@@ -1,5 +1,6 @@
 ﻿using Deipax.DataAccess.Interfaces;
 using System.Data;
+using System.Linq;
 using UnitTests.Common;
 using Xunit;
 
@@ -26,7 +27,8 @@ namespace UnitTests.DataAccess
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<MultipleFieldClass>();
+                .AsEnumerable<MultipleFieldClass>()
+                .ToList();
         }
 
         [Fact]
@@ -36,7 +38,8 @@ namespace UnitTests.DataAccess
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsList<MultipleFieldStruct>();
+                .AsEnumerable<MultipleFieldStruct>()
+                .ToList();
         }
 
         [Fact]
@@ -46,7 +49,8 @@ namespace UnitTests.DataAccess
                 .CreateDbCmd()
                 .SetCommandType(CommandType.Text)
                 .SetSql(_sql)
-                .AsDynamicList();
+                .AsDynamicEnumerable()
+                .ToList();
         }
     }
 }

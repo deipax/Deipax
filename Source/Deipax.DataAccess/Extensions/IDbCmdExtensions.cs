@@ -103,7 +103,6 @@ namespace Deipax.DataAccess.Interfaces
         public static IEnumerable<dynamic> AsDynamicEnumerable(
             this IDbCmd source)
         {
-            using (var timer = RunTimer.Create(source))
             using (var dbCmd = source.CreateCommand())
             using (var r = dbCmd.ExecuteReader())
             {
@@ -122,16 +121,9 @@ namespace Deipax.DataAccess.Interfaces
             }
         }
 
-        public static List<dynamic> AsDynamicList(
-            this IDbCmd source)
-        {
-            return source.AsDynamicEnumerable().ToList();
-        }
-
         public static IEnumerable<T> AsEnumerable<T>(
             this IDbCmd source) where T : new()
         {
-            using (var timer = RunTimer.Create(source))
             using (var dbCmd = source.CreateCommand())
             using (var r = dbCmd.ExecuteReader())
             {
@@ -149,16 +141,9 @@ namespace Deipax.DataAccess.Interfaces
             }
         }
 
-        public static List<T> AsList<T>(
-            this IDbCmd source) where T : new()
-        {
-            return source.AsEnumerable<T>().ToList();
-        }
-
         public static int ExecuteNonQuery(
             this IDbCmd source)
         {
-            using (var timer = RunTimer.Create(source))
             using (var dbCmd = source.CreateCommand())
             {
                 return dbCmd.ExecuteNonQuery();
@@ -168,7 +153,6 @@ namespace Deipax.DataAccess.Interfaces
         public static object ExecuteScalar(
             this IDbCmd source)
         {
-            using (var timer = RunTimer.Create(source))
             using (var dbCmd = source.CreateCommand())
             {
                 var obj = dbCmd.ExecuteScalar();
@@ -187,27 +171,20 @@ namespace Deipax.DataAccess.Interfaces
             this IDbCmd source,
             Action<IDbConnection> func)
         {
-            using (var timer = RunTimer.Create(source))
-            {
-                func(source.Connection);
-            }
+            func(source.Connection);
         }
 
         public static T ExecuteConnection<T>(
             this IDbCmd source,
             Func<IDbConnection, T> func)
         {
-            using (var timer = RunTimer.Create(source))
-            {
-                return func(source.Connection);
-            }
+            return func(source.Connection);
         }
 
         public static void ExecuteCommand(
             this IDbCmd source,
             Action<IDbCommand> action)
         {
-            using (var timer = RunTimer.Create(source))
             using (var dbCmd = source.CreateCommand())
             {
                 action(dbCmd);
@@ -218,7 +195,6 @@ namespace Deipax.DataAccess.Interfaces
             this IDbCmd source,
             Func<IDbCommand, T> func)
         {
-            using (var timer = RunTimer.Create(source))
             using (var dbCmd = source.CreateCommand())
             {
                 return func(dbCmd);

@@ -86,10 +86,7 @@ namespace Deipax.DataAccess.Interfaces
                 {
                     if (source.State != ConnectionState.Open)
                     {
-                        using (var timer = OpenTimer.Create(db))
-                        {
-                            source.Open();
-                        }
+                        source.Open();
                     }
                 }
             }
