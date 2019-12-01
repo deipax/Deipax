@@ -111,8 +111,8 @@ namespace Deipax.DataAccess.Interfaces
                     yield break;
                 }
 
-                var table = DynamicMap2.GetTable(r);
-                var map = DynamicMap2.CreateMap(r);
+                var table = DynamicMap.GetTable(r);
+                var map = DynamicMap.CreateMap(r);
 
                 while (r.Read())
                 {

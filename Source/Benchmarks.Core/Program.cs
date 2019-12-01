@@ -2,9 +2,7 @@
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
-using Benchmarks.DataAccess.Deipax;
 using System.Linq;
 
 namespace Benchmarks.DataAccess
@@ -33,8 +31,6 @@ namespace Benchmarks.DataAccess
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
-
-            BenchmarkRunner.Run<DeipaxSelect>(config);
         }
 
         #region Private Members

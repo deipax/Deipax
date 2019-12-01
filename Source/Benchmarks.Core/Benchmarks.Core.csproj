@@ -11,13 +11,4 @@
     <PackageReference Include="System.Net.Primitives" Version="4.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
-    <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="BenchmarkDotNet.Artifacts\" />
-  </ItemGroup>
-
 </Project>

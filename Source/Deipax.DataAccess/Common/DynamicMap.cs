@@ -13,71 +13,87 @@ namespace Deipax.DataAccess.Common
     public static class DynamicMap
     {
         #region Field Members
-        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>> _cache =
-            new ConcurrentDictionary<int, Func<IDataRecord, DynamicDictionary>>();
+        private static readonly ConcurrentDictionary<int, IEnumerable<string>> _headers =
+            new ConcurrentDictionary<int, IEnumerable<string>>();
 
-        private readonly static MethodInfo _addMethod = typeof(DynamicDictionary)
-            .GetRuntimeMethods()
-            .Where(x => x.Name == "Add")
-            .FirstOrDefault();
+        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps =
+            new ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
 
-        private readonly static MethodInfo _getValueMethod = typeof(IDataRecord)
+        private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)
             .GetRuntimeMethods()
             .Where(x => x.Name == "GetValue")
             .FirstOrDefault();
+
+        private static readonly ConstructorInfo _constructor = typeof(DynamicRow)
+            .GetConstructors()
+            .First();
         #endregion
 
         #region Public Members
-        public static Func<IDataRecord, DynamicDictionary> Create(IDataReader r)
+        public static DynamicTable GetTable(IDataReader r)
         {
-            return _cache.GetOrAdd(r.GetColumnHash(), x => CreateHelper(r));
+            return new DynamicTable(_headers.GetOrAdd(r.GetColumnHash(), x => CreateHeaders(r)));
+        }
+
+        public static Func<IDataRecord, DynamicTable, DynamicRow> CreateMap(IDataReader r)
+        {
+            return _maps.GetOrAdd(r.GetColumnHash(), x => Create(r));
         }
         #endregion
 
         #region Private Members
-        private static Func<IDataRecord, DynamicDictionary> CreateHelper(IDataReader r)
+        private static IEnumerable<string> CreateHeaders(IDataReader r)
         {
-            var record = Expression.Parameter(typeof(IDataRecord), "input");
-            var value = Expression.Parameter(typeof(object), "value");
-            var returnItem = Expression.Variable(typeof(DynamicDictionary), "returnItem");
+            List<string> list = new List<string>();
 
-            var labelTarget = Expression.Label(typeof(DynamicDictionary));
+            for (int i = 0; i < r.FieldCount; i++)
+            {
+                list.Add(r.GetName(i));
+            }
+
+            return list;
+        }
+
+        private static Func<IDataRecord, DynamicTable, DynamicRow> Create(IDataReader r)
+        {
+            var table = Expression.Parameter(typeof(DynamicTable), "table");
+            var record = Expression.Parameter(typeof(IDataRecord), "record");
+            var value = Expression.Parameter(typeof(object), "value");
+            var values = Expression.Variable(typeof(object[]), "values");
+            var returnItem = Expression.Variable(typeof(DynamicRow), "returnItem");
+
+            var labelTarget = Expression.Label(typeof(DynamicRow));
 
             var labelExpression = Expression.Label(
                 labelTarget,
-                Expression.Default(typeof(DynamicDictionary)));
+                Expression.Default(typeof(DynamicRow)));
 
             List<Expression> expressions = new List<Expression>
             {
                 Expression.Assign(
-                returnItem,
-                Expression.New(typeof(DynamicDictionary)))
+                values,
+                Expression.NewArrayBounds(typeof(object), Expression.Constant(r.FieldCount)))
             };
 
-            for (int i = 0; i < r.FieldCount; i++)
+            for (int fieldIndex = 0; fieldIndex < r.FieldCount; fieldIndex++)
             {
-                string fieldName = r.GetName(i);
-                Type fieldType = r.GetFieldType(i);
+                Type fieldType = r.GetFieldType(fieldIndex);
 
                 var getValueCall = Expression.Call(
                     record,
                     _getValueMethod,
-                    Expression.Constant(i));
+                    Expression.Constant(fieldIndex));
 
                 var isDbNull = Expression.Equal(
                     value,
                     Expression.Constant(DBNull.Value, typeof(object)));
 
-                var setValue = Expression.Call(
-                    returnItem,
-                    _addMethod,
-                    Expression.Constant(fieldName),
+                var setValue = Expression.Assign(
+                    Expression.ArrayAccess(values, Expression.Constant(fieldIndex)),
                     value);
 
-                var setDefault = Expression.Call(
-                    returnItem,
-                    _addMethod,
-                    Expression.Constant(fieldName),
+                var setDefault = Expression.Assign(
+                    Expression.ArrayAccess(values, Expression.Constant(fieldIndex)),
                     Expression.Convert(Expression.Default(fieldType), typeof(object)));
 
                 expressions.Add(Expression.Assign(
@@ -90,17 +106,22 @@ namespace Deipax.DataAccess.Common
                     setValue));
             }
 
+            expressions.Add(Expression.Assign(
+                returnItem,
+                Expression.New(_constructor, table, values)));
+
             expressions.Add(Expression.Return(labelTarget, returnItem));
             expressions.Add(labelExpression);
 
             var block = Expression.Block(
-                typeof(DynamicDictionary),
-                new[] { returnItem, value },
+                typeof(DynamicRow),
+                new[] { values, returnItem, value },
                 expressions);
 
-            var lambda = Expression.Lambda<Func<IDataRecord, DynamicDictionary>>(
+            var lambda = Expression.Lambda<Func<IDataRecord, DynamicTable, DynamicRow>>(
                 block,
-                record);
+                record,
+                table);
 
             return lambda.Compile();
         }
