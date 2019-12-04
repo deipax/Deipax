@@ -44,7 +44,6 @@ namespace Deipax.Core.Common
         #region Public Members
         public TValue GetOrAdd(TKey key, Func<TKey, TValue> factory)
         {
-
             if (!TryGetValue(key, out TValue value))
             {
                 lock (_lock)

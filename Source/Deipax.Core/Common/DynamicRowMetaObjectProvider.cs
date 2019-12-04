@@ -17,8 +17,8 @@ namespace Deipax.Core.Common
         public DynamicRowMetaObjectProvider(
             Expression expression,
             BindingRestrictions restrictions,
-            object value)
-            : base(expression, restrictions, value)
+            DynamicRow row)
+            : base(expression, restrictions, row)
         {
         }
 
@@ -85,12 +85,5 @@ namespace Deipax.Core.Common
                 BindingRestrictions.GetTypeRestriction(expression, limitType));
         }
         #endregion
-    }
-
-    internal class Null
-    {
-        private Null() { }
-
-        public static readonly Null Value = new Null();
     }
 }

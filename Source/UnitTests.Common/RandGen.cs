@@ -74,6 +74,13 @@ namespace UnitTests.Common
             return null;
         }
 
+        public static DateTime? GenerateDate(
+            uint daysFromNow)
+        {
+            var days = _rand.Next((int)daysFromNow);
+            return DateTime.UtcNow.AddDays(days);
+        }
+
         public static byte[] GenerateByteArray(
             uint length)
         {

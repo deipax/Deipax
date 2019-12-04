@@ -1,46 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Deipax.Core.Common
 {
     public class DynamicTable
     {
         public DynamicTable(
-            IEnumerable<string> fields = null)
+            string[] fields = null)
         {
-            _fields = (fields ?? Array.Empty<string>())
-                .Where(x => !string.IsNullOrEmpty(x))
-                .Distinct()
-                .ToList();
+            _fields = fields ?? Array.Empty<string>();
+            _lookup = new Dictionary<string, int>(_fields.Length);
 
-            int count = 0;
-
-            _lookup = _fields
-                .ToDictionary(x => x, x => count++);
+            for (int i = _fields.Length - 1; i >= 0; i--)
+            {
+                string key = _fields[i];
+                if (!string.IsNullOrEmpty(key)) _lookup[key] = i;
+            }
         }
 
         #region Field Members
-        private readonly List<string> _fields;
+        private string[] _fields;
         private readonly Dictionary<string, int> _lookup;
         #endregion
 
         #region Public Members
         public int GetIndex(string name)
         {
-            if (!string.IsNullOrEmpty(name) &&
-                _lookup.TryGetValue(name, out int result))
-            {
-                return result;
-            }
-
-            return -1;
+            return _lookup.TryGetValue(name, out int result)
+                ? result
+                : -1;
         }
 
         public bool FieldExists(string name)
         {
-            return name != null &&
-                   _lookup.ContainsKey(name);
+            return _lookup.ContainsKey(name);
         }
 
         public IEnumerable<string> GetNames()
@@ -50,20 +43,18 @@ namespace Deipax.Core.Common
 
         public int GetFieldCount()
         {
-            return _fields.Count;
+            return _fields.Length;
         }
 
         public int AddField(string name)
         {
-            if (!string.IsNullOrEmpty(name) &&
-                !_lookup.ContainsKey(name))
-            {
-                int count = _fields.Count;
-                _fields.Add(name);
-                _lookup.Add(name, count);
-            }
-
-            return _fields.Count - 1;
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (_lookup.ContainsKey(name)) throw new InvalidOperationException("Field already exists: " + name);
+            int oldLen = _fields.Length;
+            Array.Resize(ref _fields, oldLen + 1);
+            _fields[oldLen] = name;
+            _lookup[name] = oldLen;
+            return oldLen;
         }
         #endregion
     }

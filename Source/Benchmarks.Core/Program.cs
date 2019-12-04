@@ -2,9 +2,7 @@
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
-using Benchmarks.DataAccess.Deipax;
 using System.Linq;
 
 namespace Benchmarks.DataAccess
@@ -23,18 +21,16 @@ namespace Benchmarks.DataAccess
                 .With(new Job[]
                 {
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp20)).AsBaseline(),
-                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
+                    //ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
+                    //ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
+                    //ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
                     ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net48)),
                 })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
                 .With(DefaultConfig.Instance.GetValidators().ToArray())
                 .With(MarkdownExporter.Default)
                 .With(MemoryDiagnoser.Default);
-
-            BenchmarkRunner.Run<DeipaxSelect>(config);
         }
 
         #region Private Members

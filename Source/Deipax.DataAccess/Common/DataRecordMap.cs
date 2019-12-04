@@ -1,8 +1,6 @@
-﻿using Deipax.DataAccess.Extensions;
-using Deipax.Model;
+﻿using Deipax.Model;
 using Deipax.Model.Interfaces;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,24 +12,38 @@ namespace Deipax.DataAccess.Common
     public static class DataRecordMap<T> where T : new()
     {
         #region Field Members
-        private static readonly ConcurrentDictionary<int, Func<IDataRecord, T>> _cache =
-            new ConcurrentDictionary<int, Func<IDataRecord, T>>();
+        private static readonly object _lock = new object();
+
+        private static readonly Dictionary<int, Func<IDataRecord, T>> _cache =
+            new Dictionary<int, Func<IDataRecord, T>>();
 
         private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)
             .GetRuntimeMethods()
-            .Where(x => x.Name == "GetValue")
+            .Where(x => x.Name == nameof(IDataRecord.GetValue))
             .FirstOrDefault();
 
         private static readonly MethodInfo _createSetNullableField = typeof(DataRecordMap<T>)
             .GetRuntimeMethods()
-            .Where(x => x.Name == "CreateSetNullableField")
+            .Where(x => x.Name == nameof(DataRecordMap<T>.CreateSetNullableField))
             .FirstOrDefault();
         #endregion
 
         #region Public Members
-        public static Func<IDataRecord, T> Create(IDataReader r)
+        public static Func<IDataRecord, T> Create(DataReaderCache cache)
         {
-            return _cache.GetOrAdd(r.GetColumnHash(), x => CreateHelper(r));
+            if (!_cache.TryGetValue(cache.GetColumnHash(), out Func<IDataRecord, T> func))
+            {
+                lock (_lock)
+                {
+                    if (!_cache.TryGetValue(cache.GetColumnHash(), out func))
+                    {
+                        func = CreateHelper(cache.Reader);
+                        _cache.Add(cache.GetColumnHash(), func);
+                    }
+                }
+            }
+
+            return func;
         }
         #endregion
 
