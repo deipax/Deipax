@@ -1,7 +1,5 @@
 ﻿using Deipax.Core.Common;
-using Deipax.DataAccess.Extensions;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -13,15 +11,18 @@ namespace Deipax.DataAccess.Common
     public static class DynamicMap
     {
         #region Field Members
-        private static readonly ConcurrentDictionary<int, IEnumerable<string>> _headers =
-            new ConcurrentDictionary<int, IEnumerable<string>>();
+        private static readonly object _mapLock = new object();
+        private static readonly object _headerLock = new object();
 
-        private static readonly ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps =
-            new ConcurrentDictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
+        private static readonly Dictionary<int, string[]> _headers =
+            new Dictionary<int, string[]>();
+
+        private static readonly Dictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps =
+            new Dictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
 
         private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)
             .GetRuntimeMethods()
-            .Where(x => x.Name == "GetValue")
+            .Where(x => x.Name == nameof(IDataRecord.GetValue))
             .FirstOrDefault();
 
         private static readonly ConstructorInfo _constructor = typeof(DynamicRow)
@@ -30,25 +31,52 @@ namespace Deipax.DataAccess.Common
         #endregion
 
         #region Public Members
-        public static DynamicTable GetTable(IDataReader r)
+        public static DynamicTable GetTable(DataReaderCache cache)
         {
-            return new DynamicTable(_headers.GetOrAdd(r.GetColumnHash(), x => CreateHeaders(r)));
+            if (!_headers.TryGetValue(cache.GetColumnHash(), out string[] header))
+            {
+                lock (_headerLock)
+                {
+                    if (!_headers.TryGetValue(cache.GetColumnHash(), out header))
+                    {
+                        header = CreateHeaders(cache.Reader);
+                        _headers.Add(cache.GetColumnHash(), header);
+                    }
+                }
+            }
+
+            string[] target = new string[header.Length];
+            Array.Copy(header, 0, target, 0, header.Length);
+
+            return new DynamicTable(target);
         }
 
-        public static Func<IDataRecord, DynamicTable, DynamicRow> CreateMap(IDataReader r)
+        public static Func<IDataRecord, DynamicTable, DynamicRow> CreateMap(DataReaderCache cache)
         {
-            return _maps.GetOrAdd(r.GetColumnHash(), x => Create(r));
+            if (!_maps.TryGetValue(cache.GetColumnHash(), out Func<IDataRecord, DynamicTable, DynamicRow> func))
+            {
+                lock (_mapLock)
+                {
+                    if (!_maps.TryGetValue(cache.GetColumnHash(), out func))
+                    {
+                        func = Create(cache.Reader);
+                        _maps.Add(cache.GetColumnHash(), func);
+                    }
+                }
+            }
+
+            return func;
         }
         #endregion
 
         #region Private Members
-        private static IEnumerable<string> CreateHeaders(IDataReader r)
+        private static string[] CreateHeaders(IDataReader r)
         {
-            List<string> list = new List<string>();
+            string[] list = new string[r.FieldCount];
 
             for (int i = 0; i < r.FieldCount; i++)
             {
-                list.Add(r.GetName(i));
+                list[i] = r.GetName(i);
             }
 
             return list;

@@ -111,8 +111,9 @@ namespace Deipax.DataAccess.Interfaces
                     yield break;
                 }
 
-                var table = DynamicMap.GetTable(r);
-                var map = DynamicMap.CreateMap(r);
+                var cache = new DataReaderCache(r);
+                var table = DynamicMap.GetTable(cache);
+                var map = DynamicMap.CreateMap(cache);
 
                 while (r.Read())
                 {
@@ -132,7 +133,8 @@ namespace Deipax.DataAccess.Interfaces
                     yield break;
                 }
 
-                Func<IDataRecord, T> map = DataRecordMap<T>.Create(r);
+                var cache = new DataReaderCache(r);
+                Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
 
                 while (r.Read())
                 {

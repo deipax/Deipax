@@ -16,9 +16,9 @@ namespace Deipax.Core.Common
             DynamicTable table = null,
             object[] values = null)
         {
-            _table = table ?? new DynamicTable();
+            Table = table ?? new DynamicTable();
 
-            var fieldCount = _table.GetFieldCount();
+            var fieldCount = Table.GetFieldCount();
 
             _values = values != null && values.Length == fieldCount
                 ? values
@@ -26,11 +26,12 @@ namespace Deipax.Core.Common
         }
 
         #region Field Members
-        private DynamicTable _table;
         private object[] _values;
         #endregion
 
         #region Public Members
+        public DynamicTable Table { get; private set; }
+
         public object SetValue(
             string key,
             object value)
@@ -40,17 +41,17 @@ namespace Deipax.Core.Common
                 return null;
             }
 
-            int index = _table.GetIndex(key);
+            int index = Table.GetIndex(key);
 
             if (index < 0)
             {
-                index = _table.AddField(key);
+                index = Table.AddField(key);
 
                 int oldLength = _values.Length;
 
                 if (oldLength <= index)
                 {
-                    Array.Resize(ref _values, _table.GetFieldCount());
+                    Array.Resize(ref _values, Table.GetFieldCount());
 
                     for (int i = oldLength; i < _values.Length; i++)
                     {
@@ -94,6 +95,79 @@ namespace Deipax.Core.Common
             }
         }
 
+        object IDictionary<string, object>.this[string key]
+        {
+            get
+            {
+                TryGetValue(key, out object val);
+                return val;
+            }
+            set
+            {
+                SetValue(key, value);
+            }
+        }
+
+        void IDictionary<string, object>.Add(
+            string key,
+            object value)
+        {
+            SetValue(key, value);
+        }
+
+        bool IDictionary<string, object>.ContainsKey(
+            string key)
+        {
+            int index = Table.GetIndex(key);
+
+            if (index < 0 || index >= _values.Length || _values[index] is Null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        bool IDictionary<string, object>.Remove(
+            string key)
+        {
+            int index = Table.GetIndex(key);
+
+            if (index < 0 || index >= _values.Length || _values[index] is Null)
+            {
+                return false;
+            }
+
+            _values[index] = Null.Value;
+
+            return true;
+        }
+
+        public bool TryGetValue(
+            string key,
+            out object value)
+        {
+            var index = Table.GetIndex(key);
+
+            if (index < 0)
+            {
+                value = null;
+                return false;
+            }
+
+            value = index < _values.Length ? _values[index] : null;
+
+            if (value is Null)
+            {
+                value = null;
+                return false;
+            }
+
+            return true;
+        }      
+        #endregion
+
+        #region ICollection Members
         int ICollection<KeyValuePair<string, object>>.Count
         {
             get
@@ -118,77 +192,6 @@ namespace Deipax.Core.Common
             {
                 return false;
             }
-        }
-
-        object IDictionary<string, object>.this[string key]
-        {
-            get
-            {
-                TryGetValue(key, out object val);
-                return val;
-            }
-            set
-            {
-                SetValue(key, value);
-            }
-        }
-
-        void IDictionary<string, object>.Add(
-            string key,
-            object value)
-        {
-            SetValue(key, value);
-        }
-
-        bool IDictionary<string, object>.ContainsKey(
-            string key)
-        {
-            int index = _table.GetIndex(key);
-
-            if (index < 0 || index >= _values.Length || _values[index] is Null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        bool IDictionary<string, object>.Remove(
-            string key)
-        {
-            int index = _table.GetIndex(key);
-
-            if (index < 0 || index >= _values.Length || _values[index] is Null)
-            {
-                return false;
-            }
-
-            _values[index] = Null.Value;
-
-            return true;
-        }
-
-        public bool TryGetValue(
-            string key,
-            out object value)
-        {
-            var index = _table.GetIndex(key);
-
-            if (index < 0)
-            {
-                value = null;
-                return false;
-            }
-
-            value = index < _values.Length ? _values[index] : null;
-
-            if (value is Null)
-            {
-                value = null;
-                return false;
-            }
-
-            return true;
         }
 
         void ICollection<KeyValuePair<string, object>>.Add(
@@ -228,10 +231,17 @@ namespace Deipax.Core.Common
             IDictionary<string, object> dic = this;
             return dic.Remove(item.Key);
         }
+        #endregion
+
+        #region IEnumerable Members
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            var names = _table.GetNames();
+            var names = Table.GetNames();
 
             for (var i = 0; i < names.Count(); i++)
             {
@@ -242,12 +252,7 @@ namespace Deipax.Core.Common
                     yield return new KeyValuePair<string, object>(names.ElementAt(i), value);
                 }
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        }    
         #endregion
 
         #region IReadOnlyDictionary Members
@@ -286,11 +291,20 @@ namespace Deipax.Core.Common
 
         bool IReadOnlyDictionary<string, object>.ContainsKey(string key)
         {
-            int index = _table.GetIndex(key);
+            int index = Table.GetIndex(key);
 
             return index >= 0 &&
                    index < _values.Length &&
                    !(_values[index] is Null);
+        }
+        #endregion
+
+        #region Helper
+        class Null
+        {
+            private Null() { }
+
+            public static readonly Null Value = new Null();
         }
         #endregion
     }

@@ -21,10 +21,10 @@ namespace Benchmarks.DataAccess
                 .With(new Job[]
                 {
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp20)).AsBaseline(),
-                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
+                    //ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
+                    //ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
+                    //ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
                     ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net48)),
                 })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())
