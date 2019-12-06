@@ -22,9 +22,9 @@ namespace Deipax.DataAccess.Common
             .Where(x => x.Name == nameof(IDataRecord.GetValue))
             .FirstOrDefault();
 
-        private static readonly MethodInfo _createSetNullableField = typeof(DataRecordMap<T>)
+        private static readonly MethodInfo _getSetExpressionHelper = typeof(DataRecordMap<T>)
             .GetRuntimeMethods()
-            .Where(x => x.Name == nameof(DataRecordMap<T>.CreateSetNullableField))
+            .Where(x => x.Name == nameof(DataRecordMap<T>.GetSetExpressionHelper))
             .FirstOrDefault();
         #endregion
 
@@ -56,95 +56,79 @@ namespace Deipax.DataAccess.Common
             var instance = Expression.Variable(typeof(T), "instance");
             var value = Expression.Variable(typeof(object), "value");
             var provider = Expression.Variable(typeof(IFormatProvider), "provider");
+            var record = Expression.Parameter(typeof(IDataRecord), "record");
 
-            Args args = new Args()
+            var expressions = new List<Expression>
             {
-                Instance = instance,
-                Record = Expression.Parameter(typeof(IDataRecord), "record"),
-                Provider = provider,
-                Value = value,
-                Expressions = new List<Expression>()
-                {
-                    Expression.Assign(instance, Expression.New(typeof(T)))
-                },
-                Variables = new List<ParameterExpression>()
-                {
-                    instance,
-                    value,
-                    provider
-                }
+                Expression.Assign(instance, Expression.New(typeof(T)))
             };
 
-            for (var i = 0; i < reader.FieldCount; i++)
+            for (var fieldIndex = 0; fieldIndex < reader.FieldCount; fieldIndex++)
             {
-                var name = reader.GetName(i);
-                var type = reader.GetFieldType(i);
+                var fieldName = reader.GetName(fieldIndex);
+                var fieldType = reader.GetFieldType(fieldIndex);
 
-                if (setters.TryGetValue(name, out ISetter<T> setter) &&
+                if (setters.TryGetValue(fieldName, out ISetter<T> setter) &&
                     setter != null)
                 {
-                    _createSetNullableField
-                        .MakeGenericMethod(new[] { setter.ModelInfo.Type, type })
-                        .Invoke(null, new object[] { args, i, setter });
+                    var getValueCall = Expression.Call(
+                        record,
+                        _getValueMethod,
+                        Expression.Constant(fieldIndex));
+
+                    var isNotDbNull = Expression.NotEqual(
+                        value,
+                        Expression.Constant(DBNull.Value, typeof(object)));
+
+                    // Unbox the value and set the value on the instance
+                    var setCall = Expression.Invoke(
+                        GetSetExpression(setter, fieldType),
+                        instance,
+                        Expression.Convert(value, fieldType),
+                        provider);
+
+                    // Get the Value
+                    expressions.Add(Expression.Assign(
+                        value,
+                        getValueCall));
+
+                    // Only bother setting the value if is not dbnull,
+                    // otherwise let the field stay at the default value
+                    expressions.Add(Expression.IfThen(
+                        isNotDbNull,
+                        setCall));
                 }
             }
 
             var labelTarget = Expression.Label(typeof(T));
             var labelExpression = Expression.Label(labelTarget, Expression.Default(typeof(T)));
 
-            args.Expressions.Add(Expression.Return(labelTarget, args.Instance));
-            args.Expressions.Add(labelExpression);
+            expressions.Add(Expression.Return(labelTarget, instance));
+            expressions.Add(labelExpression);
 
             BlockExpression block = Expression.Block(
-                args.Variables,
-                args.Expressions);
+                new[] { instance, value, provider },
+                expressions);
 
             var lambda = Expression.Lambda<Func<IDataRecord, T>>(
                 block,
-                args.Record);
+                record);
 
             return lambda.Compile();
         }
 
-        private static void CreateSetNullableField<P, X>(
-            Args args,
-            int fieldIndex,
-            ISetter<T> setter)
+        private static Expression GetSetExpression(
+            ISetter<T> setter, 
+            Type fieldType)
         {
-            var getValueCall = Expression.Call(
-                args.Record,
-                _getValueMethod,
-                Expression.Constant(fieldIndex));
-
-            var setCall = Expression.Invoke(
-                setter.GetExpression<X>(),
-                args.Instance,
-                Expression.Convert(args.Value, typeof(X)),
-                args.Provider);
-
-            var isDbNull = Expression.Equal(
-                args.Value,
-                Expression.Constant(DBNull.Value, typeof(object)));
-
-            args.Expressions.Add(Expression.Assign(
-                args.Value,
-                getValueCall));
-
-            args.Expressions.Add(Expression.IfThen(
-                Expression.Not(isDbNull),
-                setCall));
+            return (Expression)_getSetExpressionHelper
+                .MakeGenericMethod(new[] { fieldType })
+                .Invoke(null, new object[] { setter });
         }
-        #endregion
 
-        #region Helper
-        class Args
+        private static Expression GetSetExpressionHelper<X>(ISetter<T> setter)
         {
-            public ParameterExpression Instance { get; set; }
-            public ParameterExpression Record { get; set; }
-            public ParameterExpression Value { get; set; }
-            public ParameterExpression Provider { get; set; }
-            public List<ParameterExpression> Variables { get; set; }
-            public List<Expression> Expressions { get; set; }
+            return setter.GetExpression<X>();
         }
         #endregion
     }

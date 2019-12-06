@@ -112,12 +112,11 @@ namespace Deipax.DataAccess.Interfaces
                 }
 
                 var cache = new DataReaderCache(r);
-                var table = DynamicMap.GetTable(cache);
                 var map = DynamicMap.CreateMap(cache);
 
                 while (r.Read())
                 {
-                    yield return map(r, table);
+                    yield return map(r);
                 }
             }
         }

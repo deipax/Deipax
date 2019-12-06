@@ -1,5 +1,4 @@
-﻿using Deipax.Core.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,55 +10,27 @@ namespace Deipax.DataAccess.Common
     public static class DynamicMap
     {
         #region Field Members
-        private static readonly object _mapLock = new object();
-        private static readonly object _headerLock = new object();
+        private static readonly object _lock = new object();
 
-        private static readonly Dictionary<int, string[]> _headers =
-            new Dictionary<int, string[]>();
-
-        private static readonly Dictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>> _maps =
-            new Dictionary<int, Func<IDataRecord, DynamicTable, DynamicRow>>();
+        private static readonly Dictionary<int, Func<IDataRecord, object>> _maps =
+            new Dictionary<int, Func<IDataRecord, object>>();
 
         private static readonly MethodInfo _getValueMethod = typeof(IDataRecord)
             .GetRuntimeMethods()
             .Where(x => x.Name == nameof(IDataRecord.GetValue))
             .FirstOrDefault();
-
-        private static readonly ConstructorInfo _constructor = typeof(DynamicRow)
-            .GetConstructors()
-            .First();
         #endregion
 
         #region Public Members
-        public static DynamicTable GetTable(DataReaderCache cache)
+        public static Func<IDataRecord, object> CreateMap(DataReaderCache cache)
         {
-            if (!_headers.TryGetValue(cache.GetColumnHash(), out string[] header))
+            if (!_maps.TryGetValue(cache.GetColumnHash(), out Func<IDataRecord, object> func))
             {
-                lock (_headerLock)
-                {
-                    if (!_headers.TryGetValue(cache.GetColumnHash(), out header))
-                    {
-                        header = CreateHeaders(cache.Reader);
-                        _headers.Add(cache.GetColumnHash(), header);
-                    }
-                }
-            }
-
-            string[] target = new string[header.Length];
-            Array.Copy(header, 0, target, 0, header.Length);
-
-            return new DynamicTable(target);
-        }
-
-        public static Func<IDataRecord, DynamicTable, DynamicRow> CreateMap(DataReaderCache cache)
-        {
-            if (!_maps.TryGetValue(cache.GetColumnHash(), out Func<IDataRecord, DynamicTable, DynamicRow> func))
-            {
-                lock (_mapLock)
+                lock (_lock)
                 {
                     if (!_maps.TryGetValue(cache.GetColumnHash(), out func))
                     {
-                        func = Create(cache.Reader);
+                        func = Create(cache);
                         _maps.Add(cache.GetColumnHash(), func);
                     }
                 }
@@ -70,86 +41,69 @@ namespace Deipax.DataAccess.Common
         #endregion
 
         #region Private Members
-        private static string[] CreateHeaders(IDataReader r)
+        private static Func<IDataRecord, object> Create(DataReaderCache cache)
         {
-            string[] list = new string[r.FieldCount];
+            Type instanceType = DynamicType.Get(cache);
 
-            for (int i = 0; i < r.FieldCount; i++)
-            {
-                list[i] = r.GetName(i);
-            }
-
-            return list;
-        }
-
-        private static Func<IDataRecord, DynamicTable, DynamicRow> Create(IDataReader r)
-        {
-            var table = Expression.Parameter(typeof(DynamicTable), "table");
+            var instance = Expression.Variable(instanceType, "instance");
+            var value = Expression.Variable(typeof(object), "value");
             var record = Expression.Parameter(typeof(IDataRecord), "record");
-            var value = Expression.Parameter(typeof(object), "value");
-            var values = Expression.Variable(typeof(object[]), "values");
-            var returnItem = Expression.Variable(typeof(DynamicRow), "returnItem");
 
-            var labelTarget = Expression.Label(typeof(DynamicRow));
-
-            var labelExpression = Expression.Label(
-                labelTarget,
-                Expression.Default(typeof(DynamicRow)));
-
-            List<Expression> expressions = new List<Expression>
+            var expressions = new List<Expression>
             {
-                Expression.Assign(
-                values,
-                Expression.NewArrayBounds(typeof(object), Expression.Constant(r.FieldCount)))
+                Expression.Assign(instance, Expression.New(instanceType))
             };
 
-            for (int fieldIndex = 0; fieldIndex < r.FieldCount; fieldIndex++)
+            for (var fieldIndex = 0; fieldIndex < cache.Reader.FieldCount; fieldIndex++)
             {
-                Type fieldType = r.GetFieldType(fieldIndex);
+                var fieldName = cache.Reader.GetName(fieldIndex);
+                var fieldType = cache.Reader.GetFieldType(fieldIndex);
 
                 var getValueCall = Expression.Call(
                     record,
                     _getValueMethod,
                     Expression.Constant(fieldIndex));
 
-                var isDbNull = Expression.Equal(
+                var isNotDbNull = Expression.NotEqual(
                     value,
                     Expression.Constant(DBNull.Value, typeof(object)));
 
-                var setValue = Expression.Assign(
-                    Expression.ArrayAccess(values, Expression.Constant(fieldIndex)),
-                    value);
+                var memberExpression = Expression.MakeMemberAccess(
+                    instance,
+                    instanceType.GetField(fieldName));
 
-                var setDefault = Expression.Assign(
-                    Expression.ArrayAccess(values, Expression.Constant(fieldIndex)),
-                    Expression.Convert(Expression.Default(fieldType), typeof(object)));
+                var setCall = Expression.Assign(
+                    memberExpression,
+                    Expression.Convert(value, fieldType));
 
+                // Get the Value
                 expressions.Add(Expression.Assign(
                     value,
                     getValueCall));
 
-                expressions.Add(Expression.IfThenElse(
-                    isDbNull,
-                    setDefault,
-                    setValue));
+                // Only bother setting the value if is not dbnull,
+                // otherwise let the field stay at the default value
+                expressions.Add(Expression.IfThen(
+                    isNotDbNull,
+                    setCall));
             }
 
-            expressions.Add(Expression.Assign(
-                returnItem,
-                Expression.New(_constructor, table, values)));
+            var labelTarget = Expression.Label(typeof(object));
+            var labelExpression = Expression.Label(labelTarget, Expression.Default(typeof(object)));
 
-            expressions.Add(Expression.Return(labelTarget, returnItem));
+            expressions.Add(Expression.Return(
+                labelTarget,
+                Expression.Convert(instance, typeof(object))));
+
             expressions.Add(labelExpression);
 
-            var block = Expression.Block(
-                typeof(DynamicRow),
-                new[] { values, returnItem, value },
+            BlockExpression block = Expression.Block(
+                new[] { instance, value },
                 expressions);
 
-            var lambda = Expression.Lambda<Func<IDataRecord, DynamicTable, DynamicRow>>(
+            var lambda = Expression.Lambda<Func<IDataRecord, object>>(
                 block,
-                record,
-                table);
+                record);
 
             return lambda.Compile();
         }
