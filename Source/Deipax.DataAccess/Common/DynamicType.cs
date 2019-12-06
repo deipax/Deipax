@@ -13,11 +13,11 @@ namespace Deipax.DataAccess.Common
         private static readonly Dictionary<int, Type> _cache =
             new Dictionary<int, Type>();
 
-        private static AssemblyName _aName = new AssemblyName("Deipax.DataAccess.Dynamic");
-        private static AssemblyBuilder _ab = AssemblyBuilder.DefineDynamicAssembly(
+        private static readonly AssemblyName _aName = new AssemblyName("Deipax.DataAccess.Dynamic");
+        private static readonly AssemblyBuilder _ab = AssemblyBuilder.DefineDynamicAssembly(
                _aName,
                AssemblyBuilderAccess.Run);
-        private static ModuleBuilder _mb = _ab.DefineDynamicModule(_aName.Name + ".dll");
+        private static readonly ModuleBuilder _mb = _ab.DefineDynamicModule(_aName.Name + ".dll");
         #endregion
 
         public static Type Get(DataReaderCache cache)

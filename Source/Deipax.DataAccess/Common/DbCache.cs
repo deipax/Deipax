@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Deipax.DataAccess.Common
 {
-    public class DbAccess
+    public class DbCache
     {
         #region Field Members
         private readonly Dictionary<string, IDb> _dbs = new Dictionary<string, IDb>();

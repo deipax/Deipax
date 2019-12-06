@@ -298,7 +298,9 @@ namespace UnitTests.Cloning
 
         class Test9_class
         {
+#pragma warning disable CS0649 // Field 'CanShallowCloneTests.Test9_class.FieldOne' is never assigned to, and will always have its default value 0
             public int FieldOne;
+#pragma warning restore CS0649 // Field 'CanShallowCloneTests.Test9_class.FieldOne' is never assigned to, and will always have its default value 0
         }
 
         class Test10_class

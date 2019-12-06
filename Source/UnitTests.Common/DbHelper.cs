@@ -17,8 +17,8 @@ namespace UnitTests.Common
             };
 
             DbFactory factory = new DbFactory();
-            _dbAccess = new DbAccess();
-            _dbAccess.Add(factory.CreateDb(
+            _dbCache = new DbCache();
+            _dbCache.Add(factory.CreateDb(
                 "Northwind",
                 "Data Source=.\\Resources\\Northwind_small.sqlite;Version=3;",
                 "System.Data.SQLite",
@@ -26,14 +26,14 @@ namespace UnitTests.Common
         }
 
         #region Field Members
-        private static readonly DbAccess _dbAccess;
+        private static readonly DbCache _dbCache;
         private static readonly IReadOnlyDictionary<string, DbProviderFactory> _dbProviders;
         #endregion
 
         #region Public Members
         public static IDb GetNorthwind()
         {
-            return _dbAccess.Get("Northwind");
+            return _dbCache.Get("Northwind");
         }
         #endregion
 

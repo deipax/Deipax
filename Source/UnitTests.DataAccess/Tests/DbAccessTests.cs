@@ -11,7 +11,7 @@ namespace UnitTests.DataAccess.Tests
     {
         public DbAccessTests()
         {
-            _access = new DbAccess();
+            _access = new DbCache();
             _access.Add(new DbHelperClass()
             {
                 Name = "NorthWind"
@@ -19,7 +19,7 @@ namespace UnitTests.DataAccess.Tests
         }
 
         #region Field Members
-        private DbAccess _access;
+        private DbCache _access;
         #endregion
 
         [Fact]

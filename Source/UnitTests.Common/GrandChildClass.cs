@@ -8,13 +8,17 @@ namespace UnitTests.Common
     public abstract class ParentAbstractClass : MyInterface
     {
         public string PublicFieldCommonName;
+#pragma warning disable CS0169 // The field 'ParentAbstractClass.PrivateFieldCommonName' is never used
         private string PrivateFieldCommonName;
+#pragma warning restore CS0169 // The field 'ParentAbstractClass.PrivateFieldCommonName' is never used
 
         private string PrivatePropCommonName { get; set; }
         public string PublicPropCommonName { get; set; }
 
         public string Parent_PublicField;
+#pragma warning disable CS0169 // The field 'ParentAbstractClass.Parent_PrivateField' is never used
         private string Parent_PrivateField;
+#pragma warning restore CS0169 // The field 'ParentAbstractClass.Parent_PrivateField' is never used
         public readonly string Parent_ReadOnlyField;
         public static string Parent_StaticField;
         public const string Parent_ConstField = "";
@@ -34,13 +38,17 @@ namespace UnitTests.Common
     public abstract class ChildAbstractClass : ParentAbstractClass
     {
         public new string PublicFieldCommonName;
+#pragma warning disable CS0169 // The field 'ChildAbstractClass.PrivateFieldCommonName' is never used
         private string PrivateFieldCommonName;
+#pragma warning restore CS0169 // The field 'ChildAbstractClass.PrivateFieldCommonName' is never used
 
         private string PrivatePropCommonName { get; set; }
         public new string PublicPropCommonName { get; set; }
 
         public string Child_PublicField;
+#pragma warning disable CS0169 // The field 'ChildAbstractClass.Child_PrivateField' is never used
         private string Child_PrivateField;
+#pragma warning restore CS0169 // The field 'ChildAbstractClass.Child_PrivateField' is never used
         public readonly string Child_ReadOnlyField;
         public static string Child_StaticField;
         public const string Child_ConstField = "";
@@ -85,13 +93,17 @@ namespace UnitTests.Common
     public class GrandChildClass : ChildAbstractClass
     {
         public new string PublicFieldCommonName;
+#pragma warning disable CS0169 // The field 'GrandChildClass.PrivateFieldCommonName' is never used
         private string PrivateFieldCommonName;
+#pragma warning restore CS0169 // The field 'GrandChildClass.PrivateFieldCommonName' is never used
 
         private string PrivatePropCommonName { get; set; }
         public new string PublicPropCommonName { get; set; }
 
         public string GrandChild_PublicField;
+#pragma warning disable CS0169 // The field 'GrandChildClass.GrandChild_PrivateField' is never used
         private string GrandChild_PrivateField;
+#pragma warning restore CS0169 // The field 'GrandChildClass.GrandChild_PrivateField' is never used
         public readonly string GrandChild_ReadOnlyField;
         public static string GrandChild_StaticField;
         public const string GrandChild_ConstField = "";
