@@ -24,6 +24,8 @@ namespace Deipax.DataAccess.Common
         #region Public Members
         public static Func<IDataRecord, object> CreateMap(DataReaderCache cache)
         {
+            if (cache == null) throw new ArgumentNullException(nameof(cache));
+
             if (!_maps.TryGetValue(cache.GetColumnHash(), out Func<IDataRecord, object> func))
             {
                 lock (_lock)

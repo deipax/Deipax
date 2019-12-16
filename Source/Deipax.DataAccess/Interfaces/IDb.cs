@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Data.Common;
+using System.Collections.Generic;
+using System.Data;
+using System.Threading;
 
 namespace Deipax.DataAccess.Interfaces
 {
@@ -8,7 +10,18 @@ namespace Deipax.DataAccess.Interfaces
         string Name { get; }
         string ConnectionString { get; }
         string ProviderName { get; }
-        IDbFactory DbFactory { get; }
-        Func<IDb, DbConnection> ConnectionFactory { get; }
+        Func<IDb, IDbConnection> Factory { get; }
+    }
+
+    public interface IDbCmd
+    {
+        IDbConnection Connection { get; set; }
+        IDbTransaction Transaction { get; set; }
+        string CommandText { get; set; }
+        ICollection<IDbDataParameter> Parameters { get; }
+        CancellationToken? CancellationToken { get; set; }
+        CommandBehavior? CommandBehavior { get; set; }
+        CommandType? CommandType { get; set; }
+        int? CommandTimeout { get; set; }
     }
 }

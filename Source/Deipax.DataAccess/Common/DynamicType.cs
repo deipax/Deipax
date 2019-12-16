@@ -22,6 +22,8 @@ namespace Deipax.DataAccess.Common
 
         public static Type Get(DataReaderCache cache)
         {
+            if (cache == null) throw new ArgumentNullException(nameof(cache));
+
             if (!_cache.TryGetValue(cache.GetColumnHash(), out Type value))
             {
                 lock (_lock)

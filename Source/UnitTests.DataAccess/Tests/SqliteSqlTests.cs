@@ -1,4 +1,4 @@
-﻿using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Extensions;
 using System.Data;
 using System.Linq;
 using UnitTests.Common;
@@ -9,24 +9,20 @@ namespace UnitTests.DataAccess
     public class SqliteSqlTests : SqliteSql
     {
         #region Field Members
-        private IDbCon _dbCon;
         private IDbConnection _dbConnection;
         #endregion
 
         public SqliteSqlTests()
         {
-            _dbCon = DbHelper.GetNorthwind().CreateDbCon();
-            _dbConnection = _dbCon.GetConnection();
-            _dbConnection.Open();
+            _dbConnection = DbHelper.GetNorthwind().Open();
         }
 
         [Fact]
         public void AllFieldsAsClass()
         {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
                 .AsEnumerable<MultipleFieldClass>()
                 .ToList();
         }
@@ -34,10 +30,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void AllFieldsAsStruct()
         {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
                 .AsEnumerable<MultipleFieldStruct>()
                 .ToList();
         }
@@ -45,11 +40,10 @@ namespace UnitTests.DataAccess
         [Fact]
         public void AllFieldsAsDynamic()
         {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsDynamicEnumerable()
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
+                .AsEnumerable()
                 .ToList();
         }
     }

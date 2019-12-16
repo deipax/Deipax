@@ -1,162 +1,184 @@
 ﻿using Deipax.Convert;
 using Deipax.DataAccess.Common;
+using Deipax.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Deipax.DataAccess.Interfaces
+namespace Deipax.DataAccess.Extensions
 {
     public static class IDbCmdExtensions
     {
-        #region Public Members
-        public static IDbCmd SetTransaction(
+        #region Field Members
+        private static readonly Dictionary<Type, Action<IDbCommand>> _cache = new Dictionary<Type, Action<IDbCommand>>();
+        private static readonly object _lock = new object();
+        #endregion
+
+        #region Fluent Extensions
+        public static IDbCmd CommandBehavior(
             this IDbCmd source,
-            DbTransaction transaction)
+            CommandBehavior? behavior)
         {
-            source.Transaction = transaction;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandBehavior = behavior;
             return source;
         }
 
-        public static IDbCmd SetConnection(
+        public static IDbCmd Connection(
             this IDbCmd source,
-            DbConnection connection)
+            IDbConnection con)
         {
-            source.Connection = connection;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            source.Connection = con;
             return source;
         }
 
-        public static IDbCmd SetTimeout(
+        public static IDbCmd Transaction(
             this IDbCmd source,
-            int timeout)
+            IDbTransaction trans)
         {
-            source.Timeout = timeout;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            source.Transaction = trans;
             return source;
         }
 
-        public static IDbCmd SetName(
+        public static IDbCmd CommandText(
             this IDbCmd source,
-            string name)
+            string text)
         {
-            source.Name = name;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandText = text;
             return source;
         }
 
-        public static IDbCmd SetCommandType(
+        public static IDbCmd CommandType(
             this IDbCmd source,
-            CommandType command)
+            CommandType? type)
         {
-            source.CommandType = command;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandType = type;
             return source;
         }
 
-        public static IDbCmd SetSql(
+        public static IDbCmd CommandTimeout(
             this IDbCmd source,
-            string sql)
+            int? timeout)
         {
-            source.Sql = sql;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandTimeout = timeout;
+            return source;
+        }
+
+        public static IDbCmd CancellationToken(
+            this IDbCmd source,
+            CancellationToken? token)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CancellationToken = token;
             return source;
         }
 
         public static IDbCmd AddParameter(
             this IDbCmd source,
-            string name = null,
-            object value = null,
-            ParameterDirection? direction = default,
-            DbType? dbType = default,
-            int? size = default)
+            IDbDataParameter parameter)
         {
-            source.AddParameter(source.Connection.CreateParameter(name, value, direction, dbType, size));
-            return source;
-        }
-
-        public static IDbCmd AddParameter(
-            this IDbCmd source,
-            DbParameter parameter)
-        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (parameter == null) throw new ArgumentNullException(nameof(parameter));
             source.Parameters.Add(parameter);
             return source;
         }
 
         public static IDbCmd AddParameters(
             this IDbCmd source,
-            IEnumerable<DbParameter> parameters)
+            params IDbDataParameter[] parameters)
         {
-            foreach (var p in parameters)
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+
+            foreach (var parameter in parameters)
             {
-                source.Parameters.Add(p);
+                if (parameter != null) source.Parameters.Add(parameter);
             }
 
             return source;
         }
+        #endregion
 
-        public static IDbCmd AddParameters(
-            this IDbCmd source,
-            string baseName,
-            IEnumerable<object> values)
-        {
-            var parameters = source.Connection.CreateParameters(baseName, values);
-            source.AddParameters(parameters);
-            return source;
-        }
-
-        public static IEnumerable<dynamic> AsDynamicEnumerable(
+        #region Database Extensions
+        public static IEnumerable<dynamic> AsEnumerable(
             this IDbCmd source)
         {
-            using (var dbCmd = source.CreateCommand())
-            using (var r = dbCmd.ExecuteReader())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = source.CreateAndOpen())
+            using (var reader = cmd.ExecuteReader(source))
             {
-                if (r.FieldCount == 0)
+                if (reader.FieldCount == 0)
                 {
                     yield break;
                 }
 
-                var cache = new DataReaderCache(r);
+                var cache = new DataReaderCache(reader);
                 var map = DynamicMap.CreateMap(cache);
 
-                while (r.Read())
+                while (reader.Read())
                 {
-                    yield return map(r);
+                    yield return map(reader);
                 }
+
+                while (reader.NextResult()) { /* ignore subsequent result sets */ }
             }
         }
 
         public static IEnumerable<T> AsEnumerable<T>(
             this IDbCmd source) where T : new()
         {
-            using (var dbCmd = source.CreateCommand())
-            using (var r = dbCmd.ExecuteReader())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = source.CreateAndOpen())
+            using (var reader = cmd.ExecuteReader(source))
             {
-                if (r.FieldCount == 0)
+                if (reader.FieldCount == 0)
                 {
                     yield break;
                 }
 
-                var cache = new DataReaderCache(r);
+                var cache = new DataReaderCache(reader);
                 Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
 
-                while (r.Read())
+                while (reader.Read())
                 {
-                    yield return map(r);
+                    yield return map(reader);
                 }
+
+                while (reader.NextResult()) { /* ignore subsequent result sets */ }
             }
         }
 
         public static int ExecuteNonQuery(
             this IDbCmd source)
         {
-            using (var dbCmd = source.CreateCommand())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = source.CreateAndOpen())
             {
-                return dbCmd.ExecuteNonQuery();
+                return cmd.ExecuteNonQuery();
             }
         }
 
         public static object ExecuteScalar(
             this IDbCmd source)
         {
-            using (var dbCmd = source.CreateCommand())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = source.CreateAndOpen())
             {
-                var obj = dbCmd.ExecuteScalar();
+                var obj = cmd.ExecuteScalar();
                 return DBNull.Value.Equals(obj) ? null : obj;
             }
         }
@@ -168,60 +190,186 @@ namespace Deipax.DataAccess.Interfaces
             return ConvertTo<T, object>.From(obj);
         }
 
-        public static void ExecuteConnection(
-            this IDbCmd source,
-            Action<IDbConnection> func)
-        {
-            func(source.Connection);
-        }
-
-        public static T ExecuteConnection<T>(
-            this IDbCmd source,
-            Func<IDbConnection, T> func)
-        {
-            return func(source.Connection);
-        }
-
-        public static void ExecuteCommand(
+        public static void Execute(
             this IDbCmd source,
             Action<IDbCommand> action)
         {
-            using (var dbCmd = source.CreateCommand())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            using (var dbCmd = source.CreateAndOpen())
             {
                 action(dbCmd);
             }
         }
 
-        public static T ExecuteCommand<T>(
+        public static T Execute<T>(
             this IDbCmd source,
             Func<IDbCommand, T> func)
         {
-            using (var dbCmd = source.CreateCommand())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
+            using (var dbCmd = source.CreateAndOpen())
             {
                 return func(dbCmd);
             }
         }
+        #endregion
 
-        public static IDbCommand CreateCommand(
+        #region Database Extensions Async
+        /*
+        public static async Task<IEnumerable<dynamic>> AsEnumerableAsync(
+            this IDbCmd source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
+            using (var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false))
+            {
+                if (reader.FieldCount == 0)
+                {
+                    yield break;
+                }
+
+                var cache = new DataReaderCache(reader);
+                var map = DynamicMap.CreateMap(cache);
+
+                while (reader.Read())
+                {
+                    yield return map(reader);
+                }
+
+                while (reader.NextResult()) { /* ignore subsequent result sets */ /*}
+            }
+        }
+
+        public static async Task<IEnumerable<T>> AsEnumerableAsync<T>(
+            this IDbCmd source) where T : new()
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
+            using (var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false))
+            {
+                if (reader.FieldCount == 0)
+                {
+                    yield break;
+                }
+
+                var cache = new DataReaderCache(reader);
+                Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
+
+                while (reader.Read())
+                {
+                    yield return map(reader);
+                }
+
+                while (reader.NextResult()) { /* ignore subsequent result sets */ /*}
+            }
+        }*/
+
+        public static async Task<int> ExecuteNonQueryAsync(
+            this IDbCmd source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
+            {
+                return source.CancellationToken.HasValue
+                    ? await cmd.ExecuteNonQueryAsync(source.CancellationToken.Value).ConfigureAwait(false)
+                    : await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<object> ExecuteScalarAsync(
+            this IDbCmd source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
+            using (var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
+            {
+                var obj = source.CancellationToken.HasValue
+                    ? await cmd.ExecuteScalarAsync(source.CancellationToken.Value).ConfigureAwait(false)
+                    : await cmd.ExecuteScalarAsync().ConfigureAwait(false);
+
+                return DBNull.Value.Equals(obj) ? null : obj;
+            }
+        }
+
+        public static async Task<T> ExecuteScalarAsync<T>(
+            this IDbCmd source)
+        {
+            var obj = await source.ExecuteScalarAsync().ConfigureAwait(false);
+            return ConvertTo<T, object>.From(obj);
+        }
+
+        public static async void ExecuteAsync(
+            this IDbCmd source,
+            Action<DbCommand> action)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            using (var dbCmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
+            {
+                action(dbCmd);
+            }
+        }
+
+        public static async Task<T> ExecuteAsync<T>(
+            this IDbCmd source,
+            Func<DbCommand, T> func)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
+            using (var dbCmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
+            {
+                return func(dbCmd);
+            }
+        }
+        #endregion
+
+        #region Private Members
+        private static IDbCommand CreateAndOpen(
+            this IDbCmd source)
+        {
+            var cmd = source.CreateCommand();
+            cmd.Connection.EnsureOpen();
+            return cmd;
+        }
+
+        private static async Task<DbCommand> CreateAndOpenAsync(
+            this IDbCmd source)
+        {
+            var cmd = source.CreateCommand();
+            await cmd.Connection.EnsureOpenAsync(source.CancellationToken).ConfigureAwait(false);
+
+            if (cmd is DbCommand dbCommand)
+            {
+                return dbCommand;
+            }
+            else
+            {
+                throw new InvalidOperationException("Async operations require use of a DbCommand");
+            }
+        }
+
+        private static IDbCommand CreateCommand(
             this IDbCmd source)
         {
             var cmd = source.Connection.CreateCommand();
 
-            var prop = cmd.GetType().GetProperty("BindByName");
+            var init = GetInit(cmd.GetType());
+            init?.Invoke(cmd);
 
-            if (prop != null)
-            {
-                prop.SetValue(cmd, true);
-            }
-
-            if (source.Timeout > 0)
-            {
-                cmd.CommandTimeout = source.Timeout;
-            }
-
+            if (source.CommandType.HasValue) cmd.CommandType = source.CommandType.Value;
+            if (source.CommandTimeout.HasValue) cmd.CommandTimeout = source.CommandTimeout.Value;
             cmd.Transaction = source.Transaction;
-            cmd.CommandText = source.Sql;
-            cmd.CommandType = source.CommandType;
+            cmd.CommandText = source.CommandText;
+            cmd.Connection = source.Connection;
+
             cmd.Parameters.Clear();
 
             foreach (var p in source.Parameters)
@@ -230,6 +378,65 @@ namespace Deipax.DataAccess.Interfaces
             }
 
             return cmd;
+        }
+
+        private static Action<IDbCommand> GetInit(
+            Type type)
+        {
+            if (!_cache.TryGetValue(type, out Action<IDbCommand> value))
+            {
+                lock (_lock)
+                {
+                    if (!_cache.TryGetValue(type, out value))
+                    {
+                        value = CreateInit(type);
+                        _cache.Add(type, value);
+                    }
+                }
+            }
+
+            return value;
+        }
+
+        private static Action<IDbCommand> CreateInit(
+            Type type)
+        {
+            var expressions = new List<Expression>();
+            var command = Expression.Variable(typeof(IDbCommand), "command");
+
+            FieldInfo bindByName = type.GetField("BindByName");
+            FieldInfo fetchSize = type.GetField("InitialLONGFetchSize");
+
+            if (bindByName != null)
+            {
+                expressions.Add(Expression.Assign(
+                    Expression.MakeMemberAccess(command, bindByName),
+                    Expression.Constant(true)));
+            }
+
+            if (fetchSize != null)
+            {
+                expressions.Add(Expression.Assign(
+                    Expression.MakeMemberAccess(command, fetchSize),
+                    Expression.Constant(-1)));
+            }
+
+            Action<IDbCommand> value = null;
+
+            if (expressions.Count > 0)
+            {
+                BlockExpression block = Expression.Block(
+                new[] { command },
+                expressions);
+
+                var lambda = Expression.Lambda<Action<IDbCommand>>(
+                    block,
+                    command);
+
+                value = lambda.Compile();
+            }
+
+            return value;
         }
         #endregion
     }

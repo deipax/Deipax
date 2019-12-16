@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Deipax.DataAccess.Interfaces;
+using Deipax.DataAccess.Extensions;
 using System.Data;
 using System.Linq;
 using UnitTests.Common;
@@ -9,33 +9,27 @@ namespace Benchmarks.DataAccess.Deipax
     public class DeipaxSelect : SqliteSql
     {
         #region Field Members
-
-        private IDbCon _dbCon;
         private IDbConnection _dbConnection;
-
         #endregion
 
         [GlobalSetup]
         public void GlobalSetup()
         {
-            _dbCon = DbHelper.GetNorthwind().CreateDbCon();
-            _dbConnection = _dbCon.GetConnection();
-            _dbConnection.Open();
+            _dbConnection = DbHelper.GetNorthwind().Open();
         }
 
         [GlobalCleanup]
         public void GlobalCleanup()
         {
-            _dbCon.Dispose();
+            _dbConnection.Dispose();
         }
 
         [Benchmark]
         public void AllFieldsAsClass_Deipax()
         {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
                 .AsEnumerable<MultipleFieldClass>()
                 .ToList();
         }
@@ -43,10 +37,9 @@ namespace Benchmarks.DataAccess.Deipax
         [Benchmark]
         public void AllFieldsAsStruct_Deipax()
         {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
                 .AsEnumerable<MultipleFieldStruct>()
                 .ToList();
         }
@@ -54,11 +47,10 @@ namespace Benchmarks.DataAccess.Deipax
         [Benchmark]
         public void DynamicList_Deipax()
         {
-            var tmp = _dbCon
-                .CreateDbCmd()
-                .SetCommandType(CommandType.Text)
-                .SetSql(_sql)
-                .AsDynamicEnumerable()
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
+                .AsEnumerable()
                 .ToList();
         }
     }

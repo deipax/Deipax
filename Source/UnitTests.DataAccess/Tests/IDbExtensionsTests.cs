@@ -1,7 +1,5 @@
-﻿using Deipax.DataAccess.Interfaces;
-using System;
+﻿using Deipax.DataAccess.Extensions;
 using System.Data;
-using System.Data.Common;
 using System.Reflection;
 using UnitTests.Common;
 using Xunit;
@@ -11,73 +9,15 @@ namespace UnitTests.DataAccess
     public class IDbExtensionsTests
     {
         [Fact]
-        public void CreateDb()
-        {
-            var db1 = DbHelper.GetNorthwind();
-            var db2 = db1.CreateDb();
-
-            Assert.NotSame(db1, db2);
-            Assert.Equal(db1.Name, db2.Name);
-            Assert.Equal(db1.ProviderName, db2.ProviderName);
-            Assert.Equal(db1.ConnectionString, db2.ConnectionString);
-            Assert.Equal(db1.ConnectionFactory, db2.ConnectionFactory);
-
-            db2 = db1.CreateDb("John");
-            Assert.NotSame(db1, db2);
-            Assert.NotEqual(db1.Name, db2.Name);
-            Assert.Equal("John", db2.Name);
-            Assert.Equal(db1.ProviderName, db2.ProviderName);
-            Assert.Equal(db1.ConnectionString, db2.ConnectionString);
-            Assert.Equal(db1.ConnectionFactory, db2.ConnectionFactory);
-
-            db2 = db1.CreateDb("John", "cs");
-            Assert.NotSame(db1, db2);
-            Assert.NotEqual(db1.Name, db2.Name);
-            Assert.Equal("John", db2.Name);
-            Assert.Equal(db1.ProviderName, db2.ProviderName);
-            Assert.NotEqual(db1.ConnectionString, db2.ConnectionString);
-            Assert.Equal("cs", db2.ConnectionString);
-            Assert.Equal(db1.ConnectionFactory, db2.ConnectionFactory);
-
-            db2 = db1.CreateDb("John", "cs", "myProviderName");
-            Assert.NotSame(db1, db2);
-            Assert.NotEqual(db1.Name, db2.Name);
-            Assert.Equal("John", db2.Name);
-            Assert.NotEqual(db1.ProviderName, db2.ProviderName);
-            Assert.Equal("myProviderName", db2.ProviderName);
-            Assert.NotEqual(db1.ConnectionString, db2.ConnectionString);
-            Assert.Equal("cs", db2.ConnectionString);
-            Assert.Equal(db1.ConnectionFactory, db2.ConnectionFactory);
-
-
-            Func<IDb, DbConnection> func = (x) =>
-            {
-                return null;
-            };
-
-            db2 = db1.CreateDb("John", "cs", "myProviderName", func);
-            Assert.NotSame(db1, db2);
-            Assert.NotEqual(db1.Name, db2.Name);
-            Assert.Equal("John", db2.Name);
-            Assert.NotEqual(db1.ProviderName, db2.ProviderName);
-            Assert.Equal("myProviderName", db2.ProviderName);
-            Assert.NotEqual(db1.ConnectionString, db2.ConnectionString);
-            Assert.Equal("cs", db2.ConnectionString);
-            Assert.NotEqual(db1.ConnectionFactory, db2.ConnectionFactory);
-            Assert.Equal(db2.ConnectionFactory, func);
-        }
-
-        [Fact]
-        public void AsBatch()
+        public void Execute()
         {
             IDbConnection connection = null;
 
-            DbHelper.GetNorthwind().AsBatch(dbBatch =>
+            DbHelper.GetNorthwind().Execute(x =>
             {
-                Assert.NotNull(dbBatch.Connection);
-                Assert.Null(dbBatch.Transaction);
-                Assert.Equal(ConnectionState.Closed, dbBatch.Connection.State);
-                connection = dbBatch.Connection;
+                connection = x;
+                Assert.NotNull(connection);
+                Assert.Equal(ConnectionState.Closed, connection.State);
                 connection.Open();
                 Assert.Equal(ConnectionState.Open, connection.State);
             });
@@ -86,16 +26,15 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void AsBatch_WithReturn()
+        public void Execute_WithReturn()
         {
             IDbConnection connection = null;
 
-            var result = DbHelper.GetNorthwind().AsBatch(dbBatch =>
+            var result = DbHelper.GetNorthwind().Execute(x =>
             {
-                Assert.NotNull(dbBatch.Connection);
-                Assert.Null(dbBatch.Transaction);
-                Assert.Equal(ConnectionState.Closed, dbBatch.Connection.State);
-                connection = dbBatch.Connection;
+                connection = x;
+                Assert.NotNull(connection);
+                Assert.Equal(ConnectionState.Closed, connection.State);
                 connection.Open();
                 Assert.Equal(ConnectionState.Open, connection.State);
                 return 1;
@@ -106,19 +45,19 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void AsTransaction()
+        public void Execute_WithTrans()
         {
             IDbConnection connection = null;
             IDbTransaction transaction = null;
 
-            DbHelper.GetNorthwind().AsTransaction(dbBatch =>
+            DbHelper.GetNorthwind().Execute((x, y) =>
             {
-                Assert.NotNull(dbBatch.Connection);
-                Assert.NotNull(dbBatch.Transaction);
-                Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
-                connection = dbBatch.Connection;
-                transaction = dbBatch.Transaction;
+                connection = x;
+                transaction = y;
 
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
                 Assert.Same(connection, transaction.Connection);
             });
@@ -128,42 +67,42 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void AsTransaction_IsolationLevel()
+        public void Execute_WithTrans_IsolationLevel()
         {
             IDbConnection connection = null;
             IDbTransaction transaction = null;
-            IsolationLevel level = IsolationLevel.Unspecified;
 
-            DbHelper.GetNorthwind().AsTransaction(level, dbBatch =>
+            DbHelper.GetNorthwind().Execute((x, y) =>
             {
-                Assert.NotNull(dbBatch.Connection);
-                Assert.NotNull(dbBatch.Transaction);
-                Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
-                connection = dbBatch.Connection;
-                transaction = dbBatch.Transaction;
+                connection = x;
+                transaction = y;
 
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
                 Assert.Same(connection, transaction.Connection);
-            });
+            },
+            IsolationLevel.Unspecified);
 
             AssertTransactionDisposed(transaction);
             AssertConnectionDisposed(connection);
         }
 
         [Fact]
-        public void AsTransaction_WithReturn()
+        public void Execute_WithTrans_WithReturn()
         {
             IDbConnection connection = null;
             IDbTransaction transaction = null;
 
-            var result = DbHelper.GetNorthwind().AsTransaction(dbBatch =>
+            var result = DbHelper.GetNorthwind().Execute((x, y) =>
             {
-                Assert.NotNull(dbBatch.Connection);
-                Assert.NotNull(dbBatch.Transaction);
-                Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
-                connection = dbBatch.Connection;
-                transaction = dbBatch.Transaction;
+                connection = x;
+                transaction = y;
 
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
                 Assert.Same(connection, transaction.Connection);
                 return 10;
@@ -175,24 +114,24 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void AsTransaction_IsolationLevel_WithReturn()
+        public void Execute_WithTrans_IsolationLevel_WithReturn()
         {
             IDbConnection connection = null;
             IDbTransaction transaction = null;
-            IsolationLevel level = IsolationLevel.Unspecified;
 
-            var result = DbHelper.GetNorthwind().AsTransaction(level, dbBatch =>
+            var result = DbHelper.GetNorthwind().Execute((x, y) =>
             {
-                Assert.NotNull(dbBatch.Connection);
-                Assert.NotNull(dbBatch.Transaction);
-                Assert.Equal(ConnectionState.Open, dbBatch.Connection.State);
-                connection = dbBatch.Connection;
-                transaction = dbBatch.Transaction;
+                connection = x;
+                transaction = y;
 
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
                 Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
                 Assert.Same(connection, transaction.Connection);
                 return 12;
-            });
+            },
+            IsolationLevel.Unspecified);
 
             Assert.Equal(12, result);
             AssertTransactionDisposed(transaction);

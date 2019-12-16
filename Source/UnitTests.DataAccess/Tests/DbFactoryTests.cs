@@ -1,104 +1,84 @@
-﻿using Deipax.DataAccess.Concretes;
+﻿using Deipax.DataAccess.Common;
+using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System;
 using System.Data.Common;
 using Xunit;
 
-namespace UnitTests.DataAccess.Tests
+namespace UnitTests.DataAccess
 {
-    public class DbFactoryTests
+    [Collection("Sequential")]
+    public class DbFactoryTests : IDisposable
     {
-        [Fact]
-        public void CreateDb()
+        public DbFactoryTests()
         {
-            DbFactory factory = new DbFactory();
-            Func<IDb, DbConnection> func = ConnectionFactory;
+            DbFactory.UserDb = null;
+            DbFactory.UserDbCmd = null;
+        }
 
-            var db = factory.CreateDb(
+        [Fact]
+        public void CreateDb_Default()
+        {
+            Func<IDb, DbConnection> func = (x) =>
+            {
+                return null;
+            };
+
+            var db = DbFactory.CreateDb(
                 "name",
                 "cs",
                 "provider",
                 func);
 
+            Assert.NotNull(db);
+            Assert.IsType<Db>(db);
             Assert.Equal("name", db.Name);
             Assert.Equal("provider", db.ProviderName);
             Assert.Equal("cs", db.ConnectionString);
-            Assert.Same(func, db.ConnectionFactory);
+            Assert.Same(func, db.Factory);
         }
 
         [Fact]
-        public void CreateOracleDb()
+        public void CreateDb_Custom()
         {
-            DbFactory factory = new DbFactory();
-            Func<IDb, DbConnection> func = ConnectionFactory;
+            Db db = new Db("name", "cs", "provider", null);
 
-            var db = factory.CreateOracleDb(
-                "name",
-                "cs",
-                func);
+            DbFactory.UserDb = (name, cs, provider, factory) =>
+            {
+                return db;
+            };
 
-            Assert.Equal("name", db.Name);
-            Assert.Equal("Oracle.DataAccess.Client", db.ProviderName);
-            Assert.Equal("cs", db.ConnectionString);
-            Assert.Same(func, db.ConnectionFactory);
+            var tmp = DbFactory.CreateDb("x", "y", "z", null);
+
+            Assert.Same(db, tmp);
         }
 
         [Fact]
-        public void CreateManagedOracleDb()
+        public void CreateDbCmd_Default()
         {
-            DbFactory factory = new DbFactory();
-            Func<IDb, DbConnection> func = ConnectionFactory;
-
-            var db = factory.CreateManagedOracleDb(
-                "name",
-                "cs",
-                func);
-
-            Assert.Equal("name", db.Name);
-            Assert.Equal("Oracle.ManagedDataAccess.Client", db.ProviderName);
-            Assert.Equal("cs", db.ConnectionString);
-            Assert.Same(func, db.ConnectionFactory);
+            IDbCmd cmd = DbFactory.CreateDbCmd();
+            Assert.NotNull(cmd);
         }
 
         [Fact]
-        public void CreateSqLiteDb()
+        public void CreateDbCmd_Custom()
         {
-            DbFactory factory = new DbFactory();
-            Func<IDb, DbConnection> func = ConnectionFactory;
+            DbCmd dbCmd = new DbCmd();
 
-            var db = factory.CreateSqLiteDb(
-                "name",
-                "cs",
-                func);
+            DbFactory.UserDbCmd = () =>
+            {
+                return dbCmd;
+            };
 
-            Assert.Equal("name", db.Name);
-            Assert.Equal("System.Data.SQLite", db.ProviderName);
-            Assert.Equal("cs", db.ConnectionString);
-            Assert.Same(func, db.ConnectionFactory);
+            var tmp = DbFactory.CreateDbCmd();
+
+            Assert.Same(dbCmd, tmp);
         }
 
-        [Fact]
-        public void CreateSqlServerDb()
+        public void Dispose()
         {
-            DbFactory factory = new DbFactory();
-            Func<IDb, DbConnection> func = ConnectionFactory;
-
-            var db = factory.CreateSqlServerDb(
-                "name",
-                "cs",
-                func);
-
-            Assert.Equal("name", db.Name);
-            Assert.Equal("System.Data.SqlClient", db.ProviderName);
-            Assert.Equal("cs", db.ConnectionString);
-            Assert.Same(func, db.ConnectionFactory);
+            DbFactory.UserDb = null;
+            DbFactory.UserDbCmd = null;
         }
-
-        #region Private Members
-        private DbConnection ConnectionFactory(IDb db)
-        {
-            return null;
-        }
-        #endregion
     }
 }

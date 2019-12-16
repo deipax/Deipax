@@ -1,8 +1,8 @@
-﻿using Deipax.DataAccess.Interfaces;
+﻿using Deipax.DataAccess.Extensions;
+using Deipax.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Linq;
 using UnitTests.Common;
 using UnitTests.DataAccess.Concretes;
@@ -17,8 +17,8 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(dbCmd =>
             {
-                Assert.Equal(CommandType.Text, dbCmd.CommandType);
-                IDbCmd dbCmd2 = dbCmd.SetCommandType(CommandType.StoredProcedure);
+                Assert.Null(dbCmd.CommandType);
+                IDbCmd dbCmd2 = dbCmd.CommandType(CommandType.StoredProcedure);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal(CommandType.StoredProcedure, dbCmd.CommandType);
             });
@@ -30,7 +30,7 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 Assert.NotNull(dbCmd.Connection);
-                IDbCmd dbCmd2 = dbCmd.SetConnection(null);
+                IDbCmd dbCmd2 = dbCmd.Connection(null);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Null(dbCmd.Connection);
             });
@@ -41,10 +41,10 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(dbCmd =>
             {
-                Assert.True(dbCmd.Timeout <= 0);
-                IDbCmd dbCmd2 = dbCmd.SetTimeout(1000);
+                Assert.Null(dbCmd.CommandTimeout);
+                IDbCmd dbCmd2 = dbCmd.CommandTimeout(1000);
                 Assert.Same(dbCmd, dbCmd2);
-                Assert.Equal(1000, dbCmd.Timeout);
+                Assert.Equal(1000, dbCmd.CommandTimeout);
             });
         }
 
@@ -55,63 +55,21 @@ namespace UnitTests.DataAccess
             {
                 TestTransaction trans = new TestTransaction();
                 Assert.Null(dbCmd.Transaction);
-                IDbCmd dbCmd2 = dbCmd.SetTransaction(trans);
+                IDbCmd dbCmd2 = dbCmd.Transaction(trans);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Same(trans, dbCmd.Transaction);
             });
         }
 
         [Fact]
-        public void SetName()
+        public void SetCommandText()
         {
             SetupAndAssert(dbCmd =>
             {
-                Assert.True(string.IsNullOrEmpty(dbCmd.Name));
-                IDbCmd dbCmd2 = dbCmd.SetName("Bill");
+                Assert.True(string.IsNullOrEmpty(dbCmd.CommandText));
+                IDbCmd dbCmd2 = dbCmd.CommandText("Bill");
                 Assert.Same(dbCmd, dbCmd2);
-                Assert.Equal("Bill", dbCmd.Name);
-            });
-        }
-
-        [Fact]
-        public void SetSql()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                Assert.True(string.IsNullOrEmpty(dbCmd.Sql));
-                IDbCmd dbCmd2 = dbCmd.SetSql("Bill");
-                Assert.Same(dbCmd, dbCmd2);
-                Assert.Equal("Bill", dbCmd.Sql);
-            });
-        }
-
-        [Fact]
-        public void AddParameter_Test1()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                Assert.NotNull(dbCmd.Parameters);
-                Assert.Empty(dbCmd.Parameters);
-
-                IDbCmd dbCmd2 = dbCmd.AddParameter(
-                    "John",
-                    1,
-                    ParameterDirection.Input,
-                    DbType.Int32,
-                    10);
-
-                Assert.Same(dbCmd, dbCmd2);
-                Assert.NotNull(dbCmd.Parameters);
-                Assert.Equal(1, dbCmd.Parameters.Count);
-
-                DbParameter parameter = dbCmd.Parameters.ElementAt(0);
-
-                Assert.Equal("John", parameter.ParameterName);
-                Assert.IsType<int>(parameter.Value);
-                Assert.Equal(1, (int)parameter.Value);
-                Assert.Equal(ParameterDirection.Input, parameter.Direction);
-                Assert.Equal(DbType.Int32, parameter.DbType);
-                Assert.Equal(10, parameter.Size);
+                Assert.Equal("Bill", dbCmd.CommandText);
             });
         }
 
@@ -123,7 +81,7 @@ namespace UnitTests.DataAccess
                 Assert.NotNull(dbCmd.Parameters);
                 Assert.Empty(dbCmd.Parameters);
 
-                DbParameter parameter = dbCmd.Connection.CreateParameter();
+                IDbDataParameter parameter = dbCmd.Connection.CreateParameter();
 
                 IDbCmd dbCmd2 = dbCmd.AddParameter(parameter);
 
@@ -142,13 +100,13 @@ namespace UnitTests.DataAccess
                 Assert.NotNull(dbCmd.Parameters);
                 Assert.Empty(dbCmd.Parameters);
 
-                List<DbParameter> list = new List<DbParameter>()
+                List<IDbDataParameter> list = new List<IDbDataParameter>()
                 {
                     dbCmd.Connection.CreateParameter(),
                     dbCmd.Connection.CreateParameter(),
                 };
 
-                IDbCmd dbCmd2 = dbCmd.AddParameters(list);
+                IDbCmd dbCmd2 = dbCmd.AddParameters(list.ToArray());
 
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.NotNull(dbCmd.Parameters);
@@ -162,43 +120,14 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void AddParameters_Test2()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                Assert.NotNull(dbCmd.Parameters);
-                Assert.Empty(dbCmd.Parameters);
-
-                List<object> list = new List<object>()
-                {
-                    1, 2
-                };
-
-                IDbCmd dbCmd2 = dbCmd.AddParameters("MyBaseName", list);
-
-                Assert.Same(dbCmd, dbCmd2);
-                Assert.NotNull(dbCmd.Parameters);
-                Assert.Equal(list.Count, dbCmd.Parameters.Count);
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    DbParameter p = dbCmd.Parameters.ElementAt(i);
-
-                    Assert.Contains("MyBaseName", p.ParameterName);
-                    Assert.Equal(list[i], p.Value);
-                }
-            });
-        }
-
-        [Fact]
         public void AsDynamicEnumerable()
         {
             SetupAndAssert(dbCmd =>
             {
                 IEnumerable<dynamic> result = dbCmd
-                .SetCommandType(CommandType.Text)
-                .SetSql(@"select * from main.[Category]")
-                .AsDynamicEnumerable();
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category]")
+                .AsEnumerable();
 
                 Assert.NotNull(result);
                 Assert.True(result.Count() > 0);
@@ -222,9 +151,9 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 List<dynamic> result = dbCmd
-                .SetCommandType(CommandType.Text)
-                .SetSql(@"select * from main.[Category]")
-                .AsDynamicEnumerable()
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category]")
+                .AsEnumerable()
                 .ToList();
 
                 Assert.NotNull(result);
@@ -249,8 +178,8 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 IEnumerable<CategoryAsClass> result = dbCmd
-                .SetCommandType(CommandType.Text)
-                .SetSql(@"select * from main.[Category]")
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category]")
                 .AsEnumerable<CategoryAsClass>();
 
                 Assert.NotNull(result);
@@ -271,8 +200,8 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 IEnumerable<CategoryAsStruct> result = dbCmd
-                .SetCommandType(CommandType.Text)
-                .SetSql(@"select * from main.[Category]")
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category]")
                 .AsEnumerable<CategoryAsStruct>()
                 .ToList();
 
@@ -294,8 +223,8 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 int result = dbCmd
-                .SetCommandType(CommandType.Text)
-                .SetSql(@"
+                .CommandType(CommandType.Text)
+                .CommandText(@"
 				update main.[Category] SET
 					CategoryName = 'RandomName'
 				where Id = 5000")
@@ -311,8 +240,8 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 object result = dbCmd
-                .SetCommandType(CommandType.Text)
-                .SetSql(@"select * from main.[Category] order by Id desc")
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category] order by Id desc")
                 .ExecuteScalar();
 
                 Assert.NotNull(result);
@@ -327,27 +256,11 @@ namespace UnitTests.DataAccess
             SetupAndAssert(dbCmd =>
             {
                 int result = dbCmd
-                .SetCommandType(CommandType.Text)
-                .SetSql(@"select * from main.[Category] order by Id desc")
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category] order by Id desc")
                 .ExecuteScalar<int>();
 
                 Assert.Equal(8, result);
-            });
-        }
-
-        [Fact]
-        public void ExecuteConnection()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                bool funcCalled = false;
-
-                dbCmd.ExecuteConnection(dbConnection =>
-                {
-                    funcCalled = true;
-                });
-
-                Assert.True(funcCalled);
             });
         }
 
@@ -358,29 +271,11 @@ namespace UnitTests.DataAccess
             {
                 bool funcCalled = false;
 
-                dbCmd.ExecuteCommand(dbCommand =>
+                dbCmd.Execute(dbCommand =>
                 {
                     funcCalled = true;
                 });
 
-                Assert.True(funcCalled);
-            });
-        }
-
-        [Fact]
-        public void ExecuteConnection_WithReturn()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                bool funcCalled = false;
-
-                int result = dbCmd.ExecuteConnection(dbConnection =>
-                {
-                    funcCalled = true;
-                    return 12;
-                });
-
-                Assert.Equal(12, result);
                 Assert.True(funcCalled);
             });
         }
@@ -392,7 +287,7 @@ namespace UnitTests.DataAccess
             {
                 bool funcCalled = false;
 
-                int result = dbCmd.ExecuteCommand(dbCommand =>
+                int result = dbCmd.Execute(dbCommand =>
                 {
                     funcCalled = true;
                     return 12;
@@ -406,10 +301,10 @@ namespace UnitTests.DataAccess
         #region Private Members
         private static void SetupAndAssert(Action<IDbCmd> act)
         {
-            using (IDbCon dbCon = DbHelper.GetNorthwind().CreateDbCon())
+            using (IDbConnection connection = DbHelper.GetNorthwind().CreateConnection())
             {
-                Assert.Equal(ConnectionState.Closed, dbCon.GetConnection().State);
-                act(dbCon.CreateDbCmd());
+                Assert.Equal(ConnectionState.Closed, connection.State);
+                act(connection.CommandType(null));
             }
         }
         #endregion

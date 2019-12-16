@@ -1,104 +1,201 @@
-﻿using System;
+﻿using Deipax.DataAccess.Interfaces;
+using System;
 using System.Data;
-using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Deipax.DataAccess.Interfaces
+namespace Deipax.DataAccess.Extensions
 {
     public static class IDbExtensions
     {
         #region Public Members
-        public static IDb CreateDb(
-            this IDb source,
-            string name = null,
-            string cs = null,
-            string provider = null,
-            Func<IDb, DbConnection> factory = null)
-        {
-            return source.DbFactory.CreateDb(
-                name ?? source.Name,
-                cs ?? source.ConnectionString,
-                provider ?? source.ProviderName,
-                factory ?? source.ConnectionFactory);
-        }
-
-        public static IDbCon CreateDbCon(
+        public static IDbConnection CreateConnection(
             this IDb source)
         {
-            return source.DbFactory.CreateDbCon(source);
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return source.Factory(source);
         }
 
-        public static IDbBatch CreateDbBatch(
+        public static IDbConnection Open(
             this IDb source)
         {
-            return source.DbFactory.CreateDbBatch(source);
+            return source.CreateConnection().EnsureOpen();
         }
 
-        public static IDbCmd CreateDbCmd(
-            this IDb source)
-        {
-            return source.DbFactory.CreateDbCmd(source);
-        }
-
-        public static void AsTransaction(
+        public static async Task<IDbConnection> OpenAsync(
             this IDb source,
-            Action<IDbBatch> func)
+            CancellationToken? token = default)
         {
-            using (var con = source.CreateDbCon())
+            return await source.CreateConnection().EnsureOpenAsync(token).ConfigureAwait(false);
+        }
+        #endregion
+
+        #region Database Extensions
+        public static void Execute(
+            this IDb source,
+            Action<IDbConnection> action)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            using (var con = source.CreateConnection())
             {
-                con.AsTransaction(func);
+                action(con);
             }
         }
 
-        public static void AsTransaction(
+        public static T Execute<T>(
             this IDb source,
-            IsolationLevel isolationLevel,
-            Action<IDbBatch> func)
+            Func<IDbConnection, T> func)
         {
-            using (var con = source.CreateDbCon())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
+            using (var con = source.CreateConnection())
             {
-                con.AsTransaction(isolationLevel, func);
+                return func(con);
             }
         }
 
-        public static T AsTransaction<T>(
+        public static void Execute(
             this IDb source,
-            Func<IDbBatch, T> func)
+            Action<IDbConnection, IDbTransaction> action,
+            IsolationLevel? isolationLevel = default)
         {
-            using (var con = source.CreateDbCon())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            using (var con = source.Open())
+            using (var trans = con.StartTrans(isolationLevel))
             {
-                return con.AsTransaction(func);
+                try
+                {
+                    action(con, trans);
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
             }
         }
 
-        public static T AsTransaction<T>(
+        public static T Execute<T>(
             this IDb source,
-            IsolationLevel isolationLevel,
-            Func<IDbBatch, T> func)
+            Func<IDbConnection, IDbTransaction, T> func,
+            IsolationLevel? isolationLevel = default)
         {
-            using (var con = source.CreateDbCon())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
+            using (var con = source.Open())
+            using (var trans = con.StartTrans(isolationLevel))
             {
-                return con.AsTransaction(isolationLevel, func);
+                try
+                {
+                    T retVal = func(con, trans);
+                    trans.Commit();
+                    return retVal;
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
+        #endregion
+
+        #region Database Extensions Async
+        public static async void ExecuteAsync(
+            this IDb source,
+            Action<IDbConnection> action,
+            CancellationToken? token = default)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            using (var con = await source.OpenAsync(token).ConfigureAwait(false))
+            {
+                action(con);
             }
         }
 
-        public static void AsBatch(
+        public static async Task<T> ExecuteAsync<T>(
             this IDb source,
-            Action<IDbBatch> func)
+            Func<IDbConnection, T> func,
+            CancellationToken? token = default)
         {
-            using (var con = source.CreateDbCon())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
+            using (var con = await source.OpenAsync(token).ConfigureAwait(false))
             {
-                con.AsBatch(func);
+                return func(con);
             }
         }
 
-        public static T AsBatch<T>(
+        public static async void ExecuteAsync(
             this IDb source,
-            Func<IDbBatch, T> func)
+            Action<IDbConnection, IDbTransaction> action,
+            CancellationToken? token = default,
+            IsolationLevel? isolationLevel = default)
         {
-            using (var con = source.CreateDbCon())
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            using (var con = await source.OpenAsync(token).ConfigureAwait(false))
+            using (var trans = con.StartTrans(isolationLevel))
             {
-                return con.AsBatch(func);
+                try
+                {
+                    action(con, trans);
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
             }
+        }
+
+        public static async Task<T> ExecuteAsync<T>(
+            this IDb source,
+            Func<IDbConnection, IDbTransaction, T> func,
+            CancellationToken? token = default,
+            IsolationLevel? isolationLevel = default)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (func == null) throw new ArgumentNullException(nameof(func));
+
+            using (var con = await source.OpenAsync(token).ConfigureAwait(false))
+            using (var trans = con.StartTrans(isolationLevel))
+            {
+                try
+                {
+                    T retVal = func(con, trans);
+                    trans.Commit();
+                    return retVal;
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
+        #endregion
+
+        #region Private Members
+        private static IDbTransaction StartTrans(
+            this IDbConnection source,
+            IsolationLevel? isolationLevel = default)
+        {
+            return isolationLevel.HasValue
+                ? source.BeginTransaction(isolationLevel.Value)
+                : source.BeginTransaction();
         }
         #endregion
     }

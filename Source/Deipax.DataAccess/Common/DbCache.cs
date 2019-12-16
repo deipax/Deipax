@@ -1,4 +1,5 @@
 ﻿using Deipax.DataAccess.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Deipax.DataAccess.Common
@@ -12,6 +13,8 @@ namespace Deipax.DataAccess.Common
         #region Public Members
         public void Add(IDb db)
         {
+            if (db == null) throw new ArgumentNullException(nameof(db));
+
             if (!_dbs.ContainsKey(db.Name))
             {
                 _dbs.Add(db.Name, db);

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
+    <ProjectReference Include="..\Deipax.DataAccess\Deipax.DataAccess.csproj" />
     <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
   </ItemGroup>
 

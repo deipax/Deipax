@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 
 namespace Deipax.DataAccess.Extensions
@@ -11,6 +10,8 @@ namespace Deipax.DataAccess.Extensions
             int startBound = 0,
             int length = -1)
         {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+
             unchecked
             {
                 int max = length < 0 ? source.FieldCount : startBound + length;
@@ -24,19 +25,6 @@ namespace Deipax.DataAccess.Extensions
 
                 return hash;
             }
-        }
-
-        public static IReadOnlyDictionary<string, Type> GetFieldInfo(
-            this IDataReader source)
-        {
-            Dictionary<string, Type> dict = new Dictionary<string, Type>();
-
-            for (int i = 0; i < source.FieldCount; i++)
-            {
-                dict.Add(source.GetName(i), source.GetFieldType(i));
-            }
-
-            return dict;
         }
     }
 }

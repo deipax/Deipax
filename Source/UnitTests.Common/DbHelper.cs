@@ -1,8 +1,6 @@
 ﻿using Deipax.DataAccess.Common;
-using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
-using System.Collections.Generic;
-using System.Data.Common;
+using System.Data;
 using System.Data.SQLite;
 
 namespace UnitTests.Common
@@ -11,23 +9,16 @@ namespace UnitTests.Common
     {
         static DbHelper()
         {
-            _dbProviders = new Dictionary<string, DbProviderFactory>()
-            {
-                { "System.Data.SQLite", SQLiteFactory.Instance }
-            };
-
-            DbFactory factory = new DbFactory();
             _dbCache = new DbCache();
-            _dbCache.Add(factory.CreateDb(
+            _dbCache.Add(DbFactory.CreateDb(
                 "Northwind",
                 "Data Source=.\\Resources\\Northwind_small.sqlite;Version=3;",
                 "System.Data.SQLite",
-                CreateDbConnection));
+                CreateSqliteConnection));
         }
 
         #region Field Members
         private static readonly DbCache _dbCache;
-        private static readonly IReadOnlyDictionary<string, DbProviderFactory> _dbProviders;
         #endregion
 
         #region Public Members
@@ -38,10 +29,9 @@ namespace UnitTests.Common
         #endregion
 
         #region Private Members
-        private static DbConnection CreateDbConnection(IDb db)
+        private static IDbConnection CreateSqliteConnection(IDb db)
         {
-            var factory = _dbProviders[db.ProviderName];
-            var con = factory.CreateConnection();
+            var con = SQLiteFactory.Instance.CreateConnection();
             con.ConnectionString = db.ConnectionString;
             return con;
         }

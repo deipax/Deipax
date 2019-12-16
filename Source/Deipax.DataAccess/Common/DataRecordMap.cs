@@ -31,6 +31,8 @@ namespace Deipax.DataAccess.Common
         #region Public Members
         public static Func<IDataRecord, T> Create(DataReaderCache cache)
         {
+            if (cache == null) throw new ArgumentNullException(nameof(cache));
+
             if (!_cache.TryGetValue(cache.GetColumnHash(), out Func<IDataRecord, T> func))
             {
                 lock (_lock)

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Deipax.DataAccess.Extensions;
+using System;
 using System.Data;
 using System.Threading;
-using Deipax.DataAccess.Extensions;
 
 namespace Deipax.DataAccess.Common
 {
