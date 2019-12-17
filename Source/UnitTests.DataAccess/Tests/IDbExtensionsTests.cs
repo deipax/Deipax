@@ -1,4 +1,5 @@
 ﻿using Deipax.DataAccess.Extensions;
+using Deipax.DataAccess.Interfaces;
 using System.Data;
 using System.Reflection;
 using UnitTests.Common;
@@ -8,17 +9,20 @@ namespace UnitTests.DataAccess
 {
     public class IDbExtensionsTests
     {
+        #region Field Members
+        // TODO: Replace with mock
+        private IDb _db = DbHelper.GetNorthwind();
+        #endregion
+
         [Fact]
         public void Execute()
         {
             IDbConnection connection = null;
 
-            DbHelper.GetNorthwind().Execute(x =>
+            _db.Execute(x =>
             {
                 connection = x;
                 Assert.NotNull(connection);
-                Assert.Equal(ConnectionState.Closed, connection.State);
-                connection.Open();
                 Assert.Equal(ConnectionState.Open, connection.State);
             });
 
@@ -30,12 +34,10 @@ namespace UnitTests.DataAccess
         {
             IDbConnection connection = null;
 
-            var result = DbHelper.GetNorthwind().Execute(x =>
+            var result = _db.Execute(x =>
             {
                 connection = x;
                 Assert.NotNull(connection);
-                Assert.Equal(ConnectionState.Closed, connection.State);
-                connection.Open();
                 Assert.Equal(ConnectionState.Open, connection.State);
                 return 1;
             });
@@ -50,7 +52,7 @@ namespace UnitTests.DataAccess
             IDbConnection connection = null;
             IDbTransaction transaction = null;
 
-            DbHelper.GetNorthwind().Execute((x, y) =>
+            _db.Execute((x, y) =>
             {
                 connection = x;
                 transaction = y;
@@ -72,7 +74,7 @@ namespace UnitTests.DataAccess
             IDbConnection connection = null;
             IDbTransaction transaction = null;
 
-            DbHelper.GetNorthwind().Execute((x, y) =>
+            _db.Execute((x, y) =>
             {
                 connection = x;
                 transaction = y;
@@ -80,10 +82,10 @@ namespace UnitTests.DataAccess
                 Assert.NotNull(connection);
                 Assert.NotNull(transaction);
                 Assert.Equal(ConnectionState.Open, connection.State);
-                Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
+                Assert.Equal(IsolationLevel.ReadCommitted, transaction.IsolationLevel);
                 Assert.Same(connection, transaction.Connection);
             },
-            IsolationLevel.Unspecified);
+            IsolationLevel.ReadCommitted);
 
             AssertTransactionDisposed(transaction);
             AssertConnectionDisposed(connection);
@@ -95,7 +97,7 @@ namespace UnitTests.DataAccess
             IDbConnection connection = null;
             IDbTransaction transaction = null;
 
-            var result = DbHelper.GetNorthwind().Execute((x, y) =>
+            var result = _db.Execute((x, y) =>
             {
                 connection = x;
                 transaction = y;
@@ -119,7 +121,7 @@ namespace UnitTests.DataAccess
             IDbConnection connection = null;
             IDbTransaction transaction = null;
 
-            var result = DbHelper.GetNorthwind().Execute((x, y) =>
+            var result = _db.Execute((x, y) =>
             {
                 connection = x;
                 transaction = y;
@@ -132,6 +134,132 @@ namespace UnitTests.DataAccess
                 return 12;
             },
             IsolationLevel.Unspecified);
+
+            Assert.Equal(12, result);
+            AssertTransactionDisposed(transaction);
+            AssertConnectionDisposed(connection);
+        }
+
+        [Fact]
+        public void ExecuteAsync()
+        {
+            IDbConnection connection = null;
+
+            _db.ExecuteAsync(x =>
+            {
+                connection = x;
+                Assert.NotNull(connection);
+                Assert.Equal(ConnectionState.Open, connection.State);
+            });
+
+            AssertConnectionDisposed(connection);
+        }
+
+        [Fact]
+        public void ExecuteAsync_WithReturn()
+        {
+            IDbConnection connection = null;
+
+            var result = _db.ExecuteAsync(x =>
+            {
+                connection = x;
+                Assert.NotNull(connection);
+                Assert.Equal(ConnectionState.Open, connection.State);
+                return 1;
+            }).Result;
+
+            Assert.Equal(1, result);
+            AssertConnectionDisposed(connection);
+        }
+
+        [Fact]
+        public void ExecuteAsync_WithTrans()
+        {
+            IDbConnection connection = null;
+            IDbTransaction transaction = null;
+
+            _db.ExecuteAsync((x, y) =>
+            {
+                connection = x;
+                transaction = y;
+
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
+                Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
+                Assert.Same(connection, transaction.Connection);
+            });
+
+            AssertTransactionDisposed(transaction);
+            AssertConnectionDisposed(connection);
+        }
+
+        [Fact]
+        public void ExecuteAsync_WithTrans_IsolationLevel()
+        {
+            IDbConnection connection = null;
+            IDbTransaction transaction = null;
+
+            _db.ExecuteAsync((x, y) =>
+            {
+                connection = x;
+                transaction = y;
+
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
+                Assert.Equal(IsolationLevel.ReadCommitted, transaction.IsolationLevel);
+                Assert.Same(connection, transaction.Connection);
+            },
+            isolationLevel: IsolationLevel.ReadCommitted);
+
+            AssertTransactionDisposed(transaction);
+            AssertConnectionDisposed(connection);
+        }
+
+        [Fact]
+        public void ExecuteAsync_WithTrans_WithReturn()
+        {
+            IDbConnection connection = null;
+            IDbTransaction transaction = null;
+
+            var result = _db.ExecuteAsync((x, y) =>
+            {
+                connection = x;
+                transaction = y;
+
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
+                Assert.Equal(IsolationLevel.Serializable, transaction.IsolationLevel);
+                Assert.Same(connection, transaction.Connection);
+                return 10;
+            }).Result;
+
+            Assert.Equal(10, result);
+            AssertTransactionDisposed(transaction);
+            AssertConnectionDisposed(connection);
+        }
+
+        [Fact]
+        public void ExecuteAsync_WithTrans_IsolationLevel_WithReturn()
+        {
+            IDbConnection connection = null;
+            IDbTransaction transaction = null;
+
+            var result = _db.ExecuteAsync((x, y) =>
+            {
+                connection = x;
+                transaction = y;
+
+                Assert.NotNull(connection);
+                Assert.NotNull(transaction);
+                Assert.Equal(ConnectionState.Open, connection.State);
+                Assert.Equal(IsolationLevel.ReadCommitted, transaction.IsolationLevel);
+                Assert.Same(connection, transaction.Connection);
+                return 12;
+            },
+            isolationLevel: IsolationLevel.ReadCommitted).Result;
 
             Assert.Equal(12, result);
             AssertTransactionDisposed(transaction);

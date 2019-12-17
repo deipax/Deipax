@@ -88,8 +88,8 @@ namespace Deipax.DataAccess.Extensions
                 if (source is DbConnection dbConn)
                 {
                     var task = token.HasValue
-                        ? dbConn.OpenAsync()
-                        : dbConn.OpenAsync(token.Value);
+                        ? dbConn.OpenAsync(token.Value)
+                        : dbConn.OpenAsync();
 
                     await task.ConfigureAwait(false);
                 }

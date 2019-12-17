@@ -12,21 +12,23 @@ namespace Deipax.DataAccess.Extensions
         public static IDbConnection CreateConnection(
             this IDb source)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
-            return source.Factory(source);
+             if (source == null) throw new ArgumentNullException(nameof(source));
+             return source.Factory(source);
         }
 
         public static IDbConnection Open(
             this IDb source)
         {
-            return source.CreateConnection().EnsureOpen();
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return source.Factory(source).EnsureOpen();
         }
 
         public static async Task<IDbConnection> OpenAsync(
             this IDb source,
             CancellationToken? token = default)
         {
-            return await source.CreateConnection().EnsureOpenAsync(token).ConfigureAwait(false);
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return await source.Factory(source).EnsureOpenAsync(token).ConfigureAwait(false);
         }
         #endregion
 
@@ -38,7 +40,7 @@ namespace Deipax.DataAccess.Extensions
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (action == null) throw new ArgumentNullException(nameof(action));
 
-            using (var con = source.CreateConnection())
+            using (var con = source.Open())
             {
                 action(con);
             }
@@ -51,7 +53,7 @@ namespace Deipax.DataAccess.Extensions
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (func == null) throw new ArgumentNullException(nameof(func));
 
-            using (var con = source.CreateConnection())
+            using (var con = source.Open())
             {
                 return func(con);
             }
