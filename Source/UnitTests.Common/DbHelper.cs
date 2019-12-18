@@ -1,4 +1,5 @@
 ﻿using Deipax.DataAccess.Common;
+using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System.Data;
 using System.Data.SQLite;
@@ -10,7 +11,7 @@ namespace UnitTests.Common
         static DbHelper()
         {
             _dbCache = new DbCache();
-            _dbCache.Add(DbFactory.CreateDb(
+            _dbCache.Add(DbFactory.Instance.CreateDb(
                 "Northwind",
                 "Data Source=.\\Resources\\Northwind_small.sqlite;Version=3;",
                 "System.Data.SQLite",

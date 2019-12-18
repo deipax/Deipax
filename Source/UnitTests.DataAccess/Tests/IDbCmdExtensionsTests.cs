@@ -106,7 +106,7 @@ namespace UnitTests.DataAccess
                     dbCmd.Connection.CreateParameter(),
                 };
 
-                IDbCmd dbCmd2 = dbCmd.AddParameters(list.ToArray());
+                IDbCmd dbCmd2 = dbCmd.AddParameter(list.ToArray());
 
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.NotNull(dbCmd.Parameters);

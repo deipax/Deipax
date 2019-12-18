@@ -1,4 +1,4 @@
-﻿using Deipax.DataAccess.Common;
+﻿using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System;
 using System.Data;
@@ -15,56 +15,49 @@ namespace Deipax.DataAccess.Extensions
             this IDbConnection source,
             CommandBehavior? behavior)
         {
-            return DbFactory.CreateDbCmd().Connection(source).CommandBehavior(behavior);
+            return DbFactory.Instance.CreateDbCmd().Connection(source).CommandBehavior(behavior);
         }
 
         public static IDbCmd Transaction(
             this IDbConnection source,
             IDbTransaction trans)
         {
-            return DbFactory.CreateDbCmd().Connection(source).Transaction(trans);
+            return DbFactory.Instance.CreateDbCmd().Connection(source).Transaction(trans);
         }
 
         public static IDbCmd CommandText(
             this IDbConnection source,
             string text)
         {
-            return DbFactory.CreateDbCmd().Connection(source).CommandText(text);
+            return DbFactory.Instance.CreateDbCmd().Connection(source).CommandText(text);
         }
 
         public static IDbCmd CommandType(
             this IDbConnection source,
             CommandType? type)
         {
-            return DbFactory.CreateDbCmd().Connection(source).CommandType(type);
+            return DbFactory.Instance.CreateDbCmd().Connection(source).CommandType(type);
         }
 
         public static IDbCmd CommandTimeout(
             this IDbConnection source,
             int? timeout)
         {
-            return DbFactory.CreateDbCmd().Connection(source).CommandTimeout(timeout);
+            return DbFactory.Instance.CreateDbCmd().Connection(source).CommandTimeout(timeout);
         }
 
         public static IDbCmd CancellationToken(
             this IDbConnection source,
             CancellationToken? token)
         {
-            return DbFactory.CreateDbCmd().Connection(source).CancellationToken(token);
+            return DbFactory.Instance.CreateDbCmd().Connection(source).CancellationToken(token);
         }
 
-        public static IDbCmd Parameter(
-            this IDbConnection source,
-            IDbDataParameter parameter)
-        {
-            return DbFactory.CreateDbCmd().Connection(source).AddParameter(parameter);
-        }
-
-        public static IDbCmd Parameters(
+        public static IDbCmd AddParameter(
             this IDbConnection source,
             params IDbDataParameter[] parameters)
         {
-            return DbFactory.CreateDbCmd().Connection(source).AddParameters(parameters);
+            return DbFactory.Instance.CreateDbCmd().Connection(source).AddParameter(parameters);
         }
         #endregion
 
@@ -77,15 +70,15 @@ namespace Deipax.DataAccess.Extensions
             return source;
         }
 
-        public async static Task<IDbConnection> EnsureOpenAsync(
+        public async static Task<DbConnection> EnsureOpenAsync(
             this IDbConnection source,
             CancellationToken? token = null)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
 
-            if (source.State == ConnectionState.Closed)
+            if (source is DbConnection dbConn)
             {
-                if (source is DbConnection dbConn)
+                if (source.State == ConnectionState.Closed)
                 {
                     var task = token.HasValue
                         ? dbConn.OpenAsync(token.Value)
@@ -93,13 +86,11 @@ namespace Deipax.DataAccess.Extensions
 
                     await task.ConfigureAwait(false);
                 }
-                else
-                {
-                    throw new InvalidOperationException("Async operations require use of a DbConnection or an already-open IDbConnection");
-                }
+
+                return dbConn;
             }
 
-            return source;
+            throw new InvalidOperationException("Async operations require use of a DbConnection or an already-open IDbConnection");
         }
 
         public static IDbDataParameter CreateParameter(

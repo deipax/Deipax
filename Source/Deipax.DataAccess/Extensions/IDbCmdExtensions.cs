@@ -85,16 +85,6 @@ namespace Deipax.DataAccess.Extensions
 
         public static IDbCmd AddParameter(
             this IDbCmd source,
-            IDbDataParameter parameter)
-        {
-            if (source == null) throw new ArgumentNullException(nameof(source));
-            if (parameter == null) throw new ArgumentNullException(nameof(parameter));
-            source.Parameters.Add(parameter);
-            return source;
-        }
-
-        public static IDbCmd AddParameters(
-            this IDbCmd source,
             params IDbDataParameter[] parameters)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
