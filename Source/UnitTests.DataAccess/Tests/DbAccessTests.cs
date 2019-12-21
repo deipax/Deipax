@@ -12,14 +12,14 @@ namespace UnitTests.DataAccess
         public DbAccessTests()
         {
             _access = new DbCache();
-            _access.Add(new DbHelperClass()
+            _access.Add(new CustomDb()
             {
                 Name = "NorthWind"
             });
         }
 
         #region Field Members
-        private DbCache _access;
+        private readonly DbCache _access;
         #endregion
 
         [Fact]
@@ -50,14 +50,14 @@ namespace UnitTests.DataAccess
             var dbs = _access.GetAll();
             Assert.True(dbs.Count() == 1);
 
-            _access.Add(new DbHelperClass()
+            _access.Add(new CustomDb()
             {
                 Name = "NorthWind"
             });
 
             Assert.True(dbs.Count() == 1);
 
-            _access.Add(new DbHelperClass()
+            _access.Add(new CustomDb()
             {
                 Name = "BogusName"
             });
@@ -66,7 +66,7 @@ namespace UnitTests.DataAccess
         }
 
         #region Helpers
-        class DbHelperClass : IDb
+        class CustomDb : IDb
         {
             public string ConnectionString { get; set; }
             public string Name { get; set; }

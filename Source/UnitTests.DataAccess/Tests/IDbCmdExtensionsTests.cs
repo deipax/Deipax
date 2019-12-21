@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 using UnitTests.Common;
 using UnitTests.DataAccess.Concretes;
 using Xunit;
@@ -13,14 +15,14 @@ namespace UnitTests.DataAccess
     public class IDbCmdExtensionsTests
     {
         [Fact]
-        public void SetCommandType()
+        public void SetCommandBehavior()
         {
             SetupAndAssert(dbCmd =>
             {
-                Assert.Null(dbCmd.CommandType);
-                IDbCmd dbCmd2 = dbCmd.CommandType(CommandType.StoredProcedure);
+                Assert.Null(dbCmd.CommandBehavior);
+                IDbCmd dbCmd2 = dbCmd.CommandBehavior(CommandBehavior.SingleRow);
                 Assert.Same(dbCmd, dbCmd2);
-                Assert.Equal(CommandType.StoredProcedure, dbCmd.CommandType);
+                Assert.Equal(CommandBehavior.SingleRow, dbCmd.CommandBehavior);
             });
         }
 
@@ -33,18 +35,6 @@ namespace UnitTests.DataAccess
                 IDbCmd dbCmd2 = dbCmd.Connection(null);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Null(dbCmd.Connection);
-            });
-        }
-
-        [Fact]
-        public void SetTimeout()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                Assert.Null(dbCmd.CommandTimeout);
-                IDbCmd dbCmd2 = dbCmd.CommandTimeout(1000);
-                Assert.Same(dbCmd, dbCmd2);
-                Assert.Equal(1000, dbCmd.CommandTimeout);
             });
         }
 
@@ -74,26 +64,44 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void AddParameter_Test2()
+        public void SetCommandType()
         {
             SetupAndAssert(dbCmd =>
             {
-                Assert.NotNull(dbCmd.Parameters);
-                Assert.Empty(dbCmd.Parameters);
-
-                IDbDataParameter parameter = dbCmd.Connection.CreateParameter();
-
-                IDbCmd dbCmd2 = dbCmd.AddParameter(parameter);
-
+                Assert.Null(dbCmd.CommandType);
+                IDbCmd dbCmd2 = dbCmd.CommandType(CommandType.StoredProcedure);
                 Assert.Same(dbCmd, dbCmd2);
-                Assert.NotNull(dbCmd.Parameters);
-                Assert.Equal(1, dbCmd.Parameters.Count);
-                Assert.Same(parameter, dbCmd.Parameters.ElementAt(0));
+                Assert.Equal(CommandType.StoredProcedure, dbCmd.CommandType);
             });
         }
 
         [Fact]
-        public void AddParameters_Test1()
+        public void SetCommandTimeout()
+        {
+            SetupAndAssert(dbCmd =>
+            {
+                Assert.Null(dbCmd.CommandTimeout);
+                IDbCmd dbCmd2 = dbCmd.CommandTimeout(1000);
+                Assert.Same(dbCmd, dbCmd2);
+                Assert.Equal(1000, dbCmd.CommandTimeout);
+            });
+        }
+
+        [Fact]
+        public void SetCancellationToken()
+        {
+            SetupAndAssert(dbCmd =>
+            {
+                var token = new CancellationToken();
+                Assert.Null(dbCmd.CancellationToken);
+                IDbCmd dbCmd2 = dbCmd.CancellationToken(token);
+                Assert.Same(dbCmd, dbCmd2);
+                Assert.Equal(token, dbCmd.CancellationToken);
+            });
+        }
+
+        [Fact]
+        public void AddParameters()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -146,34 +154,7 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void AsDynamicList()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                List<dynamic> result = dbCmd
-                .CommandType(CommandType.Text)
-                .CommandText(@"select * from main.[Category]")
-                .AsEnumerable()
-                .ToList();
-
-                Assert.NotNull(result);
-                Assert.True(result.Count() > 0);
-
-                foreach (dynamic item in result)
-                {
-                    Assert.IsType<long>(item.Id);
-                    Assert.IsType<string>(item.CategoryName);
-                    Assert.IsType<string>(item.Description);
-
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
-                }
-            });
-        }
-
-        [Fact]
-        public void AsEnumerable()
+        public void AsTypedEnumerable()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -186,29 +167,6 @@ namespace UnitTests.DataAccess
                 Assert.True(result.Count() > 0);
 
                 foreach (CategoryAsClass item in result)
-                {
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
-                }
-            });
-        }
-
-        [Fact]
-        public void AsList()
-        {
-            SetupAndAssert(dbCmd =>
-            {
-                IEnumerable<CategoryAsStruct> result = dbCmd
-                .CommandType(CommandType.Text)
-                .CommandText(@"select * from main.[Category]")
-                .AsEnumerable<CategoryAsStruct>()
-                .ToList();
-
-                Assert.NotNull(result);
-                Assert.True(result.Count() > 0);
-
-                foreach (CategoryAsStruct item in result)
                 {
                     Assert.True(item.Id >= 0);
                     Assert.True(!string.IsNullOrEmpty(item.CategoryName));
@@ -267,28 +225,36 @@ namespace UnitTests.DataAccess
         [Fact]
         public void ExecuteCommand()
         {
+            IDbCommand command = null;
+
             SetupAndAssert(dbCmd =>
             {
                 bool funcCalled = false;
 
                 dbCmd.Execute(dbCommand =>
                 {
+                    command = dbCommand;
                     funcCalled = true;
                 });
 
                 Assert.True(funcCalled);
             });
+
+            AssertCommandDisposed(command);
         }
 
         [Fact]
         public void ExecuteCommand_WithReturn()
         {
+            IDbCommand command = null;
+
             SetupAndAssert(dbCmd =>
             {
                 bool funcCalled = false;
 
                 int result = dbCmd.Execute(dbCommand =>
                 {
+                    command = dbCommand;
                     funcCalled = true;
                     return 12;
                 });
@@ -296,6 +262,152 @@ namespace UnitTests.DataAccess
                 Assert.Equal(12, result);
                 Assert.True(funcCalled);
             });
+
+            AssertCommandDisposed(command);
+        }
+
+        //[Fact]
+        public void AsDynamicEnumerableAsync()
+        {
+            // TODO: Implement Func
+            SetupAndAssert(dbCmd =>
+            {
+                IEnumerable<dynamic> result = dbCmd
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category]")
+                .AsEnumerable();
+
+                Assert.NotNull(result);
+                Assert.True(result.Count() > 0);
+
+                foreach (dynamic item in result)
+                {
+                    Assert.IsType<long>(item.Id);
+                    Assert.IsType<string>(item.CategoryName);
+                    Assert.IsType<string>(item.Description);
+
+                    Assert.True(item.Id >= 0);
+                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                    Assert.True(!string.IsNullOrEmpty(item.Description));
+                }
+            });
+        }
+
+        //[Fact]
+        public void AsTypedEnumerableAsync()
+        {
+            // TODO: Implement Func
+            SetupAndAssert(dbCmd =>
+            {
+                IEnumerable<CategoryAsClass> result = dbCmd
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category]")
+                .AsEnumerable<CategoryAsClass>();
+
+                Assert.NotNull(result);
+                Assert.True(result.Count() > 0);
+
+                foreach (CategoryAsClass item in result)
+                {
+                    Assert.True(item.Id >= 0);
+                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                    Assert.True(!string.IsNullOrEmpty(item.Description));
+                }
+            });
+        }
+
+        [Fact]
+        public void ExecuteNonQueryAsync()
+        {
+            SetupAndAssert(dbCmd =>
+            {
+                int result = dbCmd
+                .CommandType(CommandType.Text)
+                .CommandText(@"
+				update main.[Category] SET
+					CategoryName = 'RandomName'
+				where Id = 5000")
+                .ExecuteNonQueryAsync()
+                .Result;
+
+                Assert.True(result == 0);
+            });
+        }
+
+        [Fact]
+        public void ExecuteScalarAsync()
+        {
+            SetupAndAssert(dbCmd =>
+            {
+                object result = dbCmd
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category] order by Id desc")
+                .ExecuteScalarAsync()
+                .Result;
+
+                Assert.NotNull(result);
+                Assert.IsType<long>(result);
+                Assert.Equal(8, (long)result);
+            });
+        }
+
+        [Fact]
+        public void ExecuteScalarAsIntAsync()
+        {
+            SetupAndAssert(dbCmd =>
+            {
+                int result = dbCmd
+                .CommandType(CommandType.Text)
+                .CommandText(@"select * from main.[Category] order by Id desc")
+                .ExecuteScalarAsync<int>()
+                .Result;
+
+                Assert.Equal(8, result);
+            });
+        }
+
+        [Fact]
+        public void ExecuteCommandAsync()
+        {
+            IDbCommand command = null;
+
+            SetupAndAssert(dbCmd =>
+            {
+                bool funcCalled = false;
+
+                dbCmd.ExecuteAsync(dbCommand =>
+                {
+                    command = dbCommand;
+                    funcCalled = true;
+                });
+
+                Assert.True(funcCalled);
+            });
+
+            AssertCommandDisposed(command);
+        }
+
+        [Fact]
+        public void ExecuteCommandAsync_WithReturn()
+        {
+            IDbCommand command = null;
+
+            SetupAndAssert(dbCmd =>
+            {
+                bool funcCalled = false;
+
+                int result = dbCmd.ExecuteAsync(dbCommand =>
+                {
+                    command = dbCommand;
+                    funcCalled = true;
+                    return 12;
+                }).Result;
+
+                Assert.Equal(12, result);
+                Assert.True(funcCalled);
+            });
+
+            AssertCommandDisposed(command);
         }
 
         #region Private Members
@@ -306,6 +418,13 @@ namespace UnitTests.DataAccess
                 Assert.Equal(ConnectionState.Closed, connection.State);
                 act(connection.CommandType(null));
             }
+        }
+
+        private static void AssertCommandDisposed(IDbCommand cmd)
+        {
+            var field = cmd.GetType().GetField("disposed", BindingFlags.NonPublic | BindingFlags.Instance);
+            var disposed = (bool)field.GetValue(cmd);
+            Assert.True(disposed);
         }
         #endregion
     }

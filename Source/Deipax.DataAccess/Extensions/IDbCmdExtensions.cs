@@ -316,7 +316,7 @@ namespace Deipax.DataAccess.Extensions
 
             using (var dbCmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
             {
-                return func(dbCmd);
+                return await source.CreateTask(func, dbCmd).ConfigureAwait(false);
             }
         }
         #endregion
@@ -368,6 +368,20 @@ namespace Deipax.DataAccess.Extensions
             }
 
             return cmd;
+        }
+
+        private static Task<T> CreateTask<T>(
+            this IDbCmd source,
+            Func<DbCommand, T> func,
+            DbCommand dbCmd)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                return func(dbCmd);
+            },
+            source.CancellationToken ?? System.Threading.CancellationToken.None,
+            TaskCreationOptions.None,
+            TaskScheduler.Default);
         }
 
         private static Action<IDbCommand> GetInit(
