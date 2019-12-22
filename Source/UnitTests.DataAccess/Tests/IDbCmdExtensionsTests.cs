@@ -23,6 +23,8 @@ namespace UnitTests.DataAccess
                 IDbCmd dbCmd2 = dbCmd.CommandBehavior(CommandBehavior.SingleRow);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal(CommandBehavior.SingleRow, dbCmd.CommandBehavior);
+                dbCmd.CommandBehavior(null);
+                Assert.Null(dbCmd.CommandBehavior);
             });
         }
 
@@ -48,6 +50,8 @@ namespace UnitTests.DataAccess
                 IDbCmd dbCmd2 = dbCmd.Transaction(trans);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Same(trans, dbCmd.Transaction);
+                dbCmd.Transaction(null);
+                Assert.Null(dbCmd.Transaction);
             });
         }
 
@@ -60,6 +64,8 @@ namespace UnitTests.DataAccess
                 IDbCmd dbCmd2 = dbCmd.CommandText("Bill");
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal("Bill", dbCmd.CommandText);
+                dbCmd.CommandText(null);
+                Assert.Null(dbCmd.CommandText);
             });
         }
 
@@ -72,6 +78,8 @@ namespace UnitTests.DataAccess
                 IDbCmd dbCmd2 = dbCmd.CommandType(CommandType.StoredProcedure);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal(CommandType.StoredProcedure, dbCmd.CommandType);
+                dbCmd.CommandType(null);
+                Assert.Null(dbCmd.CommandType);
             });
         }
 
@@ -84,6 +92,8 @@ namespace UnitTests.DataAccess
                 IDbCmd dbCmd2 = dbCmd.CommandTimeout(1000);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal(1000, dbCmd.CommandTimeout);
+                dbCmd.CommandTimeout(null);
+                Assert.Null(dbCmd.CommandTimeout);
             });
         }
 
@@ -97,6 +107,8 @@ namespace UnitTests.DataAccess
                 IDbCmd dbCmd2 = dbCmd.CancellationToken(token);
                 Assert.Same(dbCmd, dbCmd2);
                 Assert.Equal(token, dbCmd.CancellationToken);
+                dbCmd.CancellationToken(null);
+                Assert.Null(dbCmd.CancellationToken);
             });
         }
 
@@ -124,6 +136,9 @@ namespace UnitTests.DataAccess
                 {
                     Assert.Same(list[i], dbCmd.Parameters.ElementAt(i));
                 }
+
+                dbCmd.Parameters.Clear();
+                Assert.Empty(dbCmd.Parameters);
             });
         }
 
