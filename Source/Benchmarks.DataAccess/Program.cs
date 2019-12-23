@@ -1,6 +1,5 @@
 ﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
-using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
@@ -26,8 +25,8 @@ namespace Benchmarks.DataAccess
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp20)).AsBaseline(),
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
                     ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462).With(Platform.X86)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472).With(Platform.X86)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
+                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
                     ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net48))
                 })
                 .With(DefaultConfig.Instance.GetLoggers().ToArray())

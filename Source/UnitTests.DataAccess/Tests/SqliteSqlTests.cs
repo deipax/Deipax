@@ -28,6 +28,17 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
+        public async void AllFieldsAsClass_Async()
+        {
+            var tmp = (await _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
+                .AsEnumerableAsync<MultipleFieldClass>()
+                .ConfigureAwait(false))
+                .ToList();
+        }
+
+        [Fact]
         public void AllFieldsAsStruct()
         {
             var tmp = _dbConnection
@@ -38,12 +49,34 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
+        public async void AllFieldsAsStruct_Async()
+        {
+            var tmp = (await _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
+                .AsEnumerableAsync<MultipleFieldStruct>()
+                .ConfigureAwait(false))
+                .ToList();
+        }
+
+        [Fact]
         public void AllFieldsAsDynamic()
         {
             var tmp = _dbConnection
                 .CommandType(CommandType.Text)
                 .CommandText(_sql)
                 .AsEnumerable()
+                .ToList();
+        }
+
+        [Fact]
+        public async void AllFieldsAsDynamic_Async()
+        {
+            var tmp = (await _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
+                .AsEnumerableAsync()
+                .ConfigureAwait(false))
                 .ToList();
         }
     }

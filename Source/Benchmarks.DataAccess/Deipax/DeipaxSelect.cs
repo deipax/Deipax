@@ -34,6 +34,7 @@ namespace Benchmarks.DataAccess.Deipax
                 .ToList();
         }
 
+
         [Benchmark]
         public void AllFieldsAsStruct_Deipax()
         {

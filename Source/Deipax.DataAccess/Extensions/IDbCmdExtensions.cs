@@ -104,50 +104,18 @@ namespace Deipax.DataAccess.Extensions
             this IDbCmd source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-
-            using (var cmd = source.CreateAndOpen())
-            using (var reader = cmd.ExecuteReader(source))
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                var map = DynamicMap.CreateMap(cache);
-
-                while (reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (reader.NextResult()) { /* ignore subsequent result sets */ }
-            }
+            var cmd = source.CreateAndOpen();
+            var reader = cmd.ExecuteReader(source);
+            return ExecuteSync(cmd, reader);
         }
 
         public static IEnumerable<T> AsEnumerable<T>(
             this IDbCmd source) where T : new()
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-
-            using (var cmd = source.CreateAndOpen())
-            using (var reader = cmd.ExecuteReader(source))
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
-
-                while (reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (reader.NextResult()) { /* ignore subsequent result sets */ }
-            }
+            var cmd = source.CreateAndOpen();
+            var reader = cmd.ExecuteReader(source);
+            return ExecuteSync<T>(cmd, reader);
         }
 
         public static int ExecuteNonQuery(
@@ -208,56 +176,23 @@ namespace Deipax.DataAccess.Extensions
         #endregion
 
         #region Database Extensions Async
-        /*
         public static async Task<IEnumerable<dynamic>> AsEnumerableAsync(
             this IDbCmd source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-
-            using (var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
-            using (var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false))
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                var map = DynamicMap.CreateMap(cache);
-
-                while (reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (reader.NextResult()) { /* ignore subsequent result sets */ /*}
-            }
+            var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false);
+            var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false);
+            return ExecuteSync(cmd, reader);
         }
 
         public static async Task<IEnumerable<T>> AsEnumerableAsync<T>(
             this IDbCmd source) where T : new()
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-
-            using (var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false))
-            using (var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false))
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
-
-                while (reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (reader.NextResult()) { /* ignore subsequent result sets */ /*}
-            }
-        }*/
+            var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false);
+            var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false);
+            return ExecuteSync<T>(cmd, reader);
+        }
 
         public static async Task<int> ExecuteNonQueryAsync(
             this IDbCmd source)
@@ -322,6 +257,54 @@ namespace Deipax.DataAccess.Extensions
         #endregion
 
         #region Private Members
+        private static IEnumerable<dynamic> ExecuteSync(
+            IDbCommand cmd,
+            IDataReader reader)
+        {
+            using (cmd)
+            using (reader)
+            {
+                if (reader.FieldCount == 0)
+                {
+                    yield break;
+                }
+
+                var cache = new DataReaderCache(reader);
+                var map = DynamicMap.CreateMap(cache);
+
+                while (reader.Read())
+                {
+                    yield return map(reader);
+                }
+
+                while (reader.NextResult()) { /* ignore subsequent result sets */ }
+            }
+        }
+
+        private static IEnumerable<T> ExecuteSync<T>(
+            IDbCommand cmd,
+            IDataReader reader) where T : new()
+        {
+            using (cmd)
+            using (reader)
+            {
+                if (reader.FieldCount == 0)
+                {
+                    yield break;
+                }
+
+                var cache = new DataReaderCache(reader);
+                Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
+
+                while (reader.Read())
+                {
+                    yield return map(reader);
+                }
+
+                while (reader.NextResult()) { /* ignore subsequent result sets */ }
+            }
+        }
+
         private static IDbCommand CreateAndOpen(
             this IDbCmd source)
         {

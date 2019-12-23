@@ -153,7 +153,6 @@ namespace UnitTests.DataAccess
                 .AsEnumerable();
 
                 Assert.NotNull(result);
-                Assert.True(result.Count() > 0);
 
                 foreach (dynamic item in result)
                 {
@@ -165,6 +164,9 @@ namespace UnitTests.DataAccess
                     Assert.True(!string.IsNullOrEmpty(item.CategoryName));
                     Assert.True(!string.IsNullOrEmpty(item.Description));
                 }
+
+                // Command and Reader should be cleaned up at this point.
+                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -179,7 +181,6 @@ namespace UnitTests.DataAccess
                 .AsEnumerable<CategoryAsClass>();
 
                 Assert.NotNull(result);
-                Assert.True(result.Count() > 0);
 
                 foreach (CategoryAsClass item in result)
                 {
@@ -187,6 +188,9 @@ namespace UnitTests.DataAccess
                     Assert.True(!string.IsNullOrEmpty(item.CategoryName));
                     Assert.True(!string.IsNullOrEmpty(item.Description));
                 }
+
+                // Command and Reader should be cleaned up at this point.
+                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -281,19 +285,18 @@ namespace UnitTests.DataAccess
             AssertCommandDisposed(command);
         }
 
-        //[Fact]
+        [Fact]
         public void AsDynamicEnumerableAsync()
         {
-            // TODO: Implement Func
-            SetupAndAssert(dbCmd =>
+            SetupAndAssert(async dbCmd =>
             {
-                IEnumerable<dynamic> result = dbCmd
+                IEnumerable<dynamic> result = await dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
-                .AsEnumerable();
+                .AsEnumerableAsync()
+                .ConfigureAwait(false);
 
                 Assert.NotNull(result);
-                Assert.True(result.Count() > 0);
 
                 foreach (dynamic item in result)
                 {
@@ -305,22 +308,24 @@ namespace UnitTests.DataAccess
                     Assert.True(!string.IsNullOrEmpty(item.CategoryName));
                     Assert.True(!string.IsNullOrEmpty(item.Description));
                 }
+
+                // Command and Reader should be cleaned up at this point.
+                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
-        //[Fact]
+        [Fact]
         public void AsTypedEnumerableAsync()
         {
-            // TODO: Implement Func
-            SetupAndAssert(dbCmd =>
+            SetupAndAssert(async dbCmd =>
             {
-                IEnumerable<CategoryAsClass> result = dbCmd
+                IEnumerable<CategoryAsClass> result = await dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
-                .AsEnumerable<CategoryAsClass>();
+                .AsEnumerableAsync<CategoryAsClass>()
+                .ConfigureAwait(false);
 
                 Assert.NotNull(result);
-                Assert.True(result.Count() > 0);
 
                 foreach (CategoryAsClass item in result)
                 {
@@ -328,6 +333,9 @@ namespace UnitTests.DataAccess
                     Assert.True(!string.IsNullOrEmpty(item.CategoryName));
                     Assert.True(!string.IsNullOrEmpty(item.Description));
                 }
+
+                // Command and Reader should be cleaned up at this point.
+                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
