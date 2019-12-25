@@ -45,7 +45,7 @@ namespace Benchmarks.DataAccess.Dapper
         [Benchmark]
         public void AllFieldsAsStruct_Async()
         {
-             var tmp = _dbConnection.QueryAsync<MultipleFieldStruct>(_sql).Result;
+            var tmp = _dbConnection.QueryAsync<MultipleFieldStruct>(_sql).Result;
         }
 
         [Benchmark]
@@ -58,6 +58,30 @@ namespace Benchmarks.DataAccess.Dapper
         public void DynamicList_Async()
         {
             var tmp = _dbConnection.QueryAsync(_sql).Result;
+        }
+
+        [Benchmark]
+        public void QueryFirst()
+        {
+            var tmp = _dbConnection.QueryFirst(_sql);
+        }
+
+        [Benchmark]
+        public void QueryFirstOrDefault()
+        {
+            var tmp = _dbConnection.QueryFirstOrDefault(_sql);
+        }
+
+        [Benchmark]
+        public void QuerySingle()
+        {
+            var tmp = _dbConnection.QuerySingle(_sql_limit_one);
+        }
+
+        [Benchmark]
+        public void QuerySingleOrDefault()
+        {
+            var tmp = _dbConnection.QuerySingleOrDefault(_sql_limit_one);
         }
     }
 }

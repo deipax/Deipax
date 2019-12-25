@@ -86,5 +86,45 @@ namespace Benchmarks.DataAccess.Deipax
                 .Result
                 .ToList();
         }
+
+        [Benchmark]
+        public void QueryFirst()
+        {
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
+                .AsEnumerable()
+                .QueryFirst();
+        }
+
+        [Benchmark]
+        public void QueryFirstOrDefault()
+        {
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql)
+                .AsEnumerable()
+                .QueryFirstOrDefault();
+        }
+
+        [Benchmark]
+        public void QuerySingle()
+        {
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql_limit_one)
+                .AsEnumerable()
+                .QuerySingle();
+        }
+
+        [Benchmark]
+        public void QuerySingleOrDefault()
+        {
+            var tmp = _dbConnection
+                .CommandType(CommandType.Text)
+                .CommandText(_sql_limit_one)
+                .AsEnumerable()
+                .QuerySingleOrDefault();
+        }
     }
 }

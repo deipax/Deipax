@@ -1,5 +1,4 @@
 ﻿using Deipax.Convert;
-using Deipax.DataAccess.Common;
 using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System;

@@ -36,8 +36,6 @@ namespace Deipax.DataAccess.Concretes
                     {
                         yield return map(Reader);
                     }
-
-                    while (!token.IsCancellationRequested && Reader.NextResult()) { /* ignore subsequent result sets */ }
                 }
             }
             finally
@@ -93,8 +91,6 @@ namespace Deipax.DataAccess.Concretes
                     {
                         yield return map(Reader);
                     }
-
-                    while (!token.IsCancellationRequested && Reader.NextResult()) { /* ignore subsequent result sets */ }
                 }
             }
             finally

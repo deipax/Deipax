@@ -84,6 +84,8 @@ namespace UnitTests.Common
             left join main.[Customer] c on c.[Id] = o.[CustomerId]
             left join main.[Employee] e on e.[Id] = o.[EmployeeId]
             left join main.[Supplier] s on s.[Id] = p.[SupplierId]";
+
+        protected string _sql_limit_one = _sql + " limit 1";
         #endregion
     }
 
