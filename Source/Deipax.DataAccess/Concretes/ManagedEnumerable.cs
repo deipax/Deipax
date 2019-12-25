@@ -10,31 +10,44 @@ namespace Deipax.DataAccess.Concretes
 {
     public sealed class ManagedEnumerable<T> : IManagedEnumerable<T> where T : new()
     {
-        public IDbCmd DbCmd { get; set; }
-        public IDbCommand DbCommand { get; set; }
-        public IDataReader Reader { get; set; }
+        public ManagedEnumerable(
+            IDbCmd dbCmd,
+            IDbCommand dbCommand,
+            IDataReader reader)
+        {
+            _dbCmd = dbCmd;
+            _dbCommand = dbCommand;
+            _reader = reader;
+        }
+
+        #region Field Members
+        private IDbCmd _dbCmd;
+        private IDbCommand _dbCommand;
+        private IDataReader _reader;
+        #endregion
+
         public bool Diposed { get; private set; } = false;
 
         public IEnumerator<T> GetEnumerator()
         {
             try
             {
-                var token = DbCmd.CancellationToken ?? new CancellationToken(false);
+                var token = _dbCmd.CancellationToken ?? new CancellationToken(false);
 
-                using (DbCommand)
-                using (Reader)
+                using (_dbCommand)
+                using (_reader)
                 {
-                    if (Reader.FieldCount == 0)
+                    if (_reader.FieldCount == 0)
                     {
                         yield break;
                     }
 
-                    var cache = new DataReaderCache(Reader);
+                    var cache = new DataReaderCache(_reader);
                     Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
 
-                    while (!token.IsCancellationRequested && Reader.Read())
+                    while (!token.IsCancellationRequested && _reader.Read())
                     {
-                        yield return map(Reader);
+                        yield return map(_reader);
                     }
                 }
             }
@@ -53,11 +66,11 @@ namespace Deipax.DataAccess.Concretes
         {
             if (!Diposed)
             {
-                DbCmd = null;
-                DbCommand?.Dispose();
-                DbCommand = null;
-                Reader?.Dispose();
-                Reader = null;
+                _dbCmd = null;
+                _dbCommand?.Dispose();
+                _dbCommand = null;
+                _reader?.Dispose();
+                _reader = null;
                 Diposed = true;
             }
         }
@@ -65,31 +78,44 @@ namespace Deipax.DataAccess.Concretes
 
     public sealed class ManagedEnumerable : IManagedEnumerable<object>
     {
-        public IDbCmd DbCmd { get; set; }
-        public IDbCommand DbCommand { get; set; }
-        public IDataReader Reader { get; set; }
+        public ManagedEnumerable(
+            IDbCmd dbCmd,
+            IDbCommand dbCommand,
+            IDataReader reader)
+        {
+            _dbCmd = dbCmd;
+            _dbCommand = dbCommand;
+            _reader = reader;
+        }
+
+        #region Field Members
+        private IDbCmd _dbCmd;
+        private IDbCommand _dbCommand;
+        private IDataReader _reader;
+        #endregion
+
         public bool Diposed { get; private set; } = false;
 
         public IEnumerator<object> GetEnumerator()
         {
             try
             {
-                var token = DbCmd.CancellationToken ?? new CancellationToken(false);
+                var token = _dbCmd.CancellationToken ?? new CancellationToken(false);
 
-                using (DbCommand)
-                using (Reader)
+                using (_dbCommand)
+                using (_reader)
                 {
-                    if (Reader.FieldCount == 0)
+                    if (_reader.FieldCount == 0)
                     {
                         yield break;
                     }
 
-                    var cache = new DataReaderCache(Reader);
+                    var cache = new DataReaderCache(_reader);
                     var map = DynamicMap.CreateMap(cache);
 
-                    while (!token.IsCancellationRequested && Reader.Read())
+                    while (!token.IsCancellationRequested && _reader.Read())
                     {
-                        yield return map(Reader);
+                        yield return map(_reader);
                     }
                 }
             }
@@ -108,11 +134,11 @@ namespace Deipax.DataAccess.Concretes
         {
             if (!Diposed)
             {
-                DbCmd = null;
-                DbCommand?.Dispose();
-                DbCommand = null;
-                Reader?.Dispose();
-                Reader = null;
+                _dbCmd = null;
+                _dbCommand?.Dispose();
+                _dbCommand = null;
+                _reader?.Dispose();
+                _reader = null;
                 Diposed = true;
             }
         }

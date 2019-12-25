@@ -118,12 +118,7 @@ namespace Deipax.DataAccess.Extensions
             source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = source.CreateAndOpen();
             var reader = cmd.ExecuteReader(source);
-            return new ManagedEnumerable
-            {
-                DbCmd = source,
-                DbCommand = cmd,
-                Reader = reader
-            };
+            return new ManagedEnumerable(source, cmd, reader);
         }
 
         /// <summary>
@@ -139,12 +134,7 @@ namespace Deipax.DataAccess.Extensions
             source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = source.CreateAndOpen();
             var reader = cmd.ExecuteReader(source);
-            return new ManagedEnumerable<T>
-            {
-                DbCmd = source,
-                DbCommand = cmd,
-                Reader = reader
-            };
+            return new ManagedEnumerable<T>(source, cmd, reader);
         }
 
         public static int ExecuteNonQuery(
@@ -218,12 +208,7 @@ namespace Deipax.DataAccess.Extensions
             source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false);
             var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false);
-            return new ManagedEnumerable
-            {
-                DbCmd = source,
-                DbCommand = cmd,
-                Reader = reader
-            };
+            return new ManagedEnumerable(source, cmd, reader);
         }
 
         /// <summary>
@@ -239,12 +224,7 @@ namespace Deipax.DataAccess.Extensions
             source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false);
             var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false);
-            return new ManagedEnumerable<T>
-            {
-                DbCmd = source,
-                DbCommand = cmd,
-                Reader = reader
-            };
+            return new ManagedEnumerable<T>(source, cmd, reader);
         }
 
         public static async Task<int> ExecuteNonQueryAsync(

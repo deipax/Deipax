@@ -36,7 +36,7 @@ namespace Benchmarks.DataAccess
                 .With(MemoryDiagnoser.Default);
 
             BenchmarkRunner.Run<DeipaxSelect>(config);
-            BenchmarkRunner.Run<DapperSelect>(config);
+            //BenchmarkRunner.Run<DapperSelect>(config);
         }
 
         #region Private Members
