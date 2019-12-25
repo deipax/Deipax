@@ -1,4 +1,5 @@
-﻿using Deipax.DataAccess.Extensions;
+﻿using Deipax.DataAccess.Concretes;
+using Deipax.DataAccess.Extensions;
 using Deipax.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -147,30 +148,37 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(dbCmd =>
             {
-                IEnumerable<dynamic> result = dbCmd
+                IManagedEnumerable<dynamic> result = dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .AsEnumerable();
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable enumerable = result as ManagedEnumerable;
+                Assert.False(enumerable.Diposed);
 
-                foreach (dynamic item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.IsType<long>(item.Id);
-                    Assert.IsType<string>(item.CategoryName);
-                    Assert.IsType<string>(item.Description);
+                    Assert.NotNull(result);
+                    int count = 0;
 
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
+                    foreach (dynamic item in result)
+                    {
+                        count++;
+                        Assert.IsType<long>(item.Id);
+                        Assert.IsType<string>(item.CategoryName);
+                        Assert.IsType<string>(item.Description);
+
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                    }
+
+                    Assert.Equal(8, count);
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(8, count);
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -182,32 +190,39 @@ namespace UnitTests.DataAccess
                 CancellationTokenSource cts = new CancellationTokenSource();
                 CancellationToken token = cts.Token;
 
-                IEnumerable<dynamic> result = dbCmd
+                IManagedEnumerable<dynamic> result = dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .CancellationToken(token)
                 .AsEnumerable();
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable enumerable = result as ManagedEnumerable;
+                Assert.False(enumerable.Diposed);
 
-                foreach (dynamic item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.IsType<long>(item.Id);
-                    Assert.IsType<string>(item.CategoryName);
-                    Assert.IsType<string>(item.Description);
+                    Assert.NotNull(result);
+                    int count = 0;
 
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
-                    cts.Cancel();
+                    foreach (dynamic item in result)
+                    {
+                        count++;
+                        Assert.IsType<long>(item.Id);
+                        Assert.IsType<string>(item.CategoryName);
+                        Assert.IsType<string>(item.Description);
+
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                        cts.Cancel();
+                    }
+
+                    Assert.Equal(1, count);
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(1, count);
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -216,26 +231,33 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(dbCmd =>
             {
-                IEnumerable<CategoryAsClass> result = dbCmd
+                IManagedEnumerable<CategoryAsClass> result = dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .AsEnumerable<CategoryAsClass>();
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable<CategoryAsClass> enumerable = result as ManagedEnumerable<CategoryAsClass>;
+                Assert.False(enumerable.Diposed);
 
-                foreach (CategoryAsClass item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
+                    Assert.NotNull(result);
+                    int count = 0;
+
+                    foreach (CategoryAsClass item in result)
+                    {
+                        count++;
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                    }
+
+                    Assert.Equal(8, count);
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(8, count);
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -247,28 +269,35 @@ namespace UnitTests.DataAccess
                 CancellationTokenSource cts = new CancellationTokenSource();
                 CancellationToken token = cts.Token;
 
-                IEnumerable<CategoryAsClass> result = dbCmd
+                IManagedEnumerable<CategoryAsClass> result = dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .CancellationToken(token)
                 .AsEnumerable<CategoryAsClass>();
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable<CategoryAsClass> enumerable = result as ManagedEnumerable<CategoryAsClass>;
+                Assert.False(enumerable.Diposed);
 
-                foreach (CategoryAsClass item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
-                    cts.Cancel();
+                    Assert.NotNull(result);
+                    int count = 0;
+
+                    foreach (CategoryAsClass item in result)
+                    {
+                        count++;
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                        cts.Cancel();
+                    }
+
+                    Assert.Equal(1, count); ;
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(1, count);;
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -368,31 +397,38 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(async dbCmd =>
             {
-                IEnumerable<dynamic> result = await dbCmd
+                IManagedEnumerable<dynamic> result = await dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .AsEnumerableAsync()
                 .ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable enumerable = result as ManagedEnumerable;
+                Assert.False(enumerable.Diposed);
 
-                foreach (dynamic item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.IsType<long>(item.Id);
-                    Assert.IsType<string>(item.CategoryName);
-                    Assert.IsType<string>(item.Description);
+                    Assert.NotNull(result);
+                    int count = 0;
 
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
+                    foreach (dynamic item in result)
+                    {
+                        count++;
+                        Assert.IsType<long>(item.Id);
+                        Assert.IsType<string>(item.CategoryName);
+                        Assert.IsType<string>(item.Description);
+
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                    }
+
+                    Assert.Equal(8, count);
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(8, count);
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -404,33 +440,40 @@ namespace UnitTests.DataAccess
                 CancellationTokenSource cts = new CancellationTokenSource();
                 CancellationToken token = cts.Token;
 
-                IEnumerable<dynamic> result = await dbCmd
+                IManagedEnumerable<dynamic> result = await dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .CancellationToken(token)
                 .AsEnumerableAsync()
                 .ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable enumerable = result as ManagedEnumerable;
+                Assert.False(enumerable.Diposed);
 
-                foreach (dynamic item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.IsType<long>(item.Id);
-                    Assert.IsType<string>(item.CategoryName);
-                    Assert.IsType<string>(item.Description);
+                    Assert.NotNull(result);
+                    int count = 0;
 
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
-                    cts.Cancel();
+                    foreach (dynamic item in result)
+                    {
+                        count++;
+                        Assert.IsType<long>(item.Id);
+                        Assert.IsType<string>(item.CategoryName);
+                        Assert.IsType<string>(item.Description);
+
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                        cts.Cancel();
+                    }
+
+                    Assert.Equal(1, count);
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(1, count);
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -439,27 +482,34 @@ namespace UnitTests.DataAccess
         {
             SetupAndAssert(async dbCmd =>
             {
-                IEnumerable<CategoryAsClass> result = await dbCmd
+                IManagedEnumerable<CategoryAsClass> result = await dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .AsEnumerableAsync<CategoryAsClass>()
                 .ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable<CategoryAsClass> enumerable = result as ManagedEnumerable<CategoryAsClass>;
+                Assert.False(enumerable.Diposed);
 
-                foreach (CategoryAsClass item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
+                    Assert.NotNull(result);
+                    int count = 0;
+
+                    foreach (CategoryAsClass item in result)
+                    {
+                        count++;
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                    }
+
+                    Assert.Equal(8, count);
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(8, count);
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 
@@ -471,29 +521,36 @@ namespace UnitTests.DataAccess
                 CancellationTokenSource cts = new CancellationTokenSource();
                 CancellationToken token = cts.Token;
 
-                IEnumerable<CategoryAsClass> result = await dbCmd
+                IManagedEnumerable<CategoryAsClass> result = await dbCmd
                 .CommandType(CommandType.Text)
                 .CommandText(@"select * from main.[Category]")
                 .CancellationToken(token)
                 .AsEnumerableAsync<CategoryAsClass>()
                 .ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                int count = 0;
+                ManagedEnumerable<CategoryAsClass> enumerable = result as ManagedEnumerable<CategoryAsClass>;
+                Assert.False(enumerable.Diposed);
 
-                foreach (CategoryAsClass item in result)
+                using (result)
                 {
-                    count++;
-                    Assert.True(item.Id >= 0);
-                    Assert.True(!string.IsNullOrEmpty(item.CategoryName));
-                    Assert.True(!string.IsNullOrEmpty(item.Description));
-                    cts.Cancel();
+                    Assert.NotNull(result);
+                    int count = 0;
+
+                    foreach (CategoryAsClass item in result)
+                    {
+                        count++;
+                        Assert.True(item.Id >= 0);
+                        Assert.True(!string.IsNullOrEmpty(item.CategoryName));
+                        Assert.True(!string.IsNullOrEmpty(item.Description));
+                        cts.Cancel();
+                    }
+
+                    Assert.Equal(1, count);
+
+                    // Command and Reader should be cleaned up at this point.
+                    Assert.ThrowsAny<NullReferenceException>(() => result.Count());
+                    Assert.True(enumerable.Diposed);
                 }
-
-                Assert.Equal(1, count);
-
-                // Command and Reader should be cleaned up at this point.
-                Assert.ThrowsAny<NullReferenceException>(() => result.Count());
             });
         }
 

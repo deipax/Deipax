@@ -1,5 +1,6 @@
 ﻿using Deipax.Convert;
 using Deipax.DataAccess.Common;
+using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using CmdBehavior = System.Data.CommandBehavior;
 
 namespace Deipax.DataAccess.Extensions
 {
@@ -22,10 +24,14 @@ namespace Deipax.DataAccess.Extensions
         #region Fluent Extensions
         public static IDbCmd CommandBehavior(
             this IDbCmd source,
-            CommandBehavior? behavior)
+            CmdBehavior? behavior)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-            source.CommandBehavior = behavior;
+
+            source.CommandBehavior = source.CommandBehavior.HasValue
+                ? source.CommandBehavior | behavior
+                : behavior;
+
             return source;
         }
 
@@ -100,22 +106,46 @@ namespace Deipax.DataAccess.Extensions
         #endregion
 
         #region Database Extensions
-        public static IEnumerable<dynamic> AsEnumerable(
+        /// <summary>
+        /// Either read all items or use a using block to ensure all
+        /// resources are fully cleaned up.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IManagedEnumerable<dynamic> AsEnumerable(
             this IDbCmd source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = source.CreateAndOpen();
             var reader = cmd.ExecuteReader(source);
-            return ExecuteSync(source, cmd, reader);
+            return new ManagedEnumerable
+            {
+                DbCmd = source,
+                DbCommand = cmd,
+                Reader = reader
+            };
         }
 
-        public static IEnumerable<T> AsEnumerable<T>(
+        /// <summary>
+        /// Either read all items or use a using block to ensure all
+        /// resources are fully cleaned up.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IManagedEnumerable<T> AsEnumerable<T>(
             this IDbCmd source) where T : new()
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = source.CreateAndOpen();
             var reader = cmd.ExecuteReader(source);
-            return ExecuteSync<T>(source, cmd, reader);
+            return new ManagedEnumerable<T>
+            {
+                DbCmd = source,
+                DbCommand = cmd,
+                Reader = reader
+            };
         }
 
         public static int ExecuteNonQuery(
@@ -176,22 +206,46 @@ namespace Deipax.DataAccess.Extensions
         #endregion
 
         #region Database Extensions Async
-        public static async Task<IEnumerable<dynamic>> AsEnumerableAsync(
+        /// <summary>
+        /// Either read all items or use a using block to ensure all
+        /// resources are fully cleaned up.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static async Task<IManagedEnumerable<dynamic>> AsEnumerableAsync(
             this IDbCmd source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false);
             var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false);
-            return ExecuteAsync(source, cmd, reader);
+            return new ManagedEnumerable
+            {
+                DbCmd = source,
+                DbCommand = cmd,
+                Reader = reader
+            };
         }
 
-        public static async Task<IEnumerable<T>> AsEnumerableAsync<T>(
+        /// <summary>
+        /// Either read all items or use a using block to ensure all
+        /// resources are fully cleaned up.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static async Task<IManagedEnumerable<T>> AsEnumerableAsync<T>(
             this IDbCmd source) where T : new()
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
+            source.CommandBehavior(CmdBehavior.SingleResult);
             var cmd = await source.CreateAndOpenAsync().ConfigureAwait(false);
             var reader = await cmd.ExecuteReaderAsync(source).ConfigureAwait(false);
-            return ExecuteAsync<T>(source, cmd, reader);
+            return new ManagedEnumerable<T>
+            {
+                DbCmd = source,
+                DbCommand = cmd,
+                Reader = reader
+            };
         }
 
         public static async Task<int> ExecuteNonQueryAsync(
@@ -257,114 +311,6 @@ namespace Deipax.DataAccess.Extensions
         #endregion
 
         #region Private Members
-        private static IEnumerable<dynamic> ExecuteSync(
-            IDbCmd dbCmd,
-            IDbCommand cmd,
-            IDataReader reader)
-        {
-            var token = dbCmd.CancellationToken ?? new CancellationToken(false);
-
-            using (cmd)
-            using (reader)
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                var map = DynamicMap.CreateMap(cache);
-
-                while (!token.IsCancellationRequested && reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (!token.IsCancellationRequested && reader.NextResult()) { /* ignore subsequent result sets */ }
-            }
-        }
-
-        private static IEnumerable<dynamic> ExecuteAsync(
-            IDbCmd dbCmd,
-            DbCommand cmd,
-            DbDataReader reader)
-        {
-            var token = dbCmd.CancellationToken ?? new CancellationToken(false);
-
-            using (cmd)
-            using (reader)
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                var map = DynamicMap.CreateMap(cache);
-
-                while (!token.IsCancellationRequested && reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (!token.IsCancellationRequested && reader.NextResult()) { /* ignore subsequent result sets */ }
-            }
-        }
-
-        private static IEnumerable<T> ExecuteSync<T>(
-            IDbCmd dbCmd,
-            IDbCommand cmd,
-            IDataReader reader) where T : new()
-        {
-            var token = dbCmd.CancellationToken ?? new CancellationToken(false);
-
-            using (cmd)
-            using (reader)
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
-
-                while (!token.IsCancellationRequested && reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (!token.IsCancellationRequested && reader.NextResult()) { /* ignore subsequent result sets */ }
-            }
-        }
-
-        private static IEnumerable<T> ExecuteAsync<T>(
-            IDbCmd dbCmd,
-            DbCommand cmd,
-            DbDataReader reader) where T : new()
-        {
-            var token = dbCmd.CancellationToken ?? new CancellationToken(false);
-
-            using (cmd)
-            using (reader)
-            {
-                if (reader.FieldCount == 0)
-                {
-                    yield break;
-                }
-
-                var cache = new DataReaderCache(reader);
-                Func<IDataRecord, T> map = DataRecordMap<T>.Create(cache);
-
-                while (!token.IsCancellationRequested && reader.Read())
-                {
-                    yield return map(reader);
-                }
-
-                while (!token.IsCancellationRequested && reader.NextResult()) { /* ignore subsequent result sets */ }
-            }
-        }
-
         private static IDbCommand CreateAndOpen(
             this IDbCmd source)
         {
