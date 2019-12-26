@@ -11,7 +11,7 @@ namespace UnitTests.DataAccess
     public class IManagedEnumerableExtensionTests
     {
         [Fact]
-        public void QueryFirst()
+        public void ExecuteFirst()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -23,7 +23,7 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                var tmp = result.QueryFirst();
+                var tmp = result.ExecuteFirst();
 
                 Assert.NotNull(tmp);
                 Assert.True(enumerable.Diposed);
@@ -31,7 +31,7 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void QueryFirst_NoResults()
+        public void ExecuteFirst_NoResults()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -43,14 +43,14 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                Assert.ThrowsAny<InvalidOperationException>(() => result.QueryFirst());
+                Assert.ThrowsAny<InvalidOperationException>(() => result.ExecuteFirst());
 
                 Assert.True(enumerable.Diposed);
             });
         }
 
         [Fact]
-        public void QueryFirstOrDefault()
+        public void ExecuteFirstOrDefault()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -62,7 +62,7 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                var tmp = result.QueryFirstOrDefault();
+                var tmp = result.ExecuteFirstOrDefault();
 
                 Assert.NotNull(tmp);
                 Assert.True(enumerable.Diposed);
@@ -70,7 +70,7 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void QueryFirstOrDefault_NoResults()
+        public void ExecuteFirstOrDefault_NoResults()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -82,7 +82,7 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                var tmp = result.QueryFirstOrDefault();
+                var tmp = result.ExecuteFirstOrDefault();
 
                 Assert.Null(tmp);
                 Assert.True(enumerable.Diposed);
@@ -90,7 +90,7 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void QuerySingle()
+        public void ExecuteSingle()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -102,7 +102,7 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                var tmp = result.QuerySingle();
+                var tmp = result.ExecuteSingle();
 
                 Assert.NotNull(tmp);
                 Assert.True(enumerable.Diposed);
@@ -110,7 +110,7 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void QuerySingle_NoResults()
+        public void ExecuteSingle_NoResults()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -122,14 +122,14 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                Assert.ThrowsAny<InvalidOperationException>(() => result.QuerySingle());
+                Assert.ThrowsAny<InvalidOperationException>(() => result.ExecuteSingle());
 
                 Assert.True(enumerable.Diposed);
             });
         }
 
         [Fact]
-        public void QuerySingle_ManyResults()
+        public void ExecuteSingle_ManyResults()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -141,14 +141,14 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                Assert.ThrowsAny<InvalidOperationException>(() => result.QuerySingle());
+                Assert.ThrowsAny<InvalidOperationException>(() => result.ExecuteSingle());
 
                 Assert.True(enumerable.Diposed);
             });
         }
 
         [Fact]
-        public void QuerySingleOrDefault()
+        public void ExecuteSingleOrDefault()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -160,7 +160,7 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                var tmp = result.QuerySingleOrDefault();
+                var tmp = result.ExecuteSingleOrDefault();
 
                 Assert.NotNull(tmp);
                 Assert.True(enumerable.Diposed);
@@ -168,7 +168,7 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void QuerySingleOrDefault_NoResults()
+        public void ExecuteSingleOrDefault_NoResults()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -180,7 +180,7 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                var tmp = result.QuerySingleOrDefault();
+                var tmp = result.ExecuteSingleOrDefault();
 
                 Assert.Null(tmp);
                 Assert.True(enumerable.Diposed);
@@ -188,7 +188,7 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void QuerySingleOrDefault_ManyResults()
+        public void ExecuteSingleOrDefault_ManyResults()
         {
             SetupAndAssert(dbCmd =>
             {
@@ -200,7 +200,7 @@ namespace UnitTests.DataAccess
                 ManagedEnumerable enumerable = result as ManagedEnumerable;
                 Assert.False(enumerable.Diposed);
 
-                Assert.ThrowsAny<InvalidOperationException>(() => result.QuerySingle());
+                Assert.ThrowsAny<InvalidOperationException>(() => result.ExecuteSingle());
 
                 Assert.True(enumerable.Diposed);
             });

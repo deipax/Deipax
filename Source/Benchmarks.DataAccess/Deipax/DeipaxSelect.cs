@@ -1,7 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Deipax.DataAccess.Extensions;
 using System.Data;
-using System.Linq;
 using UnitTests.Common;
 
 namespace Benchmarks.DataAccess.Deipax
@@ -27,104 +26,61 @@ namespace Benchmarks.DataAccess.Deipax
         [Benchmark]
         public void AllFieldsAsClass()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerable<MultipleFieldClass>()
-                .ToList();
+            var tmp = _dbConnection.Execute<MultipleFieldClass>(_sql);
         }
 
         [Benchmark]
         public void AllFieldsAsClass_Async()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerableAsync<MultipleFieldClass>()
-                .Result
-                .ToList();
+            var tmp = _dbConnection.ExecuteAsync<MultipleFieldClass>(_sql).Result;
         }
 
         [Benchmark]
         public void AllFieldsAsStruct()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerable<MultipleFieldStruct>()
-                .ToList();
+            var tmp = _dbConnection.Execute<MultipleFieldStruct>(_sql);
         }
 
         [Benchmark]
         public void AllFieldsAsStruct_Async()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerableAsync<MultipleFieldStruct>()
-                .Result
-                .ToList();
+            var tmp = _dbConnection.ExecuteAsync<MultipleFieldStruct>(_sql).Result;
         }
 
         [Benchmark]
         public void DynamicList()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerable()
-                .ToList();
+            var tmp = _dbConnection.Execute(_sql);
         }
 
         [Benchmark]
         public void DynamicList_Async()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerableAsync()
-                .Result
-                .ToList();
+            var tmp = _dbConnection.ExecuteAsync(_sql).Result;
         }
 
         [Benchmark]
         public void QueryFirst()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerable()
-                .QueryFirst();
+            var tmp = _dbConnection.ExecuteFirst(_sql);
         }
 
         [Benchmark]
         public void QueryFirstOrDefault()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql)
-                .AsEnumerable()
-                .QueryFirstOrDefault();
+            var tmp = _dbConnection.ExecuteFirstOrDefault(_sql);
         }
 
         [Benchmark]
         public void QuerySingle()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql_limit_one)
-                .AsEnumerable()
-                .QuerySingle();
+            var tmp = _dbConnection.ExecuteSingle(_sql_limit_one);
         }
 
         [Benchmark]
         public void QuerySingleOrDefault()
         {
-            var tmp = _dbConnection
-                .CommandType(CommandType.Text)
-                .CommandText(_sql_limit_one)
-                .AsEnumerable()
-                .QuerySingleOrDefault();
+            var tmp = _dbConnection.ExecuteSingleOrDefault(_sql_limit_one);
         }
     }
 }

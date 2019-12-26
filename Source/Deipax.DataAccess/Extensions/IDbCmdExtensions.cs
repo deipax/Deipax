@@ -93,7 +93,7 @@ namespace Deipax.DataAccess.Extensions
             params IDbDataParameter[] parameters)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            if (parameters == null) return source;
 
             foreach (var parameter in parameters)
             {
@@ -322,8 +322,8 @@ namespace Deipax.DataAccess.Extensions
             var init = GetInit(cmd.GetType());
             init?.Invoke(cmd);
 
-            if (source.CommandType.HasValue) cmd.CommandType = source.CommandType.Value;
             if (source.CommandTimeout.HasValue) cmd.CommandTimeout = source.CommandTimeout.Value;
+            cmd.CommandType = source.CommandType ?? System.Data.CommandType.Text;
             cmd.Transaction = source.Transaction;
             cmd.CommandText = source.CommandText;
             cmd.Connection = source.Connection;

@@ -1,8 +1,10 @@
 ﻿using Deipax.DataAccess.Concretes;
 using Deipax.DataAccess.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,6 +60,496 @@ namespace Deipax.DataAccess.Extensions
             params IDbDataParameter[] parameters)
         {
             return DbFactory.Instance.CreateDbCmd().Connection(source).AddParameter(parameters);
+        }
+        #endregion
+
+        #region Synchronous Query Interface
+        /// <summary>
+        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <param name="transaction"></param>
+        /// <param name="buffered"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Execute<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            bool buffered = true,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            var enumerable = DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable<T>();
+
+            return buffered ? enumerable.ToList() : enumerable as IEnumerable<T>;
+        }
+
+        /// <summary>
+        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <param name="transaction"></param>
+        /// <param name="buffered"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public static IEnumerable<dynamic> Execute(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            bool buffered = true,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            var enumerable = DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable();
+
+            return buffered ? enumerable.ToList() : enumerable as IEnumerable<dynamic>;
+        }
+
+        public static T ExecuteFirst<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable<T>()
+                .ExecuteFirst();
+        }
+
+        public static dynamic ExecuteFirst(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable()
+                .ExecuteFirst();
+        }
+
+        public static T ExecuteFirstOrDefault<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable<T>()
+                .ExecuteFirstOrDefault();
+        }
+
+        public static dynamic ExecuteFirstOrDefault(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable()
+                .ExecuteFirstOrDefault();
+        }
+
+        public static T ExecuteSingle<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable<T>()
+                .ExecuteSingle();
+        }
+
+        public static dynamic ExecuteSingle(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable()
+                .ExecuteSingle();
+        }
+
+        public static T ExecuteSingleOrDefault<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable<T>()
+                .ExecuteSingleOrDefault();
+        }
+
+        public static dynamic ExecuteSingleOrDefault(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerable()
+                .ExecuteSingleOrDefault();
+        }
+        #endregion
+
+        #region Asynchronous Query Interface 
+        /// <summary>
+        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <param name="transaction"></param>
+        /// <param name="buffered"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public static async Task<IEnumerable<T>> ExecuteAsync<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            bool buffered = true,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            var enumerable = await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync<T>()
+                .ConfigureAwait(false);
+
+            return buffered ? enumerable.ToList() : enumerable as IEnumerable<T>;
+        }
+
+        /// <summary>
+        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <param name="transaction"></param>
+        /// <param name="buffered"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public static async Task<IEnumerable<dynamic>> ExecuteAsync(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            bool buffered = true,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            var enumerable = await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync()
+                .ConfigureAwait(false);
+
+            return buffered ? enumerable.ToList() : enumerable as IEnumerable<dynamic>;
+        }
+
+        public static async Task<T> ExecuteFirstAsync<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync<T>()
+                .ConfigureAwait(false))
+                .ExecuteFirst();
+        }
+
+        public static async Task<dynamic> ExecuteFirstAsync(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync()
+                .ConfigureAwait(false))
+                .ExecuteFirst();
+        }
+
+        public static async Task<T> ExecuteFirstOrDefaultAsync<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync<T>()
+                .ConfigureAwait(false))
+                .ExecuteFirstOrDefault();
+        }
+
+        public static async Task<dynamic> ExecuteFirstOrDefaultAsync(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync()
+                .ConfigureAwait(false))
+                .ExecuteFirstOrDefault();
+        }
+
+        public static async Task<T> ExecuteSingleAsync<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync<T>()
+                .ConfigureAwait(false))
+                .ExecuteSingle();
+        }
+
+        public static async Task<dynamic> ExecuteSingleAsync(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync()
+                .ConfigureAwait(false))
+                .ExecuteSingle();
+        }
+
+        public static async Task<T>ExecuteSingleOrDefaultAsync<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null) where T : new()
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync<T>()
+                .ConfigureAwait(false))
+                .ExecuteSingleOrDefault();
+        }
+
+        public static async Task<dynamic> ExecuteSingleOrDefaultAsync(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return (await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .AsEnumerableAsync()
+                .ConfigureAwait(false))
+                .ExecuteSingleOrDefault();
         }
         #endregion
 

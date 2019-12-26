@@ -12,7 +12,7 @@ namespace Deipax.DataAccess.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static T QueryFirst<T>(
+        public static T ExecuteFirst<T>(
             this IManagedEnumerable<T> source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
@@ -29,7 +29,7 @@ namespace Deipax.DataAccess.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static T QueryFirstOrDefault<T>(
+        public static T ExecuteFirstOrDefault<T>(
             this IManagedEnumerable<T> source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
@@ -46,7 +46,7 @@ namespace Deipax.DataAccess.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static T QuerySingle<T>(
+        public static T ExecuteSingle<T>(
             this IManagedEnumerable<T> source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
@@ -64,7 +64,7 @@ namespace Deipax.DataAccess.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static T QuerySingleOrDefault<T>(
+        public static T ExecuteSingleOrDefault<T>(
             this IManagedEnumerable<T> source)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
