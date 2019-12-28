@@ -176,15 +176,15 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void Execute_Typed_Sync()
+        public void AsEnumerable_Typed_Sync()
         {
             SetupConnection(con =>
             {
-                IEnumerable<CategoryAsClass> result = con.Execute<CategoryAsClass>(@"select * from main.[Category]");
+                IEnumerable<CategoryAsClass> result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]");
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.Execute<CategoryAsClass>(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]", buffered: false);
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -192,15 +192,15 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void Execute_Typed_Async()
+        public void AsEnumerable_Typed_Async()
         {
             SetupConnection(async con =>
             {
-                IEnumerable<CategoryAsClass> result = await con.ExecuteAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
+                IEnumerable<CategoryAsClass> result = await con.AsEnumerableAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.Execute<CategoryAsClass>(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]", buffered: false);
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -208,15 +208,15 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void Execute_Dynamic_Sync()
+        public void AsEnumerable_Dynamic_Sync()
         {
             SetupConnection(con =>
             {
-                IEnumerable<dynamic> result = con.Execute(@"select * from main.[Category]");
+                IEnumerable<dynamic> result = con.AsEnumerable(@"select * from main.[Category]");
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.Execute(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerable(@"select * from main.[Category]", buffered: false);
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -224,15 +224,15 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void Execute_Dynamic_Async()
+        public void AsEnumerable_Dynamic_Async()
         {
             SetupConnection(async con =>
             {
-                IEnumerable<dynamic> result = await con.ExecuteAsync(@"select * from main.[Category]").ConfigureAwait(false);
+                IEnumerable<dynamic> result = await con.AsEnumerableAsync(@"select * from main.[Category]").ConfigureAwait(false);
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.Execute(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerable(@"select * from main.[Category]", buffered: false);
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -240,161 +240,161 @@ namespace UnitTests.DataAccess
         }
 
         [Fact]
-        public void ExecuteFirst_Typed_Sync()
+        public void First_Typed_Sync()
         {
             SetupConnection(con =>
             {
-                CategoryAsClass result = con.ExecuteFirst<CategoryAsClass>(@"select * from main.[Category]");
+                CategoryAsClass result = con.First<CategoryAsClass>(@"select * from main.[Category]");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteFirst_Typed_Async()
+        public void First_Typed_Async()
         {
             SetupConnection(async con =>
             {
-                CategoryAsClass result = await con.ExecuteFirstAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
+                CategoryAsClass result = await con.FirstAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteFirst_Dynamic_Sync()
+        public void First_Dynamic_Sync()
         {
             SetupConnection(con =>
             {
-                dynamic result = con.ExecuteFirst(@"select * from main.[Category]");
+                dynamic result = con.First(@"select * from main.[Category]");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteFirst_Dynamic_Async()
+        public void First_Dynamic_Async()
         {
             SetupConnection(async con =>
             {
-                dynamic result = await con.ExecuteFirstAsync(@"select * from main.[Category]").ConfigureAwait(false);
+                dynamic result = await con.FirstAsync(@"select * from main.[Category]").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteFirstOrDefault_Typed_Sync()
+        public void FirstOrDefault_Typed_Sync()
         {
             SetupConnection(con =>
             {
-                CategoryAsClass result = con.ExecuteFirstOrDefault<CategoryAsClass>(@"select * from main.[Category]");
+                CategoryAsClass result = con.FirstOrDefault<CategoryAsClass>(@"select * from main.[Category]");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteFirstOrDefault_Typed_Async()
+        public void FirstOrDefault_Typed_Async()
         {
             SetupConnection(async con =>
             {
-                CategoryAsClass result = await con.ExecuteFirstOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
+                CategoryAsClass result = await con.FirstOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteFirstOrDefault_Dynamic_Sync()
+        public void FirstOrDefault_Dynamic_Sync()
         {
             SetupConnection(con =>
             {
-                dynamic result = con.ExecuteFirstOrDefault(@"select * from main.[Category]");
+                dynamic result = con.FirstOrDefault(@"select * from main.[Category]");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteFirstOrDefault_Dynamic_Async()
+        public void FirstOrDefault_Dynamic_Async()
         {
             SetupConnection(async con =>
             {
-                dynamic result = await con.ExecuteFirstOrDefaultAsync(@"select * from main.[Category]").ConfigureAwait(false);
+                dynamic result = await con.FirstOrDefaultAsync(@"select * from main.[Category]").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingle_Typed_Sync()
+        public void Single_Typed_Sync()
         {
             SetupConnection(con =>
             {
-                CategoryAsClass result = con.ExecuteSingle<CategoryAsClass>(@"select * from main.[Category] where Id = 1");
+                CategoryAsClass result = con.Single<CategoryAsClass>(@"select * from main.[Category] where Id = 1");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingle_Typed_Async()
+        public void Single_Typed_Async()
         {
             SetupConnection(async con =>
             {
-                CategoryAsClass result = await con.ExecuteSingleAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                CategoryAsClass result = await con.SingleAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingle_Dynamic_Sync()
+        public void Single_Dynamic_Sync()
         {
             SetupConnection(con =>
             {
-                dynamic result = con.ExecuteSingle(@"select * from main.[Category] where Id = 1");
+                dynamic result = con.Single(@"select * from main.[Category] where Id = 1");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingle_Dynamic_Async()
+        public void Single_Dynamic_Async()
         {
             SetupConnection(async con =>
             {
-                dynamic result = await con.ExecuteSingleAsync(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                dynamic result = await con.SingleAsync(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingleOrDefault_Typed_Sync()
+        public void SingleOrDefault_Typed_Sync()
         {
             SetupConnection(con =>
             {
-                CategoryAsClass result = con.ExecuteSingleOrDefault<CategoryAsClass>(@"select * from main.[Category] where Id = 1");
+                CategoryAsClass result = con.SingleOrDefault<CategoryAsClass>(@"select * from main.[Category] where Id = 1");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingleOrDefault_Typed_Async()
+        public void SingleOrDefault_Typed_Async()
         {
             SetupConnection(async con =>
             {
-                CategoryAsClass result = await con.ExecuteSingleOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                CategoryAsClass result = await con.SingleOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingleOrDefault_Dynamic_Sync()
+        public void SingleOrDefault_Dynamic_Sync()
         {
             SetupConnection(con =>
             {
-                dynamic result = con.ExecuteSingleOrDefault(@"select * from main.[Category] where Id = 1");
+                dynamic result = con.SingleOrDefault(@"select * from main.[Category] where Id = 1");
                 Assert.NotNull(result);
             });
         }
 
         [Fact]
-        public void ExecuteSingleOrDefault_Dynamic_Async()
+        public void SingleOrDefault_Dynamic_Async()
         {
             SetupConnection(async con =>
             {
-                dynamic result = await con.ExecuteSingleOrDefaultAsync(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                dynamic result = await con.SingleOrDefaultAsync(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
                 Assert.NotNull(result);
             });
         }

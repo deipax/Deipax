@@ -63,7 +63,7 @@ namespace Deipax.DataAccess.Extensions
         }
         #endregion
 
-        #region Synchronous Query Interface
+        #region Database Extensions
         /// <summary>
         /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Deipax.DataAccess.Extensions
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
-        public static IEnumerable<T> Execute<T>(
+        public static IEnumerable<T> AsEnumerable<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -111,7 +111,7 @@ namespace Deipax.DataAccess.Extensions
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
-        public static IEnumerable<dynamic> Execute(
+        public static IEnumerable<dynamic> AsEnumerable(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -134,7 +134,7 @@ namespace Deipax.DataAccess.Extensions
             return buffered ? enumerable.ToList() : enumerable as IEnumerable<dynamic>;
         }
 
-        public static T ExecuteFirst<T>(
+        public static T First<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -155,7 +155,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirst();
         }
 
-        public static dynamic ExecuteFirst(
+        public static dynamic First(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -176,7 +176,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirst();
         }
 
-        public static T ExecuteFirstOrDefault<T>(
+        public static T FirstOrDefault<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -197,7 +197,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirstOrDefault();
         }
 
-        public static dynamic ExecuteFirstOrDefault(
+        public static dynamic FirstOrDefault(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -218,7 +218,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirstOrDefault();
         }
 
-        public static T ExecuteSingle<T>(
+        public static T Single<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -239,7 +239,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteSingle();
         }
 
-        public static dynamic ExecuteSingle(
+        public static dynamic Single(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -260,7 +260,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteSingle();
         }
 
-        public static T ExecuteSingleOrDefault<T>(
+        public static T SingleOrDefault<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -281,7 +281,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteSingleOrDefault();
         }
 
-        public static dynamic ExecuteSingleOrDefault(
+        public static dynamic SingleOrDefault(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -303,7 +303,7 @@ namespace Deipax.DataAccess.Extensions
         }
         #endregion
 
-        #region Asynchronous Query Interface 
+        #region Database Extensions Async
         /// <summary>
         /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
         /// </summary>
@@ -316,7 +316,7 @@ namespace Deipax.DataAccess.Extensions
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<T>> ExecuteAsync<T>(
+        public static async Task<IEnumerable<T>> AsEnumerableAsync<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -352,7 +352,7 @@ namespace Deipax.DataAccess.Extensions
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<dynamic>> ExecuteAsync(
+        public static async Task<IEnumerable<dynamic>> AsEnumerableAsync(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -376,7 +376,7 @@ namespace Deipax.DataAccess.Extensions
             return buffered ? enumerable.ToList() : enumerable as IEnumerable<dynamic>;
         }
 
-        public static async Task<T> ExecuteFirstAsync<T>(
+        public static async Task<T> FirstAsync<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -398,7 +398,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirst();
         }
 
-        public static async Task<dynamic> ExecuteFirstAsync(
+        public static async Task<dynamic> FirstAsync(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -420,7 +420,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirst();
         }
 
-        public static async Task<T> ExecuteFirstOrDefaultAsync<T>(
+        public static async Task<T> FirstOrDefaultAsync<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -442,7 +442,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirstOrDefault();
         }
 
-        public static async Task<dynamic> ExecuteFirstOrDefaultAsync(
+        public static async Task<dynamic> FirstOrDefaultAsync(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -464,7 +464,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteFirstOrDefault();
         }
 
-        public static async Task<T> ExecuteSingleAsync<T>(
+        public static async Task<T> SingleAsync<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -486,7 +486,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteSingle();
         }
 
-        public static async Task<dynamic> ExecuteSingleAsync(
+        public static async Task<dynamic> SingleAsync(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -508,7 +508,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteSingle();
         }
 
-        public static async Task<T>ExecuteSingleOrDefaultAsync<T>(
+        public static async Task<T>SingleOrDefaultAsync<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -530,7 +530,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteSingleOrDefault();
         }
 
-        public static async Task<dynamic> ExecuteSingleOrDefaultAsync(
+        public static async Task<dynamic> SingleOrDefaultAsync(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
