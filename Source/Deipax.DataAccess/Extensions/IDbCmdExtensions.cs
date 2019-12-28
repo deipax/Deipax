@@ -298,7 +298,7 @@ namespace Deipax.DataAccess.Extensions
             return cmd;
         }
 
-        private static async Task<DbCommand> CreateAndOpenAsync(
+        internal static async Task<DbCommand> CreateAndOpenAsync(
             this IDbCmd source)
         {
             var cmd = source.CreateCommand();

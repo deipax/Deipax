@@ -3,7 +3,9 @@ using Deipax.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using UnitTests.Common;
 using UnitTests.DataAccess.Concretes;
@@ -399,6 +401,160 @@ namespace UnitTests.DataAccess
             });
         }
 
+        [Fact]
+        public void ExecuteNonQuery()
+        {
+            SetupConnection(con =>
+            {
+                var result = con.ExecuteNonQuery(@"update main.[Category] set CategoryName = 'Beverages' where Id = 1");
+                Assert.Equal(1, result);
+            });
+        }
+
+        [Fact]
+        public void ExecuteNonQueryAsync()
+        {
+            SetupConnection(async con =>
+            {
+                var result = await con.ExecuteNonQueryAsync(@"update main.[Category] set CategoryName = 'Beverages' where Id = 1");
+                Assert.Equal(1, result);
+            });
+        }
+
+        [Fact]
+        public void ExecuteScalar_Object()
+        {
+            SetupConnection(con =>
+            {
+                var result = con.ExecuteScalar(@"select Id from main.[Category] where Id = 1");
+                Assert.IsType<long>(result);
+                Assert.Equal(1L, result);
+            });
+        }
+
+        [Fact]
+        public void ExecuteScalar_Object_Async()
+        {
+            SetupConnection(async con =>
+            {
+                var result = await con.ExecuteScalarAsync(@"select Id from main.[Category] where Id = 1").ConfigureAwait(false);
+                Assert.IsType<long>(result);
+                Assert.Equal(1L, result);
+            });
+        }
+
+        [Fact]
+        public void ExecuteScalar_T()
+        {
+            SetupConnection(con =>
+            {
+                var result = con.ExecuteScalar<int>(@"select Id from main.[Category] where Id = 1");
+                Assert.IsType<int>(result);
+                Assert.Equal(1, result);
+            });
+        }
+
+        [Fact]
+        public void ExecuteScalar_T_Async()
+        {
+            SetupConnection(async con =>
+            {
+                var result = await con.ExecuteScalarAsync<int>(@"select Id from main.[Category] where Id = 1");
+                Assert.IsType<int>(result);
+                Assert.Equal(1, result);
+            });
+        }
+
+        [Fact]
+        public void Execute()
+        {
+            int count = 0;
+            IDbCommand command = null;
+
+            Action<IDbCommand> action = (dbCommand) =>
+            {
+                command = dbCommand;
+                count++;
+            };
+
+            SetupConnection(con =>
+            {
+                con.Execute(@"select Id from main.[Category] where Id = 1", action);
+            });
+
+            Assert.Equal(1, count);
+            Assert.NotNull(command);
+            AssertCommandDisposed(command);
+        }
+
+        [Fact]
+        public void Execute_Async()
+        {
+            int count = 0;
+            DbCommand command = null;
+
+            Action<DbCommand> action = (dbCommand) =>
+            {
+                command = dbCommand;
+                count++;
+            };
+
+            SetupConnection(con =>
+            {
+                con.ExecuteAsync(@"select Id from main.[Category] where Id = 1", action);
+            });
+
+            Assert.Equal(1, count);
+            Assert.NotNull(command);
+            AssertCommandDisposed(command);
+        }
+
+        [Fact]
+        public void Execute_T()
+        {
+            int count = 0;
+            IDbCommand command = null;
+
+            Func<IDbCommand, int> func = (dbCommand) =>
+            {
+                command = dbCommand;
+                count++;
+                return 1;
+            };
+
+            SetupConnection(con =>
+            {
+                var result = con.Execute(@"select Id from main.[Category] where Id = 1", func);
+            });
+
+            Assert.Equal(1, count);
+            Assert.NotNull(command);
+            AssertCommandDisposed(command);
+        }
+
+        [Fact]
+        public void Execute_T_Async()
+        {
+            int count = 0;
+            IDbCommand command = null;
+
+            Func<DbCommand, int> func = (dbCommand) =>
+            {
+                command = dbCommand;
+                count++;
+                return 1;
+            };
+
+            SetupConnection(async con =>
+            {
+                var result = await con.ExecuteAsync(@"select Id from main.[Category] where Id = 1", func);
+            });
+
+            Assert.Equal(1, count);
+            Assert.NotNull(command);
+            AssertCommandDisposed(command);
+        }
+
         #region Private Members
         private static void SetupConnection(Action<IDbConnection> act)
         {
@@ -407,6 +563,13 @@ namespace UnitTests.DataAccess
             {
                 act(connection);
             }
+        }
+
+        private static void AssertCommandDisposed(IDbCommand cmd)
+        {
+            var field = cmd.GetType().GetField("disposed", BindingFlags.NonPublic | BindingFlags.Instance);
+            var disposed = (bool)field.GetValue(cmd);
+            Assert.True(disposed);
         }
         #endregion
     }

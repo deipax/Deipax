@@ -301,6 +301,108 @@ namespace Deipax.DataAccess.Extensions
                 .AsEnumerable()
                 .ExecuteSingleOrDefault();
         }
+
+        public static int ExecuteNonQuery(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteNonQuery();
+        }
+
+        public static object ExecuteScalar(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteScalar();
+        }
+
+        public static T ExecuteScalar<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteScalar<T>();
+        }
+
+        public static void Execute(
+            this IDbConnection source,
+            string sql,
+            Action<IDbCommand> action,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .Execute(action);
+        }
+
+        public static T Execute<T>(
+            this IDbConnection source,
+            string sql,
+            Func<IDbCommand, T> func,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .Execute(func);
+        }
         #endregion
 
         #region Database Extensions Async
@@ -508,7 +610,7 @@ namespace Deipax.DataAccess.Extensions
                 .ExecuteSingle();
         }
 
-        public static async Task<T>SingleOrDefaultAsync<T>(
+        public static async Task<T> SingleOrDefaultAsync<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
@@ -550,6 +652,112 @@ namespace Deipax.DataAccess.Extensions
                 .AsEnumerableAsync()
                 .ConfigureAwait(false))
                 .ExecuteSingleOrDefault();
+        }
+
+        public static async Task<int> ExecuteNonQueryAsync(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteNonQueryAsync()
+                .ConfigureAwait(false);
+        }
+
+        public static async Task<object> ExecuteScalarAsync(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteScalarAsync()
+                .ConfigureAwait(false);
+        }
+
+        public static async Task<T> ExecuteScalarAsync<T>(
+            this IDbConnection source,
+            string sql,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteScalarAsync<T>()
+                .ConfigureAwait(false);
+        }
+
+        public static void ExecuteAsync(
+            this IDbConnection source,
+            string sql,
+            Action<DbCommand> action,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteAsync(action);
+        }
+
+        public static async Task<T> ExecuteAsync<T>(
+            this IDbConnection source,
+            string sql,
+            Func<DbCommand, T> func,
+            IDbDataParameter[] parameters = null,
+            IDbTransaction transaction = null,
+            int? commandTimeout = null,
+            CommandType? commandType = null)
+        {
+            return await DbFactory
+                .Instance
+                .CreateDbCmd()
+                .Connection(source)
+                .CommandText(sql)
+                .AddParameter(parameters)
+                .Transaction(transaction)
+                .CommandTimeout(commandTimeout)
+                .CommandType(commandType)
+                .ExecuteAsync(func)
+                .ConfigureAwait(false);
         }
         #endregion
 
