@@ -65,27 +65,25 @@ namespace Deipax.DataAccess.Extensions
 
         #region Database Extensions
         /// <summary>
-        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// Either read all items or use a using block to ensure all resources are fully cleaned up.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <param name="transaction"></param>
-        /// <param name="buffered"></param>
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
-        public static IEnumerable<T> AsEnumerable<T>(
+        public static IManagedEnumerable<T> AsEnumerable<T>(
             this IDbConnection source,
             string sql,
             IDbDataParameter[] parameters = null,
             IDbTransaction transaction = null,
-            bool buffered = true,
             int? commandTimeout = null,
             CommandType? commandType = null) where T : new()
         {
-            var enumerable = DbFactory
+            return DbFactory
                 .Instance
                 .CreateDbCmd()
                 .Connection(source)
@@ -95,19 +93,16 @@ namespace Deipax.DataAccess.Extensions
                 .CommandTimeout(commandTimeout)
                 .CommandType(commandType)
                 .AsEnumerable<T>();
-
-            return buffered ? enumerable.ToList() : enumerable as IEnumerable<T>;
         }
 
         /// <summary>
-        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// Either read all items or use a using block to ensure all resources are fully cleaned up.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <param name="transaction"></param>
-        /// <param name="buffered"></param>
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
@@ -116,11 +111,10 @@ namespace Deipax.DataAccess.Extensions
             string sql,
             IDbDataParameter[] parameters = null,
             IDbTransaction transaction = null,
-            bool buffered = true,
             int? commandTimeout = null,
             CommandType? commandType = null)
         {
-            var enumerable = DbFactory
+            return DbFactory
                 .Instance
                 .CreateDbCmd()
                 .Connection(source)
@@ -130,8 +124,6 @@ namespace Deipax.DataAccess.Extensions
                 .CommandTimeout(commandTimeout)
                 .CommandType(commandType)
                 .AsEnumerable();
-
-            return buffered ? enumerable.ToList() : enumerable as IEnumerable<dynamic>;
         }
 
         public static T First<T>(
@@ -407,14 +399,13 @@ namespace Deipax.DataAccess.Extensions
 
         #region Database Extensions Async
         /// <summary>
-        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// Either read all items or use a using block to ensure all resources are fully cleaned up.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <param name="transaction"></param>
-        /// <param name="buffered"></param>
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
@@ -423,11 +414,10 @@ namespace Deipax.DataAccess.Extensions
             string sql,
             IDbDataParameter[] parameters = null,
             IDbTransaction transaction = null,
-            bool buffered = true,
             int? commandTimeout = null,
             CommandType? commandType = null) where T : new()
         {
-            var enumerable = await DbFactory
+            return await DbFactory
                 .Instance
                 .CreateDbCmd()
                 .Connection(source)
@@ -438,19 +428,16 @@ namespace Deipax.DataAccess.Extensions
                 .CommandType(commandType)
                 .AsEnumerableAsync<T>()
                 .ConfigureAwait(false);
-
-            return buffered ? enumerable.ToList() : enumerable as IEnumerable<T>;
         }
 
         /// <summary>
-        /// If performing a non-buffered read, to ensure timely disposal of resouces, read all items from the enumeration.
+        /// Either read all items or use a using block to ensure all resources are fully cleaned up.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <param name="transaction"></param>
-        /// <param name="buffered"></param>
         /// <param name="commandTimeout"></param>
         /// <param name="commandType"></param>
         /// <returns></returns>
@@ -459,11 +446,10 @@ namespace Deipax.DataAccess.Extensions
             string sql,
             IDbDataParameter[] parameters = null,
             IDbTransaction transaction = null,
-            bool buffered = true,
             int? commandTimeout = null,
             CommandType? commandType = null)
         {
-            var enumerable = await DbFactory
+            return await DbFactory
                 .Instance
                 .CreateDbCmd()
                 .Connection(source)
@@ -474,8 +460,6 @@ namespace Deipax.DataAccess.Extensions
                 .CommandType(commandType)
                 .AsEnumerableAsync()
                 .ConfigureAwait(false);
-
-            return buffered ? enumerable.ToList() : enumerable as IEnumerable<dynamic>;
         }
 
         public static async Task<T> FirstAsync<T>(

@@ -3,49 +3,49 @@ BenchmarkDotNet=v0.12.0, OS=Windows 10.0.17763.914 (1809/October2018Update/Redst
 Intel Core i7-8700K CPU 3.70GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
 .NET Core SDK=3.0.100
   [Host]     : .NET Core 3.0.0 (CoreCLR 4.700.19.46205, CoreFX 4.700.19.46214), X64 RyuJIT
-  Job-XYVOCI : .NET Core 2.0.9 (CoreCLR 4.6.26614.01, CoreFX 4.6.26614.01), X64 RyuJIT
-  Job-DLSBQL : .NET Core 2.2.7 (CoreCLR 4.6.28008.02, CoreFX 4.6.28008.03), X64 RyuJIT
-  Job-ZPORLS : .NET Core 3.0.0 (CoreCLR 4.700.19.46205, CoreFX 4.700.19.46214), X64 RyuJIT
+  Job-UBQXFW : .NET Core 2.0.9 (CoreCLR 4.6.26614.01, CoreFX 4.6.26614.01), X64 RyuJIT
+  Job-BZDDAE : .NET Core 2.2.7 (CoreCLR 4.6.28008.02, CoreFX 4.6.28008.03), X64 RyuJIT
+  Job-OHXMKF : .NET Core 3.0.0 (CoreCLR 4.700.19.46205, CoreFX 4.700.19.46214), X64 RyuJIT
 
 
-                  Method |     Toolchain |        Mean |     Error |      StdDev | Ratio | RatioSD |     Gen 0 |     Gen 1 |     Gen 2 |   Allocated |
------------------------- |-------------- |------------:|----------:|------------:|------:|--------:|----------:|----------:|----------:|------------:|
-        AllFieldsAsClass | .NET Core 2.0 | 40,338.1 us | 319.68 us |   283.39 us |  1.00 |    0.00 | 2166.6667 |  916.6667 |  166.6667 | 13505.33 KB |
-        AllFieldsAsClass | .NET Core 2.2 | 38,714.0 us | 131.09 us |   122.63 us |  0.96 |    0.01 | 2153.8462 |  923.0769 |  230.7692 | 13505.33 KB |
-        AllFieldsAsClass | .NET Core 3.0 | 38,270.9 us | 604.46 us |   565.41 us |  0.95 |    0.02 | 2153.8462 |  923.0769 |  230.7692 | 13107.12 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-  AllFieldsAsClass_Async | .NET Core 2.0 | 40,189.2 us | 474.13 us |   443.50 us |  1.00 |    0.00 | 2153.8462 |  923.0769 |  230.7692 | 13505.26 KB |
-  AllFieldsAsClass_Async | .NET Core 2.2 | 39,613.5 us | 353.57 us |   330.73 us |  0.99 |    0.01 | 2153.8462 |  923.0769 |  230.7692 | 13505.26 KB |
-  AllFieldsAsClass_Async | .NET Core 3.0 | 38,253.9 us | 511.19 us |   478.16 us |  0.95 |    0.02 | 2153.8462 |  923.0769 |  230.7692 | 13107.36 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-       AllFieldsAsStruct | .NET Core 2.0 | 49,602.7 us | 200.86 us |   178.06 us |  1.00 |    0.00 | 2909.0909 | 1636.3636 |  909.0909 |  17665.9 KB |
-       AllFieldsAsStruct | .NET Core 2.2 | 46,579.2 us | 459.59 us |   429.90 us |  0.94 |    0.01 | 2909.0909 | 1636.3636 |  909.0909 | 17665.46 KB |
-       AllFieldsAsStruct | .NET Core 3.0 | 45,087.0 us | 221.57 us |   185.02 us |  0.91 |    0.00 | 2916.6667 | 1916.6667 |  916.6667 | 17266.77 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
- AllFieldsAsStruct_Async | .NET Core 2.0 | 48,501.6 us | 182.12 us |   170.35 us |  1.00 |    0.00 | 2909.0909 | 1636.3636 |  909.0909 | 17665.75 KB |
- AllFieldsAsStruct_Async | .NET Core 2.2 | 45,585.8 us | 181.72 us |   169.98 us |  0.94 |    0.00 | 3000.0000 | 1750.0000 | 1000.0000 | 17664.81 KB |
- AllFieldsAsStruct_Async | .NET Core 3.0 | 44,847.8 us | 666.10 us |   623.07 us |  0.92 |    0.01 | 2916.6667 | 1916.6667 |  916.6667 | 17266.31 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-             DynamicList | .NET Core 2.0 | 42,359.9 us | 273.05 us |   255.41 us |  1.00 |    0.00 | 2416.6667 | 1000.0000 |  416.6667 | 13474.19 KB |
-             DynamicList | .NET Core 2.2 | 40,763.5 us | 241.98 us |   226.35 us |  0.96 |    0.01 | 2384.6154 | 1000.0000 |  384.6154 | 13474.18 KB |
-             DynamicList | .NET Core 3.0 | 37,520.8 us | 596.88 us |   529.11 us |  0.89 |    0.02 | 2230.7692 |  923.0769 |  307.6923 |    13076 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-       DynamicList_Async | .NET Core 2.0 | 42,325.3 us | 538.90 us |   504.08 us |  1.00 |    0.00 | 2416.6667 | 1000.0000 |  416.6667 | 13473.41 KB |
-       DynamicList_Async | .NET Core 2.2 | 39,870.7 us | 218.74 us |   204.61 us |  0.94 |    0.01 | 2384.6154 | 1000.0000 |  384.6154 | 13473.75 KB |
-       DynamicList_Async | .NET Core 3.0 | 39,920.1 us | 798.00 us | 1,784.83 us |  0.98 |    0.04 | 2300.0000 | 1000.0000 |  300.0000 | 13076.11 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-              QueryFirst | .NET Core 2.0 |    277.3 us |   0.56 us |     0.50 us |  1.00 |    0.00 |    5.8594 |         - |         - |    38.14 KB |
-              QueryFirst | .NET Core 2.2 |    260.4 us |   3.75 us |     3.51 us |  0.94 |    0.01 |    5.8594 |         - |         - |    38.14 KB |
-              QueryFirst | .NET Core 3.0 |    245.2 us |   1.55 us |     1.45 us |  0.88 |    0.01 |    5.8594 |         - |         - |    37.27 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-     QueryFirstOrDefault | .NET Core 2.0 |    282.4 us |   4.08 us |     3.62 us |  1.00 |    0.00 |    5.8594 |         - |         - |    38.14 KB |
-     QueryFirstOrDefault | .NET Core 2.2 |    259.5 us |   2.72 us |     2.54 us |  0.92 |    0.02 |    5.8594 |         - |         - |    38.14 KB |
-     QueryFirstOrDefault | .NET Core 3.0 |    243.7 us |   1.46 us |     1.37 us |  0.86 |    0.01 |    5.8594 |         - |         - |    37.27 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-             QuerySingle | .NET Core 2.0 |    281.4 us |   0.61 us |     0.54 us |  1.00 |    0.00 |    5.8594 |         - |         - |    38.16 KB |
-             QuerySingle | .NET Core 2.2 |    260.7 us |   2.83 us |     2.65 us |  0.93 |    0.01 |    5.8594 |         - |         - |    38.16 KB |
-             QuerySingle | .NET Core 3.0 |    243.6 us |   0.52 us |     0.46 us |  0.87 |    0.00 |    5.8594 |         - |         - |     37.3 KB |
-                         |               |             |           |             |       |         |           |           |           |             |
-    QuerySingleOrDefault | .NET Core 2.0 |    283.2 us |   1.57 us |     1.22 us |  1.00 |    0.00 |    5.8594 |         - |         - |    38.16 KB |
-    QuerySingleOrDefault | .NET Core 2.2 |    257.9 us |   1.18 us |     1.10 us |  0.91 |    0.01 |    5.8594 |         - |         - |    38.16 KB |
-    QuerySingleOrDefault | .NET Core 3.0 |    247.3 us |   1.20 us |     1.12 us |  0.87 |    0.01 |    5.8594 |         - |         - |     37.3 KB |
+                  Method |     Toolchain |        Mean |     Error |    StdDev | Ratio | RatioSD |     Gen 0 |     Gen 1 |    Gen 2 |   Allocated |
+------------------------ |-------------- |------------:|----------:|----------:|------:|--------:|----------:|----------:|---------:|------------:|
+        AllFieldsAsClass | .NET Core 2.0 | 40,339.0 us | 146.99 us | 122.75 us |  1.00 |    0.00 | 2153.8462 |  923.0769 | 230.7692 | 13505.33 KB |
+        AllFieldsAsClass | .NET Core 2.2 | 39,656.6 us | 198.36 us | 165.64 us |  0.98 |    0.00 | 2153.8462 |  923.0769 | 230.7692 | 13505.33 KB |
+        AllFieldsAsClass | .NET Core 3.0 | 38,716.5 us | 552.63 us | 516.93 us |  0.96 |    0.01 | 2142.8571 |  928.5714 | 214.2857 | 13107.57 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+  AllFieldsAsClass_Async | .NET Core 2.0 | 40,829.7 us | 193.80 us | 181.28 us |  1.00 |    0.00 | 2153.8462 |  923.0769 | 230.7692 | 13505.26 KB |
+  AllFieldsAsClass_Async | .NET Core 2.2 | 39,530.4 us | 232.32 us | 194.00 us |  0.97 |    0.01 | 2153.8462 |  923.0769 | 230.7692 | 13505.26 KB |
+  AllFieldsAsClass_Async | .NET Core 3.0 | 39,057.7 us | 776.35 us | 953.43 us |  0.96 |    0.03 | 2142.8571 |  928.5714 | 214.2857 | 13107.21 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+       AllFieldsAsStruct | .NET Core 2.0 | 49,935.0 us | 367.52 us | 306.90 us |  1.00 |    0.00 | 2909.0909 | 1636.3636 | 909.0909 | 17665.25 KB |
+       AllFieldsAsStruct | .NET Core 2.2 | 47,061.9 us | 382.47 us | 357.76 us |  0.94 |    0.01 | 2909.0909 | 1636.3636 | 909.0909 | 17665.83 KB |
+       AllFieldsAsStruct | .NET Core 3.0 | 46,024.1 us | 628.82 us | 588.20 us |  0.92 |    0.01 | 2818.1818 | 1818.1818 | 909.0909 | 17267.33 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+ AllFieldsAsStruct_Async | .NET Core 2.0 | 49,120.4 us | 165.16 us | 146.41 us |  1.00 |    0.00 | 2909.0909 | 1636.3636 | 909.0909 | 17664.99 KB |
+ AllFieldsAsStruct_Async | .NET Core 2.2 | 45,539.5 us | 161.31 us | 150.89 us |  0.93 |    0.00 | 2909.0909 | 1636.3636 | 909.0909 | 17664.34 KB |
+ AllFieldsAsStruct_Async | .NET Core 3.0 | 45,001.1 us | 689.60 us | 611.32 us |  0.92 |    0.01 | 2916.6667 | 1916.6667 | 916.6667 |  17267.4 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+             DynamicList | .NET Core 2.0 | 42,067.7 us | 395.22 us | 369.69 us |  1.00 |    0.00 | 2416.6667 | 1000.0000 | 416.6667 | 13474.54 KB |
+             DynamicList | .NET Core 2.2 | 40,309.0 us | 257.75 us | 241.10 us |  0.96 |    0.01 | 2384.6154 | 1000.0000 | 384.6154 | 13474.61 KB |
+             DynamicList | .NET Core 3.0 | 38,528.3 us | 443.58 us | 414.92 us |  0.92 |    0.01 | 2230.7692 |  923.0769 | 307.6923 | 13075.16 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+       DynamicList_Async | .NET Core 2.0 | 42,590.5 us | 416.45 us | 389.54 us |  1.00 |    0.00 | 2416.6667 | 1000.0000 | 416.6667 | 13474.11 KB |
+       DynamicList_Async | .NET Core 2.2 | 40,182.3 us | 207.15 us | 183.63 us |  0.94 |    0.01 | 2384.6154 | 1000.0000 | 384.6154 | 13474.12 KB |
+       DynamicList_Async | .NET Core 3.0 | 38,550.2 us | 652.29 us | 610.15 us |  0.91 |    0.02 | 2230.7692 |  923.0769 | 307.6923 |  13075.6 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+              QueryFirst | .NET Core 2.0 |    279.5 us |   1.31 us |   1.16 us |  1.00 |    0.00 |    5.8594 |         - |        - |    38.14 KB |
+              QueryFirst | .NET Core 2.2 |    257.6 us |   1.18 us |   0.92 us |  0.92 |    0.00 |    5.8594 |         - |        - |    38.14 KB |
+              QueryFirst | .NET Core 3.0 |    242.9 us |   1.13 us |   1.06 us |  0.87 |    0.01 |    5.8594 |         - |        - |    37.27 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+     QueryFirstOrDefault | .NET Core 2.0 |    280.9 us |   1.62 us |   1.51 us |  1.00 |    0.00 |    5.8594 |         - |        - |    38.14 KB |
+     QueryFirstOrDefault | .NET Core 2.2 |    258.2 us |   0.80 us |   0.71 us |  0.92 |    0.01 |    5.8594 |         - |        - |    38.14 KB |
+     QueryFirstOrDefault | .NET Core 3.0 |    248.1 us |   2.89 us |   2.56 us |  0.88 |    0.01 |    5.8594 |         - |        - |    37.27 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+             QuerySingle | .NET Core 2.0 |    285.5 us |   4.67 us |   4.37 us |  1.00 |    0.00 |    5.8594 |         - |        - |    38.16 KB |
+             QuerySingle | .NET Core 2.2 |    260.7 us |   1.34 us |   1.25 us |  0.91 |    0.01 |    5.8594 |         - |        - |    38.16 KB |
+             QuerySingle | .NET Core 3.0 |    248.5 us |   1.26 us |   1.18 us |  0.87 |    0.01 |    5.8594 |         - |        - |     37.3 KB |
+                         |               |             |           |           |       |         |           |           |          |             |
+    QuerySingleOrDefault | .NET Core 2.0 |    288.1 us |   3.09 us |   2.89 us |  1.00 |    0.00 |    5.8594 |         - |        - |    38.16 KB |
+    QuerySingleOrDefault | .NET Core 2.2 |    262.6 us |   4.23 us |   3.95 us |  0.91 |    0.02 |    5.8594 |         - |        - |    38.16 KB |
+    QuerySingleOrDefault | .NET Core 3.0 |    247.9 us |   1.62 us |   1.43 us |  0.86 |    0.01 |    5.8594 |         - |        - |     37.3 KB |

@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Deipax.DataAccess.Extensions;
 using System.Data;
+using System.Linq;
 using UnitTests.Common;
 
 namespace Benchmarks.DataAccess.Deipax
@@ -26,61 +27,61 @@ namespace Benchmarks.DataAccess.Deipax
         [Benchmark]
         public void AllFieldsAsClass()
         {
-            var tmp = _dbConnection.AsEnumerable<MultipleFieldClass>(_sql);
+            _dbConnection.AsEnumerable<MultipleFieldClass>(_sql).ToList();
         }
 
         [Benchmark]
         public void AllFieldsAsClass_Async()
         {
-            var tmp = _dbConnection.AsEnumerableAsync<MultipleFieldClass>(_sql).Result;
+            _dbConnection.AsEnumerableAsync<MultipleFieldClass>(_sql).Result.ToList();
         }
 
         [Benchmark]
         public void AllFieldsAsStruct()
         {
-            var tmp = _dbConnection.AsEnumerable<MultipleFieldStruct>(_sql);
+            _dbConnection.AsEnumerable<MultipleFieldStruct>(_sql).ToList();
         }
 
         [Benchmark]
         public void AllFieldsAsStruct_Async()
         {
-            var tmp = _dbConnection.AsEnumerableAsync<MultipleFieldStruct>(_sql).Result;
+            _dbConnection.AsEnumerableAsync<MultipleFieldStruct>(_sql).Result.ToList();
         }
 
         [Benchmark]
         public void DynamicList()
         {
-            var tmp = _dbConnection.AsEnumerable(_sql);
+            _dbConnection.AsEnumerable(_sql).ToList();
         }
 
         [Benchmark]
         public void DynamicList_Async()
         {
-            var tmp = _dbConnection.AsEnumerableAsync(_sql).Result;
+            _dbConnection.AsEnumerableAsync(_sql).Result.ToList();
         }
 
         [Benchmark]
         public void QueryFirst()
         {
-            var tmp = _dbConnection.First(_sql);
+            _dbConnection.First(_sql);
         }
 
         [Benchmark]
         public void QueryFirstOrDefault()
         {
-            var tmp = _dbConnection.FirstOrDefault(_sql);
+            _dbConnection.FirstOrDefault(_sql);
         }
 
         [Benchmark]
         public void QuerySingle()
         {
-            var tmp = _dbConnection.Single(_sql_limit_one);
+            _dbConnection.Single(_sql_limit_one);
         }
 
         [Benchmark]
         public void QuerySingleOrDefault()
         {
-            var tmp = _dbConnection.SingleOrDefault(_sql_limit_one);
+            _dbConnection.SingleOrDefault(_sql_limit_one);
         }
     }
 }

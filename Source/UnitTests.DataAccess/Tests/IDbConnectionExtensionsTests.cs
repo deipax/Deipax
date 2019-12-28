@@ -182,11 +182,11 @@ namespace UnitTests.DataAccess
         {
             SetupConnection(con =>
             {
-                IEnumerable<CategoryAsClass> result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]");
+                IEnumerable<CategoryAsClass> result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]").ToList();
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]");
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -196,13 +196,13 @@ namespace UnitTests.DataAccess
         [Fact]
         public void AsEnumerable_Typed_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                IEnumerable<CategoryAsClass> result = await con.AsEnumerableAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
+                IEnumerable<CategoryAsClass> result = con.AsEnumerableAsync<CategoryAsClass>(@"select * from main.[Category]").Result.ToList();
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.AsEnumerable<CategoryAsClass>(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerableAsync<CategoryAsClass>(@"select * from main.[Category]").Result;
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -214,11 +214,11 @@ namespace UnitTests.DataAccess
         {
             SetupConnection(con =>
             {
-                IEnumerable<dynamic> result = con.AsEnumerable(@"select * from main.[Category]");
+                IEnumerable<dynamic> result = con.AsEnumerable(@"select * from main.[Category]").ToList();
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.AsEnumerable(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerable(@"select * from main.[Category]");
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -228,13 +228,13 @@ namespace UnitTests.DataAccess
         [Fact]
         public void AsEnumerable_Dynamic_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                IEnumerable<dynamic> result = await con.AsEnumerableAsync(@"select * from main.[Category]").ConfigureAwait(false);
+                IEnumerable<dynamic> result = con.AsEnumerableAsync(@"select * from main.[Category]").Result.ToList();
                 Assert.Equal(8, result.Count());
                 Assert.Equal(8, result.Count()); // Assert twice to test result is buffered
 
-                result = con.AsEnumerable(@"select * from main.[Category]", buffered: false);
+                result = con.AsEnumerableAsync(@"select * from main.[Category]").Result;
                 Assert.Equal(8, result.Count());
                 // Command and Reader should be cleaned up at this point.
                 Assert.ThrowsAny<NullReferenceException>(() => result.Count());
@@ -254,9 +254,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void First_Typed_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                CategoryAsClass result = await con.FirstAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
+                CategoryAsClass result = con.FirstAsync<CategoryAsClass>(@"select * from main.[Category]").Result;
                 Assert.NotNull(result);
             });
         }
@@ -274,9 +274,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void First_Dynamic_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                dynamic result = await con.FirstAsync(@"select * from main.[Category]").ConfigureAwait(false);
+                dynamic result = con.FirstAsync(@"select * from main.[Category]").Result;
                 Assert.NotNull(result);
             });
         }
@@ -294,9 +294,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void FirstOrDefault_Typed_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                CategoryAsClass result = await con.FirstOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category]").ConfigureAwait(false);
+                CategoryAsClass result = con.FirstOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category]").Result;
                 Assert.NotNull(result);
             });
         }
@@ -314,9 +314,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void FirstOrDefault_Dynamic_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                dynamic result = await con.FirstOrDefaultAsync(@"select * from main.[Category]").ConfigureAwait(false);
+                dynamic result = con.FirstOrDefaultAsync(@"select * from main.[Category]").Result;
                 Assert.NotNull(result);
             });
         }
@@ -334,9 +334,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void Single_Typed_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                CategoryAsClass result = await con.SingleAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                CategoryAsClass result = con.SingleAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").Result;
                 Assert.NotNull(result);
             });
         }
@@ -354,9 +354,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void Single_Dynamic_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                dynamic result = await con.SingleAsync(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                dynamic result = con.SingleAsync(@"select * from main.[Category] where Id = 1").Result;
                 Assert.NotNull(result);
             });
         }
@@ -374,9 +374,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void SingleOrDefault_Typed_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                CategoryAsClass result = await con.SingleOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                CategoryAsClass result = con.SingleOrDefaultAsync<CategoryAsClass>(@"select * from main.[Category] where Id = 1").Result;
                 Assert.NotNull(result);
             });
         }
@@ -394,9 +394,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void SingleOrDefault_Dynamic_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                dynamic result = await con.SingleOrDefaultAsync(@"select * from main.[Category] where Id = 1").ConfigureAwait(false);
+                dynamic result = con.SingleOrDefaultAsync(@"select * from main.[Category] where Id = 1").Result;
                 Assert.NotNull(result);
             });
         }
@@ -414,9 +414,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void ExecuteNonQueryAsync()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                var result = await con.ExecuteNonQueryAsync(@"update main.[Category] set CategoryName = 'Beverages' where Id = 1");
+                var result = con.ExecuteNonQueryAsync(@"update main.[Category] set CategoryName = 'Beverages' where Id = 1").Result;
                 Assert.Equal(1, result);
             });
         }
@@ -435,9 +435,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void ExecuteScalar_Object_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                var result = await con.ExecuteScalarAsync(@"select Id from main.[Category] where Id = 1").ConfigureAwait(false);
+                var result = con.ExecuteScalarAsync(@"select Id from main.[Category] where Id = 1").Result;
                 Assert.IsType<long>(result);
                 Assert.Equal(1L, result);
             });
@@ -457,9 +457,9 @@ namespace UnitTests.DataAccess
         [Fact]
         public void ExecuteScalar_T_Async()
         {
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                var result = await con.ExecuteScalarAsync<int>(@"select Id from main.[Category] where Id = 1");
+                var result = con.ExecuteScalarAsync<int>(@"select Id from main.[Category] where Id = 1").Result;
                 Assert.IsType<int>(result);
                 Assert.Equal(1, result);
             });
@@ -545,9 +545,9 @@ namespace UnitTests.DataAccess
                 return 1;
             };
 
-            SetupConnection(async con =>
+            SetupConnection(con =>
             {
-                var result = await con.ExecuteAsync(@"select Id from main.[Category] where Id = 1", func);
+                var result = con.ExecuteAsync(@"select Id from main.[Category] where Id = 1", func).Result;
             });
 
             Assert.Equal(1, count);
