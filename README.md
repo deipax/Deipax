@@ -6,7 +6,7 @@ A high performance, customizable, deep cloning library.
 
 # Deipax - DataAccess library
 
-Access any relational database that provides an Ado.Net implementation in a linq like fashion using extension methods.
+Access any relational database that provides an Ado.Net implementation in a fluent fashion using extension methods.
 
 # Deipax - Convert
 
