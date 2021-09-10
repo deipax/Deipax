@@ -16,26 +16,23 @@ namespace Benchmarks.Convert
         {
             var config = ManualConfig
                 .CreateEmpty()
-                .With(DefaultConfig.Instance.GetAnalysers().ToArray())
-                .With(DefaultConfig.Instance.GetColumnProviders().ToArray())
-                .With(DefaultConfig.Instance.GetDiagnosers().ToArray())
-                .With(DefaultConfig.Instance.GetFilters().ToArray())
+                .AddAnalyser(DefaultConfig.Instance.GetAnalysers().ToArray())
+                .AddColumnProvider(DefaultConfig.Instance.GetColumnProviders().ToArray())
+                .AddDiagnoser(DefaultConfig.Instance.GetDiagnosers().ToArray())
+                .AddFilter(DefaultConfig.Instance.GetFilters().ToArray())
                 //.With(new AllCategoriesFilter(new string[] { "Enum" }))
-                .With(DefaultConfig.Instance.GetHardwareCounters().ToArray())
-                .With(new Job[]
+                .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
+                .AddJob(new Job[]
                 {
-                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp20)).AsBaseline(),
-                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp22)),
-                    ConfigureJob(Job.Default.With(CsProjCoreToolchain.NetCoreApp30)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net462)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net472)),
-                    ConfigureJob(Job.Default.With(CsProjClassicNetToolchain.Net48)),
+                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp21)).AsBaseline(),
+                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp31)),
+                    ConfigureJob(Job.Default.WithToolchain(CsProjClassicNetToolchain.Net48)),
                 })
-                .With(DefaultConfig.Instance.GetLoggers().ToArray())
-                .With(DefaultConfig.Instance.GetValidators().ToArray())
-                .With(MarkdownExporter.Default)
-                .With(MemoryDiagnoser.Default)
-                .With(new IColumn[]
+                .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
+                .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
+                .AddExporter(MarkdownExporter.Default)
+                .AddDiagnoser(MemoryDiagnoser.Default)
+                .AddColumn(new IColumn[]
                 {
                     StatisticColumn.Mean,
                     StatisticColumn.Error,
