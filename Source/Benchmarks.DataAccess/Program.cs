@@ -23,9 +23,8 @@ namespace Benchmarks.DataAccess
                 .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .AddJob(new Job[]
                 {
-                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp21)).AsBaseline(),
-                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp31)),
-                    ConfigureJob(Job.Default.WithToolchain(CsProjClassicNetToolchain.Net48)),
+                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
+                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
                 })
                 .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
                 .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
