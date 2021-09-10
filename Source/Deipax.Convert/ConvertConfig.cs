@@ -37,6 +37,7 @@ namespace Deipax.Convert
                 new FromObject(),
             };
         }
+
         #region Field Members
         private static readonly IConvertFactory _defaultFactory = new DefaultFactory();
         #endregion
