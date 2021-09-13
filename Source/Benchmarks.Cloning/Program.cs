@@ -6,6 +6,7 @@ using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
 using Benchmarks.Cloning.Deipax;
 using System.Linq;
+using BenchmarkDotNet.Columns;
 
 namespace Benchmarks.Cloning
 {
@@ -22,13 +23,22 @@ namespace Benchmarks.Cloning
                 .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .AddJob(new Job[]
                 {
-                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
-                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
+                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
+                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
                 })
                 .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
                 .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
                 .AddExporter(MarkdownExporter.Default)
-                .AddDiagnoser(MemoryDiagnoser.Default);
+                .AddDiagnoser(MemoryDiagnoser.Default)
+                .AddColumn(new IColumn[]
+                {
+                    StatisticColumn.Mean,
+                    StatisticColumn.Error,
+                    StatisticColumn.StdDev,
+                    StatisticColumn.Median,
+                    BaselineRatioColumn.RatioMean,
+                    BaselineRatioColumn.RatioStdDev
+                });
 
             RunDeipaxBenchmarks(config);
         }

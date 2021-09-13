@@ -20,12 +20,11 @@ namespace Benchmarks.Convert
                 .AddColumnProvider(DefaultConfig.Instance.GetColumnProviders().ToArray())
                 .AddDiagnoser(DefaultConfig.Instance.GetDiagnosers().ToArray())
                 .AddFilter(DefaultConfig.Instance.GetFilters().ToArray())
-                //.With(new AllCategoriesFilter(new string[] { "Enum" }))
                 .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .AddJob(new Job[]
                 {
-                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
-                    ConfigureJob(Job.Default.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
+                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
+                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
                 })
                 .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
                 .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
