@@ -10,9 +10,9 @@ namespace UnitTests.Convert
     //TODO: Fix all FormatException/InvalidCastException
     public abstract class ConvertTo_Base<TTo> : BaseConvertTo<TTo>
     {
-        protected override TTo ConvertFrom<TFrom>(TFrom from)
+        protected override TTo Convert<TFrom>(TFrom value)
         {
-            return ConvertTo<TTo, TFrom>.From(from, CultureInfo.InvariantCulture);
+            return ConvertTo<TTo>.From(value, CultureInfo.InvariantCulture);
         }
     }
 
