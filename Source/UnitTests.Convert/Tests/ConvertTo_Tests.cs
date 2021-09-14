@@ -7,6 +7,7 @@ using Xunit;
 
 namespace UnitTests.Convert
 {
+    //TODO: Fix all FormatException/InvalidCastException
     public abstract class ConvertTo_Base<TTo> : BaseConvertTo<TTo>
     {
         protected override TTo ConvertFrom<TFrom>(TFrom from)
@@ -16,415 +17,354 @@ namespace UnitTests.Convert
     }
 
     #region Bool/BoolNullable
-    public abstract class ConvertToBoolBase<TTo> : ConvertTo_Base<TTo>
+    public class ConvertToBool : ConvertTo_Base<bool>
     {
-        public ConvertToBoolBase()
-        {
-            _fromString_AsObject = _fromString = "true";
-        }
+        public override void From_Char_AsObject(object input, bool expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, bool expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, bool expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, bool expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, bool expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
-    public class ConvertToBool : ConvertToBoolBase<bool>
+    public class ConvertToBoolNullable : ConvertTo_Base<bool?>
     {
-    }
-
-    public class ConvertToBoolNullable : ConvertToBoolBase<bool?>
-    {
+        public override void From_Char_AsObject(object input, bool? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, bool? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, bool? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, bool? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, bool? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Char/CharNullable
-    public abstract class ConvertToCharBase<TTo> : ConvertTo_Base<TTo>
+    public class ConvertToChar : ConvertTo_Base<char>
     {
+        public override void From_Bool_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Bool_Nullable_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_Nullable_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_Nullable_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_Nullable_AsObject(object input, char expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, char expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
-    public class ConvertToChar : ConvertToCharBase<char>
+    public class ConvertToCharNullable : ConvertTo_Base<char?>
     {
-    }
-
-    public class ConvertToCharNullable : ConvertToCharBase<char?>
-    {
+        public override void From_Bool_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Bool_Nullable_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_Nullable_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_Nullable_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_Nullable_AsObject(object input, char? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, char? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region SByte/SByteNullable
     public class ConvertToSByte : ConvertTo_Base<sbyte>
     {
+        public override void From_DateTime_AsObject(object input, sbyte expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, sbyte expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, sbyte expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToSByteNullable : ConvertTo_Base<sbyte?>
     {
+        public override void From_DateTime_AsObject(object input, sbyte? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, sbyte? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, sbyte? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Byte/ByteNullable
     public class ConvertToByte : ConvertTo_Base<byte>
     {
+        public override void From_DateTime_AsObject(object input, byte expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, byte expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, byte expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToByteNullable : ConvertTo_Base<byte?>
     {
+        public override void From_DateTime_AsObject(object input, byte? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, byte? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, byte? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Short/ShortNullable
     public class ConvertToShort : ConvertTo_Base<short>
     {
+        public override void From_DateTime_AsObject(object input, short expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, short expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, short expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToShortNullable : ConvertTo_Base<short?>
     {
+        public override void From_DateTime_AsObject(object input, short? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, short? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, short? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region UShort/UShortNullable
     public class ConvertToUShort : ConvertTo_Base<ushort>
     {
+        public override void From_DateTime_AsObject(object input, ushort expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, ushort expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, ushort expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToUShortNullable : ConvertTo_Base<ushort?>
     {
+        public override void From_DateTime_AsObject(object input, ushort? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, ushort? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, ushort? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Int/IntNullable
     public class ConvertToInt : ConvertTo_Base<int>
     {
+        public override void From_DateTime_AsObject(object input, int expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, int expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, int expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToIntNullable : ConvertTo_Base<int?>
     {
+        public override void From_DateTime_AsObject(object input, int? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, int? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, int? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region UInt/UIntNullable
     public class ConvertToUInt : ConvertTo_Base<uint>
     {
+        public override void From_DateTime_AsObject(object input, uint expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, uint expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, uint expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToUIntNullable : ConvertTo_Base<uint?>
     {
+        public override void From_DateTime_AsObject(object input, uint? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, uint? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, uint? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Long/LongNullable
     public class ConvertToLong : ConvertTo_Base<long>
     {
+        public override void From_DateTime_AsObject(object input, long expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, long expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, long expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToLongNullable : ConvertTo_Base<long?>
     {
+        public override void From_DateTime_AsObject(object input, long? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, long? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, long? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region ULong/ULongNullable
     public class ConvertToULong : ConvertTo_Base<ulong>
     {
+        public override void From_DateTime_AsObject(object input, ulong expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, ulong expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, ulong expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
     public class ConvertToULongNullable : ConvertTo_Base<ulong?>
     {
+        public override void From_DateTime_AsObject(object input, ulong? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, ulong? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, ulong? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Float/FloatNullable
-    public abstract class ConvertToFloatBase<TTo> : ConvertTo_Base<TTo>
+    public class ConvertToFloat : ConvertTo_Base<float>
     {
+        public override void From_Char_AsObject(object input, float expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, float expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, float expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, float expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, float expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
-    public class ConvertToFloat : ConvertToFloatBase<float>
+    public class ConvertToFloatNullable : ConvertTo_Base<float?>
     {
-    }
-
-    public class ConvertToFloatNullable : ConvertToFloatBase<float?>
-    {
+        public override void From_Char_AsObject(object input, float? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, float? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, float? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, float? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, float? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Double/DoubleNullable
-    public abstract class ConvertToDoubleBase<TTo> : ConvertTo_Base<TTo>
+    public class ConvertToDouble : ConvertTo_Base<double>
     {
+        public override void From_Char_AsObject(object input, double expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, double expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, double expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, double expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, double expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
-    public class ConvertToDouble : ConvertToDoubleBase<double>
+    public class ConvertToDoubleNullable : ConvertTo_Base<double?>
     {
-    }
-
-    public class ConvertToDoubleNullable : ConvertToDoubleBase<double?>
-    {
+        public override void From_Char_AsObject(object input, double? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, double? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, double? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, double? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, double? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region Decimal/DecimalNullable
-    public abstract class ConvertToDecimalBase<TTo> : ConvertTo_Base<TTo>
+    public class ConvertToDecimal : ConvertTo_Base<decimal>
     {
+        public override void From_Char_AsObject(object input, decimal expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, decimal expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, decimal expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, decimal expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, decimal expected) => Assert.ThrowsAsync<FormatException>(null);
     }
 
-    public class ConvertToDecimal : ConvertToDecimalBase<decimal>
+    public class ConvertToDecimalNullable : ConvertTo_Base<decimal?>
     {
-    }
-
-    public class ConvertToDecimalNullable : ConvertToDecimalBase<decimal?>
-    {
+        public override void From_Char_AsObject(object input, decimal? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, decimal? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_AsObject(object input, decimal? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, decimal? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, decimal? expected) => Assert.ThrowsAsync<FormatException>(null);
     }
     #endregion
 
     #region DateTime/DateTimeNullable
-    public abstract class ConvertToDateTimeBase<TTo> : ConvertTo_Base<TTo>
+    public class ConvertToDateTime : ConvertTo_Base<DateTime>
     {
-        public ConvertToDateTimeBase()
-        {
-            _fromString_AsObject = _fromString = DateTime.MinValue.ToString();
-        }
+        public override void From_Bool_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Bool_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Byte_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Byte_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Short_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Short_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Int_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Int_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Long_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Long_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_SByte_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_SByte_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<FormatException>(null);
+        public override void From_UShort_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_UShort_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_UInt_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_UInt_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_ULong_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_ULong_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Enum_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Enum_Nullable_AsObject(object input, DateTime expected) => Assert.ThrowsAsync<InvalidCastException>(null);
     }
 
-    public class ConvertToDateTime : ConvertToDateTimeBase<DateTime>
+    public class ConvertToDateTimeNullable : ConvertTo_Base<DateTime?>
     {
-    }
-
-    public class ConvertToDateTimeNullable : ConvertToDateTimeBase<DateTime?>
-    {
+        public override void From_Bool_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Bool_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Byte_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Byte_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Char_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Decimal_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Double_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Short_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Short_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Int_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Int_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Long_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Long_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_SByte_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_SByte_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Float_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_String_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<FormatException>(null);
+        public override void From_UShort_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_UShort_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_UInt_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_UInt_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_ULong_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_ULong_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Enum_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_Enum_Nullable_AsObject(object input, DateTime? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
     }
     #endregion
 
     #region String
     public class ConvertToString : ConvertTo_Base<string>
     {
-        [Fact]
-        public override void From_NonConvertibleClass()
-        {
-            TestConvertFrom(_nonConvertibleClass, _nonConvertibleClass.ToString());
-        }
-
-        [Fact]
-        public override void From_NonConvertibleClass_AsObject()
-        {
-            TestConvertFrom(_nonConvertibleClass_AsObject, _nonConvertibleClass_AsObject.ToString());
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct()
-        {
-            TestConvertFrom(_nonConvertibleStruct, _nonConvertibleStruct.ToString());
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct_AsObject()
-        {
-            TestConvertFrom(_nonConvertibleStruct_AsObject, _nonConvertibleStruct_AsObject.ToString());
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct_Nullable_WithValue()
-        {
-            TestConvertFrom(_nonConvertibleStructNullableWithValue, _nonConvertibleStructNullableWithValue.ToString());
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
-        {
-            TestConvertFrom(_nonConvertibleStructNullableWithValue_AsObject, _nonConvertibleStructNullableWithValue_AsObject.ToString());
-        }
-
-        [Fact]
-        public override void From_ParentClass()
-        {
-            TestConvertFrom(_parentClass, _parentClass.ToString());
-        }
-
-        [Fact]
-        public override void From_ParentClass_AsObject()
-        {
-            TestConvertFrom(_parentClass_AsObject, _parentClass_AsObject.ToString());
-        }
-
-        [Fact]
-        public override void From_ParentStruct()
-        {
-            TestConvertFrom(_parentStruct, _parentStruct.ToString());
-        }
-
-        [Fact]
-        public override void From_ParentStruct_AsObject()
-        {
-            TestConvertFrom(_parentStruct_AsObject, _parentStruct_AsObject.ToString());
-        }
-
-        [Fact]
-        public override void From_ParentStruct_Nullable_WithValue()
-        {
-            TestConvertFrom(_parentStructNullableWithValue, _parentStructNullableWithValue.ToString());
-        }
-
-        [Fact]
-        public override void From_ParentStruct_Nullable_WithValue_AsObject()
-        {
-            TestConvertFrom(_parentStructNullableWithValue_AsObject, _parentStructNullableWithValue_AsObject.ToString());
-        }
     }
     #endregion
 
     #region Object
     public class ConvertToObject : ConvertTo_Base<object>
     {
-        [Fact]
-        public override void From_DBNull()
-        {
-            TestConvertFrom(DBNull.Value, DBNull.Value);
-        }
-
-        [Fact]
-        public override void From_DBNull_AsObject()
-        {
-            TestConvertFrom(DBNull.Value, DBNull.Value);
-        }
-
-        [Fact]
-        public override void From_NonConvertibleClass()
-        {
-            TestConvertFrom(_nonConvertibleClass, _nonConvertibleClass);
-        }
-
-        [Fact]
-        public override void From_NonConvertibleClass_AsObject()
-        {
-            TestConvertFrom(_nonConvertibleClass_AsObject, _nonConvertibleClass_AsObject);
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct()
-        {
-            TestConvertFrom(_nonConvertibleStruct, _nonConvertibleStruct);
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct_AsObject()
-        {
-            TestConvertFrom(_nonConvertibleStruct_AsObject, _nonConvertibleStruct_AsObject);
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct_Nullable_WithValue()
-        {
-            TestConvertFrom(_nonConvertibleStructNullableWithValue, _nonConvertibleStructNullableWithValue);
-        }
-
-        [Fact]
-        public override void From_NonConvertibleStruct_Nullable_WithValue_AsObject()
-        {
-            TestConvertFrom(_nonConvertibleStructNullableWithValue_AsObject, _nonConvertibleStructNullableWithValue_AsObject);
-        }
-
-        [Fact]
-        public override void From_ParentClass()
-        {
-            TestConvertFrom(_parentClass, _parentClass);
-        }
-
-        [Fact]
-        public override void From_ParentClass_AsObject()
-        {
-            TestConvertFrom(_parentClass_AsObject, _parentClass_AsObject);
-        }
-
-        [Fact]
-        public override void From_ParentStruct()
-        {
-            TestConvertFrom(_parentStruct, _parentStruct);
-        }
-
-        [Fact]
-        public override void From_ParentStruct_AsObject()
-        {
-            TestConvertFrom(_parentStruct_AsObject, _parentStruct_AsObject);
-        }
-
-        [Fact]
-        public override void From_ParentStruct_Nullable_WithValue()
-        {
-            TestConvertFrom(_parentStructNullableWithValue, _parentStructNullableWithValue);
-        }
-
-        [Fact]
-        public override void From_ParentStruct_Nullable_WithValue_AsObject()
-        {
-            TestConvertFrom(_parentStructNullableWithValue_AsObject, _parentStructNullableWithValue_AsObject);
-        }
     }
     #endregion
 
     #region Enum
     public class ConvertToEnum : ConvertTo_Base<TestEnum>
     {
-        protected override TestEnum GetExpected<TFrom>(TFrom from)
-        {
-            return base.GetExpected(from);
-        }
+        public override void From_DateTime_AsObject(object input, TestEnum expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, TestEnum expected) => Assert.ThrowsAsync<InvalidCastException>(null);
     }
 
     public class ConvertToEnumNullable : ConvertTo_Base<TestEnum?>
     {
-        protected override TestEnum? GetExpected<TFrom>(TFrom from)
-        {
-            return base.GetExpected(from);
-        }
+        public override void From_DateTime_AsObject(object input, TestEnum? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, TestEnum? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
     }
 
     public class ConvertToEnumLong : ConvertTo_Base<TestEnumLong>
     {
-        protected override TestEnumLong GetExpected<TFrom>(TFrom from)
-        {
-            return base.GetExpected(from);
-        }
+        public override void From_DateTime_AsObject(object input, TestEnumLong expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, TestEnumLong expected) => Assert.ThrowsAsync<InvalidCastException>(null);
     }
 
     public class ConvertToEnumLongNullable : ConvertTo_Base<TestEnumLong?>
     {
-        protected override TestEnumLong? GetExpected<TFrom>(TFrom from)
-        {
-            return base.GetExpected(from);
-        }
+        public override void From_DateTime_AsObject(object input, TestEnumLong? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
+        public override void From_DateTime_Nullable_AsObject(object input, TestEnumLong? expected) => Assert.ThrowsAsync<InvalidCastException>(null);
     }
     #endregion
 
     #region IParent
     public class ConvertToIParent : ConvertTo_Base<IParent>
     {
-        [Fact]
-        public override void From_ParentClass()
-        {
-            TestConvertFrom(_parentClass, _parentClass);
-        }
-
-        [Fact]
-        public override void From_ParentClass_AsObject()
-        {
-            TestConvertFrom(_parentClass_AsObject, (IParent)_parentClass_AsObject);
-        }
-
-        [Fact]
-        public override void From_ParentStruct()
-        {
-            TestConvertFrom(_parentStruct, _parentStruct);
-        }
-
-        [Fact]
-        public override void From_ParentStruct_AsObject()
-        {
-            TestConvertFrom(_parentStruct_AsObject, (IParent)_parentStruct_AsObject);
-        }
-
-        [Fact]
-        public override void From_ParentStruct_Nullable_WithValue()
-        {
-            TestConvertFrom(_parentStructNullableWithValue, _parentStructNullableWithValue);
-        }
-
-        [Fact]
-        public override void From_ParentStruct_Nullable_WithValue_AsObject()
-        {
-            TestConvertFrom(_parentStructNullableWithValue_AsObject, (IParent)_parentStructNullableWithValue_AsObject);
-        }
     }
     #endregion
 }

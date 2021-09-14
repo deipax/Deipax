@@ -80,6 +80,11 @@ namespace Deipax.Core.Extensions
         {
             return type.GetTypeInfo().IsEnum;
         }
+
+        public static bool CanBeAssignedTo(this Type type, Type implementedType)
+        {
+            return implementedType.IsAssignableFrom(type);
+        }
         #endregion
     }
 }

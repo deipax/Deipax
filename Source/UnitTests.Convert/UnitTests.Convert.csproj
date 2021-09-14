@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Convert\Deipax.Convert.csproj" />
+    <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
     <ProjectReference Include="..\UnitTests.Common\UnitTests.Common.csproj" />
   </ItemGroup>
 
