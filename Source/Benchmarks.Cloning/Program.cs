@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Columns;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
@@ -6,7 +7,6 @@ using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
 using Benchmarks.Cloning.Deipax;
 using System.Linq;
-using BenchmarkDotNet.Columns;
 
 namespace Benchmarks.Cloning
 {

@@ -12,8 +12,8 @@ namespace Deipax.DataAccess.Extensions
         public static IDbConnection CreateConnection(
             this IDb source)
         {
-             if (source == null) throw new ArgumentNullException(nameof(source));
-             return source.Factory(source);
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return source.Factory(source);
         }
 
         public static IDbConnection Open(

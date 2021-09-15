@@ -1,5 +1,5 @@
-﻿using System;
-using Deipax.Convert.Interfaces;
+﻿using Deipax.Convert.Interfaces;
+using System;
 
 namespace Deipax.Convert
 {

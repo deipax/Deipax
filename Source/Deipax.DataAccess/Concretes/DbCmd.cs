@@ -19,7 +19,7 @@ namespace Deipax.DataAccess.Concretes
         public IDbTransaction Transaction { get; set; }
         public string CommandText { get; set; }
         public CommandType? CommandType { get; set; }
-        public int? CommandTimeout { get; set; }        
+        public int? CommandTimeout { get; set; }
         public CancellationToken? CancellationToken { get; set; }
         public CommandBehavior? CommandBehavior { get; set; }
         #endregion

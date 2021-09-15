@@ -120,7 +120,7 @@ namespace Deipax.DataAccess.Common
         }
 
         private static Expression GetSetExpression(
-            ISetter<T> setter, 
+            ISetter<T> setter,
             Type fieldType)
         {
             return (Expression)_getSetExpressionHelper

@@ -9,9 +9,9 @@ namespace Deipax.DataAccess.Concretes
         public static IDbFactory Instance { get; set; } = new DbFactory();
 
         public IDb CreateDb(
-            string name, 
-            string cs, 
-            string provider, 
+            string name,
+            string cs,
+            string provider,
             Func<IDb, IDbConnection> factory)
         {
             return new Db(name, cs, provider, factory);
