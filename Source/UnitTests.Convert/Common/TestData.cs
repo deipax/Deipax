@@ -1,467 +1,366 @@
-﻿using Deipax.Core.Extensions;
-using System;
-using System.Globalization;
+﻿using System;
 using UnitTests.Common;
 using Xunit;
 
 namespace UnitTests.Convert.Common
 {
-    public class TestData<TTo>
+    // TODO: Add MinValue/MaxValue where appropriate
+    // TODO: TheoryData string, MinValue/MaxValue for all types.
+    public static class TestData
     {
-        public TheoryData<bool, TTo> Bool()
+        public static TheoryData<bool> Bool()
         {
-            return new TheoryData<bool, TTo>()
+            return new TheoryData<bool>()
             {
-                {true, GetExpected(true)},
-                {false, GetExpected(false)},
+                {true},
+                {false},
             };
         }
 
-        public TheoryData<bool?, TTo> BoolNullable()
+        public static TheoryData<bool?> BoolNullable()
         {
-            return new TheoryData<bool?, TTo>()
+            return new TheoryData<bool?>()
             {
-                {true, GetExpected((bool?) true)},
-                {false, GetExpected((bool?) false)},
-                {null, GetExpected((bool?) null)},
+                {true},
+                {false},
+                {null},
             };
         }
 
-        public TheoryData<byte, TTo> Byte()
+        public static TheoryData<byte> Byte()
         {
-            return new TheoryData<byte, TTo>()
+            return new TheoryData<byte>()
             {
-                {1, GetExpected((byte)1)},
+                {1},
             };
         }
 
-        public TheoryData<byte?, TTo> ByteNullable()
+        public static TheoryData<byte?> ByteNullable()
         {
-            return new TheoryData<byte?, TTo>()
+            return new TheoryData<byte?>()
             {
-                {1, GetExpected((byte?)1)},
-                {null, GetExpected((byte?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<char, TTo> Char()
+        public static TheoryData<char> Char()
         {
-            return new TheoryData<char, TTo>()
+            return new TheoryData<char>()
             {
-                {'c', GetExpected('c')},
+                {'c'},
             };
         }
 
-        public TheoryData<char?, TTo> CharNullable()
+        public static TheoryData<char?> CharNullable()
         {
-            return new TheoryData<char?, TTo>()
+            return new TheoryData<char?>()
             {
-                {'c', GetExpected((char?)'c')},
-                {null, GetExpected((char?)null)},
+                {'c'},
+                {null},
             };
         }
 
-        public TheoryData<DateTime, TTo> DateTime()
+        public static TheoryData<DateTime> DateTime()
         {
-            return new TheoryData<DateTime, TTo>()
+            return new TheoryData<DateTime>()
             {
-                {System.DateTime.MinValue, GetExpected(System.DateTime.MinValue)},
-                {System.DateTime.MaxValue, GetExpected(System.DateTime.MaxValue)},
+                {System.DateTime.MinValue},
+                {System.DateTime.MaxValue},
             };
         }
 
-        public TheoryData<DateTime?, TTo> DateTimeNullable()
+        public static TheoryData<DateTime?> DateTimeNullable()
         {
-            return new TheoryData<DateTime?, TTo>()
+            return new TheoryData<DateTime?>()
             {
-                {(DateTime?)System.DateTime.MinValue, GetExpected((DateTime?)System.DateTime.MinValue)},
-                {(DateTime?)System.DateTime.MaxValue, GetExpected((DateTime?)System.DateTime.MaxValue)},
-                {null, GetExpected((DateTime?)null)},
+                {(DateTime?)System.DateTime.MinValue},
+                {(DateTime?)System.DateTime.MaxValue},
+                {null},
             };
         }
 
-        public TheoryData<decimal, TTo> Decimal()
+        public static TheoryData<decimal> Decimal()
         {
-            return new TheoryData<decimal, TTo>()
+            return new TheoryData<decimal>()
             {
-                {1, GetExpected((decimal)1)},
+                {1},
             };
         }
 
-        public TheoryData<decimal?, TTo> DecimalNullable()
+        public static TheoryData<decimal?> DecimalNullable()
         {
-            return new TheoryData<decimal?, TTo>()
+            return new TheoryData<decimal?>()
             {
-                {1, GetExpected((decimal?)1)},
-                {null, GetExpected((decimal?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<double, TTo> Double()
+        public static TheoryData<double> Double()
         {
-            return new TheoryData<double, TTo>()
+            return new TheoryData<double>()
             {
-                {1, GetExpected((double)1)},
+                {1},
             };
         }
 
-        public TheoryData<double?, TTo> DoubleNullable()
+        public static TheoryData<double?> DoubleNullable()
         {
-            return new TheoryData<double?, TTo>()
+            return new TheoryData<double?>()
             {
-                {1, GetExpected((double?)1)},
-                {null, GetExpected((double?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<short, TTo> Short()
+        public static TheoryData<short> Short()
         {
-            return new TheoryData<short, TTo>()
+            return new TheoryData<short>()
             {
-                {1, GetExpected((short)1)},
+                {1},
             };
         }
 
-        public TheoryData<short?, TTo> ShortNullable()
+        public static TheoryData<short?> ShortNullable()
         {
-            return new TheoryData<short?, TTo>()
+            return new TheoryData<short?>()
             {
-                {1, GetExpected((short?)1)},
-                {null, GetExpected((short?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<int, TTo> Int()
+        public static TheoryData<int> Int()
         {
-            return new TheoryData<int, TTo>()
+            return new TheoryData<int>()
             {
-                {1, GetExpected(1)},
+                {1},
             };
         }
 
-        public TheoryData<int?, TTo> IntNullable()
+        public static TheoryData<int?> IntNullable()
         {
-            return new TheoryData<int?, TTo>()
+            return new TheoryData<int?>()
             {
-                {1, GetExpected((int?)1)},
-                {null, GetExpected((int?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<long, TTo> Long()
+        public static TheoryData<long> Long()
         {
-            return new TheoryData<long, TTo>()
+            return new TheoryData<long>()
             {
-                {1, GetExpected((long)1)},
+                {1},
             };
         }
 
-        public TheoryData<long?, TTo> LongNullable()
+        public static TheoryData<long?> LongNullable()
         {
-            return new TheoryData<long?, TTo>()
+            return new TheoryData<long?>()
             {
-                {1, GetExpected((long?)1)},
-                {null, GetExpected((long?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<sbyte, TTo> SByte()
+        public static TheoryData<sbyte> SByte()
         {
-            return new TheoryData<sbyte, TTo>()
+            return new TheoryData<sbyte>()
             {
-                {1, GetExpected((sbyte)1)},
+                {1},
             };
         }
 
-        public TheoryData<sbyte?, TTo> SByteNullable()
+        public static TheoryData<sbyte?> SByteNullable()
         {
-            return new TheoryData<sbyte?, TTo>()
+            return new TheoryData<sbyte?>()
             {
-                {1, GetExpected((sbyte?)1)},
-                {null, GetExpected((sbyte?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<float, TTo> Float()
+        public static TheoryData<float> Float()
         {
-            return new TheoryData<float, TTo>()
+            return new TheoryData<float>()
             {
-                {1, GetExpected((float)1)},
+                {1},
             };
         }
 
-        public TheoryData<float?, TTo> FloatNullable()
+        public static TheoryData<float?> FloatNullable()
         {
-            return new TheoryData<float?, TTo>()
+            return new TheoryData<float?>()
             {
-                {1, GetExpected((float?)1)},
-                {null, GetExpected((float?)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<string, TTo> String()
+        public static TheoryData<string> String()
         {
-            var data = new TheoryData<string, TTo>()
+            return new TheoryData<string>()
             {
-                {string.Empty, GetExpected(string.Empty)},
-                {null, GetExpected((string)null)},
-            };
-
-            var minValue = MinValue()?.ToString();
-            var maxValue = MaxValue()?.ToString();
-
-            if (!string.IsNullOrEmpty(minValue)) data.Add(minValue, GetExpected(minValue));
-            if (!string.IsNullOrEmpty(maxValue)) data.Add(maxValue, GetExpected(maxValue));
-
-            return data;
-        }
-
-        public TheoryData<ushort, TTo> UShort()
-        {
-            return new TheoryData<ushort, TTo>()
-            {
-                {1, GetExpected((ushort)1)},
+                {string.Empty},
+                {null},
             };
         }
 
-        public TheoryData<ushort?, TTo> UShortNullable()
+        public static TheoryData<ushort> UShort()
         {
-            return new TheoryData<ushort?, TTo>()
+            return new TheoryData<ushort>()
             {
-                {1, GetExpected((ushort?)1)},
-                {null, GetExpected((ushort?)null)},
+                {1},
             };
         }
 
-        public TheoryData<uint, TTo> UInt()
+        public static TheoryData<ushort?> UShortNullable()
         {
-            return new TheoryData<uint, TTo>()
+            return new TheoryData<ushort?>()
             {
-                {1, GetExpected((uint)1)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<uint?, TTo> UIntNullable()
+        public static TheoryData<uint> UInt()
         {
-            return new TheoryData<uint?, TTo>()
+            return new TheoryData<uint>()
             {
-                {1, GetExpected((uint?)1)},
-                {null, GetExpected((uint?)null)},
+                {1},
             };
         }
 
-        public TheoryData<ulong, TTo> ULong()
+        public static TheoryData<uint?> UIntNullable()
         {
-            return new TheoryData<ulong, TTo>()
+            return new TheoryData<uint?>()
             {
-                {1, GetExpected((ulong)1)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<ulong?, TTo> ULongNullable()
+        public static TheoryData<ulong> ULong()
         {
-            return new TheoryData<ulong?, TTo>()
+            return new TheoryData<ulong>()
             {
-                {1, GetExpected((ulong?)1)},
-                {null, GetExpected((ulong?)null)},
+                {1},
             };
         }
 
-        public TheoryData<DBNull, TTo> DbNull()
+        public static TheoryData<ulong?> ULongNullable()
         {
-
-            return new TheoryData<DBNull, TTo>()
+            return new TheoryData<ulong?>()
             {
-                {DBNull.Value, GetExpected(DBNull.Value)},
-                {null, GetExpected((DBNull)null)},
+                {1},
+                {null},
             };
         }
 
-        public TheoryData<ConvertibleClass, TTo> ConvertibleClass()
+        public static TheoryData<DBNull> DbNull()
         {
-            var input = new ConvertibleClass();
 
-            return new TheoryData<ConvertibleClass, TTo>()
+            return new TheoryData<DBNull>()
             {
-                {input, GetExpected(input)},
-                {null, GetExpected((ConvertibleClass)null)},
+                {DBNull.Value},
+                {null},
             };
         }
 
-        public TheoryData<NonConvertibleClass, TTo> NonConvertibleClass()
+        public static TheoryData<ConvertibleClass> ConvertibleClass()
         {
-            var input = new NonConvertibleClass();
-
-            return new TheoryData<NonConvertibleClass, TTo>()
+            return new TheoryData<ConvertibleClass>()
             {
-                {input, GetExpected(input)},
-                {null, GetExpected((NonConvertibleClass)null)},
+                {new ConvertibleClass()},
+                {null},
             };
         }
 
-        public TheoryData<ConvertibleStruct, TTo> ConvertibleStruct()
+        public static TheoryData<NonConvertibleClass> NonConvertibleClass()
         {
-            var input = new ConvertibleStruct();
-
-            return new TheoryData<ConvertibleStruct, TTo>()
+            return new TheoryData<NonConvertibleClass>()
             {
-                {input, GetExpected(input)},
+                {new NonConvertibleClass()},
+                {null},
             };
         }
 
-        public TheoryData<ConvertibleStruct?, TTo> ConvertibleStructNullable()
+        public static TheoryData<ConvertibleStruct> ConvertibleStruct()
         {
-            var input = new ConvertibleStruct();
-
-            return new TheoryData<ConvertibleStruct?, TTo>()
+            return new TheoryData<ConvertibleStruct>()
             {
-                {input, GetExpected(input)},
-                {null, GetExpected((ConvertibleStruct?)null)},
+                {new ConvertibleStruct()},
             };
         }
 
-        public TheoryData<NonConvertibleStruct, TTo> NonConvertibleStruct()
+        public static TheoryData<ConvertibleStruct?> ConvertibleStructNullable()
         {
-            var input = new NonConvertibleStruct();
-
-            return new TheoryData<NonConvertibleStruct, TTo>()
+            return new TheoryData<ConvertibleStruct?>()
             {
-                {input, GetExpected(input)},
+                {new ConvertibleStruct()},
+                {null},
             };
         }
 
-        public TheoryData<NonConvertibleStruct?, TTo> NonConvertibleStructNullable()
+        public static TheoryData<NonConvertibleStruct> NonConvertibleStruct()
         {
-            var input = new NonConvertibleStruct();
-
-            return new TheoryData<NonConvertibleStruct?, TTo>()
+            return new TheoryData<NonConvertibleStruct>()
             {
-                {input, GetExpected(input)},
-                {null, GetExpected((NonConvertibleStruct?)null)},
+                {new NonConvertibleStruct()},
             };
         }
 
-        public TheoryData<TestEnum, TTo> Enum()
+        public static TheoryData<NonConvertibleStruct?> NonConvertibleStructNullable()
         {
-            return new TheoryData<TestEnum, TTo>()
+            return new TheoryData<NonConvertibleStruct?>()
             {
-                {TestEnum.One, GetExpected(TestEnum.One)},
+                {new NonConvertibleStruct()},
             };
         }
 
-        public TheoryData<TestEnum?, TTo> EnumNullable()
+        public static TheoryData<TestEnum> Enum()
         {
-            return new TheoryData<TestEnum?, TTo>()
+            return new TheoryData<TestEnum>()
             {
-                {TestEnum.One, GetExpected((TestEnum?)TestEnum.One)},
-                {null, GetExpected((TestEnum?)null)},
+                {TestEnum.One},
             };
         }
 
-        public TheoryData<ParentClass, TTo> ParentClass()
+        public static TheoryData<TestEnum?> EnumNullable()
         {
-            var input = new ParentClass();
-
-            return new TheoryData<ParentClass, TTo>()
+            return new TheoryData<TestEnum?>()
             {
-                {input, GetExpected(input)},
-                {null, GetExpected((ParentClass)null)},
+                {TestEnum.One},
+                {null},
             };
         }
 
-        public TheoryData<ParentStruct, TTo> ParentStruct()
+        public static TheoryData<ParentClass> ParentClass()
         {
-            var input = new ParentStruct();
-
-            return new TheoryData<ParentStruct, TTo>()
+            return new TheoryData<ParentClass>()
             {
-                {input, GetExpected(input)},
+                {new ParentClass()},
+                {null},
             };
         }
 
-        public TheoryData<ParentStruct?, TTo> ParentStructNullable()
+        public static TheoryData<ParentStruct> ParentStruct()
         {
-            var input = new ParentStruct();
-
-            return new TheoryData<ParentStruct?, TTo>()
+            return new TheoryData<ParentStruct>()
             {
-                {input, GetExpected((ParentStruct?)input)},
-                {null, GetExpected((ParentStruct?)null)},
+                {new ParentStruct()},
             };
         }
 
-        #region Private Members
-        private static TTo GetExpected<TFrom>(TFrom value)
+        public static TheoryData<ParentStruct?> ParentStructNullable()
         {
-            var toType = typeof(TTo);
-            var fromType = typeof(TFrom);
-            var underlyingToType = Nullable.GetUnderlyingType(toType) ?? toType;
-            var underlyingFromType = Nullable.GetUnderlyingType(fromType) ?? fromType;
-            var runtimeType = value?.GetType();
-            var underlyingRuntimeType = runtimeType != null ? Nullable.GetUnderlyingType(runtimeType) : runtimeType;
-
-            try
+            return new TheoryData<ParentStruct?>()
             {
-                if (underlyingToType == underlyingFromType ||
-                    runtimeType == underlyingToType ||
-                    underlyingRuntimeType == underlyingToType ||
-                    underlyingToType == typeof(object) ||
-                    underlyingFromType.CanBeAssignedTo(underlyingToType))
-                {
-                    return (TTo)(object)value;
-                }
-
-                if (value != null)
-                {
-                    if (toType.IsEnum || underlyingToType.IsEnum)
-                    {
-                        if (fromType == typeof(string))
-                        {
-                            return (TTo)System.Enum.Parse(underlyingToType, value as string, true);
-                        }
-                        else
-                        {
-                            var intValue = System.Convert.ChangeType(value, typeof(int), CultureInfo.InvariantCulture);
-                            return (TTo)System.Enum.Parse(underlyingToType, intValue.ToString(), true);
-                        }
-                    }
-
-                    if (toType == typeof(string) && runtimeType == typeof(DBNull))
-                    {
-                        return default;
-                    }
-
-                    return (TTo)System.Convert.ChangeType(value, underlyingToType, CultureInfo.InvariantCulture);
-                }
-            }
-            catch
-            {
-            }
-
-            // TODO:  Fix this.  A non-convertable should return default TTo
-            if (toType == typeof(string) && value != null)
-            {
-                return (TTo)(object)value.ToString();
-            }
-
-            return default;
+                {new ParentStruct()},
+                {null},
+            };
         }
-
-        private static TTo MinValue()
-        {
-            var type = Nullable.GetUnderlyingType(typeof(TTo)) ?? typeof(TTo);
-            var field = type.GetField("MinValue");
-            object value = field?.GetValue(null);
-            return value == null ? default : (TTo)value;
-        }
-
-        private static TTo MaxValue()
-        {
-            var type = Nullable.GetUnderlyingType(typeof(TTo)) ?? typeof(TTo);
-            var field = type.GetField("MaxValue");
-            object value = field?.GetValue(null);
-            return value == null ? default : (TTo)value;
-        }
-        #endregion
     }
 }
