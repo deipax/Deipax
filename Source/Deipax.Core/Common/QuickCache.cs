@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Deipax.Core.Common
 {
+    //TODO: Replace with Concurrent Dictionary
     public class QuickCache<TKey, TValue> : Dictionary<TKey, TValue>
     {
         public QuickCache()
