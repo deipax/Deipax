@@ -5,9 +5,6 @@ namespace Benchmarks.Cloning.Deipax
 {
     public class StringDeipax : StringBase
     {
-        protected override X Clone<X>(X source)
-        {
-            return source.GetClone();
-        }
+        protected override X Clone<X>(X source) => source.GetClone();
     }
 }

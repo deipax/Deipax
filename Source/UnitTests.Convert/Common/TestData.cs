@@ -261,7 +261,6 @@ namespace UnitTests.Convert.Common
 
         public static TheoryData<DBNull> DbNull()
         {
-
             return new TheoryData<DBNull>()
             {
                 {DBNull.Value},

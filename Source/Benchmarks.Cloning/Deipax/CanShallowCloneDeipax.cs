@@ -13,15 +13,9 @@ namespace Benchmarks.Cloning.Deipax
         #endregion
 
         [Benchmark]
-        public void CanShallowClone_Decimal()
-        {
-            _decimalType.CanShallowClone();
-        }
+        public bool CanShallowClone_Decimal() => _decimalType.CanShallowClone();
 
         [Benchmark]
-        public void CanShallowClone_ComplexStruct()
-        {
-            _complexStruct.CanShallowClone();
-        }
+        public bool CanShallowClone_ComplexStruct() => _complexStruct.CanShallowClone();
     }
 }

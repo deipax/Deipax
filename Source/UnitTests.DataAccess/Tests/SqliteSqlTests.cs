@@ -6,7 +6,7 @@ using Xunit;
 
 namespace UnitTests.DataAccess
 {
-    public class SqliteSqlTests : SqliteSql
+    public class SqliteSqlTests
     {
         #region Field Members
         private IDbConnection _dbConnection;
@@ -22,7 +22,7 @@ namespace UnitTests.DataAccess
         {
             var tmp = _dbConnection
                 .CommandType(CommandType.Text)
-                .CommandText(_sql)
+                .CommandText(SqliteSql.Sql)
                 .AsEnumerable<MultipleFieldClass>()
                 .ToList();
         }
@@ -32,7 +32,7 @@ namespace UnitTests.DataAccess
         {
             var tmp = (await _dbConnection
                 .CommandType(CommandType.Text)
-                .CommandText(_sql)
+                .CommandText(SqliteSql.Sql)
                 .AsEnumerableAsync<MultipleFieldClass>()
                 .ConfigureAwait(false))
                 .ToList();
@@ -43,7 +43,7 @@ namespace UnitTests.DataAccess
         {
             var tmp = _dbConnection
                 .CommandType(CommandType.Text)
-                .CommandText(_sql)
+                .CommandText(SqliteSql.Sql)
                 .AsEnumerable<MultipleFieldStruct>()
                 .ToList();
         }
@@ -53,7 +53,7 @@ namespace UnitTests.DataAccess
         {
             var tmp = (await _dbConnection
                 .CommandType(CommandType.Text)
-                .CommandText(_sql)
+                .CommandText(SqliteSql.Sql)
                 .AsEnumerableAsync<MultipleFieldStruct>()
                 .ConfigureAwait(false))
                 .ToList();
@@ -64,7 +64,7 @@ namespace UnitTests.DataAccess
         {
             var tmp = _dbConnection
                 .CommandType(CommandType.Text)
-                .CommandText(_sql)
+                .CommandText(SqliteSql.Sql)
                 .AsEnumerable()
                 .ToList();
         }
@@ -74,7 +74,7 @@ namespace UnitTests.DataAccess
         {
             var tmp = (await _dbConnection
                 .CommandType(CommandType.Text)
-                .CommandText(_sql)
+                .CommandText(SqliteSql.Sql)
                 .AsEnumerableAsync()
                 .ConfigureAwait(false))
                 .ToList();

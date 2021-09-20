@@ -195,99 +195,51 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void SimpleClass()
-        {
-            var target = GetClone(_simpleClass);
-        }
+        public Helper1 SimpleClass() => GetClone(_simpleClass);
 
         [Benchmark]
-        public void ComplexClass()
-        {
-            var target = GetClone(_complexClass);
-        }
+        public Helper2 ComplexClass() => GetClone(_complexClass);
 
         [Benchmark]
-        public void InheritList_Class()
-        {
-            var target = GetClone(_inheritListClass);
-        }
+        public Helper3<Helper1> InheritList_Class() => GetClone(_inheritListClass);
 
         [Benchmark]
-        public void InheritList_Int()
-        {
-            var target = GetClone(_inheritListInt);
-        }
+        public Helper3<int> InheritList_Int() => GetClone(_inheritListInt);
 
         [Benchmark]
-        public void Null()
-        {
-            var target = GetClone(_null);
-        }
+        public Helper1 Null() => GetClone(_null);
 
         [Benchmark]
-        public void GrandChildClass_Test()
-        {
-            var target = GetClone(_grandChildClass);
-        }
+        public GrandChildClass GrandChildClass_Test() => GetClone(_grandChildClass);
 
         [Benchmark]
-        public void List_SimpleClasses()
-        {
-            var target = GetClone(_listSimpleClasses);
-        }
+        public List<Helper1> List_SimpleClasses() => GetClone(_listSimpleClasses);
 
         [Benchmark]
-        public void List_SimpleClasses_AsInterface()
-        {
-            var target = GetClone(_listSimpleClassesAsInterfaces);
-        }
+        public IReadOnlyList<MyTmpInterface> List_SimpleClasses_AsInterface() => GetClone(_listSimpleClassesAsInterfaces);
 
         [Benchmark]
-        public void List_SimpleClasses_AsObjects()
-        {
-            var target = GetClone(_listSimpleClassesAsObjects);
-        }
+        public List<object> List_SimpleClasses_AsObjects() => GetClone(_listSimpleClassesAsObjects);
 
         [Benchmark]
-        public void List_ComplexClasses()
-        {
-            var target = GetClone(_listComplexClasses);
-        }
+        public List<Helper2> List_ComplexClasses() => GetClone(_listComplexClasses);
 
         [Benchmark]
-        public void List_Interfaces()
-        {
-            var target = GetClone(_listInterfaces);
-        }
+        public List<MyTmpInterface> List_Interfaces() => GetClone(_listInterfaces);
 
         [Benchmark]
-        public void List_SimpleStructs()
-        {
-            var target = GetClone(_listSimpleStructs);
-        }
+        public List<HelperStruct1> List_SimpleStructs() => GetClone(_listSimpleStructs);
 
         [Benchmark]
-        public void List_ComplexStructs()
-        {
-            var target = GetClone(_listComplexStructs);
-        }
+        public List<HelperStruct2> List_ComplexStructs() => GetClone(_listComplexStructs);
 
         [Benchmark]
-        public void DictionaryOfStructs()
-        {
-            var target = GetClone(_dictOfStructs);
-        }
+        public Dictionary<HelperStruct1, HelperStruct1> DictionaryOfStructs() => GetClone(_dictOfStructs);
 
         [Benchmark]
-        public void DictionaryOfClasses()
-        {
-            var target = GetClone(_dictOfClasses);
-        }
+        public Dictionary<Helper1, Helper1> DictionaryOfClasses() => GetClone(_dictOfClasses);
 
         [Benchmark]
-        public void DictionaryOfInt()
-        {
-            var target = GetClone(_dictOfInt);
-        }
+        public Dictionary<int, int> DictionaryOfInt() => GetClone(_dictOfInt);
     }
 }

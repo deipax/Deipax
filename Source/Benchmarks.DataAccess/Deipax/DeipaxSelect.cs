@@ -1,86 +1,61 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using Benchmarks.DataAccess.Base;
 using Deipax.DataAccess.Extensions;
+using System.Collections.Generic;
 using System.Data;
 using UnitTests.Common;
 
 namespace Benchmarks.DataAccess.Deipax
 {
-    public class DeipaxSelect : SqliteSql
+    public class DeipaxSelect : SelectBase
     {
-        #region Field Members
-        private IDbConnection _dbConnection;
-        #endregion
-
-        [GlobalSetup]
-        public void GlobalSetup()
+        public override IEnumerable<MultipleFieldClass> AllFieldsAsClass()
         {
-            _dbConnection = DbHelper.GetNorthwind().Open();
+            return _dbConnection.AsEnumerable<MultipleFieldClass>(SqliteSql.Sql);
         }
 
-        [GlobalCleanup]
-        public void GlobalCleanup()
+        public override IEnumerable<MultipleFieldClass> AllFieldsAsClass_Async()
         {
-            _dbConnection.Dispose();
+            return _dbConnection.AsEnumerableAsync<MultipleFieldClass>(SqliteSql.Sql).Result;
         }
 
-        [Benchmark]
-        public void AllFieldsAsClass()
+        public override IEnumerable<MultipleFieldStruct> AllFieldsAsStruct()
         {
-            var tmp = _dbConnection.AsEnumerable<MultipleFieldClass>(_sql);
+            return _dbConnection.AsEnumerable<MultipleFieldStruct>(SqliteSql.Sql);
         }
 
-        [Benchmark]
-        public void AllFieldsAsClass_Async()
+        public override IEnumerable<MultipleFieldStruct> AllFieldsAsStruct_Async()
         {
-            var tmp = _dbConnection.AsEnumerableAsync<MultipleFieldClass>(_sql).Result;
+            return _dbConnection.AsEnumerableAsync<MultipleFieldStruct>(SqliteSql.Sql).Result;
         }
 
-        [Benchmark]
-        public void AllFieldsAsStruct()
+        public override IEnumerable<dynamic> DynamicList()
         {
-            var tmp = _dbConnection.AsEnumerable<MultipleFieldStruct>(_sql);
+            return _dbConnection.AsEnumerable(SqliteSql.Sql);
         }
 
-        [Benchmark]
-        public void AllFieldsAsStruct_Async()
+        public override IEnumerable<dynamic> DynamicList_Async()
         {
-            var tmp = _dbConnection.AsEnumerableAsync<MultipleFieldStruct>(_sql).Result;
+            return _dbConnection.AsEnumerableAsync(SqliteSql.Sql).Result;
         }
 
-        [Benchmark]
-        public void DynamicList()
+        public override dynamic QueryFirst()
         {
-            var tmp = _dbConnection.AsEnumerable(_sql);
+            return _dbConnection.First(SqliteSql.Sql);
         }
 
-        [Benchmark]
-        public void DynamicList_Async()
+        public override dynamic QueryFirstOrDefault()
         {
-            var tmp = _dbConnection.AsEnumerableAsync(_sql).Result;
+            return _dbConnection.FirstOrDefault(SqliteSql.Sql);
         }
 
-        [Benchmark]
-        public void QueryFirst()
+        public override dynamic QuerySingle()
         {
-            var tmp = _dbConnection.First(_sql);
+            return _dbConnection.Single(SqliteSql.SqlLimitOne);
         }
 
-        [Benchmark]
-        public void QueryFirstOrDefault()
+        public override dynamic QuerySingleOrDefault()
         {
-            var tmp = _dbConnection.FirstOrDefault(_sql);
-        }
-
-        [Benchmark]
-        public void QuerySingle()
-        {
-            var tmp = _dbConnection.Single(_sql_limit_one);
-        }
-
-        [Benchmark]
-        public void QuerySingleOrDefault()
-        {
-            var tmp = _dbConnection.SingleOrDefault(_sql_limit_one);
+            return _dbConnection.SingleOrDefault(SqliteSql.SqlLimitOne);
         }
     }
 }

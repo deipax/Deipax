@@ -31,27 +31,15 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void Primitives()
-        {
-            var target = GetClone(_primitives);
-        }
+        public KeyValuePair<int, string> Primitives() => GetClone(_primitives);
 
         [Benchmark]
-        public void Classes()
-        {
-            var target = GetClone(_classes);
-        }
+        public KeyValuePair<Helper1, Helper1> Classes() => GetClone(_classes);
 
         [Benchmark]
-        public void Structs()
-        {
-            var target = GetClone(_structs);
-        }
+        public KeyValuePair<HelperStruct1, HelperStruct1> Structs() => GetClone(_structs);
 
         [Benchmark]
-        public void Nulls()
-        {
-            var target = GetClone(_nulls);
-        }
+        public KeyValuePair<Helper1, Helper1> Nulls() => GetClone(_nulls);
     }
 }

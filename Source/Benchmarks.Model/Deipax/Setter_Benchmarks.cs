@@ -1,4 +1,4 @@
-﻿using Benchmarks.Model.BaseClasses;
+﻿using Benchmarks.Model.Base;
 using System;
 using UnitTests.Common;
 

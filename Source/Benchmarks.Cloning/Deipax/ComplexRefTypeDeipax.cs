@@ -5,9 +5,6 @@ namespace Benchmarks.Cloning.Deipax
 {
     public class ComplexRefTypeDeipax : ComplexRefTypeBase
     {
-        protected override T GetClone<T>(T source)
-        {
-            return source.GetClone();
-        }
+        protected override T GetClone<T>(T source) => source.GetClone();
     }
 }

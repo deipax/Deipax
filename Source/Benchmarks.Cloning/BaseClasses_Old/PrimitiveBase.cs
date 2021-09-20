@@ -84,51 +84,27 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void Int()
-        {
-            var target = GetClone(_int);
-        }
+        public int Int() => GetClone(_int);
 
         [Benchmark]
-        public void String()
-        {
-            var target = GetClone(_string);
-        }
+        public string String() => GetClone(_string);
 
         [Benchmark]
-        public void ListOfStrings()
-        {
-            var target = GetClone(_listOfStrings);
-        }
+        public List<string> ListOfStrings() => GetClone(_listOfStrings);
 
         [Benchmark]
-        public void ListOfBytes()
-        {
-            var target = GetClone(_listOfBytes);
-        }
+        public List<byte> ListOfBytes() => GetClone(_listOfBytes);
 
         [Benchmark]
-        public void ListOfInts()
-        {
-            var target = GetClone(_listOfInts);
-        }
+        public List<int> ListOfInts() => GetClone(_listOfInts);
 
         [Benchmark]
-        public void ListOfTimeSpan()
-        {
-            var target = GetClone(_listOfTimeSpans);
-        }
+        public List<TimeSpan> ListOfTimeSpan() => GetClone(_listOfTimeSpans);
 
         [Benchmark]
-        public void ListOfDateTime()
-        {
-            var target = GetClone(_listOfDateTimes);
-        }
+        public List<DateTime> ListOfDateTime() => GetClone(_listOfDateTimes);
 
         [Benchmark]
-        public void ListOfDelegate()
-        {
-            var target = GetClone(_listOfDelegates);
-        }
+        public List<Func<string>> ListOfDelegate() => GetClone(_listOfDelegates);
     }
 }

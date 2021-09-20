@@ -70,33 +70,18 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void Primitives()
-        {
-            var target = GetClone(_primitives);
-        }
+        public Tuple<int, string, int, int, int, int, int, Tuple<int>> Primitives() => GetClone(_primitives);
 
         [Benchmark]
-        public void Classes()
-        {
-            var target = GetClone(_classes);
-        }
+        public Tuple<Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Tuple<Helper1>> Classes() => GetClone(_classes);
 
         [Benchmark]
-        public void Structs()
-        {
-            var target = GetClone(_structs);
-        }
+        public Tuple<HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, Tuple<HelperStruct1>> Structs() => GetClone(_structs);
 
         [Benchmark]
-        public void Null()
-        {
-            var target = GetClone(_null);
-        }
+        public Tuple<int> Null() => GetClone(_null);
 
         [Benchmark]
-        public void TupleCloneLogicTests_List_TupleOfClasses_Duplicates()
-        {
-            var target = GetClone(_duplicates);
-        }
+        public List<Tuple<Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Tuple<Helper1>>> TupleCloneLogicTests_List_TupleOfClasses_Duplicates() => GetClone(_duplicates);
     }
 }

@@ -32,12 +32,11 @@ namespace Benchmarks.Cloning
                 .AddDiagnoser(MemoryDiagnoser.Default)
                 .AddColumn(new IColumn[]
                 {
+                    StatisticColumn.Min,
+                    StatisticColumn.Max,
                     StatisticColumn.Mean,
-                    StatisticColumn.Error,
-                    StatisticColumn.StdDev,
                     StatisticColumn.Median,
                     BaselineRatioColumn.RatioMean,
-                    BaselineRatioColumn.RatioStdDev
                 });
 
             RunDeipaxBenchmarks(config);

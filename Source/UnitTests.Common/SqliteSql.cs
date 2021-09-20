@@ -2,10 +2,9 @@
 
 namespace UnitTests.Common
 {
-    public abstract class SqliteSql
+    public static class SqliteSql
     {
-        #region Field Members
-        protected static readonly string _sql = @"
+        public static readonly string Sql = @"
         select
             od.[Id] as OrderDetailId,      
             od.[Discount] as OrderDetailDiscount,      
@@ -85,8 +84,7 @@ namespace UnitTests.Common
             left join main.[Employee] e on e.[Id] = o.[EmployeeId]
             left join main.[Supplier] s on s.[Id] = p.[SupplierId]";
 
-        protected string _sql_limit_one = _sql + " limit 1";
-        #endregion
+        public static readonly string SqlLimitOne = Sql + " limit 1";
     }
 
     public class MultipleFieldClass

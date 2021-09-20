@@ -104,155 +104,76 @@ namespace Benchmarks.Cloning.BaseClasses
 
         #region Public Members
         [Benchmark]
-        public int SingleInstance()
-        {
-            var result = Clone(_single);
-            return 1;
-        }
+        public T SingleInstance() => Clone(_single);
 
         [Benchmark]
-        public int ObjectInstance()
-        {
-            var result = Clone(_object);
-            return 1;
-        }
+        public object ObjectInstance() => Clone(_object);
 
         [Benchmark]
-        public int DefaultInstance()
-        {
-            var result = Clone(_default);
-            return 1;
-        }
+        public T DefaultInstance() => Clone(_default);
 
         [Benchmark]
-        public int ArrayOfDefaultInstance()
-        {
-            return Clone(_arrayDefault).Length;
-        }
+        public T[] ArrayOfDefaultInstance() => Clone(_arrayDefault);
 
         [Benchmark]
-        public int ArrayOfDiffInstance()
-        {
-            return Clone(_arrayDiff).Length;
-        }
+        public T[] ArrayOfDiffInstance() => Clone(_arrayDiff);
 
         [Benchmark]
-        public int ArrayOfSameInstance()
-        {
-            return Clone(_arraySame).Length;
-        }
+        public T[] ArrayOfSameInstance() => Clone(_arraySame);
 
         [Benchmark]
-        public int ArrayOfObjectsDiffInstance()
-        {
-            return Clone(_arrayDiffObjects).Length;
-        }
+        public object[] ArrayOfObjectsDiffInstance() => Clone(_arrayDiffObjects);
 
         [Benchmark]
-        public int ArrayOfObjectsSameInstance()
-        {
-            return Clone(_arraySameObjects).Length;
-        }
+        public object[] ArrayOfObjectsSameInstance() => Clone(_arraySameObjects);
 
         [Benchmark]
-        public int Array2dOfDiffInstance()
-        {
-            return Clone(_array2dDiff).Length;
-        }
+        public T[][] Array2dOfDiffInstance() => Clone(_array2dDiff);
 
         [Benchmark]
-        public int Array2dOfSameInstance()
-        {
-            return Clone(_array2dSame).Length;
-        }
+        public T[][] Array2dOfSameInstance() => Clone(_array2dSame);
 
         [Benchmark]
-        public int ArrayRank2OfDiffInstance()
-        {
-            return Clone(_arrayRank2Diff).Length;
-        }
+        public T[,] ArrayRank2OfDiffInstance() => Clone(_arrayRank2Diff);
 
         [Benchmark]
-        public int ArrayRank2OfSameInstance()
-        {
-            return Clone(_arrayRank2Same).Length;
-        }
+        public T[,] ArrayRank2OfSameInstance() => Clone(_arrayRank2Same);
 
         [Benchmark]
-        public int ArrayRank3OfDiffInstance()
-        {
-            return Clone(_arrayRank3Diff).Length;
-        }
+        public T[,,] ArrayRank3OfDiffInstance() => Clone(_arrayRank3Diff);
 
         [Benchmark]
-        public int ArrayRank3OfSameInstance()
-        {
-            return Clone(_arrayRank3Same).Length;
-        }
+        public T[,,] ArrayRank3OfSameInstance() => Clone(_arrayRank3Same);
 
         [Benchmark]
-        public int ListOfDiffInstance()
-        {
-            return Clone(_listDiff).Count;
-        }
+        public List<T> ListOfDiffInstance() => Clone(_listDiff);
 
         [Benchmark]
-        public int ListOfSameInstance()
-        {
-            return Clone(_listSame).Count;
-        }
+        public List<T> ListOfSameInstance() => Clone(_listSame);
 
         [Benchmark]
-        public int ListOfObjectsDiffInstance()
-        {
-            return Clone(_listDiffObject).Count;
-        }
+        public List<object> ListOfObjectsDiffInstance() => Clone(_listDiffObject);
 
         [Benchmark]
-        public int ListOfObjectsSameInstance()
-        {
-            return Clone(_listSameObject).Count;
-        }
+        public List<object> ListOfObjectsSameInstance() => Clone(_listSameObject);
 
         [Benchmark]
-        public int KeyValuePairSame()
-        {
-            Clone(_keyValueSame);
-            return 1;
-        }
+        public KeyValuePair<T, T> KeyValuePairSame() => Clone(_keyValueSame);
 
         [Benchmark]
-        public int KeyValuePairDiff()
-        {
-            Clone(_keyValueDiff);
-            return 1;
-        }
+        public KeyValuePair<T, T> KeyValuePairDiff() => Clone(_keyValueDiff);
 
         [Benchmark]
-        public int TupleSameInstance()
-        {
-            Clone(_tupleSame);
-            return 1;
-        }
+        public Tuple<T, T> TupleSameInstance() => Clone(_tupleSame);
 
         [Benchmark]
-        public int TupleDiffInstance()
-        {
-            Clone(_tupleDiff);
-            return 1;
-        }
+        public Tuple<T, T> TupleDiffInstance() => Clone(_tupleDiff);
 
         [Benchmark]
-        public int DictionarySameInstance()
-        {
-            return Clone(_dictSame).Keys.Count;
-        }
+        public Dictionary<T, T> DictionarySameInstance() => Clone(_dictSame);
 
         [Benchmark]
-        public int DictionaryDiffInstance()
-        {
-            return Clone(_dictDiff).Keys.Count;
-        }
+        public Dictionary<T, T> DictionaryDiffInstance() => Clone(_dictDiff);
         #endregion
 
         #region Protected Members

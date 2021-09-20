@@ -36,21 +36,12 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void ComplexStruct()
-        {
-            var target = GetClone(_complexStruct);
-        }
+        public HelperStruct2 ComplexStruct() => GetClone(_complexStruct);
 
         [Benchmark]
-        public void SimpleStruct()
-        {
-            var target = GetClone(_simpleStruct);
-        }
+        public HelperStruct1 SimpleStruct() => GetClone(_simpleStruct);
 
         [Benchmark]
-        public void NullStruct()
-        {
-            var target = GetClone(_nullStruct);
-        }
+        public HelperStruct1 NullStruct() => GetClone(_nullStruct);
     }
 }

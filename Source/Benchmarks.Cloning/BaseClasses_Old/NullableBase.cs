@@ -21,21 +21,12 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void Int()
-        {
-            var target = GetClone(_nullableInt);
-        }
+        public int? Int() => GetClone(_nullableInt);
 
         [Benchmark]
-        public void NullInt()
-        {
-            var target = GetClone(_nullInt);
-        }
+        public int? NullInt() => GetClone(_nullInt);
 
         [Benchmark]
-        public void Struct()
-        {
-            var target = GetClone(_struct);
-        }
+        public HelperStruct1? Struct() => GetClone(_struct);
     }
 }

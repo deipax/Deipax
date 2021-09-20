@@ -5,10 +5,7 @@ namespace Benchmarks.Cloning.BaseClasses
     public abstract class NullableIntBase : Base<int?>
     {
         #region Protected Members
-        protected override int? GenerateItem()
-        {
-            return RandGen.GenerateInt();
-        }
+        protected override int? GenerateItem() => RandGen.GenerateInt();
         #endregion
     }
 }

@@ -1,10 +1,15 @@
-﻿using BenchmarkDotNet.Columns;
+﻿using System;
+using System.Collections.Concurrent;
+using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Toolchains.CsProj;
 using System.Linq;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using Deipax.Core.Common;
 
 namespace Benchmarks.DataAccess
 {
@@ -21,8 +26,8 @@ namespace Benchmarks.DataAccess
                 .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .AddJob(new Job[]
                 {
-                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
-                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
+                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31).AsBaseline(),
+                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50),
                 })
                 .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
                 .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
@@ -30,24 +35,58 @@ namespace Benchmarks.DataAccess
                 .AddDiagnoser(MemoryDiagnoser.Default)
                 .AddColumn(new IColumn[]
                 {
+                    StatisticColumn.Min,
+                    StatisticColumn.Max,
                     StatisticColumn.Mean,
-                    StatisticColumn.Error,
-                    StatisticColumn.StdDev,
                     StatisticColumn.Median,
                     BaselineRatioColumn.RatioMean,
-                    BaselineRatioColumn.RatioStdDev
                 });
+
+            BenchmarkRunner.Run<TestBenchmark>(config);
+        }
+    }
+
+    public class TestBenchmark
+    {
+        [GlobalSetup]
+        public void Setup()
+        {
+            _getKey = new object();
+            _addKey = new object();
+            _getOrAddKey = new object();
+            _value = new object();
+
+            _concurrent = new ConcurrentDictionary<object, object>(8, 16, ReferenceEqualsComparer.Instance);
+            _quickCache = new QuickCache<object, object>(8, ReferenceEqualsComparer.Instance);
+
+            _concurrent.TryAdd(_getKey, _value);
+            _quickCache.TryAdd(_getKey, _value);
         }
 
-        #region Private Members
-        private static Job ConfigureJob(Job source)
+        private object _getKey;
+        private object _addKey;
+        private object _getOrAddKey;
+        private object _value;
+        private object _returnValue;
+        private ConcurrentDictionary<object, object> _concurrent;
+        private QuickCache<object, object> _quickCache;
+        private static Func<object, object> _create = Create;
+
+        [Benchmark]
+        public object Conncurrent_TryGetValue() => _concurrent.TryGetValue(_getKey, out _returnValue);
+
+        [Benchmark]
+        public object Quick_TryGetValue() => _quickCache.TryGetValue(_getKey, out _returnValue);
+
+        [Benchmark]
+        public object Conncurrent_GetOrAdd() => _concurrent.GetOrAdd(_getOrAddKey, _create);
+
+        [Benchmark]
+        public object Quick_GetOrAdd() => _quickCache.GetOrAdd(_getOrAddKey, _create);
+
+        private static object Create(object key)
         {
-            return source;
-            /*
-            return source
-                .WithIterationCount(1)
-                .WithWarmupCount(1);*/
+            return new object();
         }
-        #endregion
     }
 }

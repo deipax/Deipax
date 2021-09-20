@@ -5,9 +5,6 @@ namespace Benchmarks.Cloning.Deipax
 {
     public class AbstractDeipax : AbstractBase
     {
-        protected override T GetClone<T>(T source)
-        {
-            return source.GetClone();
-        }
+        protected override T GetClone<T>(T source) => source.GetClone();
     }
 }

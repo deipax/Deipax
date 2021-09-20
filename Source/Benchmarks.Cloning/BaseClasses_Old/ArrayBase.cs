@@ -75,57 +75,30 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void IntArray()
-        {
-            var target = GetClone(_intArray);
-        }
+        public int[] IntArray() => GetClone(_intArray);
 
         [Benchmark]
-        public void ByteArray()
-        {
-            var target = GetClone(_byteArray);
-        }
+        public byte[] ByteArray() => GetClone(_byteArray);
 
         [Benchmark]
-        public void StringArray()
-        {
-            var target = GetClone(_stringArray);
-        }
+        public string[] StringArray() => GetClone(_stringArray);
 
         [Benchmark]
-        public void TimeSpanArray()
-        {
-            var target = GetClone(_timeSpanArray);
-        }
+        public TimeSpan[] TimeSpanArray() => GetClone(_timeSpanArray);
 
         [Benchmark]
-        public void DateTimeArray()
-        {
-            var target = GetClone(_dateTimeArray);
-        }
+        public DateTime[] DateTimeArray() => GetClone(_dateTimeArray);
 
         [Benchmark]
-        public void DelegateArray()
-        {
-            var target = GetClone(_delegateArray);
-        }
+        public Func<string>[] DelegateArray() => GetClone(_delegateArray);
 
         [Benchmark]
-        public void ArrayOfStringArrays()
-        {
-            var target = GetClone(_arrayOfStringArrays);
-        }
+        public string[][] ArrayOfStringArrays() => GetClone(_arrayOfStringArrays);
 
         [Benchmark]
-        public void ArrayOfClasses()
-        {
-            var target = GetClone(_arrayOfClasses);
-        }
+        public Helper1[] ArrayOfClasses() => GetClone(_arrayOfClasses);
 
         [Benchmark]
-        public void ArrayOfStruct()
-        {
-            var target = GetClone(_arrayOfStructs);
-        }
+        public HelperStruct1[] ArrayOfStruct() => GetClone(_arrayOfStructs);
     }
 }

@@ -4,9 +4,6 @@ namespace Benchmarks.Cloning.BaseClasses
 {
     public abstract class DoubleSimpleClassBase : Base<DoubleSimpleClass>
     {
-        protected override DoubleSimpleClass GenerateItem()
-        {
-            return DoubleSimpleClass.Generate();
-        }
+        protected override DoubleSimpleClass GenerateItem() => DoubleSimpleClass.Generate();
     }
 }

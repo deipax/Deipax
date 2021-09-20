@@ -26,21 +26,12 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         protected abstract T GetClone<T>(T source);
 
         [Benchmark]
-        public void IRealOnlyList_String()
-        {
-            IReadOnlyList<string> target = GetClone(_readOnlyListString);
-        }
+        public IReadOnlyList<string> IRealOnlyList_String() => GetClone(_readOnlyListString);
 
         [Benchmark]
-        public void GrandChildClass_AsInterface()
-        {
-            MyInterface target = GetClone(_grandChildAsInterface);
-        }
+        public MyInterface GrandChildClass_AsInterface() => GetClone(_grandChildAsInterface);
 
         [Benchmark]
-        public void IRealOnlyList_Interface()
-        {
-            IReadOnlyList<MyTmpInterface> target = GetClone(_readOnlyListInterface);
-        }
+        public IReadOnlyList<MyTmpInterface> IRealOnlyList_Interface() => GetClone(_readOnlyListInterface);
     }
 }
