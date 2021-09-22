@@ -44,7 +44,7 @@ namespace Deipax.Model.Concretes
                 ModelInfo.GetOptimalMemberInfo());
 
             var invoke = Expression.Invoke(
-                ConvertTo<TValue, TProp>.Result.Expression,
+                Expression.Constant(ConvertTo<TValue, TProp>.From),
                 input,
                 provider);
 

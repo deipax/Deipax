@@ -5,8 +5,7 @@ namespace Deipax.Convert
 {
     public static class ConvertTo<TFrom, TTo>
     {
-        public static readonly IConvertResult<TFrom, TTo> Result = ConvertConfig.Get<TFrom, TTo>();
-        public static readonly ConvertDelegate<TFrom, TTo> From = Result?.Func;
+        public static readonly ConvertDelegate<TFrom, TTo> From = ConvertConfig.Get<TFrom, TTo>().Func;
     }
 
     public static class ConvertTo<TTo>
