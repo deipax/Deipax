@@ -1,12 +1,22 @@
 ﻿using Benchmarks.Convert.Base;
+using Deipax.Convert;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnitTests.Common;
 
 namespace Benchmarks.Convert.Deipax
 {
+    public class BaseDeipax<TTo> : BaseConvertTo<TTo>
+    {
+        protected override TTo Convert<TFrom>(TFrom from)
+        {
+            return ConvertTo<TTo, TFrom>.From(from, CultureInfo.InvariantCulture);
+        }
+    }
+
     #region Bool/BoolNullable
-    public class ConvertToBool : BaseConvertTo<bool>
+    public class ConvertToBool : BaseDeipax<bool>
     {
         protected override IEnumerable<string> StringValues()
         {
@@ -14,7 +24,7 @@ namespace Benchmarks.Convert.Deipax
         }
     }
 
-    public class ConvertToBoolNullable : BaseConvertTo<bool?>
+    public class ConvertToBoolNullable : BaseDeipax<bool?>
     {
         protected override IEnumerable<string> StringValues()
         {
@@ -24,7 +34,7 @@ namespace Benchmarks.Convert.Deipax
     #endregion
 
     #region Char/CharNullable
-    public class ConvertToChar : BaseConvertTo<char>
+    public class ConvertToChar : BaseDeipax<char>
     {
         protected override IEnumerable<string> StringValues()
         {
@@ -32,7 +42,7 @@ namespace Benchmarks.Convert.Deipax
         }
     }
 
-    public class ConvertToCharNullable : BaseConvertTo<char?>
+    public class ConvertToCharNullable : BaseDeipax<char?>
     {
         protected override IEnumerable<string> StringValues()
         {
@@ -42,117 +52,117 @@ namespace Benchmarks.Convert.Deipax
     #endregion
 
     #region SByte/SByteNullable
-    public class ConvertToSByte : BaseConvertTo<sbyte>
+    public class ConvertToSByte : BaseDeipax<sbyte>
     {
     }
 
-    public class ConvertToSByteNullable : BaseConvertTo<sbyte?>
+    public class ConvertToSByteNullable : BaseDeipax<sbyte?>
     {
     }
     #endregion
 
     #region Byte/ByteNullable
-    public class ConvertToByte : BaseConvertTo<byte>
+    public class ConvertToByte : BaseDeipax<byte>
     {
     }
 
-    public class ConvertToByteNullable : BaseConvertTo<byte?>
+    public class ConvertToByteNullable : BaseDeipax<byte?>
     {
     }
     #endregion
 
     #region Short/ShortNullable
-    public class ConvertToShort : BaseConvertTo<short>
+    public class ConvertToShort : BaseDeipax<short>
     {
     }
 
-    public class ConvertToShortNullable : BaseConvertTo<short?>
+    public class ConvertToShortNullable : BaseDeipax<short?>
     {
     }
     #endregion
 
     #region UShort/UShortNullable
-    public class ConvertToUShort : BaseConvertTo<ushort>
+    public class ConvertToUShort : BaseDeipax<ushort>
     {
     }
 
-    public class ConvertToUShortNullable : BaseConvertTo<ushort?>
+    public class ConvertToUShortNullable : BaseDeipax<ushort?>
     {
     }
     #endregion
 
     #region Int/IntNullable
-    public class ConvertToInt : BaseConvertTo<int>
+    public class ConvertToInt : BaseDeipax<int>
     {
     }
 
-    public class ConvertToIntNullable : BaseConvertTo<int?>
+    public class ConvertToIntNullable : BaseDeipax<int?>
     {
     }
     #endregion
 
     #region UInt/UIntNullable
-    public class ConvertToUInt : BaseConvertTo<uint>
+    public class ConvertToUInt : BaseDeipax<uint>
     {
     }
 
-    public class ConvertToUIntNullable : BaseConvertTo<uint?>
+    public class ConvertToUIntNullable : BaseDeipax<uint?>
     {
     }
     #endregion
 
     #region Long/LongNullable
-    public class ConvertToLong : BaseConvertTo<long>
+    public class ConvertToLong : BaseDeipax<long>
     {
     }
 
-    public class ConvertToLongNullable : BaseConvertTo<long?>
+    public class ConvertToLongNullable : BaseDeipax<long?>
     {
     }
     #endregion
 
     #region ULong/ULongNullable
-    public class ConvertToULong : BaseConvertTo<ulong>
+    public class ConvertToULong : BaseDeipax<ulong>
     {
     }
 
-    public class ConvertToULongNullable : BaseConvertTo<ulong?>
+    public class ConvertToULongNullable : BaseDeipax<ulong?>
     {
     }
     #endregion
 
     #region Float/FloatNullable
-    public class ConvertToFloat : BaseConvertTo<float>
+    public class ConvertToFloat : BaseDeipax<float>
     {
     }
 
-    public class ConvertToFloatNullable : BaseConvertTo<float?>
+    public class ConvertToFloatNullable : BaseDeipax<float?>
     {
     }
     #endregion
 
     #region Double/DoubleNullable
-    public class ConvertToDouble : BaseConvertTo<double>
+    public class ConvertToDouble : BaseDeipax<double>
     {
     }
 
-    public class ConvertToDoubleNullable : BaseConvertTo<double?>
+    public class ConvertToDoubleNullable : BaseDeipax<double?>
     {
     }
     #endregion
 
     #region Decimal/DecimalNullable
-    public class ConvertToDecimal : BaseConvertTo<decimal>
+    public class ConvertToDecimal : BaseDeipax<decimal>
     {
     }
 
-    public class ConvertToDecimalNullable : BaseConvertTo<decimal?>
+    public class ConvertToDecimalNullable : BaseDeipax<decimal?>
     {
     }
     #endregion
 
     #region DateTime/DateTimeNullable
-    public class ConvertToDateTimeBase<TTo> : BaseConvertTo<TTo>
+    public class ConvertToDateTimeBase<TTo> : BaseDeipax<TTo>
     {
     }
 
@@ -166,29 +176,29 @@ namespace Benchmarks.Convert.Deipax
     #endregion
 
     #region String
-    public class ConvertToString : BaseConvertTo<string>
+    public class ConvertToString : BaseDeipax<string>
     {
     }
     #endregion
 
     #region Object
-    public class ConvertToObject : BaseConvertTo<object>
+    public class ConvertToObject : BaseDeipax<object>
     {
     }
     #endregion
 
     #region Enum
-    public class ConvertToEnum : BaseConvertTo<TestEnum>
+    public class ConvertToEnum : BaseDeipax<TestEnum>
     {
     }
 
-    public class ConvertToEnumNullable : BaseConvertTo<TestEnum?>
+    public class ConvertToEnumNullable : BaseDeipax<TestEnum?>
     {
     }
     #endregion
 
     #region IParent
-    public class ConvertToIParent : BaseConvertTo<IParent>
+    public class ConvertToIParent : BaseDeipax<IParent>
     {
     }
     #endregion

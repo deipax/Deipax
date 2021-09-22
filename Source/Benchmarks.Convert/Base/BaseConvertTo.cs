@@ -24,136 +24,133 @@ namespace Benchmarks.Convert.Base
             if (!string.IsNullOrEmpty(value)) list.Add(value);
             return list;
         }
+
+        protected abstract TTo Convert<TFrom>(TFrom from);
         #endregion
 
         #region Data Members
-        public virtual TTo Convert<TFrom>(TFrom from)
-        {
-            return ConvertTo<TTo, TFrom>.From(from, CultureInfo.InvariantCulture);
-        }
-
-        public virtual IEnumerable<object> Bool()
+        public IEnumerable<object> Bool()
         {
             yield return true;
         }
 
-        public virtual IEnumerable<object> BoolNullable()
+        public IEnumerable<object> BoolNullable()
         {
             yield return (bool?)true;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Byte()
+        public IEnumerable<object> Byte()
         {
             yield return (byte)1;
         }
 
-        public virtual IEnumerable<object> ByteNullable()
+        public IEnumerable<object> ByteNullable()
         {
             yield return (byte?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Char()
+        public IEnumerable<object> Char()
         {
             yield return 'c';
         }
 
-        public virtual IEnumerable<object> CharNullable()
+        public IEnumerable<object> CharNullable()
         {
             yield return (char?)'c';
             yield return null;
         }
 
-        public virtual IEnumerable<object> DateTime()
+        public IEnumerable<object> DateTime()
         {
             yield return System.DateTime.MinValue;
         }
 
-        public virtual IEnumerable<object> DateTimeNullable()
+        public IEnumerable<object> DateTimeNullable()
         {
             yield return (DateTime?)System.DateTime.MinValue;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Decimal()
+        public IEnumerable<object> Decimal()
         {
             yield return (decimal)1;
         }
 
-        public virtual IEnumerable<object> DecimalNullable()
+        public IEnumerable<object> DecimalNullable()
         {
             yield return (decimal?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Double()
+        public IEnumerable<object> Double()
         {
             yield return (double)1;
         }
 
-        public virtual IEnumerable<object> DoubleNullable()
+        public IEnumerable<object> DoubleNullable()
         {
             yield return (double?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Short()
+        public IEnumerable<object> Short()
         {
             yield return (short)1;
         }
 
-        public virtual IEnumerable<object> ShortNullable()
+        public IEnumerable<object> ShortNullable()
         {
             yield return (short?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Int()
+        public IEnumerable<object> Int()
         {
             yield return 1;
         }
 
-        public virtual IEnumerable<object> IntNullable()
+        public IEnumerable<object> IntNullable()
         {
             yield return (int?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Long()
+        public IEnumerable<object> Long()
         {
             yield return (long)1;
         }
 
-        public virtual IEnumerable<object> LongNullable()
+        public IEnumerable<object> LongNullable()
         {
             yield return (long?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> SByte()
+        public IEnumerable<object> SByte()
         {
             yield return (sbyte)1;
         }
 
-        public virtual IEnumerable<object> SByteNullable()
+        public IEnumerable<object> SByteNullable()
         {
             yield return (sbyte?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> Float()
+        public IEnumerable<object> Float()
         {
             yield return (float)1;
         }
 
-        public virtual IEnumerable<object> FloatNullable()
+        public IEnumerable<object> FloatNullable()
         {
             yield return (float?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> String()
+        public IEnumerable<object> String()
         {
             foreach (var item in StringValues().Where(x => !string.IsNullOrEmpty(x)))
                 yield return item;
@@ -162,102 +159,102 @@ namespace Benchmarks.Convert.Base
             yield return null;
         }
 
-        public virtual IEnumerable<object> UShort()
+        public IEnumerable<object> UShort()
         {
             yield return (ushort)1;
         }
 
-        public virtual IEnumerable<object> UShortNullable()
+        public IEnumerable<object> UShortNullable()
         {
             yield return (ushort?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> UInt()
+        public IEnumerable<object> UInt()
         {
             yield return (uint)1;
         }
 
-        public virtual IEnumerable<object> UIntNullable()
+        public IEnumerable<object> UIntNullable()
         {
             yield return (uint?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> ULong()
+        public IEnumerable<object> ULong()
         {
             yield return (ulong)1;
         }
 
-        public virtual IEnumerable<object> ULongNullable()
+        public IEnumerable<object> ULongNullable()
         {
             yield return (ulong?)1;
             yield return null;
         }
 
-        public virtual IEnumerable<object> DbNull()
+        public IEnumerable<object> DbNull()
         {
             yield return DBNull.Value;
             yield return null;
         }
 
-        public virtual IEnumerable<object> ConvertibleClass()
+        public IEnumerable<object> ConvertibleClass()
         {
             yield return new ConvertibleClass();
             yield return null;
         }
 
-        public virtual IEnumerable<object> NonConvertibleClass()
+        public IEnumerable<object> NonConvertibleClass()
         {
             yield return new NonConvertibleClass();
             yield return null;
         }
 
-        public virtual IEnumerable<object> ConvertibleStruct()
+        public IEnumerable<object> ConvertibleStruct()
         {
             yield return new ConvertibleStruct();
         }
 
-        public virtual IEnumerable<object> ConvertibleStructNullable()
+        public IEnumerable<object> ConvertibleStructNullable()
         {
             yield return (ConvertibleStruct?)new ConvertibleStruct();
             yield return null;
         }
 
-        public virtual IEnumerable<object> NonConvertibleStruct()
+        public IEnumerable<object> NonConvertibleStruct()
         {
             yield return new NonConvertibleStruct();
         }
 
-        public virtual IEnumerable<object> NonConvertibleStructNullable()
+        public IEnumerable<object> NonConvertibleStructNullable()
         {
             yield return (NonConvertibleStruct?)new NonConvertibleStruct();
             yield return null;
         }
 
-        public virtual IEnumerable<object> Enum()
+        public IEnumerable<object> Enum()
         {
             yield return TestEnum.One;
         }
 
-        public virtual IEnumerable<object> EnumNullable()
+        public IEnumerable<object> EnumNullable()
         {
             yield return (TestEnum?)TestEnum.One;
             yield return null;
         }
 
-        public virtual IEnumerable<object> ParentClass()
+        public IEnumerable<object> ParentClass()
         {
             yield return new ParentClass();
             yield return null;
         }
 
-        public virtual IEnumerable<object> ParentStruct()
+        public IEnumerable<object> ParentStruct()
         {
             yield return new ParentStruct();
         }
 
-        public virtual IEnumerable<object> ParentStructNullable()
+        public IEnumerable<object> ParentStructNullable()
         {
             yield return (ParentStruct?)new ParentStruct();
             yield return null;
