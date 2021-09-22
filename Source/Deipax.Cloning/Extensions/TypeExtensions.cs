@@ -2,6 +2,7 @@
 using Deipax.Core.Extensions;
 using Deipax.Model.Extensions;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,16 +12,16 @@ namespace Deipax.Cloning.Extensions
     public static class TypeExtensions
     {
         #region Field Members
-        private static MethodInfo _cloneConfigHelper = typeof(TypeExtensions)
+        private static readonly MethodInfo _cloneConfigHelper = typeof(TypeExtensions)
             .GetRuntimeMethods()
-            .Where(x => x.Name == "CheckCloneConfigHelper")
+            .Where(x => x.Name == nameof(CheckCloneConfigHelper))
             .FirstOrDefault();
 
         private static readonly RuntimeTypeHandle _intPtrTypeHandle = typeof(IntPtr).TypeHandle;
         private static readonly RuntimeTypeHandle _uIntPtrTypeHandle = typeof(UIntPtr).TypeHandle;
 
-        private static readonly QuickCache<Type, bool> _canShallowClone =
-            new QuickCache<Type, bool>(16, ReferenceEqualsComparer.Instance);
+        private static readonly ConcurrentDictionary<Type, bool> _canShallowClone =
+            new ConcurrentDictionary<Type, bool>(8, 16, ReferenceEqualsComparer.Instance);
 
         private static readonly Func<Type, bool> _canShallowCloneHelper = CanShallowCloneHelper;
         #endregion
@@ -69,7 +70,7 @@ namespace Deipax.Cloning.Extensions
                 (source.IsNullable() && Nullable.GetUnderlyingType(source).CanShallowClone()) ||
                 (source.IsValueType() && CanShallowCloneFields(source));
 
-            bool CanShallowCloneFields(Type type)
+            static bool CanShallowCloneFields(Type type)
             {
                 foreach (var copyableField in type.GetCopyableFields())
                 {

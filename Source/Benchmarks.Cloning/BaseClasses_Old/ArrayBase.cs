@@ -7,7 +7,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class ArrayBase
     {
-        public ArrayBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _intArray = new[] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             _byteArray = RandGen.GenerateByteArray(1000);
@@ -61,15 +62,15 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly int[] _intArray;
-        private readonly byte[] _byteArray;
-        private readonly string[] _stringArray;
-        private readonly TimeSpan[] _timeSpanArray;
-        private readonly DateTime[] _dateTimeArray;
-        private readonly Func<string>[] _delegateArray;
-        private readonly string[][] _arrayOfStringArrays;
-        private readonly Helper1[] _arrayOfClasses;
-        private readonly HelperStruct1[] _arrayOfStructs;
+        private int[] _intArray;
+        private byte[] _byteArray;
+        private string[] _stringArray;
+        private TimeSpan[] _timeSpanArray;
+        private DateTime[] _dateTimeArray;
+        private Func<string>[] _delegateArray;
+        private string[][] _arrayOfStringArrays;
+        private Helper1[] _arrayOfClasses;
+        private HelperStruct1[] _arrayOfStructs;
         #endregion
 
         protected abstract T GetClone<T>(T source);

@@ -1,5 +1,6 @@
 ﻿using Deipax.Core.Common;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Deipax.Convert.Common
@@ -11,11 +12,11 @@ namespace Deipax.Convert.Common
     public static class EnumCache
     {
         #region Field Members
-        private static QuickCache<Type, object> _enumValueCache =
-            new QuickCache<Type, object>(ReferenceEqualsComparer.Instance);
+        private static readonly ConcurrentDictionary<Type, object> _enumValueCache =
+            new ConcurrentDictionary<Type, object>(8, 16, ReferenceEqualsComparer.Instance);
 
-        private static QuickCache<Type, object> _stringValueCache =
-            new QuickCache<Type, object>(ReferenceEqualsComparer.Instance);
+        private static readonly ConcurrentDictionary<Type, object> _stringValueCache =
+            new ConcurrentDictionary<Type, object>(8, 16, ReferenceEqualsComparer.Instance);
         #endregion
 
         #region Public Members

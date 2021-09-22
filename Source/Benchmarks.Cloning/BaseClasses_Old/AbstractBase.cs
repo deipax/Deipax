@@ -6,7 +6,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class AbstractBase
     {
-        public AbstractBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _readOnlyListString = RandGen.GenerateStringList(1000, 5);
             _grandChildAsInterface = GrandChildClassHelper.Generate();
@@ -18,9 +19,9 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly IReadOnlyList<string> _readOnlyListString;
-        private readonly MyInterface _grandChildAsInterface;
-        private readonly IReadOnlyList<MyTmpInterface> _readOnlyListInterface;
+        private IReadOnlyList<string> _readOnlyListString;
+        private MyInterface _grandChildAsInterface;
+        private IReadOnlyList<MyTmpInterface> _readOnlyListInterface;
         #endregion
 
         protected abstract T GetClone<T>(T source);

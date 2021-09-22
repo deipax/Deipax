@@ -7,7 +7,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class TupleBase
     {
-        public TupleBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _null = null;
 
@@ -60,11 +61,11 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly Tuple<int, string, int, int, int, int, int, Tuple<int>> _primitives;
-        private readonly Tuple<Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Tuple<Helper1>> _classes;
-        private readonly Tuple<HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, Tuple<HelperStruct1>> _structs;
-        private readonly Tuple<int> _null;
-        private readonly List<Tuple<Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Tuple<Helper1>>> _duplicates;
+        private Tuple<int, string, int, int, int, int, int, Tuple<int>> _primitives;
+        private Tuple<Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Tuple<Helper1>> _classes;
+        private Tuple<HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, HelperStruct1, Tuple<HelperStruct1>> _structs;
+        private Tuple<int> _null;
+        private List<Tuple<Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Helper1, Tuple<Helper1>>> _duplicates;
         #endregion
 
         protected abstract T GetClone<T>(T source);

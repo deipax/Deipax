@@ -8,7 +8,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class PrimitiveBase
     {
-        public PrimitiveBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _int = RandGen.GenerateInt();
 
@@ -71,14 +72,14 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly int _int;
-        private readonly string _string;
-        private readonly List<string> _listOfStrings;
-        private readonly List<byte> _listOfBytes;
-        private readonly List<int> _listOfInts;
-        private readonly List<TimeSpan> _listOfTimeSpans;
-        private readonly List<DateTime> _listOfDateTimes;
-        private readonly List<Func<string>> _listOfDelegates;
+        private int _int;
+        private string _string;
+        private List<string> _listOfStrings;
+        private List<byte> _listOfBytes;
+        private List<int> _listOfInts;
+        private List<TimeSpan> _listOfTimeSpans;
+        private List<DateTime> _listOfDateTimes;
+        private List<Func<string>> _listOfDelegates;
         #endregion
 
         protected abstract T GetClone<T>(T source);

@@ -3,6 +3,7 @@ using Deipax.Cloning.Extensions;
 using Deipax.Core.Common;
 using Deipax.Core.Extensions;
 using System;
+using System.Collections.Concurrent;
 using System.Linq.Expressions;
 
 namespace Deipax.Cloning
@@ -16,8 +17,8 @@ namespace Deipax.Cloning
 
         private static readonly CloneDel<T> _del = CloneConfig.Get<T>().Func;
 
-        private static readonly QuickCache<Type, CloneDel<T>> _cache =
-            new QuickCache<Type, CloneDel<T>>(16, ReferenceEqualsComparer.Instance);
+        private static readonly ConcurrentDictionary<Type, CloneDel<T>> _cache =
+            new ConcurrentDictionary<Type, CloneDel<T>>(8, 16, ReferenceEqualsComparer.Instance);
 
         private static readonly Func<Type, CloneDel<T>> _create = Create;
         #endregion
@@ -25,11 +26,7 @@ namespace Deipax.Cloning
         #region Public Members
         public static T Get(T source, CopyContext context)
         {
-            if (source == null)
-            {
-                return source;
-            }
-
+            if (source == null) return source;
             var runtimeType = source.GetType();
 
             CloneDel<T> del = runtimeType == _type

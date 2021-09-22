@@ -15,15 +15,21 @@ namespace Benchmarks.Model.Base
             Expression<Func<T, P>> memberExpression)
         {
             _testValue = testValue;
+            _memberExpression = memberExpression;
+        }
+
+        [GlobalSetup]
+        public void Setup()
+        {
             _instance = new T();
 
             var setter = ModelAccess<T>
-                .GetSetter(memberExpression)
+                .GetSetter(_memberExpression)
                 .GetDelegate<P>();
 
             setter(ref _instance, _testValue);
 
-            var getter = ModelAccess<T>.GetGetter(memberExpression);
+            var getter = ModelAccess<T>.GetGetter(_memberExpression);
 
             _getBool = getter.GetDelegate<bool>();
             _getBoolNullable = getter.GetDelegate<bool?>();
@@ -62,6 +68,8 @@ namespace Benchmarks.Model.Base
         }
 
         #region Field Member
+        private Expression<Func<T, P>> _memberExpression;
+
         private P _testValue;
         private T _instance;
 
@@ -103,196 +111,100 @@ namespace Benchmarks.Model.Base
 
         #region Public Member
         [Benchmark]
-        public bool ToBool()
-        {
-            return _getBool(ref _instance, _provider);
-        }
+        public bool ToBool() => _getBool(ref _instance, _provider);
 
         [Benchmark]
-        public bool? ToBoolNullable()
-        {
-            return _getBoolNullable(ref _instance, _provider);
-        }
+        public bool? ToBoolNullable() => _getBoolNullable(ref _instance, _provider);
 
         [Benchmark]
-        public char ToChar()
-        {
-            return _getChar(ref _instance, _provider);
-        }
+        public char ToChar() => _getChar(ref _instance, _provider);
 
         [Benchmark]
-        public char? ToCharNullable()
-        {
-            return _getCharNullable(ref _instance, _provider);
-        }
+        public char? ToCharNullable() => _getCharNullable(ref _instance, _provider);
 
         [Benchmark]
-        public sbyte ToSByte()
-        {
-            return _getSByte(ref _instance, _provider);
-        }
+        public sbyte ToSByte() => _getSByte(ref _instance, _provider);
 
         [Benchmark]
-        public sbyte? ToSByteNullable()
-        {
-            return _getSByteNullable(ref _instance, _provider);
-        }
+        public sbyte? ToSByteNullable() => _getSByteNullable(ref _instance, _provider);
 
         [Benchmark]
-        public byte ToByte()
-        {
-            return _getByte(ref _instance, _provider);
-        }
+        public byte ToByte() => _getByte(ref _instance, _provider);
 
         [Benchmark]
-        public byte? ToByteNullable()
-        {
-            return _getByteNullable(ref _instance, _provider);
-        }
+        public byte? ToByteNullable() => _getByteNullable(ref _instance, _provider);
 
         [Benchmark]
-        public short ToShort()
-        {
-            return _getShort(ref _instance, _provider);
-        }
+        public short ToShort() => _getShort(ref _instance, _provider);
 
         [Benchmark]
-        public short? ToShortNullable()
-        {
-            return _getShortNullable(ref _instance, _provider);
-        }
+        public short? ToShortNullable() => _getShortNullable(ref _instance, _provider);
 
         [Benchmark]
-        public ushort ToUShort()
-        {
-            return _getUShort(ref _instance, _provider);
-        }
+        public ushort ToUShort() => _getUShort(ref _instance, _provider);
 
         [Benchmark]
-        public ushort? ToUShortNullable()
-        {
-            return _getUShortNullable(ref _instance, _provider);
-        }
+        public ushort? ToUShortNullable() => _getUShortNullable(ref _instance, _provider);
 
         [Benchmark]
-        public int ToInt()
-        {
-            return _getInt(ref _instance, _provider);
-        }
+        public int ToInt() => _getInt(ref _instance, _provider);
 
         [Benchmark]
-        public int? ToIntNullable()
-        {
-            return _getIntNullable(ref _instance, _provider);
-        }
+        public int? ToIntNullable() => _getIntNullable(ref _instance, _provider);
 
         [Benchmark]
-        public uint ToUInt()
-        {
-            return _getUInt(ref _instance, _provider);
-        }
+        public uint ToUInt() => _getUInt(ref _instance, _provider);
 
         [Benchmark]
-        public uint? ToUIntNullable()
-        {
-            return _getUIntNullable(ref _instance, _provider);
-        }
+        public uint? ToUIntNullable() => _getUIntNullable(ref _instance, _provider);
 
         [Benchmark]
-        public long ToLong()
-        {
-            return _getLong(ref _instance, _provider);
-        }
+        public long ToLong() => _getLong(ref _instance, _provider);
 
         [Benchmark]
-        public long? ToLongNullable()
-        {
-            return _getLongNullable(ref _instance, _provider);
-        }
+        public long? ToLongNullable() => _getLongNullable(ref _instance, _provider);
 
         [Benchmark]
-        public ulong ToULong()
-        {
-            return _getULong(ref _instance, _provider);
-        }
+        public ulong ToULong() => _getULong(ref _instance, _provider);
 
         [Benchmark]
-        public ulong? ToULongNullable()
-        {
-            return _getULongNullable(ref _instance, _provider);
-        }
+        public ulong? ToULongNullable() => _getULongNullable(ref _instance, _provider);
 
         [Benchmark]
-        public float ToFloat()
-        {
-            return _getFloat(ref _instance, _provider);
-        }
+        public float ToFloat() => _getFloat(ref _instance, _provider);
 
         [Benchmark]
-        public float? ToFloatNullable()
-        {
-            return _getFloatNullable(ref _instance, _provider);
-        }
+        public float? ToFloatNullable() => _getFloatNullable(ref _instance, _provider);
 
         [Benchmark]
-        public double ToDouble()
-        {
-            return _getDouble(ref _instance, _provider);
-        }
+        public double ToDouble() => _getDouble(ref _instance, _provider);
 
         [Benchmark]
-        public double? ToDoubleNullable()
-        {
-            return _getDoubleNullable(ref _instance, _provider);
-        }
+        public double? ToDoubleNullable() => _getDoubleNullable(ref _instance, _provider);
 
         [Benchmark]
-        public decimal ToDecimal()
-        {
-            return _getDecimal(ref _instance, _provider);
-        }
+        public decimal ToDecimal() => _getDecimal(ref _instance, _provider);
 
         [Benchmark]
-        public decimal? ToDecimalNullable()
-        {
-            return _getDecimalNullable(ref _instance, _provider);
-        }
+        public decimal? ToDecimalNullable() => _getDecimalNullable(ref _instance, _provider);
 
         [Benchmark]
-        public DateTime ToDateTime()
-        {
-            return _getDateTime(ref _instance, _provider);
-        }
+        public DateTime ToDateTime() => _getDateTime(ref _instance, _provider);
 
         [Benchmark]
-        public DateTime? ToDateTimeNullable()
-        {
-            return _getDateTimeNullable(ref _instance, _provider);
-        }
+        public DateTime? ToDateTimeNullable() => _getDateTimeNullable(ref _instance, _provider);
 
         [Benchmark]
-        public object ToObject()
-        {
-            return _getObject(ref _instance, _provider);
-        }
+        public object ToObject() => _getObject(ref _instance, _provider);
 
         [Benchmark]
-        public string To_String()
-        {
-            return _getString(ref _instance, _provider);
-        }
+        public string To_String() => _getString(ref _instance, _provider);
 
         [Benchmark]
-        public TestEnum ToEnum()
-        {
-            return _getEnum(ref _instance, _provider);
-        }
+        public TestEnum ToEnum() => _getEnum(ref _instance, _provider);
 
         [Benchmark]
-        public TestEnum? ToEnumNullable()
-        {
-            return _getEnumNullable(ref _instance, _provider);
-        }
+        public TestEnum? ToEnumNullable() => _getEnumNullable(ref _instance, _provider);
         #endregion
     }
 }

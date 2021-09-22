@@ -6,7 +6,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class KeyValueBase
     {
-        public KeyValueBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _primitives = new KeyValuePair<int, string>(10, "test");
 
@@ -22,10 +23,10 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly KeyValuePair<int, string> _primitives;
-        private readonly KeyValuePair<Helper1, Helper1> _classes;
-        private readonly KeyValuePair<HelperStruct1, HelperStruct1> _structs;
-        private readonly KeyValuePair<Helper1, Helper1> _nulls;
+        private KeyValuePair<int, string> _primitives;
+        private KeyValuePair<Helper1, Helper1> _classes;
+        private KeyValuePair<HelperStruct1, HelperStruct1> _structs;
+        private KeyValuePair<Helper1, Helper1> _nulls;
         #endregion
 
         protected abstract T GetClone<T>(T source);

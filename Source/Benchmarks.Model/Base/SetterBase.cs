@@ -15,9 +15,16 @@ namespace Benchmarks.Model.Base
             P testValue,
             Expression<Func<T, P>> memberExpression)
         {
+            _memberExpression = memberExpression;
+            _testValue = testValue;
+        }
+
+        [GlobalSetup]
+        public void Setup()
+        {
             _instance = new T();
 
-            var setter = ModelAccess<T>.GetSetter(memberExpression);
+            var setter = ModelAccess<T>.GetSetter(_memberExpression);
 
             _setBool = setter.GetDelegate<bool>();
             _setBoolNullable = setter.GetDelegate<bool?>();
@@ -52,43 +59,45 @@ namespace Benchmarks.Model.Base
             _setEnum = setter.GetDelegate<TestEnum>();
             _setEnumNullable = setter.GetDelegate<TestEnum?>();
 
-            _testValueBool = ConvertSafe<bool, P>(testValue);
-            _testValueBoolNullable = ConvertSafe<bool?, P>(testValue);
-            _testValueChar = ConvertSafe<char, P>(testValue);
-            _testValueCharNullable = ConvertSafe<char?, P>(testValue);
-            _testValueSByte = ConvertSafe<sbyte, P>(testValue);
-            _testValueSByteNullable = ConvertSafe<sbyte?, P>(testValue);
-            _testValueByte = ConvertSafe<byte, P>(testValue);
-            _testValueByteNullable = ConvertSafe<byte?, P>(testValue);
-            _testValueShort = ConvertSafe<short, P>(testValue);
-            _testValueShortNullable = ConvertSafe<short?, P>(testValue);
-            _testValueUShort = ConvertSafe<ushort, P>(testValue);
-            _testValueUShortNullable = ConvertSafe<ushort?, P>(testValue);
-            _testValueInt = ConvertSafe<int, P>(testValue);
-            _testValueIntNullable = ConvertSafe<int?, P>(testValue);
-            _testValueUInt = ConvertSafe<uint, P>(testValue);
-            _testValueUIntNullable = ConvertSafe<uint?, P>(testValue);
-            _testValueLong = ConvertSafe<long, P>(testValue);
-            _testValueLongNullable = ConvertSafe<long?, P>(testValue);
-            _testValueULong = ConvertSafe<ulong, P>(testValue);
-            _testValueULongNullable = ConvertSafe<ulong?, P>(testValue);
-            _testValueFloat = ConvertSafe<float, P>(testValue);
-            _testValueFloatNullable = ConvertSafe<float?, P>(testValue);
-            _testValueDouble = ConvertSafe<double, P>(testValue);
-            _testValueDoubleNullable = ConvertSafe<double?, P>(testValue);
-            _testValueDecimal = ConvertSafe<decimal, P>(testValue);
-            _testValueDecimalNullable = ConvertSafe<decimal?, P>(testValue);
-            _testValueDateTime = ConvertSafe<DateTime, P>(testValue);
-            _testValueDateTimeNullable = ConvertSafe<DateTime?, P>(testValue);
-            _testValueObject = ConvertSafe<object, P>(testValue);
-            _testValueString = ConvertSafe<string, P>(testValue);
-            _testValueEnum = ConvertSafe<TestEnum, P>(testValue);
-            _testValueEnumNullable = ConvertSafe<TestEnum?, P>(testValue);
+            _testValueBool = ConvertSafe<bool, P>(_testValue);
+            _testValueBoolNullable = ConvertSafe<bool?, P>(_testValue);
+            _testValueChar = ConvertSafe<char, P>(_testValue);
+            _testValueCharNullable = ConvertSafe<char?, P>(_testValue);
+            _testValueSByte = ConvertSafe<sbyte, P>(_testValue);
+            _testValueSByteNullable = ConvertSafe<sbyte?, P>(_testValue);
+            _testValueByte = ConvertSafe<byte, P>(_testValue);
+            _testValueByteNullable = ConvertSafe<byte?, P>(_testValue);
+            _testValueShort = ConvertSafe<short, P>(_testValue);
+            _testValueShortNullable = ConvertSafe<short?, P>(_testValue);
+            _testValueUShort = ConvertSafe<ushort, P>(_testValue);
+            _testValueUShortNullable = ConvertSafe<ushort?, P>(_testValue);
+            _testValueInt = ConvertSafe<int, P>(_testValue);
+            _testValueIntNullable = ConvertSafe<int?, P>(_testValue);
+            _testValueUInt = ConvertSafe<uint, P>(_testValue);
+            _testValueUIntNullable = ConvertSafe<uint?, P>(_testValue);
+            _testValueLong = ConvertSafe<long, P>(_testValue);
+            _testValueLongNullable = ConvertSafe<long?, P>(_testValue);
+            _testValueULong = ConvertSafe<ulong, P>(_testValue);
+            _testValueULongNullable = ConvertSafe<ulong?, P>(_testValue);
+            _testValueFloat = ConvertSafe<float, P>(_testValue);
+            _testValueFloatNullable = ConvertSafe<float?, P>(_testValue);
+            _testValueDouble = ConvertSafe<double, P>(_testValue);
+            _testValueDoubleNullable = ConvertSafe<double?, P>(_testValue);
+            _testValueDecimal = ConvertSafe<decimal, P>(_testValue);
+            _testValueDecimalNullable = ConvertSafe<decimal?, P>(_testValue);
+            _testValueDateTime = ConvertSafe<DateTime, P>(_testValue);
+            _testValueDateTimeNullable = ConvertSafe<DateTime?, P>(_testValue);
+            _testValueObject = ConvertSafe<object, P>(_testValue);
+            _testValueString = ConvertSafe<string, P>(_testValue);
+            _testValueEnum = ConvertSafe<TestEnum, P>(_testValue);
+            _testValueEnumNullable = ConvertSafe<TestEnum?, P>(_testValue);
 
             _provider = CultureInfo.InvariantCulture;
         }
 
         #region Field Member
+        private Expression<Func<T, P>> _memberExpression;
+        private P _testValue;
         private T _instance;
 
         private SetDelegate<T, bool> _setBool;
@@ -162,228 +171,100 @@ namespace Benchmarks.Model.Base
 
         #region Public Member
         [Benchmark]
-        public T FromBool()
-        {
-            _setBool(ref _instance, _testValueBool, _provider);
-            return _instance;
-        }
+        public void FromBool() => _setBool(ref _instance, _testValueBool, _provider);
 
         [Benchmark]
-        public T FromBoolNullable()
-        {
-            _setBoolNullable(ref _instance, _testValueBoolNullable, _provider);
-            return _instance;
-        }
+        public void FromBoolNullable() => _setBoolNullable(ref _instance, _testValueBoolNullable, _provider);
 
         [Benchmark]
-        public T FromChar()
-        {
-            _setChar(ref _instance, _testValueChar, _provider);
-            return _instance;
-        }
+        public void FromChar() => _setChar(ref _instance, _testValueChar, _provider);
 
         [Benchmark]
-        public T FromCharNullable()
-        {
-            _setCharNullable(ref _instance, _testValueCharNullable, _provider);
-            return _instance;
-        }
+        public void FromCharNullable() => _setCharNullable(ref _instance, _testValueCharNullable, _provider);
 
         [Benchmark]
-        public T FromSByte()
-        {
-            _setSByte(ref _instance, _testValueSByte, _provider);
-            return _instance;
-        }
+        public void FromSByte() => _setSByte(ref _instance, _testValueSByte, _provider);
 
         [Benchmark]
-        public T FromSByteNullable()
-        {
-            _setSByteNullable(ref _instance, _testValueSByteNullable, _provider);
-            return _instance;
-        }
+        public void FromSByteNullable() => _setSByteNullable(ref _instance, _testValueSByteNullable, _provider);
 
         [Benchmark]
-        public T FromByte()
-        {
-            _setByte(ref _instance, _testValueByte, _provider);
-            return _instance;
-        }
+        public void FromByte() => _setByte(ref _instance, _testValueByte, _provider);
 
         [Benchmark]
-        public T FromByteNullable()
-        {
-            _setByteNullable(ref _instance, _testValueByteNullable, _provider);
-            return _instance;
-        }
+        public void FromByteNullable() => _setByteNullable(ref _instance, _testValueByteNullable, _provider);
 
         [Benchmark]
-        public T FromShort()
-        {
-            _setShort(ref _instance, _testValueShort, _provider);
-            return _instance;
-        }
+        public void FromShort() => _setShort(ref _instance, _testValueShort, _provider);
 
         [Benchmark]
-        public T FromShortNullable()
-        {
-            _setShortNullable(ref _instance, _testValueShortNullable, _provider);
-            return _instance;
-        }
+        public void FromShortNullable() => _setShortNullable(ref _instance, _testValueShortNullable, _provider);
 
         [Benchmark]
-        public T FromUShort()
-        {
-            _setUShort(ref _instance, _testValueUShort, _provider);
-            return _instance;
-        }
+        public void FromUShort() => _setUShort(ref _instance, _testValueUShort, _provider);
 
         [Benchmark]
-        public T FromUShortNullable()
-        {
-            _setUShortNullable(ref _instance, _testValueUShortNullable, _provider);
-            return _instance;
-        }
+        public void FromUShortNullable() => _setUShortNullable(ref _instance, _testValueUShortNullable, _provider);
 
         [Benchmark]
-        public T FromInt()
-        {
-            _setInt(ref _instance, _testValueInt, _provider);
-            return _instance;
-        }
+        public void FromInt() => _setInt(ref _instance, _testValueInt, _provider);
 
         [Benchmark]
-        public T FromIntNullable()
-        {
-            _setIntNullable(ref _instance, _testValueIntNullable, _provider);
-            return _instance;
-        }
+        public void FromIntNullable() => _setIntNullable(ref _instance, _testValueIntNullable, _provider);
 
         [Benchmark]
-        public T FromUInt()
-        {
-            _setUInt(ref _instance, _testValueUInt, _provider);
-            return _instance;
-        }
+        public void FromUInt() => _setUInt(ref _instance, _testValueUInt, _provider);
 
         [Benchmark]
-        public T FromUIntNullable()
-        {
-            _setUIntNullable(ref _instance, _testValueUIntNullable, _provider);
-            return _instance;
-        }
+        public void FromUIntNullable() => _setUIntNullable(ref _instance, _testValueUIntNullable, _provider);
 
         [Benchmark]
-        public T FromLong()
-        {
-            _setLong(ref _instance, _testValueLong, _provider);
-            return _instance;
-        }
+        public void FromLong() => _setLong(ref _instance, _testValueLong, _provider);
 
         [Benchmark]
-        public T FromLongNullable()
-        {
-            _setLongNullable(ref _instance, _testValueLongNullable, _provider);
-            return _instance;
-        }
+        public void FromLongNullable() => _setLongNullable(ref _instance, _testValueLongNullable, _provider);
 
         [Benchmark]
-        public T FromULong()
-        {
-            _setULong(ref _instance, _testValueULong, _provider);
-            return _instance;
-        }
+        public void FromULong() => _setULong(ref _instance, _testValueULong, _provider);
 
         [Benchmark]
-        public T FromULongNullable()
-        {
-            _setULongNullable(ref _instance, _testValueULongNullable, _provider);
-            return _instance;
-        }
+        public void FromULongNullable() => _setULongNullable(ref _instance, _testValueULongNullable, _provider);
 
         [Benchmark]
-        public T FromFloat()
-        {
-            _setFloat(ref _instance, _testValueFloat, _provider);
-            return _instance;
-        }
+        public void FromFloat() => _setFloat(ref _instance, _testValueFloat, _provider);
 
         [Benchmark]
-        public T FromFloatNullable()
-        {
-            _setFloatNullable(ref _instance, _testValueFloatNullable, _provider);
-            return _instance;
-        }
+        public void FromFloatNullable() => _setFloatNullable(ref _instance, _testValueFloatNullable, _provider);
 
         [Benchmark]
-        public T FromDouble()
-        {
-            _setDouble(ref _instance, _testValueDouble, _provider);
-            return _instance;
-        }
+        public void FromDouble() => _setDouble(ref _instance, _testValueDouble, _provider);
 
         [Benchmark]
-        public T FromDoubleNullable()
-        {
-            _setDoubleNullable(ref _instance, _testValueDoubleNullable, _provider);
-            return _instance;
-        }
+        public void FromDoubleNullable() => _setDoubleNullable(ref _instance, _testValueDoubleNullable, _provider);
 
         [Benchmark]
-        public T FromDecimal()
-        {
-            _setDecimal(ref _instance, _testValueDecimal, _provider);
-            return _instance;
-        }
+        public void FromDecimal() => _setDecimal(ref _instance, _testValueDecimal, _provider);
 
         [Benchmark]
-        public T FromDecimalNullable()
-        {
-            _setDecimalNullable(ref _instance, _testValueDecimalNullable, _provider);
-            return _instance;
-        }
+        public void FromDecimalNullable() => _setDecimalNullable(ref _instance, _testValueDecimalNullable, _provider);
 
         [Benchmark]
-        public T FromDateTime()
-        {
-            _setDateTime(ref _instance, _testValueDateTime, _provider);
-            return _instance;
-        }
+        public void FromDateTime() => _setDateTime(ref _instance, _testValueDateTime, _provider);
 
         [Benchmark]
-        public T FromDateTimeNullable()
-        {
-            _setDateTimeNullable(ref _instance, _testValueDateTimeNullable, _provider);
-            return _instance;
-        }
+        public void FromDateTimeNullable() => _setDateTimeNullable(ref _instance, _testValueDateTimeNullable, _provider);
 
         [Benchmark]
-        public T FromObject()
-        {
-            _setObject(ref _instance, _testValueObject, _provider);
-            return _instance;
-        }
+        public void FromObject() => _setObject(ref _instance, _testValueObject, _provider);
 
         [Benchmark]
-        public T FromString()
-        {
-            _setString(ref _instance, _testValueString, _provider);
-            return _instance;
-        }
+        public void FromString() => _setString(ref _instance, _testValueString, _provider);
 
         [Benchmark]
-        public T FromEnum()
-        {
-            _setEnum(ref _instance, _testValueEnum, _provider);
-            return _instance;
-        }
+        public void FromEnum() => _setEnum(ref _instance, _testValueEnum, _provider);
 
         [Benchmark]
-        public T FromEnumNullable()
-        {
-            _setEnumNullable(ref _instance, _testValueEnumNullable, _provider);
-            return _instance;
-        }
+        public void FromEnumNullable() => _setEnumNullable(ref _instance, _testValueEnumNullable, _provider);
         #endregion
 
         #region Private Members

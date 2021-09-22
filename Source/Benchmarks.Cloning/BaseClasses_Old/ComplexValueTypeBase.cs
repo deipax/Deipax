@@ -5,7 +5,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class ComplexValueTypeBase
     {
-        public ComplexValueTypeBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _complexStruct = new HelperStruct2()
             {
@@ -28,9 +29,9 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly HelperStruct2 _complexStruct;
-        private readonly HelperStruct1 _simpleStruct;
-        private readonly HelperStruct1 _nullStruct;
+        private HelperStruct2 _complexStruct;
+        private HelperStruct1 _simpleStruct;
+        private HelperStruct1 _nullStruct;
         #endregion
 
         protected abstract T GetClone<T>(T source);

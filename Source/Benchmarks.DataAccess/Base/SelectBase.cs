@@ -24,34 +24,24 @@ namespace Benchmarks.DataAccess.Base
             _dbConnection.Dispose();
         }
 
-        [Benchmark]
-        public abstract IEnumerable<MultipleFieldClass> AllFieldsAsClass();
+        public abstract IList<MultipleFieldClass> AllFieldsAsClass();
 
-        [Benchmark]
-        public abstract IEnumerable<MultipleFieldClass> AllFieldsAsClass_Async();
+        public abstract IList<MultipleFieldClass> AllFieldsAsClass_Async();
 
-        [Benchmark]
-        public abstract IEnumerable<MultipleFieldStruct> AllFieldsAsStruct();
+        public abstract IList<MultipleFieldStruct> AllFieldsAsStruct();
 
-        [Benchmark]
-        public abstract IEnumerable<MultipleFieldStruct> AllFieldsAsStruct_Async();
+        public abstract IList<MultipleFieldStruct> AllFieldsAsStruct_Async();
 
-        [Benchmark]
-        public abstract IEnumerable<dynamic> DynamicList();
+        public abstract IList<dynamic> DynamicList();
 
-        [Benchmark]
-        public abstract IEnumerable<dynamic> DynamicList_Async();
+        public abstract IList<dynamic> DynamicList_Async();
 
-        [Benchmark]
         public abstract dynamic QueryFirst();
 
-        [Benchmark]
         public abstract dynamic QueryFirstOrDefault();
 
-        [Benchmark]
         public abstract dynamic QuerySingle();
 
-        [Benchmark]
         public abstract dynamic QuerySingleOrDefault();
     }
 }

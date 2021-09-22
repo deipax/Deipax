@@ -7,7 +7,8 @@ namespace Benchmarks.Cloning.BaseClasses
 {
     public abstract class Base<T>
     {
-        public Base()
+        [GlobalSetup]
+        public void Setup()
         {
             _default = default;
             _single = GenerateItem();
@@ -76,30 +77,30 @@ namespace Benchmarks.Cloning.BaseClasses
         }
 
         #region Field Members
-        private readonly T _default;
-        private readonly T _single;
-        private readonly object _object;
-        private readonly T[] _arraySame;
-        private readonly T[] _arrayDiff;
-        private readonly object[] _arraySameObjects;
-        private readonly object[] _arrayDiffObjects;
-        private readonly T[][] _array2dDiff;
-        private readonly T[][] _array2dSame;
-        private readonly T[] _arrayDefault;
-        private readonly T[,] _arrayRank2Diff;
-        private readonly T[,] _arrayRank2Same;
-        private readonly T[,,] _arrayRank3Diff;
-        private readonly T[,,] _arrayRank3Same;
-        private readonly List<T> _listSame;
-        private readonly List<T> _listDiff;
-        private readonly List<object> _listSameObject;
-        private readonly List<object> _listDiffObject;
-        private readonly KeyValuePair<T, T> _keyValueSame;
-        private readonly KeyValuePair<T, T> _keyValueDiff;
-        private readonly Tuple<T, T> _tupleSame;
-        private readonly Tuple<T, T> _tupleDiff;
-        private readonly Dictionary<T, T> _dictSame;
-        private readonly Dictionary<T, T> _dictDiff;
+        private T _default;
+        private T _single;
+        private object _object;
+        private T[] _arraySame;
+        private T[] _arrayDiff;
+        private object[] _arraySameObjects;
+        private object[] _arrayDiffObjects;
+        private T[][] _array2dDiff;
+        private T[][] _array2dSame;
+        private T[] _arrayDefault;
+        private T[,] _arrayRank2Diff;
+        private T[,] _arrayRank2Same;
+        private T[,,] _arrayRank3Diff;
+        private T[,,] _arrayRank3Same;
+        private List<T> _listSame;
+        private List<T> _listDiff;
+        private List<object> _listSameObject;
+        private List<object> _listDiffObject;
+        private KeyValuePair<T, T> _keyValueSame;
+        private KeyValuePair<T, T> _keyValueDiff;
+        private Tuple<T, T> _tupleSame;
+        private Tuple<T, T> _tupleDiff;
+        private Dictionary<T, T> _dictSame;
+        private Dictionary<T, T> _dictDiff;
         #endregion
 
         #region Public Members

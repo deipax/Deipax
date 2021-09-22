@@ -2,6 +2,7 @@
 using Deipax.Core.Common;
 using Deipax.Core.Extensions;
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -19,8 +20,8 @@ namespace Deipax.Convert.Common
 
         private static readonly bool _returnTypeIsObject = _type == typeof(object);
 
-        private static readonly QuickCache<Type, ConvertDelegate<object, TTo>> _cache =
-            new QuickCache<Type, ConvertDelegate<object, TTo>>(16, ReferenceEqualsComparer.Instance);
+        private static readonly ConcurrentDictionary<Type, ConvertDelegate<object, TTo>> _cache =
+            new ConcurrentDictionary<Type, ConvertDelegate<object, TTo>>(8, 16, ReferenceEqualsComparer.Instance);
 
         private static readonly Func<Type, ConvertDelegate<object, TTo>> _create = Create;
         #endregion

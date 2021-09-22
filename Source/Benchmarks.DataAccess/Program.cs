@@ -13,7 +13,7 @@ namespace Benchmarks.DataAccess
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var config = ManualConfig
                 .CreateEmpty()
@@ -24,8 +24,8 @@ namespace Benchmarks.DataAccess
                 .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
                 .AddJob(new Job[]
                 {
-                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
-                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
+                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31).AsBaseline(),
+                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50),
                 })
                 .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
                 .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
@@ -43,16 +43,5 @@ namespace Benchmarks.DataAccess
             BenchmarkRunner.Run<DeipaxSelect>(config);
             BenchmarkRunner.Run<DapperSelect>(config);
         }
-
-        #region Private Members
-        private static Job ConfigureJob(Job source)
-        {
-            return source;
-            /*
-            return source
-                .WithIterationCount(1)
-                .WithWarmupCount(1);*/
-        }
-        #endregion
     }
 }

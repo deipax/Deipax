@@ -7,9 +7,16 @@ namespace Benchmarks.Cloning.Deipax
 {
     public class CanShallowCloneDeipax
     {
+        [GlobalSetup]
+        public void Setup()
+        {
+            _decimalType = typeof(decimal);
+            _complexStruct = typeof(ComplexStruct);
+        }
+
         #region Field Members
-        private static Type _decimalType = typeof(decimal);
-        private static Type _complexStruct = typeof(ComplexStruct);
+        private Type _decimalType;
+        private Type _complexStruct;
         #endregion
 
         [Benchmark]

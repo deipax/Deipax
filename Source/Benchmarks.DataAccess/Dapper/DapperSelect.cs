@@ -1,60 +1,42 @@
 ﻿using Benchmarks.DataAccess.Base;
 using Dapper;
 using System.Collections.Generic;
+using System.Linq;
+using BenchmarkDotNet.Attributes;
 using UnitTests.Common;
 
 namespace Benchmarks.DataAccess.Dapper
 {
     public class DapperSelect : SelectBase
     {
-        public override IEnumerable<MultipleFieldClass> AllFieldsAsClass()
-        {
-            return _dbConnection.Query<MultipleFieldClass>(SqliteSql.Sql);
-        }
+        [Benchmark]
+        public override IList<MultipleFieldClass> AllFieldsAsClass() => _dbConnection.Query<MultipleFieldClass>(SqliteSql.Sql).ToList();
 
-        public override IEnumerable<MultipleFieldClass> AllFieldsAsClass_Async()
-        {
-            return _dbConnection.QueryAsync<MultipleFieldClass>(SqliteSql.Sql).Result;
-        }
+        [Benchmark]
+        public override IList<MultipleFieldClass> AllFieldsAsClass_Async() => _dbConnection.QueryAsync<MultipleFieldClass>(SqliteSql.Sql).Result.ToList();
 
-        public override IEnumerable<MultipleFieldStruct> AllFieldsAsStruct()
-        {
-            return _dbConnection.Query<MultipleFieldStruct>(SqliteSql.Sql);
-        }
+        [Benchmark]
+        public override IList<MultipleFieldStruct> AllFieldsAsStruct() => _dbConnection.Query<MultipleFieldStruct>(SqliteSql.Sql).ToList();
 
-        public override IEnumerable<MultipleFieldStruct> AllFieldsAsStruct_Async()
-        {
-            return _dbConnection.QueryAsync<MultipleFieldStruct>(SqliteSql.Sql).Result;
-        }
+        [Benchmark]
+        public override IList<MultipleFieldStruct> AllFieldsAsStruct_Async() => _dbConnection.QueryAsync<MultipleFieldStruct>(SqliteSql.Sql).Result.ToList();
 
-        public override IEnumerable<dynamic> DynamicList()
-        {
-            return _dbConnection.Query(SqliteSql.Sql);
-        }
+        [Benchmark]
+        public override IList<dynamic> DynamicList() => _dbConnection.Query(SqliteSql.Sql).ToList();
 
-        public override IEnumerable<dynamic> DynamicList_Async()
-        {
-            return _dbConnection.QueryAsync(SqliteSql.Sql).Result;
-        }
+        [Benchmark]
+        public override IList<dynamic> DynamicList_Async() => _dbConnection.QueryAsync(SqliteSql.Sql).Result.ToList();
 
-        public override dynamic QueryFirst()
-        {
-            return _dbConnection.QueryFirst(SqliteSql.Sql);
-        }
+        [Benchmark]
+        public override dynamic QueryFirst() => _dbConnection.QueryFirst(SqliteSql.Sql);
 
-        public override dynamic QueryFirstOrDefault()
-        {
-            return _dbConnection.QueryFirstOrDefault(SqliteSql.Sql);
-        }
+        [Benchmark]
+        public override dynamic QueryFirstOrDefault() => _dbConnection.QueryFirstOrDefault(SqliteSql.Sql);
 
-        public override dynamic QuerySingle()
-        {
-            return _dbConnection.QuerySingle(SqliteSql.SqlLimitOne);
-        }
+        [Benchmark]
+        public override dynamic QuerySingle() => _dbConnection.QuerySingle(SqliteSql.SqlLimitOne);
 
-        public override dynamic QuerySingleOrDefault()
-        {
-            return _dbConnection.QuerySingleOrDefault(SqliteSql.SqlLimitOne);
-        }
+        [Benchmark]
+        public override dynamic QuerySingleOrDefault() => _dbConnection.QuerySingleOrDefault(SqliteSql.SqlLimitOne);
     }
 }

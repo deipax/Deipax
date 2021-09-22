@@ -5,7 +5,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class NullableBase
     {
-        public NullableBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _nullableInt = RandGen.GenerateInt();
             _nullInt = null;
@@ -13,9 +14,9 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly int? _nullableInt;
-        private readonly int? _nullInt;
-        private readonly HelperStruct1? _struct;
+        private int? _nullableInt;
+        private int? _nullInt;
+        private HelperStruct1? _struct;
         #endregion
 
         protected abstract T GetClone<T>(T source);

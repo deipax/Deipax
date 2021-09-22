@@ -50,7 +50,7 @@ namespace Benchmarks.Convert
         #region Private Members
         private static void RunConvertBenchmarks(IConfig config = null)
         {
-            BenchmarkRunner.Run<ConvertToBoolNullable>(config);
+            /*BenchmarkRunner.Run<ConvertToBoolNullable>(config);
             BenchmarkRunner.Run<ConvertToBool>(config);
             BenchmarkRunner.Run<ConvertToByteNullable>(config);
             BenchmarkRunner.Run<ConvertToByte>(config);
@@ -76,7 +76,7 @@ namespace Benchmarks.Convert
             BenchmarkRunner.Run<ConvertToSByte>(config);
             BenchmarkRunner.Run<ConvertToShortNullable>(config);
             BenchmarkRunner.Run<ConvertToShort>(config);
-            BenchmarkRunner.Run<ConvertToString>(config);
+            BenchmarkRunner.Run<ConvertToString>(config);*/
             BenchmarkRunner.Run<ConvertToUIntNullable>(config);
             BenchmarkRunner.Run<ConvertToUInt>(config);
             BenchmarkRunner.Run<ConvertToULongNullable>(config);

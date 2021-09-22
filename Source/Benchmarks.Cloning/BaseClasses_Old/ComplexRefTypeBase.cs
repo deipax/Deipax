@@ -7,7 +7,8 @@ namespace Benchmarks.Cloning.BaseClasses_Old
 {
     public abstract class ComplexRefTypeBase
     {
-        public ComplexRefTypeBase()
+        [GlobalSetup]
+        public void Setup()
         {
             _null = null;
 
@@ -174,22 +175,22 @@ namespace Benchmarks.Cloning.BaseClasses_Old
         }
 
         #region Field Members
-        private readonly Helper1 _simpleClass;
-        private readonly Helper2 _complexClass;
-        private readonly Helper3<Helper1> _inheritListClass;
-        private readonly Helper3<int> _inheritListInt;
-        private readonly Helper1 _null;
-        private readonly GrandChildClass _grandChildClass;
-        private readonly List<Helper1> _listSimpleClasses;
-        private readonly List<Helper2> _listComplexClasses;
-        private readonly List<MyTmpInterface> _listInterfaces;
-        private readonly List<HelperStruct1> _listSimpleStructs;
-        private readonly List<HelperStruct2> _listComplexStructs;
-        private readonly Dictionary<HelperStruct1, HelperStruct1> _dictOfStructs;
-        private readonly Dictionary<Helper1, Helper1> _dictOfClasses;
-        private readonly Dictionary<int, int> _dictOfInt;
-        private readonly IReadOnlyList<MyTmpInterface> _listSimpleClassesAsInterfaces;
-        private readonly List<object> _listSimpleClassesAsObjects;
+        private Helper1 _simpleClass;
+        private Helper2 _complexClass;
+        private Helper3<Helper1> _inheritListClass;
+        private Helper3<int> _inheritListInt;
+        private Helper1 _null;
+        private GrandChildClass _grandChildClass;
+        private List<Helper1> _listSimpleClasses;
+        private List<Helper2> _listComplexClasses;
+        private List<MyTmpInterface> _listInterfaces;
+        private List<HelperStruct1> _listSimpleStructs;
+        private List<HelperStruct2> _listComplexStructs;
+        private Dictionary<HelperStruct1, HelperStruct1> _dictOfStructs;
+        private Dictionary<Helper1, Helper1> _dictOfClasses;
+        private Dictionary<int, int> _dictOfInt;
+        private IReadOnlyList<MyTmpInterface> _listSimpleClassesAsInterfaces;
+        private List<object> _listSimpleClassesAsObjects;
         #endregion
 
         protected abstract T GetClone<T>(T source);
