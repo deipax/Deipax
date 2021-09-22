@@ -92,12 +92,12 @@ namespace Benchmarks.Convert
         public override IEnumerable<BenchmarkCase> GetSummaryOrder(ImmutableArray<BenchmarkCase> benchmarksCases, Summary summary)
         {
             var groups = benchmarksCases
-                .GroupBy(x => new { Method = x.Descriptor.WorkloadMethodDisplayInfo, Parameter = x.Parameters.DisplayInfo})
+                .GroupBy(x => new { Method = x.Descriptor.WorkloadMethodDisplayInfo, Parameter = x.Parameters.DisplayInfo })
                 .OrderBy(x => x.Key.Method);
 
             foreach (var group in groups)
-            foreach (var benchmark in group.OrderBy(x => x.Job.Infrastructure.Toolchain.Name))
-                yield return benchmark;
+                foreach (var benchmark in group.OrderBy(x => x.Job.Infrastructure.Toolchain.Name))
+                    yield return benchmark;
         }
     }
 }

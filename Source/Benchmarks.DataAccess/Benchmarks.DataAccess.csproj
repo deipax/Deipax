@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BenchmarkDotNet.Artifacts\results\**" />
+    <EmbeddedResource Remove="BenchmarkDotNet.Artifacts\results\**" />
+    <None Remove="BenchmarkDotNet.Artifacts\results\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
     <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -20,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="BenchmarkDotNet.Artifacts\" />
+    <Folder Include="BenchmarkDotNet.Artifacts\Saved\" />
   </ItemGroup>
 
 </Project>

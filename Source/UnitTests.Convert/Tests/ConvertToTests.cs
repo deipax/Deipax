@@ -22,7 +22,7 @@ namespace UnitTests.Convert
         [Theory]
         [InlineData("true")]
         [InlineData("false")]
-        public override void From_String(string input) =>  AssertEqual(input, GetExpected, Convert);
+        public override void From_String(string input) => AssertEqual(input, GetExpected, Convert);
 
         [Theory]
         [InlineData("true")]

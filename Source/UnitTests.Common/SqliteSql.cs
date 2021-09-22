@@ -167,6 +167,86 @@ namespace UnitTests.Common
         public string SupplierHomePage { get; set; }
     }
 
+    public class MultipleFieldClassConvert
+    {
+        public string OrderDetailId { get; set; }
+        public decimal OrderDetailOrderId { get; set; }
+        public decimal OrderDetailProductId { get; set; }
+        public decimal OrderDetailUnitPrice { get; set; }
+        public decimal OrderDetailQuantity { get; set; }
+        public decimal OrderDetailDiscount { get; set; }
+
+        public decimal OrderId { get; set; }
+        public string OrderCustomerId { get; set; }
+        public decimal OrderEmployeeId { get; set; }
+        public DateTime OrderOrderDate { get; set; }
+        public DateTime OrderRequiredDate { get; set; }
+        public DateTime OrderShippedDate { get; set; }
+        public decimal OrderShipVia { get; set; }
+        public decimal OrderFreight { get; set; }
+        public string OrderShipName { get; set; }
+        public string OrderShipAddress { get; set; }
+        public string OrderShipCity { get; set; }
+        public string OrderShipRegion { get; set; }
+        public string OrderShipPostalCode { get; set; }
+        public string OrderShipCountry { get; set; }
+
+        public string CustomerId { get; set; }
+        public string CustomerCompanyName { get; set; }
+        public string CustomerContactName { get; set; }
+        public string CustomerContactTitle { get; set; }
+        public string CustomerAddress { get; set; }
+        public string CustomerCity { get; set; }
+        public string CustomerRegion { get; set; }
+        public string CustomerPostalCode { get; set; }
+        public string CustomerPhone { get; set; }
+        public string CustomerCountry { get; set; }
+        public string CustomerFax { get; set; }
+
+        public decimal EmployeeId { get; set; }
+        public string EmployeeLastName { get; set; }
+        public string EmployeeFirstName { get; set; }
+        public string EmployeeTitle { get; set; }
+        public string EmployeeTitleOfCourtesy { get; set; }
+        public DateTime EmployeeBirthDate { get; set; }
+        public DateTime EmployeeHireDate { get; set; }
+        public string EmployeeAddress { get; set; }
+        public string EmployeeCity { get; set; }
+        public string EmployeeRegion { get; set; }
+        public string EmployeePostalCode { get; set; }
+        public string EmployeeCountry { get; set; }
+        public string EmployeeHomePhone { get; set; }
+        public string EmployeeExtension { get; set; }
+        public byte[] EmployeePhoto { get; set; }
+        public string EmployeeNotes { get; set; }
+        public decimal EmployeeReportsTo { get; set; }
+        public string EmployeePhotoPath { get; set; }
+
+        public decimal ProductId { get; set; }
+        public string ProductProductName { get; set; }
+        public decimal ProductSupplierId { get; set; }
+        public decimal ProductCategoryId { get; set; }
+        public string ProductQuantityPerUnit { get; set; }
+        public decimal ProductUnitPrice { get; set; }
+        public decimal UnitsInStock { get; set; }
+        public decimal ProductUnitsOnOrder { get; set; }
+        public decimal ProductReorderLevel { get; set; }
+        public decimal ProductDiscontinued { get; set; }
+
+        public decimal SupplierId { get; set; }
+        public string SupplierCompanyName { get; set; }
+        public string SupplierContactName { get; set; }
+        public string SupplierContactTitle { get; set; }
+        public string SupplierAddress { get; set; }
+        public string SupplierCity { get; set; }
+        public string SupplierRegion { get; set; }
+        public string SupplierPostalCode { get; set; }
+        public string SupplierCountry { get; set; }
+        public string SupplierPhone { get; set; }
+        public string SupplierFax { get; set; }
+        public string SupplierHomePage { get; set; }
+    }
+
     public struct MultipleFieldStruct
     {
         public string OrderDetailId { get; set; }
@@ -234,6 +314,86 @@ namespace UnitTests.Common
         public int ProductDiscontinued { get; set; }
 
         public int SupplierId { get; set; }
+        public string SupplierCompanyName { get; set; }
+        public string SupplierContactName { get; set; }
+        public string SupplierContactTitle { get; set; }
+        public string SupplierAddress { get; set; }
+        public string SupplierCity { get; set; }
+        public string SupplierRegion { get; set; }
+        public string SupplierPostalCode { get; set; }
+        public string SupplierCountry { get; set; }
+        public string SupplierPhone { get; set; }
+        public string SupplierFax { get; set; }
+        public string SupplierHomePage { get; set; }
+    }
+
+    public struct MultipleFieldStructConvert
+    {
+        public string OrderDetailId { get; set; }
+        public decimal OrderDetailOrderId { get; set; }
+        public decimal OrderDetailProductId { get; set; }
+        public decimal OrderDetailUnitPrice { get; set; }
+        public decimal OrderDetailQuantity { get; set; }
+        public decimal OrderDetailDiscount { get; set; }
+
+        public decimal OrderId { get; set; }
+        public string OrderCustomerId { get; set; }
+        public decimal OrderEmployeeId { get; set; }
+        public DateTime OrderOrderDate { get; set; }
+        public DateTime OrderRequiredDate { get; set; }
+        public DateTime OrderShippedDate { get; set; }
+        public decimal OrderShipVia { get; set; }
+        public decimal OrderFreight { get; set; }
+        public string OrderShipName { get; set; }
+        public string OrderShipAddress { get; set; }
+        public string OrderShipCity { get; set; }
+        public string OrderShipRegion { get; set; }
+        public string OrderShipPostalCode { get; set; }
+        public string OrderShipCountry { get; set; }
+
+        public string CustomerId { get; set; }
+        public string CustomerCompanyName { get; set; }
+        public string CustomerContactName { get; set; }
+        public string CustomerContactTitle { get; set; }
+        public string CustomerAddress { get; set; }
+        public string CustomerCity { get; set; }
+        public string CustomerRegion { get; set; }
+        public string CustomerPostalCode { get; set; }
+        public string CustomerPhone { get; set; }
+        public string CustomerCountry { get; set; }
+        public string CustomerFax { get; set; }
+
+        public decimal EmployeeId { get; set; }
+        public string EmployeeLastName { get; set; }
+        public string EmployeeFirstName { get; set; }
+        public string EmployeeTitle { get; set; }
+        public string EmployeeTitleOfCourtesy { get; set; }
+        public DateTime EmployeeBirthDate { get; set; }
+        public DateTime EmployeeHireDate { get; set; }
+        public string EmployeeAddress { get; set; }
+        public string EmployeeCity { get; set; }
+        public string EmployeeRegion { get; set; }
+        public string EmployeePostalCode { get; set; }
+        public string EmployeeCountry { get; set; }
+        public string EmployeeHomePhone { get; set; }
+        public string EmployeeExtension { get; set; }
+        public byte[] EmployeePhoto { get; set; }
+        public string EmployeeNotes { get; set; }
+        public decimal EmployeeReportsTo { get; set; }
+        public string EmployeePhotoPath { get; set; }
+
+        public decimal ProductId { get; set; }
+        public string ProductProductName { get; set; }
+        public decimal ProductSupplierId { get; set; }
+        public decimal ProductCategoryId { get; set; }
+        public string ProductQuantityPerUnit { get; set; }
+        public decimal ProductUnitPrice { get; set; }
+        public decimal UnitsInStock { get; set; }
+        public decimal ProductUnitsOnOrder { get; set; }
+        public decimal ProductReorderLevel { get; set; }
+        public decimal ProductDiscontinued { get; set; }
+
+        public decimal SupplierId { get; set; }
         public string SupplierCompanyName { get; set; }
         public string SupplierContactName { get; set; }
         public string SupplierContactTitle { get; set; }

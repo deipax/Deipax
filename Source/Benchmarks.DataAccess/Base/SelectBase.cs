@@ -6,10 +6,32 @@ using UnitTests.Common;
 
 namespace Benchmarks.DataAccess.Base
 {
-    public abstract class SelectBase
+    public abstract class DynamicSelect : SelectBase<dynamic>
+    {
+    }
+
+    public abstract class MultipleFieldStructSelect : SelectBase<MultipleFieldStruct>
+    {
+    }
+
+    public abstract class MultipleFieldStructConvertSelect : SelectBase<MultipleFieldStructConvert>
+    {
+    }
+
+    public abstract class MultipleFieldClassSelect : SelectBase<MultipleFieldClass>
+    {
+    }
+
+    public abstract class MultipleFieldClassConvertSelect : SelectBase<MultipleFieldClassConvert>
+    {
+    }
+
+    public abstract class SelectBase<T>
     {
         #region Field Members
         protected IDbConnection _dbConnection;
+        protected string _selectAll = SqliteSql.Sql;
+        protected string _selectOne = SqliteSql.SqlLimitOne;
         #endregion
 
         [GlobalSetup]
@@ -24,24 +46,16 @@ namespace Benchmarks.DataAccess.Base
             _dbConnection.Dispose();
         }
 
-        public abstract IList<MultipleFieldClass> AllFieldsAsClass();
+        public abstract IList<T> List();
 
-        public abstract IList<MultipleFieldClass> AllFieldsAsClass_Async();
+        public abstract IList<T> List_Async();
 
-        public abstract IList<MultipleFieldStruct> AllFieldsAsStruct();
+        public abstract T First();
 
-        public abstract IList<MultipleFieldStruct> AllFieldsAsStruct_Async();
+        public abstract T FirstOrDefault();
 
-        public abstract IList<dynamic> DynamicList();
+        public abstract T Single();
 
-        public abstract IList<dynamic> DynamicList_Async();
-
-        public abstract dynamic QueryFirst();
-
-        public abstract dynamic QueryFirstOrDefault();
-
-        public abstract dynamic QuerySingle();
-
-        public abstract dynamic QuerySingleOrDefault();
+        public abstract T SingleOrDefault();
     }
 }

@@ -40,8 +40,17 @@ namespace Benchmarks.DataAccess
                     BaselineRatioColumn.RatioMean,
                 });
 
-            BenchmarkRunner.Run<DeipaxSelect>(config);
-            BenchmarkRunner.Run<DapperSelect>(config);
+            BenchmarkRunner.Run<DeipaxDynamicSelect>(config);
+            BenchmarkRunner.Run<DeipaxMultipleFieldClassSelect>(config);
+            BenchmarkRunner.Run<DeipaxMultipleFieldClassConvertSelect>(config);
+            BenchmarkRunner.Run<DeipaxMultipleFieldStructSelect>(config);
+            BenchmarkRunner.Run<DeipaxMultipleFieldStructConvertSelect>(config);
+
+            BenchmarkRunner.Run<DapperDynamicSelect>(config);
+            BenchmarkRunner.Run<DapperMultipleFieldClassSelect>(config);
+            BenchmarkRunner.Run<DapperMultipleFieldClassConvertSelect>(config);
+            BenchmarkRunner.Run<DapperMultipleFieldStructSelect>(config);
+            BenchmarkRunner.Run<DapperMultipleFieldStructConvertSelect>(config);
         }
     }
 }
