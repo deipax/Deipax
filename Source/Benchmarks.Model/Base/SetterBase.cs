@@ -19,83 +19,7 @@ namespace Benchmarks.Model.Base
             _testValue = testValue;
         }
 
-        [GlobalSetup]
-        public void Setup()
-        {
-            _instance = new T();
-
-            var setter = ModelAccess<T>.GetSetter(_memberExpression);
-
-            _setBool = setter.GetDelegate<bool>();
-            _setBoolNullable = setter.GetDelegate<bool?>();
-            _setChar = setter.GetDelegate<char>();
-            _setCharNullable = setter.GetDelegate<char?>();
-            _setSByte = setter.GetDelegate<sbyte>();
-            _setSByteNullable = setter.GetDelegate<sbyte?>();
-            _setByte = setter.GetDelegate<byte>();
-            _setByteNullable = setter.GetDelegate<byte?>();
-            _setShort = setter.GetDelegate<short>();
-            _setShortNullable = setter.GetDelegate<short?>();
-            _setUShort = setter.GetDelegate<ushort>();
-            _setUShortNullable = setter.GetDelegate<ushort?>();
-            _setInt = setter.GetDelegate<int>();
-            _setIntNullable = setter.GetDelegate<int?>();
-            _setUInt = setter.GetDelegate<uint>();
-            _setUIntNullable = setter.GetDelegate<uint?>();
-            _setLong = setter.GetDelegate<long>();
-            _setLongNullable = setter.GetDelegate<long?>();
-            _setULong = setter.GetDelegate<ulong>();
-            _setULongNullable = setter.GetDelegate<ulong?>();
-            _setFloat = setter.GetDelegate<float>();
-            _setFloatNullable = setter.GetDelegate<float?>();
-            _setDouble = setter.GetDelegate<double>();
-            _setDoubleNullable = setter.GetDelegate<double?>();
-            _setDecimal = setter.GetDelegate<decimal>();
-            _setDecimalNullable = setter.GetDelegate<decimal?>();
-            _setDateTime = setter.GetDelegate<DateTime>();
-            _setDateTimeNullable = setter.GetDelegate<DateTime?>();
-            _setObject = setter.GetDelegate<object>();
-            _setString = setter.GetDelegate<string>();
-            _setEnum = setter.GetDelegate<TestEnum>();
-            _setEnumNullable = setter.GetDelegate<TestEnum?>();
-
-            _testValueBool = ConvertSafe<bool, P>(_testValue);
-            _testValueBoolNullable = ConvertSafe<bool?, P>(_testValue);
-            _testValueChar = ConvertSafe<char, P>(_testValue);
-            _testValueCharNullable = ConvertSafe<char?, P>(_testValue);
-            _testValueSByte = ConvertSafe<sbyte, P>(_testValue);
-            _testValueSByteNullable = ConvertSafe<sbyte?, P>(_testValue);
-            _testValueByte = ConvertSafe<byte, P>(_testValue);
-            _testValueByteNullable = ConvertSafe<byte?, P>(_testValue);
-            _testValueShort = ConvertSafe<short, P>(_testValue);
-            _testValueShortNullable = ConvertSafe<short?, P>(_testValue);
-            _testValueUShort = ConvertSafe<ushort, P>(_testValue);
-            _testValueUShortNullable = ConvertSafe<ushort?, P>(_testValue);
-            _testValueInt = ConvertSafe<int, P>(_testValue);
-            _testValueIntNullable = ConvertSafe<int?, P>(_testValue);
-            _testValueUInt = ConvertSafe<uint, P>(_testValue);
-            _testValueUIntNullable = ConvertSafe<uint?, P>(_testValue);
-            _testValueLong = ConvertSafe<long, P>(_testValue);
-            _testValueLongNullable = ConvertSafe<long?, P>(_testValue);
-            _testValueULong = ConvertSafe<ulong, P>(_testValue);
-            _testValueULongNullable = ConvertSafe<ulong?, P>(_testValue);
-            _testValueFloat = ConvertSafe<float, P>(_testValue);
-            _testValueFloatNullable = ConvertSafe<float?, P>(_testValue);
-            _testValueDouble = ConvertSafe<double, P>(_testValue);
-            _testValueDoubleNullable = ConvertSafe<double?, P>(_testValue);
-            _testValueDecimal = ConvertSafe<decimal, P>(_testValue);
-            _testValueDecimalNullable = ConvertSafe<decimal?, P>(_testValue);
-            _testValueDateTime = ConvertSafe<DateTime, P>(_testValue);
-            _testValueDateTimeNullable = ConvertSafe<DateTime?, P>(_testValue);
-            _testValueObject = ConvertSafe<object, P>(_testValue);
-            _testValueString = ConvertSafe<string, P>(_testValue);
-            _testValueEnum = ConvertSafe<TestEnum, P>(_testValue);
-            _testValueEnumNullable = ConvertSafe<TestEnum?, P>(_testValue);
-
-            _provider = CultureInfo.InvariantCulture;
-        }
-
-        #region Field Member
+        #region Field Members
         private Expression<Func<T, P>> _memberExpression;
         private P _testValue;
         private T _instance;
@@ -169,7 +93,83 @@ namespace Benchmarks.Model.Base
         private IFormatProvider _provider;
         #endregion
 
-        #region Public Member
+        #region Public Members
+        [GlobalSetup]
+        public void Setup()
+        {
+            _instance = new T();
+
+            var setter = ModelAccess<T>.GetSetter(_memberExpression);
+
+            _setBool = setter.GetDelegate<bool>();
+            _setBoolNullable = setter.GetDelegate<bool?>();
+            _setChar = setter.GetDelegate<char>();
+            _setCharNullable = setter.GetDelegate<char?>();
+            _setSByte = setter.GetDelegate<sbyte>();
+            _setSByteNullable = setter.GetDelegate<sbyte?>();
+            _setByte = setter.GetDelegate<byte>();
+            _setByteNullable = setter.GetDelegate<byte?>();
+            _setShort = setter.GetDelegate<short>();
+            _setShortNullable = setter.GetDelegate<short?>();
+            _setUShort = setter.GetDelegate<ushort>();
+            _setUShortNullable = setter.GetDelegate<ushort?>();
+            _setInt = setter.GetDelegate<int>();
+            _setIntNullable = setter.GetDelegate<int?>();
+            _setUInt = setter.GetDelegate<uint>();
+            _setUIntNullable = setter.GetDelegate<uint?>();
+            _setLong = setter.GetDelegate<long>();
+            _setLongNullable = setter.GetDelegate<long?>();
+            _setULong = setter.GetDelegate<ulong>();
+            _setULongNullable = setter.GetDelegate<ulong?>();
+            _setFloat = setter.GetDelegate<float>();
+            _setFloatNullable = setter.GetDelegate<float?>();
+            _setDouble = setter.GetDelegate<double>();
+            _setDoubleNullable = setter.GetDelegate<double?>();
+            _setDecimal = setter.GetDelegate<decimal>();
+            _setDecimalNullable = setter.GetDelegate<decimal?>();
+            _setDateTime = setter.GetDelegate<DateTime>();
+            _setDateTimeNullable = setter.GetDelegate<DateTime?>();
+            _setObject = setter.GetDelegate<object>();
+            _setString = setter.GetDelegate<string>();
+            _setEnum = setter.GetDelegate<TestEnum>();
+            _setEnumNullable = setter.GetDelegate<TestEnum?>();
+
+            _testValueBool = ConvertSafe<P, bool>(_testValue);
+            _testValueBoolNullable = ConvertSafe<P, bool?>(_testValue);
+            _testValueChar = ConvertSafe<P, char>(_testValue);
+            _testValueCharNullable = ConvertSafe<P, char?>(_testValue);
+            _testValueSByte = ConvertSafe<P, sbyte>(_testValue);
+            _testValueSByteNullable = ConvertSafe<P, sbyte?>(_testValue);
+            _testValueByte = ConvertSafe<P, byte>(_testValue);
+            _testValueByteNullable = ConvertSafe<P, byte?>(_testValue);
+            _testValueShort = ConvertSafe<P, short>(_testValue);
+            _testValueShortNullable = ConvertSafe<P, short?>(_testValue);
+            _testValueUShort = ConvertSafe<P, ushort>(_testValue);
+            _testValueUShortNullable = ConvertSafe<P, ushort?>(_testValue);
+            _testValueInt = ConvertSafe<P, int>(_testValue);
+            _testValueIntNullable = ConvertSafe<P, int?>(_testValue);
+            _testValueUInt = ConvertSafe<P, uint>(_testValue);
+            _testValueUIntNullable = ConvertSafe<P, uint?>(_testValue);
+            _testValueLong = ConvertSafe<P, long>(_testValue);
+            _testValueLongNullable = ConvertSafe<P, long?>(_testValue);
+            _testValueULong = ConvertSafe<P, ulong>(_testValue);
+            _testValueULongNullable = ConvertSafe<P, ulong?>(_testValue);
+            _testValueFloat = ConvertSafe<P, float>(_testValue);
+            _testValueFloatNullable = ConvertSafe<P, float?>(_testValue);
+            _testValueDouble = ConvertSafe<P, double>(_testValue);
+            _testValueDoubleNullable = ConvertSafe<P, double?>(_testValue);
+            _testValueDecimal = ConvertSafe<P, decimal>(_testValue);
+            _testValueDecimalNullable = ConvertSafe<P, decimal?>(_testValue);
+            _testValueDateTime = ConvertSafe<P, DateTime>(_testValue);
+            _testValueDateTimeNullable = ConvertSafe<P, DateTime?>(_testValue);
+            _testValueObject = ConvertSafe<P, object>(_testValue);
+            _testValueString = ConvertSafe<P, string>(_testValue);
+            _testValueEnum = ConvertSafe<P, TestEnum>(_testValue);
+            _testValueEnumNullable = ConvertSafe<P, TestEnum?>(_testValue);
+
+            _provider = CultureInfo.InvariantCulture;
+        }
+
         [Benchmark]
         public void FromBool() => _setBool(ref _instance, _testValueBool, _provider);
 
@@ -268,11 +268,11 @@ namespace Benchmarks.Model.Base
         #endregion
 
         #region Private Members
-        private static TTo ConvertSafe<TTo, TFrom>(TFrom value)
+        private static TTo ConvertSafe<TFrom, TTo>(TFrom value)
         {
             try
             {
-                return ConvertTo<TTo, TFrom>.From(value);
+                return ConvertTo<TFrom, TTo>.From(value);
             }
             catch
             {

@@ -238,7 +238,7 @@ namespace UnitTests.Model.BaseClasses
 
             try
             {
-                expectedX = ConvertTo<X, P>.From(_testValue, _provider);
+                expectedX = ConvertTo<P, X>.From(_testValue, _provider);
                 setAsX(ref _instance, expectedX);
                 actualX = getAsX(ref _instance, _provider);
             }

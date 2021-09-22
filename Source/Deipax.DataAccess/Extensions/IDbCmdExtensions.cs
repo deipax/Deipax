@@ -164,7 +164,7 @@ namespace Deipax.DataAccess.Extensions
             this IDbCmd source)
         {
             var obj = source.ExecuteScalar();
-            return ConvertTo<T, object>.From(obj);
+            return ConvertTo<object, T>.From(obj);
         }
 
         public static void Execute(
@@ -259,7 +259,7 @@ namespace Deipax.DataAccess.Extensions
             this IDbCmd source)
         {
             var obj = await source.ExecuteScalarAsync().ConfigureAwait(false);
-            return ConvertTo<T, object>.From(obj);
+            return ConvertTo<object, T>.From(obj);
         }
 
         public static async void ExecuteAsync(

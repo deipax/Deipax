@@ -11,7 +11,7 @@ namespace Benchmarks.Convert.Deipax
     {
         protected override TTo Convert<TFrom>(TFrom from)
         {
-            return ConvertTo<TTo, TFrom>.From(from, CultureInfo.InvariantCulture);
+            return ConvertTo<TFrom, TTo>.From(from, CultureInfo.InvariantCulture);
         }
     }
 

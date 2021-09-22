@@ -100,7 +100,7 @@ namespace Deipax.Model.Concretes
             else if (xType != ModelInfo.Type)
             {
                 var invoke = Expression.Invoke(
-                    ConvertTo<TValue, P>.Result.Expression,
+                    ConvertTo<P, TValue>.Result.Expression,
                     memberExpression,
                     provider);
 

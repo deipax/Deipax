@@ -35,14 +35,14 @@ namespace Deipax.Convert.Common
                     return _cast(returnValue);
                 }
 
-                value = ConvertTo<TUnderlyingType?, string>.From(key, provider);
+                value = ConvertTo<string, TUnderlyingType?>.From(key, provider);
 
                 return value.HasValue
                     ? _cast(value.Value)
                     : _default;
             }
 
-            value = ConvertTo<TUnderlyingType?, object>.From(from, provider);
+            value = ConvertTo<object, TUnderlyingType?>.From(from, provider);
 
             return value.HasValue
                 ? _cast(value.Value)
@@ -59,7 +59,7 @@ namespace Deipax.Convert.Common
                 return _cast(returnValue);
             }
 
-            TUnderlyingType? value = ConvertTo<TUnderlyingType?, string>.From(from, provider);
+            TUnderlyingType? value = ConvertTo<string, TUnderlyingType?>.From(from, provider);
 
             return value.HasValue
                 ? _cast(value.Value)
@@ -70,7 +70,7 @@ namespace Deipax.Convert.Common
             TFrom from,
             IFormatProvider provider = null)
         {
-            TUnderlyingType? value = ConvertTo<TUnderlyingType?, TFrom>.From(from, provider);
+            TUnderlyingType? value = ConvertTo<TFrom, TUnderlyingType?>.From(from, provider);
 
             return value.HasValue
                 ? _cast(value.Value)
@@ -82,7 +82,7 @@ namespace Deipax.Convert.Common
             IFormatProvider provider = null)
         {
             string returnValue = default;
-            TUnderlyingType? value = ConvertTo<TUnderlyingType?, TEnum>.From(from, provider);
+            TUnderlyingType? value = ConvertTo<TEnum, TUnderlyingType?>.From(from, provider);
 
             if (value.HasValue)
             {

@@ -53,7 +53,7 @@ namespace Deipax.Convert.Common
             var returnLabel = Expression.Label(labelTarget, defaultValue);
 
             var fieldInfo = typeof(ConvertTo<,>)
-                .MakeGenericType(_type, runtimeType)
+                .MakeGenericType(runtimeType, _type)
                 .GetRuntimeFields()
                 .Where(x => x.Name == "From")
                 .FirstOrDefault();
