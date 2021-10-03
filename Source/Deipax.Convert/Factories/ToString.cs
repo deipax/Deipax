@@ -1,4 +1,5 @@
 ﻿using Deipax.Convert.Common;
+using Deipax.Convert.Concretes;
 using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
@@ -12,30 +13,31 @@ namespace Deipax.Convert.Factories
     public class ToString : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
-            if (args.ToType == typeof(string))
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
+            if (expBuilder.ToType == typeof(string))
             {
-                Expression guardedInput = args.FromType.IsNullable()
-                    ? Expression.Property(args.Input, "Value")
-                    : (Expression)args.Input;
+                Expression guardedInput = expBuilder.FromType.IsNullable()
+                    ? Expression.Property(expBuilder.Input, "Value")
+                    : (Expression)expBuilder.Input;
 
-                var result = GetConvert(args, guardedInput);
+                var result = GetConvert(expBuilder, guardedInput);
 
                 if (result == null)
                 {
-                    result = GetEnum(args, guardedInput);
+                    result = GetEnum(expBuilder, guardedInput);
                 }
 
                 if (result == null)
                 {
-                    result = GetIConvertible(args);
+                    result = GetIConvertible<TFrom, TTo>();
                 }
 
                 if (result == null)
                 {
-                    result = GetToString(args, guardedInput);
+                    result = GetToString(expBuilder, guardedInput);
                 }
 
                 return result;
@@ -47,7 +49,7 @@ namespace Deipax.Convert.Factories
 
         #region Private Members
         private IConvertResult<TFrom, TTo> GetConvert<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args,
+            IExpBuilder<TFrom, TTo> expBuilder,
             Expression guardedInput)
         {
             var method = typeof(System.Convert)
@@ -55,7 +57,7 @@ namespace Deipax.Convert.Factories
                 .Where(x =>
                     x.ReturnType == typeof(string) &&
                     x.GetParameters().Length == 2 &&
-                    x.GetParameters()[0].ParameterType == args.UnderlyingFromType &&
+                    x.GetParameters()[0].ParameterType == expBuilder.UnderlyingFromType &&
                     x.GetParameters()[1].ParameterType == typeof(IFormatProvider))
                 .FirstOrDefault();
 
@@ -64,37 +66,36 @@ namespace Deipax.Convert.Factories
                 MethodCallExpression callExpression = Expression.Call(
                     method,
                     guardedInput,
-                    args.GetDefaultProvider());
+                    expBuilder.GetDefaultProvider());
 
                 GotoExpression returnExpression = Expression.Return(
-                    args.LabelTarget,
+                    expBuilder.LabelTarget,
                     callExpression);
 
-                return args
+                return expBuilder
                     .AddGuards()
                     .Add(returnExpression)
-                    .Add(args.LabelExpression)
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
 
             return null;
         }
 
-        private static IConvertResult<TFrom, TTo> GetIConvertible<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        private static IConvertResult<TFrom, TTo> GetIConvertible<TFrom, TTo>()
         {
             return ConvertConfig
                 .DefaultFactories
                 .OfType<FromIConvertible>()
                 .First()
-                .Create(args);
+                .Create<TFrom, TTo>();
         }
 
         private IConvertResult<TFrom, TTo> GetToString<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args,
+            IExpBuilder<TFrom, TTo> expBuilder,
             Expression guardedInput)
         {
-            var method = args.UnderlyingFromType
+            var method = expBuilder.UnderlyingFromType
                 .GetRuntimeMethods()
                 .Where(x => x.Name == "ToString")
                 .FirstOrDefault();
@@ -106,13 +107,13 @@ namespace Deipax.Convert.Factories
                     method);
 
                 GotoExpression returnExpression = Expression.Return(
-                    args.LabelTarget,
+                    expBuilder.LabelTarget,
                     callExpression);
 
-                return args
+                return expBuilder
                     .AddGuards()
                     .Add(returnExpression)
-                    .Add(args.LabelExpression)
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
 
@@ -120,24 +121,24 @@ namespace Deipax.Convert.Factories
         }
 
         private IConvertResult<TFrom, TTo> GetEnum<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args,
+            IExpBuilder<TFrom, TTo> expBuilder,
             Expression guardedInput)
         {
-            if (args.UnderlyingFromType.IsEnum)
+            if (expBuilder.UnderlyingFromType.IsEnum)
             {
                 var callExpression = Expression.Call(
                   typeof(EnumHelper<,>).MakeGenericType(
-                      args.UnderlyingFromType,
-                      Enum.GetUnderlyingType(args.UnderlyingFromType)),
+                      expBuilder.UnderlyingFromType,
+                      Enum.GetUnderlyingType(expBuilder.UnderlyingFromType)),
                   "ConvertToString",
                   Array.Empty<Type>(),
                   guardedInput,
-                  args.GetDefaultProvider());
+                  expBuilder.GetDefaultProvider());
 
-                return args
+                return expBuilder
                     .AddGuards()
-                    .Add(Expression.Return(args.LabelTarget, callExpression))
-                    .Add(args.LabelExpression)
+                    .Add(Expression.Return(expBuilder.LabelTarget, callExpression))
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
 

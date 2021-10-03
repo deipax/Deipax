@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Extensions;
+﻿using Deipax.Convert.Concretes;
+using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System;
@@ -153,47 +154,48 @@ namespace Deipax.Convert.Factories
         #endregion
 
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
-            if (args.UnderlyingToType == typeof(T) &&
-                args.UnderlyingFromType != typeof(string) &&
-                args.UnderlyingFromType != typeof(object))
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
+            if (expBuilder.UnderlyingToType == typeof(T) &&
+                expBuilder.UnderlyingFromType != typeof(string) &&
+                expBuilder.UnderlyingFromType != typeof(object))
             {
                 var methodInfo = typeof(System.Convert)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.ReturnType == args.UnderlyingToType &&
+                        x.ReturnType == expBuilder.UnderlyingToType &&
                         x.GetParameters().Length == 1 &&
-                        x.GetParameters()[0].ParameterType == args.UnderlyingFromType)
+                        x.GetParameters()[0].ParameterType == expBuilder.UnderlyingFromType)
                     .FirstOrDefault();
 
                 if (methodInfo != null)
                 {
-                    if (_invalidCastTypes.Exists(x => x == args.UnderlyingFromType))
+                    if (_invalidCastTypes.Exists(x => x == expBuilder.UnderlyingFromType))
                     {
-                        return args
-                            .Add(args.LabelExpression)
+                        return expBuilder
+                            .Add(expBuilder.LabelExpression)
                             .ToResult(this);
                     }
                     else
                     {
-                        Expression guardedInput = args.FromType.IsNullable()
-                            ? Expression.Property(args.Input, "Value")
-                            : (Expression)args.Input;
+                        Expression guardedInput = expBuilder.FromType.IsNullable()
+                            ? Expression.Property(expBuilder.Input, "Value")
+                            : (Expression)expBuilder.Input;
 
                         MethodCallExpression callExpression = Expression.Call(
                             methodInfo,
                             guardedInput);
 
-                        GotoExpression returnExpression = args.ToType.IsNullable()
-                            ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
-                            : Expression.Return(args.LabelTarget, callExpression);
+                        GotoExpression returnExpression = expBuilder.ToType.IsNullable()
+                            ? Expression.Return(expBuilder.LabelTarget, Expression.Convert(callExpression, expBuilder.ToType))
+                            : Expression.Return(expBuilder.LabelTarget, callExpression);
 
-                        return args
+                        return expBuilder
                             .AddGuards()
                             .Add(returnExpression)
-                            .Add(args.LabelExpression)
+                            .Add(expBuilder.LabelExpression)
                             .ToResult(this);
                     }
                 }

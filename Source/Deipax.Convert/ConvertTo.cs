@@ -11,10 +11,10 @@ namespace Deipax.Convert
     public static class ConvertTo<TTo>
     {
         public static TTo From<TFrom>(
-            TFrom instance,
+            TFrom source,
             IFormatProvider provider = null)
         {
-            return ConvertTo<TFrom, TTo>.From(instance, provider);
+            return ConvertTo<TFrom, TTo>.From(source, provider);
         }
     }
 }

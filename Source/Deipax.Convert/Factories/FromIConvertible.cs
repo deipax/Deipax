@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Extensions;
+﻿using Deipax.Convert.Concretes;
+using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System;
@@ -11,16 +12,17 @@ namespace Deipax.Convert.Factories
     public class FromIConvertible : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
-            if (typeof(IConvertible).IsAssignableFrom(args.UnderlyingFromType) &&
-                args.UnderlyingFromType != typeof(object))
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
+            if (typeof(IConvertible).IsAssignableFrom(expBuilder.UnderlyingFromType) &&
+                expBuilder.UnderlyingFromType != typeof(object))
             {
                 var methodInfo = typeof(IConvertible)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.ReturnType == args.UnderlyingToType &&
+                        x.ReturnType == expBuilder.UnderlyingToType &&
                         x.GetParameters().Length == 1 &&
                         x.GetParameters()[0].ParameterType == typeof(IFormatProvider))
                     .FirstOrDefault();
@@ -29,9 +31,9 @@ namespace Deipax.Convert.Factories
                 {
                     ParameterExpression converter = Expression.Variable(typeof(IConvertible), "converter");
 
-                    Expression guardedInput = args.FromType.IsNullable()
-                        ? Expression.Property(args.Input, "Value")
-                        : (Expression)args.Input;
+                    Expression guardedInput = expBuilder.FromType.IsNullable()
+                        ? Expression.Property(expBuilder.Input, "Value")
+                        : (Expression)expBuilder.Input;
 
                     var assignConverter = Expression.Assign(
                         converter,
@@ -39,24 +41,24 @@ namespace Deipax.Convert.Factories
 
                     var ifConverterNullReturn = Expression.IfThen(
                         Expression.Equal(converter, Expression.Constant(null, typeof(object))),
-                        Expression.Return(args.LabelTarget, args.DefaultExpression));
+                        Expression.Return(expBuilder.LabelTarget, expBuilder.DefaultExpression));
 
                     var callExpression = Expression.Call(
                         converter,
                         methodInfo,
-                        args.GetDefaultProvider());
+                        expBuilder.GetDefaultProvider());
 
-                    GotoExpression returnExpression = args.ToType.IsNullable()
-                        ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
-                        : Expression.Return(args.LabelTarget, callExpression);
+                    GotoExpression returnExpression = expBuilder.ToType.IsNullable()
+                        ? Expression.Return(expBuilder.LabelTarget, Expression.Convert(callExpression, expBuilder.ToType))
+                        : Expression.Return(expBuilder.LabelTarget, callExpression);
 
-                    return args
+                    return expBuilder
                         .AddVariable(converter)
                         .AddGuards()
                         .Add(assignConverter)
                         .Add(ifConverterNullReturn)
                         .Add(returnExpression)
-                        .Add(args.LabelExpression)
+                        .Add(expBuilder.LabelExpression)
                         .ToResult(this);
                 }
             }

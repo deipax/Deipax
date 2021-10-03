@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Extensions;
+﻿using Deipax.Convert.Concretes;
+using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System;
@@ -11,46 +12,47 @@ namespace Deipax.Convert.Factories
     public class FromEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
-            if (args.UnderlyingFromType.IsEnum &&
-                args.ToType != typeof(string) &&
-                args.ToType != typeof(object))
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
+            if (expBuilder.UnderlyingFromType.IsEnum &&
+                expBuilder.ToType != typeof(string) &&
+                expBuilder.ToType != typeof(object))
             {
                 var methodInfo = typeof(System.Convert)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.ReturnType == args.UnderlyingToType &&
+                        x.ReturnType == expBuilder.UnderlyingToType &&
                         x.GetParameters().Length == 1 &&
                         x.GetParameters()[0].ParameterType == typeof(int))
                     .FirstOrDefault();
 
                 if (methodInfo != null &&
-                    args.UnderlyingToType != typeof(DateTime))
+                    expBuilder.UnderlyingToType != typeof(DateTime))
                 {
-                    Expression guardedInput = args.FromType.IsNullable()
-                        ? Expression.Property(args.Input, "Value")
-                        : (Expression)args.Input;
+                    Expression guardedInput = expBuilder.FromType.IsNullable()
+                        ? Expression.Property(expBuilder.Input, "Value")
+                        : (Expression)expBuilder.Input;
 
                     var callExpression = Expression.Call(
                         methodInfo,
                         Expression.Convert(guardedInput, typeof(int)));
 
                     var returnExpression = Expression.Return(
-                        args.LabelTarget,
-                        Expression.Convert(callExpression, args.ToType));
+                        expBuilder.LabelTarget,
+                        Expression.Convert(callExpression, expBuilder.ToType));
 
-                    return args
+                    return expBuilder
                         .AddGuards()
                         .Add(returnExpression)
-                        .Add(args.LabelExpression)
+                        .Add(expBuilder.LabelExpression)
                         .ToResult(this);
                 }
-                else if (args.UnderlyingToType == typeof(DateTime))
+                else if (expBuilder.UnderlyingToType == typeof(DateTime))
                 {
-                    return args
-                        .Add(args.LabelExpression)
+                    return expBuilder
+                        .Add(expBuilder.LabelExpression)
                         .ToResult(this);
                 }
             }

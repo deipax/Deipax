@@ -1,7 +1,7 @@
 ﻿using Deipax.Convert.Interfaces;
 using System.Linq.Expressions;
 
-namespace Deipax.Convert.Common
+namespace Deipax.Convert.Concretes
 {
     public class ConvertResult<TFrom, TTo> : IConvertResult<TFrom, TTo>
     {

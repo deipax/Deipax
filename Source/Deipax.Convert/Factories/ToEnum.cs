@@ -1,4 +1,5 @@
 ﻿using Deipax.Convert.Common;
+using Deipax.Convert.Concretes;
 using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
@@ -10,59 +11,60 @@ namespace Deipax.Convert.Factories
     public class ToEnum : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
-            if (args.UnderlyingToType.IsEnum)
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
+            if (expBuilder.UnderlyingToType.IsEnum)
             {
                 MethodCallExpression callExpression;
 
-                if (args.FromType == typeof(string))
+                if (expBuilder.FromType == typeof(string))
                 {
                     callExpression = Expression.Call(
                         typeof(EnumHelper<,>).MakeGenericType(
-                            args.ToType,
-                            Enum.GetUnderlyingType(args.UnderlyingToType)),
+                            expBuilder.ToType,
+                            Enum.GetUnderlyingType(expBuilder.UnderlyingToType)),
                         "ConvertFromString",
                         Array.Empty<Type>(),
-                        args.Input,
-                        args.GetDefaultProvider());
+                        expBuilder.Input,
+                        expBuilder.GetDefaultProvider());
                 }
-                else if (args.FromType == typeof(object))
+                else if (expBuilder.FromType == typeof(object))
                 {
                     callExpression = Expression.Call(
                         typeof(EnumHelper<,>).MakeGenericType(
-                            args.ToType,
-                            Enum.GetUnderlyingType(args.UnderlyingToType)),
+                            expBuilder.ToType,
+                            Enum.GetUnderlyingType(expBuilder.UnderlyingToType)),
                         "ConvertFromObject",
                         Array.Empty<Type>(),
-                        args.Input,
-                        args.GetDefaultProvider());
+                        expBuilder.Input,
+                        expBuilder.GetDefaultProvider());
                 }
                 else
                 {
-                    Expression guardedInput = args.FromType.IsNullable()
-                        ? Expression.Property(args.Input, "Value")
-                        : (Expression)args.Input;
+                    Expression guardedInput = expBuilder.FromType.IsNullable()
+                        ? Expression.Property(expBuilder.Input, "Value")
+                        : (Expression)expBuilder.Input;
 
                     callExpression = Expression.Call(
                         typeof(EnumHelper<,>).MakeGenericType(
-                            args.ToType,
-                            Enum.GetUnderlyingType(args.UnderlyingToType)),
+                            expBuilder.ToType,
+                            Enum.GetUnderlyingType(expBuilder.UnderlyingToType)),
                         "Convert",
-                        new[] { args.UnderlyingFromType },
+                        new[] { expBuilder.UnderlyingFromType },
                         guardedInput,
-                        args.GetDefaultProvider());
+                        expBuilder.GetDefaultProvider());
                 }
 
-                GotoExpression returnExpression = args.ToType.IsNullable()
-                    ? Expression.Return(args.LabelTarget, Expression.Convert(callExpression, args.ToType))
-                    : Expression.Return(args.LabelTarget, callExpression);
+                GotoExpression returnExpression = expBuilder.ToType.IsNullable()
+                    ? Expression.Return(expBuilder.LabelTarget, Expression.Convert(callExpression, expBuilder.ToType))
+                    : Expression.Return(expBuilder.LabelTarget, callExpression);
 
-                return args
+                return expBuilder
                     .AddGuards()
                     .Add(returnExpression)
-                    .Add(args.LabelExpression)
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
 

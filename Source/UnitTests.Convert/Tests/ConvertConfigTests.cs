@@ -1,4 +1,5 @@
 ﻿using Deipax.Convert;
+using Deipax.Convert.Concretes;
 using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using System;
@@ -55,9 +56,10 @@ namespace UnitTests.Convert
                 return _count;
             }
 
-            public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-                IExpArgs<TFrom, TTo> args)
+            public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
             {
+                var args = new ExpBuilder<TFrom, TTo>();
+
                 if (args.ToType == typeof(TestClass_1))
                 {
                     _count++;

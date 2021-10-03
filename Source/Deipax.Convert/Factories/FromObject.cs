@@ -1,4 +1,5 @@
 ﻿using Deipax.Convert.Common;
+using Deipax.Convert.Concretes;
 using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using System;
@@ -11,19 +12,20 @@ namespace Deipax.Convert.Factories
     public class FromObject : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
             // This will only return a func IF TFrom is an object
             // or implements IConvertible and the TTo is supported by 
             // IConvertible.
-            if (args.FromType == typeof(object))
+            if (expBuilder.FromType == typeof(object))
             {
                 var methodInfo = typeof(ConvertObject<>)
-                    .MakeGenericType(args.ToType)
+                    .MakeGenericType(expBuilder.ToType)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.ReturnType == args.ToType &&
+                        x.ReturnType == expBuilder.ToType &&
                         x.GetParameters().Length == 2 &&
                         x.GetParameters()[0].ParameterType == typeof(object) &&
                         x.GetParameters()[1].ParameterType == typeof(IFormatProvider))
@@ -33,15 +35,15 @@ namespace Deipax.Convert.Factories
                 {
                     Expression callExpression = Expression.Call(
                         methodInfo,
-                        args.Input,
-                        args.GetDefaultProvider());
+                        expBuilder.Input,
+                        expBuilder.GetDefaultProvider());
 
-                    GotoExpression returnExpression = Expression.Return(args.LabelTarget, callExpression);
+                    GotoExpression returnExpression = Expression.Return(expBuilder.LabelTarget, callExpression);
 
-                    return args
+                    return expBuilder
                         .AddGuards()
                         .Add(returnExpression)
-                        .Add(args.LabelExpression)
+                        .Add(expBuilder.LabelExpression)
                         .ToResult(this);
                 }
             }

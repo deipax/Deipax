@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Extensions;
+﻿using Deipax.Convert.Concretes;
+using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System.Linq.Expressions;
@@ -8,96 +9,97 @@ namespace Deipax.Convert.Factories
     public class NoConvert : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
-            if (args.FromType == args.ToType)
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
+            if (expBuilder.FromType == expBuilder.ToType)
             {
                 GotoExpression returnExpression = Expression.Return(
-                    args.LabelTarget,
-                    args.Input);
+                    expBuilder.LabelTarget,
+                    expBuilder.Input);
 
-                return args
+                return expBuilder
                     .Add(returnExpression)
-                    .Add(args.LabelExpression)
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
-            else if (args.UnderlyingToType == args.UnderlyingFromType)
+            else if (expBuilder.UnderlyingToType == expBuilder.UnderlyingFromType)
             {
-                Expression guardedInput = args.FromType.IsNullable()
-                    ? Expression.Property(args.Input, "Value")
-                    : (Expression)args.Input;
+                Expression guardedInput = expBuilder.FromType.IsNullable()
+                    ? Expression.Property(expBuilder.Input, "Value")
+                    : (Expression)expBuilder.Input;
 
-                GotoExpression returnExpression = args.ToType.IsNullable()
-                    ? Expression.Return(args.LabelTarget, Expression.Convert(guardedInput, args.ToType))
-                    : Expression.Return(args.LabelTarget, guardedInput);
+                GotoExpression returnExpression = expBuilder.ToType.IsNullable()
+                    ? Expression.Return(expBuilder.LabelTarget, Expression.Convert(guardedInput, expBuilder.ToType))
+                    : Expression.Return(expBuilder.LabelTarget, guardedInput);
 
-                return args
+                return expBuilder
                     .AddGuards()
                     .Add(returnExpression)
-                    .Add(args.LabelExpression)
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
-            else if (args.ToType == typeof(object))
+            else if (expBuilder.ToType == typeof(object))
             {
-                if (args.FromType.IsNullable())
+                if (expBuilder.FromType.IsNullable())
                 {
-                    var hasValue = Expression.Property(args.Input, "HasValue");
-                    var value = Expression.Property(args.Input, "Value");
+                    var hasValue = Expression.Property(expBuilder.Input, "HasValue");
+                    var value = Expression.Property(expBuilder.Input, "Value");
 
                     GotoExpression returnValue = Expression.Return(
-                        args.LabelTarget,
-                        Expression.Convert(value, args.ToType));
+                        expBuilder.LabelTarget,
+                        Expression.Convert(value, expBuilder.ToType));
 
                     GotoExpression returnDefault = Expression.Return(
-                        args.LabelTarget,
-                        args.DefaultExpression);
+                        expBuilder.LabelTarget,
+                        expBuilder.DefaultExpression);
 
                     var ifThenElse = Expression.IfThenElse(
                         hasValue,
                         returnValue,
                         returnDefault);
 
-                    return args
+                    return expBuilder
                         .Add(ifThenElse)
-                        .Add(args.LabelExpression)
+                        .Add(expBuilder.LabelExpression)
                         .ToResult(this);
                 }
                 else
                 {
                     GotoExpression returnExpression = Expression.Return(
-                        args.LabelTarget,
-                        Expression.Convert(args.Input, typeof(object)));
+                        expBuilder.LabelTarget,
+                        Expression.Convert(expBuilder.Input, typeof(object)));
 
-                    return args
+                    return expBuilder
                         .Add(returnExpression)
-                        .Add(args.LabelExpression)
+                        .Add(expBuilder.LabelExpression)
                         .ToResult(this);
                 }
             }
-            else if (args.ToType.IsAssignableFrom(args.FromType))
+            else if (expBuilder.ToType.IsAssignableFrom(expBuilder.FromType))
             {
                 GotoExpression returnExpression = Expression.Return(
-                    args.LabelTarget,
-                    Expression.Convert(args.Input, args.ToType));
+                    expBuilder.LabelTarget,
+                    Expression.Convert(expBuilder.Input, expBuilder.ToType));
 
-                return args
+                return expBuilder
                     .Add(returnExpression)
-                    .Add(args.LabelExpression)
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
-            else if (args.ToType.IsAssignableFrom(args.UnderlyingFromType))
+            else if (expBuilder.ToType.IsAssignableFrom(expBuilder.UnderlyingFromType))
             {
-                var value = Expression.Property(args.Input, "Value");
+                var value = Expression.Property(expBuilder.Input, "Value");
 
                 GotoExpression returnExpression = Expression.Return(
-                    args.LabelTarget,
-                    Expression.Convert(value, args.ToType));
+                    expBuilder.LabelTarget,
+                    Expression.Convert(value, expBuilder.ToType));
 
-                return args
+                return expBuilder
                     .AddGuards()
                     .Add(returnExpression)
-                    .Add(args.LabelExpression)
+                    .Add(expBuilder.LabelExpression)
                     .ToResult(this);
             }
 

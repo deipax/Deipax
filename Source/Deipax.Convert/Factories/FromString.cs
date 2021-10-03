@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Extensions;
+﻿using Deipax.Convert.Concretes;
+using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System;
@@ -11,18 +12,19 @@ namespace Deipax.Convert.Factories
     public class FromString : IConvertFactory
     {
         #region IConvertFactory Members
-        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>(
-            IExpArgs<TFrom, TTo> args)
+        public IConvertResult<TFrom, TTo> Create<TFrom, TTo>()
         {
-            if (args.FromType == typeof(string) &&
-                args.ToType != typeof(object))
+            var expBuilder = new ExpBuilder<TFrom, TTo>();
+
+            if (expBuilder.FromType == typeof(string) &&
+                expBuilder.ToType != typeof(object))
             {
                 var methodInfo = typeof(System.Convert)
                     .GetRuntimeMethods()
                     .Where(x =>
-                        x.ReturnType == args.UnderlyingToType &&
+                        x.ReturnType == expBuilder.UnderlyingToType &&
                         x.GetParameters().Length == 2 &&
-                        x.GetParameters()[0].ParameterType == args.FromType &&
+                        x.GetParameters()[0].ParameterType == expBuilder.FromType &&
                         x.GetParameters()[1].ParameterType == typeof(IFormatProvider))
                     .FirstOrDefault();
 
@@ -30,17 +32,17 @@ namespace Deipax.Convert.Factories
                 {
                     MethodCallExpression convertExpression = Expression.Call(
                         methodInfo,
-                        args.Input,
-                        args.GetDefaultProvider());
+                        expBuilder.Input,
+                        expBuilder.GetDefaultProvider());
 
-                    GotoExpression returnExpression = args.ToType.IsNullable()
-                        ? Expression.Return(args.LabelTarget, Expression.Convert(convertExpression, args.ToType))
-                        : Expression.Return(args.LabelTarget, convertExpression);
+                    GotoExpression returnExpression = expBuilder.ToType.IsNullable()
+                        ? Expression.Return(expBuilder.LabelTarget, Expression.Convert(convertExpression, expBuilder.ToType))
+                        : Expression.Return(expBuilder.LabelTarget, convertExpression);
 
-                    return args
+                    return expBuilder
                         .AddGuards()
                         .Add(returnExpression)
-                        .Add(args.LabelExpression)
+                        .Add(expBuilder.LabelExpression)
                         .ToResult(this);
                 }
             }

@@ -12,7 +12,7 @@ namespace Benchmarks.Cloning
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var config = ManualConfig
                 .CreateEmpty()
@@ -61,15 +61,6 @@ namespace Benchmarks.Cloning
             BenchmarkRunner.Run<PrimitiveDeipax>(config);
             BenchmarkRunner.Run<TupleDeipax>(config);
             BenchmarkRunner.Run<CanShallowCloneDeipax>(config);
-        }
-
-        private static Job ConfigureJob(Job source)
-        {
-            return source;
-            /*
-            return source
-                .WithIterationCount(1)
-                .WithWarmupCount(1);*/
         }
         #endregion
     }
