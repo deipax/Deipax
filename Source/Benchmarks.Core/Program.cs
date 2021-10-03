@@ -19,23 +19,19 @@ namespace Benchmarks.DataAccess
                 .AddDiagnoser(DefaultConfig.Instance.GetDiagnosers().ToArray())
                 .AddFilter(DefaultConfig.Instance.GetFilters().ToArray())
                 .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
-                .AddJob(new Job[]
-                {
+                .AddJob(
                     Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31).AsBaseline(),
-                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50),
-                })
+                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50))
                 .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
                 .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
                 .AddExporter(MarkdownExporter.Default)
                 .AddDiagnoser(MemoryDiagnoser.Default)
-                .AddColumn(new IColumn[]
-                {
+                .AddColumn(
                     StatisticColumn.Min,
                     StatisticColumn.Max,
                     StatisticColumn.Mean,
                     StatisticColumn.Median,
-                    BaselineRatioColumn.RatioMean,
-                });
+                    BaselineRatioColumn.RatioMean);
         }
     }
 }

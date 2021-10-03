@@ -7,8 +7,11 @@
 
   <ItemGroup>
     <Compile Remove="BenchmarkDotNet.Artifacts\results\**" />
+    <Compile Remove="BenchmarkDotNet.Artifacts\Saved\**" />
     <EmbeddedResource Remove="BenchmarkDotNet.Artifacts\results\**" />
+    <EmbeddedResource Remove="BenchmarkDotNet.Artifacts\Saved\**" />
     <None Remove="BenchmarkDotNet.Artifacts\results\**" />
+    <None Remove="BenchmarkDotNet.Artifacts\Saved\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="BenchmarkDotNet.Artifacts\" />
-    <Folder Include="BenchmarkDotNet.Artifacts\Saved\" />
   </ItemGroup>
 
 </Project>

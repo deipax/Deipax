@@ -148,7 +148,7 @@ namespace UnitTests.Common
         public int ProductCategoryId { get; set; }
         public string ProductQuantityPerUnit { get; set; }
         public decimal ProductUnitPrice { get; set; }
-        public int UnitsInStock { get; set; }
+        public int ProductUnitsInStock { get; set; }
         public int ProductUnitsOnOrder { get; set; }
         public int ProductReorderLevel { get; set; }
         public int ProductDiscontinued { get; set; }
@@ -228,7 +228,7 @@ namespace UnitTests.Common
         public decimal ProductCategoryId { get; set; }
         public string ProductQuantityPerUnit { get; set; }
         public decimal ProductUnitPrice { get; set; }
-        public decimal UnitsInStock { get; set; }
+        public decimal ProductUnitsInStock { get; set; }
         public decimal ProductUnitsOnOrder { get; set; }
         public decimal ProductReorderLevel { get; set; }
         public decimal ProductDiscontinued { get; set; }
@@ -308,7 +308,7 @@ namespace UnitTests.Common
         public int ProductCategoryId { get; set; }
         public string ProductQuantityPerUnit { get; set; }
         public decimal ProductUnitPrice { get; set; }
-        public int UnitsInStock { get; set; }
+        public int ProductUnitsInStock { get; set; }
         public int ProductUnitsOnOrder { get; set; }
         public int ProductReorderLevel { get; set; }
         public int ProductDiscontinued { get; set; }
@@ -388,7 +388,7 @@ namespace UnitTests.Common
         public decimal ProductCategoryId { get; set; }
         public string ProductQuantityPerUnit { get; set; }
         public decimal ProductUnitPrice { get; set; }
-        public decimal UnitsInStock { get; set; }
+        public decimal ProductUnitsInStock { get; set; }
         public decimal ProductUnitsOnOrder { get; set; }
         public decimal ProductReorderLevel { get; set; }
         public decimal ProductDiscontinued { get; set; }

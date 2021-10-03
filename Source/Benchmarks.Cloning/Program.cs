@@ -21,23 +21,19 @@ namespace Benchmarks.Cloning
                 .AddDiagnoser(DefaultConfig.Instance.GetDiagnosers().ToArray())
                 .AddFilter(DefaultConfig.Instance.GetFilters().ToArray())
                 .AddHardwareCounters(DefaultConfig.Instance.GetHardwareCounters().ToArray())
-                .AddJob(new Job[]
-                {
-                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31)).AsBaseline(),
-                    ConfigureJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50)),
-                })
+                .AddJob(
+                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31).AsBaseline(),
+                    Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50))
                 .AddLogger(DefaultConfig.Instance.GetLoggers().ToArray())
                 .AddValidator(DefaultConfig.Instance.GetValidators().ToArray())
                 .AddExporter(MarkdownExporter.Default)
                 .AddDiagnoser(MemoryDiagnoser.Default)
-                .AddColumn(new IColumn[]
-                {
+                .AddColumn(
                     StatisticColumn.Min,
                     StatisticColumn.Max,
                     StatisticColumn.Mean,
                     StatisticColumn.Median,
-                    BaselineRatioColumn.RatioMean,
-                });
+                    BaselineRatioColumn.RatioMean);
 
             RunDeipaxBenchmarks(config);
         }
