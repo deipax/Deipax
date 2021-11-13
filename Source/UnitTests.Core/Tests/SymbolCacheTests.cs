@@ -5,14 +5,14 @@ namespace UnitTests.Core
 {
     public class SymbolCacheTests
     {
-        private readonly string _key = "Test";
-
         [Fact]
         public void Get()
         {
-            var symbol = SymbolCache.Get(_key);
+            var symbol = SymbolCache.Get("10");
             Assert.NotNull(symbol);
-            var symbol2 = SymbolCache.Get(_key);
+            var symbol2 = SymbolCache.Get("10");
+            Assert.Same(symbol, symbol2);
+            Assert.True(SymbolCache.Count == 1);
         }
     }
 }

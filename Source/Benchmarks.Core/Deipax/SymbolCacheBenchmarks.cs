@@ -8,22 +8,19 @@ namespace Benchmarks.Core.Deipax
         [GlobalSetup]
         public void Setup()
         {
-            SymbolCache.Get(_existingKey);
+            SymbolCache.Get("ExistingKey");
         }
-
-        private string _newKey = "NewKey";
-        private string _existingKey = "ExistingKey";
 
         [Benchmark]
         public Symbol GetNewSymbol()
         {
-            return SymbolCache.Get(_newKey);
+            return SymbolCache.Get("NewKey");
         }
 
         [Benchmark]
         public Symbol GetExistingSymbol()
         {
-            return SymbolCache.Get(_existingKey);
+            return SymbolCache.Get("ExistingKey");
         }
     }
 }
