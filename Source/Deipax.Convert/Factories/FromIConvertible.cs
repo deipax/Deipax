@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Deipax.Convert.Common;
 
 namespace Deipax.Convert.Factories
 {

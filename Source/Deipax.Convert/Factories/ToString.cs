@@ -1,5 +1,4 @@
 ﻿using Deipax.Convert.Common;
-using Deipax.Convert.Concretes;
 using Deipax.Convert.Extensions;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
@@ -49,7 +48,7 @@ namespace Deipax.Convert.Factories
 
         #region Private Members
         private IConvertResult<TFrom, TTo> GetConvert<TFrom, TTo>(
-            IExpBuilder<TFrom, TTo> expBuilder,
+            ExpBuilder<TFrom, TTo> expBuilder,
             Expression guardedInput)
         {
             var method = typeof(System.Convert)
@@ -92,7 +91,7 @@ namespace Deipax.Convert.Factories
         }
 
         private IConvertResult<TFrom, TTo> GetToString<TFrom, TTo>(
-            IExpBuilder<TFrom, TTo> expBuilder,
+            ExpBuilder<TFrom, TTo> expBuilder,
             Expression guardedInput)
         {
             var method = expBuilder.UnderlyingFromType
@@ -121,7 +120,7 @@ namespace Deipax.Convert.Factories
         }
 
         private IConvertResult<TFrom, TTo> GetEnum<TFrom, TTo>(
-            IExpBuilder<TFrom, TTo> expBuilder,
+            ExpBuilder<TFrom, TTo> expBuilder,
             Expression guardedInput)
         {
             if (expBuilder.UnderlyingFromType.IsEnum)

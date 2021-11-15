@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Deipax.Convert.Concretes
+namespace Deipax.Convert.Common
 {
-    public class ExpBuilder<TFrom, TTo> : IExpBuilder<TFrom, TTo>
+    public class ExpBuilder<TFrom, TTo>
     {
         public ExpBuilder()
         {
@@ -37,7 +37,7 @@ namespace Deipax.Convert.Concretes
         public LabelExpression LabelExpression { get; private set; }
         public DefaultExpression DefaultExpression { get; private set; }
 
-        public IExpBuilder<TFrom, TTo> Add(Expression expr)
+        public ExpBuilder<TFrom, TTo> Add(Expression expr)
         {
             if (expr != null)
             {
@@ -47,7 +47,7 @@ namespace Deipax.Convert.Concretes
             return this;
         }
 
-        public IExpBuilder<TFrom, TTo> AddVariable(ParameterExpression variable)
+        public ExpBuilder<TFrom, TTo> AddVariable(ParameterExpression variable)
         {
             if (variable != null)
             {

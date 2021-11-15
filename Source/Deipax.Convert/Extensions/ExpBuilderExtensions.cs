@@ -1,4 +1,5 @@
-﻿using Deipax.Convert.Concretes;
+﻿using Deipax.Convert.Common;
+using Deipax.Convert.Concretes;
 using Deipax.Convert.Interfaces;
 using Deipax.Core.Extensions;
 using System;
@@ -7,18 +8,18 @@ using System.Linq.Expressions;
 
 namespace Deipax.Convert.Extensions
 {
-    public static class IExpBuilderExtensions
+    public static class ExpBuilderExtensions
     {
         public static BinaryExpression GetDefaultProvider<TFrom, TTo>(
-            this IExpBuilder<TFrom, TTo> expBuilder)
+            this ExpBuilder<TFrom, TTo> expBuilder)
         {
             return Expression.Coalesce(
                 expBuilder?.Provider,
                 Expression.Constant(CultureInfo.InvariantCulture));
         }
 
-        public static IExpBuilder<TFrom, TTo> AddGuards<TFrom, TTo>(
-            this IExpBuilder<TFrom, TTo> expBuilder)
+        public static ExpBuilder<TFrom, TTo> AddGuards<TFrom, TTo>(
+            this ExpBuilder<TFrom, TTo> expBuilder)
         {
             if (expBuilder.FromType == typeof(string))
             {
@@ -79,7 +80,7 @@ namespace Deipax.Convert.Extensions
         }
 
         public static IConvertResult<TFrom, TTo> ToResult<TFrom, TTo>(
-            this IExpBuilder<TFrom, TTo> expBuilder,
+            this ExpBuilder<TFrom, TTo> expBuilder,
             IConvertFactory factory)
         {
             var convertExpression = expBuilder?.Create();

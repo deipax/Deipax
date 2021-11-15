@@ -6,12 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="BenchmarkDotNet.Artifacts\Benchmarks.Core.DotNet.DictionaryBenchmarks-20211114-065209.log" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
     <PackageReference Include="System.Net.Primitives" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Deipax.Core\Deipax.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BenchmarkDotNet.Artifacts\" />
   </ItemGroup>
 
 </Project>
