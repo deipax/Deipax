@@ -5,6 +5,7 @@ using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
+using Benchmarks.Core.Deipax;
 using System.Linq;
 
 namespace Benchmarks.DataAccess
@@ -33,6 +34,8 @@ namespace Benchmarks.DataAccess
                     StatisticColumn.Mean,
                     StatisticColumn.Median,
                     BaselineRatioColumn.RatioMean);
+
+            BenchmarkRunner.Run<SymbolCacheBenchmarks>(config);
         }
     }
 }
