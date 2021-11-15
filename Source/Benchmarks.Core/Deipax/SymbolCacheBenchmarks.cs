@@ -8,6 +8,11 @@ namespace Benchmarks.Core.Deipax
         [GlobalSetup]
         public void Setup()
         {
+            for (int i = 0; i < 100000; i++)
+            {
+                SymbolCache.Get(i.ToString());
+            }
+
             SymbolCache.Get("GetExisting");
         }
 
